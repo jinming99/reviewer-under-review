@@ -1,0 +1,228 @@
+schema_version: "v1"
+paper: cmdp_meta_safe_rl
+version: baseline
+method: baseline
+verdict: REJECT
+score: 4  # Overall score from review (1-10 scale)
+
+decision_drivers:
+  - id: R1
+    polarity: pro_reject
+    text: >-
+      Significant theory-practice gap: all theory assumes tabular CMDPs with softmax
+      parametrization yet experiments include continuous control tasks (Half-Cheetah 17D,
+      Humanoid 376D) with no bridging analysis.
+    evidence: "Weaknesses bullet 1"
+    linked_concern_ids: [A1]
+
+  - id: R2
+    polarity: pro_reject
+    text: >-
+      Baselines are uniformly naive (random init, simple averaging, pre-trained single-task,
+      FTAL); no comparison with any meta-RL method (MAML, ProMP) or modern safe RL approach.
+    evidence: "Weaknesses bullet 3"
+    linked_concern_ids: [A3]
+
+  - id: R3
+    polarity: pro_reject
+    text: >-
+      Core theoretical predictions that TAOG and TACV scale with task-similarity/relatedness
+      are never quantitatively validated; no ablation varies similarity in a controlled way.
+    evidence: "Weaknesses bullet 4"
+    linked_concern_ids: [A4]
+
+  - id: R4
+    polarity: pro_reject
+    text: >-
+      Theorem 3.1 bound involves an opaque function h from the KL inequality whose growth rate
+      is unknown, making the bound potentially vacuous; practical tightness is never assessed.
+    evidence: "Weaknesses bullet 2"
+    linked_concern_ids: [A2]
+
+mentions:
+  - id: M1
+    polarity: pro_accept
+    text: >-
+      Addresses an important and understudied problem: provable guarantees for meta-learning
+      in constrained MDPs. Appears to be the first work providing such guarantees.
+    evidence: "Strengths bullet 1"
+    note: "Acknowledged as a positive contribution but did not outweigh the weaknesses."
+
+  - id: M2
+    polarity: pro_accept
+    text: >-
+      The use of tame geometry and the Kurdyka-Lojasiewicz inequality to bound suboptimal-to-optimal
+      policy distance (Theorem 3.1) is a creative and novel technical contribution of independent interest.
+    evidence: "Strengths bullet 2"
+    note: "Novelty recognized but undermined by opaqueness of the resulting bound (see A2)."
+
+  - id: M3
+    polarity: pro_accept
+    text: >-
+      Framework handles practical challenges: does not require globally optimal policies, uses
+      off-policy estimation (DualDICE), and supports adaptive learning rates without horizon knowledge.
+    evidence: "Strengths bullet 3"
+    note: "Practical design noted but not weighted as decisive given evaluation gaps."
+
+  - id: M4
+    polarity: pro_accept
+    text: >-
+      Comprehensive theoretical development with clear progression from idealized (Lemma 1) to
+      practical settings (Theorem 3.2, Corollary 1), covering static and dynamic regret.
+    evidence: "Strengths bullet 4"
+    note: "Theoretical depth acknowledged but not sufficient to offset soundness concerns."
+
+  - id: M5
+    polarity: pro_accept
+    text: >-
+      Modular decomposition of estimation error into three sources (distribution mismatch, DualDICE
+      error, policy suboptimality) in Equation 4 could accommodate alternative estimation methods.
+    evidence: "Strengths bullet 5"
+    note: "Noted as a framework contribution but not weighted as decisive."
+
+concerns:
+  - id: A1
+    text: >-
+      Theory-practice gap: all theoretical results assume tabular CMDPs with softmax
+      parametrization, yet experiments use continuous control tasks (Half-Cheetah 17D state,
+      Humanoid 376D observations) with no discussion bridging this gap.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 1; Limitations bullet 2"
+    decisive: true
+    tags: [theory_practice_gap, experimental_design]
+    dimension_impact: [D, F]
+
+  - id: A2
+    text: >-
+      Theorem 3.1 bound involves an opaque function h from the KL inequality characterized
+      only qualitatively; without knowing its growth rate, the bound could be vacuous and
+      practical tightness is never assessed.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 2; Limitations bullet 3 (opaque quantities h, E_T)"
+    decisive: true
+    tags: [theoretical_rigor, soundness]
+    dimension_impact: [D, E]
+
+  - id: A3
+    text: >-
+      Experimental baselines are uniformly naive (random init, averaging, single-task pretrain,
+      FTAL); no comparison with any established meta-RL method (MAML, ProMP) or modern safe
+      RL approach adapted to the multi-task setting.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 3; Questions bullet 4"
+    decisive: true
+    tags: [baseline_fairness, experimental_design]
+    dimension_impact: [D]
+
+  - id: A4
+    text: >-
+      Core theoretical prediction that TAOG and TACV scale with task-similarity D* or
+      task-relatedness V_psi is never quantitatively validated; no ablation varies similarity
+      in a controlled way while measuring these quantities.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 4; Questions bullet 3"
+    decisive: true
+    tags: [claim_evidence_gap, ablation]
+    dimension_impact: [D, E]
+
+  - id: A5
+    text: >-
+      Framework is restricted to CRPO as the within-task algorithm; no concrete analysis
+      is provided for other safe RL algorithms, limiting practical generality.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 5; Limitations bullet 1"
+    decisive: false
+    tags: [generality, scope_limitation]
+    dimension_impact: [F]
+
+  - id: A6
+    text: >-
+      Very limited training steps (5-10 steps on test tasks) make it difficult to assess
+      convergence properties or distinguish meta-learning benefit from simply running more
+      within-task iterations.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 6"
+    decisive: false
+    tags: [experimental_design, insufficient_evaluation]
+    dimension_impact: [D, F]
+
+  - id: A7
+    text: >-
+      Paper is very dense (49 pages total) with heavy notation; many important details
+      including proofs and algorithm specifics are deferred to appendices, making the
+      main text hard to follow independently.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 7"
+    decisive: false
+    tags: [clarity, presentation]
+    dimension_impact: [G]
+
+  - id: A8
+    text: >-
+      Method permits constraint violations during learning, which may be unacceptable in
+      safety-critical applications that the paper targets.
+    severity:
+      level: moderate
+      addressability: unresolved
+      mechanism: none
+    source: other
+    source_detail: "Limitations bullet 4"
+    decisive: false
+    tags: [safety, scope_limitation]
+    dimension_impact: [F]
+
+  - id: A9
+    text: >-
+      No discussion of computational overhead of DualDICE estimation after each task
+      or how it scales with state-action space size.
+    severity:
+      level: minor
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Limitations bullet 5; Questions bullet 6"
+    decisive: false
+    tags: [scalability, reproducibility]
+    dimension_impact: [H]
+
+method_specific:
+  baseline_system: ai_scientist
+  run_id: run_1
+  scores:
+    originality: 3
+    quality: 2
+    clarity: 2
+    significance: 2
+    soundness: 2
+    presentation: 2
+    contribution: 2
+    overall: 4
+    confidence: 4

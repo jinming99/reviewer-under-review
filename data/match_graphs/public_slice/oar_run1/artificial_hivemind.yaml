@@ -1,0 +1,175 @@
+schema_version: "v1"
+paper: "artificial_hivemind"
+version: "v0.9.2"
+condition: "own_group/oar_run1"
+method: "baseline_openaireview"
+
+# ============================================================
+# Match Graph: Official (19 concerns) <-> Agentic OAR (5 concerns)
+# ============================================================
+# The agentic system (OAR run1) produced 5 comments focused on
+# reporting precision and internal consistency: Pearson/Spearman
+# naming, disagreement formula flaw, inter/intra similarity claim,
+# taxonomy count, min-p caption. The official reviewers (4 reviewers
+# + AC) covered scope (English-only), actionability, causal analysis,
+# contribution significance, paraphrase robustness, query validation,
+# similarity baselines, Section 4 methodology, and presentation.
+# Almost entirely different concern spaces. Result: 1 partial match,
+# 1 related edge; very low recall, high phantom rate.
+
+matches:
+  # ---------------------------------------------------------------
+  # O11 <-> A2: Section 4 disagreement analysis methodology
+  # ---------------------------------------------------------------
+  - official_id: O11
+    agentic_id: A2
+    match_type: partial
+    issue: "Section 4 human disagreement analysis uses a flawed disagreement metric"
+    judgment_alignment: aligned
+    severity_alignment: match  # official=major, agentic=major -> gap=0
+    rationale: >-
+      Both flag technical problems in the Section 4 disagreement analysis methodology.
+      O11 is broader: covers subset selection methodology, entropy-based disagreement
+      measure being unjustified, and unclear motivation for averaging human ratings.
+      A2 identifies a specific formula flaw where P_disagree assigns 50% disagreement
+      to unanimous ties. Both would require rethinking the disagreement metric, but
+      A2 addresses only one sub-issue of O11's broader critique. Scope test fails for
+      exact: fixing the P_disagree formula would not address O11's subset selection or
+      averaging concerns.
+
+  # ---------------------------------------------------------------
+  # O12 <-> A3: Interpretation of similarity score data
+  # ---------------------------------------------------------------
+  - official_id: O12
+    agentic_id: A3
+    match_type: related
+    issue: "Similarity score data does not support the interpretation given"
+    judgment_alignment: n/a
+    severity_alignment: n/a
+    rationale: >-
+      Both address how inter-model similarity data is interpreted and presented.
+      O12 says scores are clustered in 0.7-0.8 with little differentiation, requesting
+      full distributions rather than averages. A3 says the claim that inter-model
+      similarity sometimes exceeds intra-model is not supported by aggregate data.
+      Different specific complaints: O12 wants better visualization granularity;
+      A3 wants a claim to be qualified. Different fixes. Related only because
+      both critique the same figures/tables but from different angles.
+
+# ============================================================
+# Positive Factor Matches (paper was accepted as Outstanding Paper)
+# ============================================================
+# Official pro_accept drivers: D1-D6. D7-D8 are pro_reject (excluded).
+# Agentic pro_accept sources: R1 (decision driver), M1 (mention).
+# The agentic system inferred ACCEPT, so positive factors appear
+# as decision drivers and mentions.
+
+positive_factor_matches:
+  - official_factor_id: D1
+    agentic_source: mention
+    agentic_text: >-
+      The human annotation effort (31,250 labels with 25 annotators per example)
+      is commendable and enables meaningful analysis of distributional preferences.
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >-
+      D1 praises the meticulously constructed benchmark with rich prompts AND
+      high-density annotations. M1 recognizes the annotation density as commendable
+      but does not explicitly praise the benchmark construction or prompt quality.
+      Partial because M1 captures the annotation aspect but misses the dataset
+      design and prompt richness.
+
+  - official_factor_id: D2
+    agentic_source: decision_driver
+    agentic_text: >-
+      Substantial empirical contribution: large-scale dataset, query taxonomy, and
+      systematic evidence of mode collapse across language models, with the
+      'Artificial Hivemind' framing vivid and well-supported by core experiments.
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >-
+      D2 specifically praises the fine-grained and comprehensive evaluation framework
+      measuring diversity, human alignment, and inter-model homogenization. R1
+      acknowledges the paper as a substantial empirical contribution and mentions
+      mode collapse evidence, but does not single out the evaluation framework's
+      granularity. Partial because R1 captures the overall contribution but
+      misses the specific praise for the evaluation methodology.
+
+  - official_factor_id: D3
+    agentic_source: decision_driver
+    agentic_text: >-
+      Substantial empirical contribution: large-scale dataset, query taxonomy, and
+      systematic evidence of mode collapse across language models, with the
+      'Artificial Hivemind' framing vivid and well-supported by core experiments.
+    match_type: exact
+    judgment_alignment: aligned
+    rationale: >-
+      Both recognize the central Artificial Hivemind finding demonstrated across
+      many models. D3 highlights the effect with both automatic and hand-written
+      queries across 70+ LMs. R1 says the 'Artificial Hivemind framing is vivid
+      and well-supported by the core experiments' with 'systematic evidence of
+      mode collapse.' Same value recognized.
+
+  - official_factor_id: D4
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >-
+      D4 highlights implications for alignment-diversity tension and human pluralism.
+      The agentic system did not explicitly discuss these broader implications.
+
+  - official_factor_id: D5
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >-
+      D5 praises writing quality, clear figures, and code documentation.
+      The agentic system did not comment on presentation quality as a positive
+      factor (ironically, most of its concerns targeted presentation precision).
+
+  - official_factor_id: D6
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >-
+      D6 is about authors addressing reviewer concerns during rebuttal, leading
+      to score increases. This is a post-discussion dynamic not observable to
+      the agentic system, which operates on the paper PDF alone.
+
+# ============================================================
+# Unmatched Concerns
+# ============================================================
+# Related-only edges count as strict-unmatched per schema.
+
+unmatched_official:
+  # Scope and generalizability (1cqC, AC)
+  - O1   # English-only scope limits generalizability
+  - O2   # Limited actionable guidance for applying the metric
+  # Causal analysis and significance (1cqC, zt6D)
+  - O3   # Insufficient causal analysis of inter-model homogenization
+  - O4   # Hivemind effect is statistically expected, not surprising
+  # Robustness and depth analysis (zt6D)
+  - O5   # Need paraphrase robustness test
+  - O6   # Query entropy impact on Hivemind effect
+  # Presentation (WB9g)
+  - O7   # Figure 1 could be more concise
+  - O8   # Missing taxonomy discussion in related work
+  # Dataset validation (cdsj)
+  - O9   # Open-endedness of queries not verified
+  - O10  # Similarity scores lack reference/baseline for interpretation
+  # Section 4 methodology (cdsj) — O11 has partial match with A2
+  - O12  # Similarity score range too narrow for comparison (related-only with A3)
+  - O13  # Cosine metric vs inter/intra metric inconsistency
+  # Data and reproducibility
+  - O14  # Data availability issue (broken link)
+  - O15  # Need foundation model baseline without instruction-following
+  - O16  # Codebase should include testing scripts
+  # AC and meta-review
+  - O17  # New human annotation results should be in camera-ready
+  - O18  # Results need deeper interpretation and discussion
+  - O19  # Justification for averaging human ratings
+
+unmatched_agentic:
+  - A1   # Pearson vs Spearman naming inconsistency (no official counterpart)
+  - A3   # Inter > intra similarity claim unsupported (related-only with O12)
+  - A4   # Taxonomy subcategory count 17 vs 15 (no official counterpart)
+  - A5   # Min-p caption overstates similarity frequency (no official counterpart)

@@ -1,0 +1,177 @@
+schema_version: "v1"
+paper: "rl_reasoning_limits"
+version: "own_group"
+method: "baseline"
+verdict: "REJECT"
+score: null  # liang_etal format does not produce a numeric score
+
+decision_drivers:
+  - id: "R1"
+    polarity: "pro_reject"
+    text: "Central claim ('RLVR does not elicit new reasoning') may be overstated given inherent limitations of pass@k as a finite-sample probe and the conflation of entropy reduction with reasoning scope reduction."
+    evidence: "Review section 3, rejection reason #1 and #3"
+    linked_concern_ids: ["A1", "A2", "A5"]
+
+  - id: "R2"
+    polarity: "pro_reject"
+    text: "Scaling and training compute investigation is insufficient — controlled experiments are extremely small-scale relative to frontier RLVR recipes, undermining generality of conclusions."
+    evidence: "Review section 3, rejection reason #2"
+    linked_concern_ids: ["A3", "A4"]
+
+  - id: "R3"
+    polarity: "pro_reject"
+    text: "Perplexity analysis is too limited in sample size and granularity to support the general claim that RLVR paths are a strict subset of base model paths."
+    evidence: "Review section 3, rejection reason #4"
+    linked_concern_ids: ["A7", "A8"]
+
+mentions:
+  - id: "M1"
+    polarity: "pro_accept"
+    text: "Comprehensive empirical coverage spanning 4+ model families, 3 task domains (math, code, vision), 6 RL algorithms, and multiple scales."
+    evidence: "Review section 2, bullet 1"
+    note: "Acknowledged as strength but not weighted as decisive for verdict"
+
+  - id: "M2"
+    polarity: "pro_accept"
+    text: "Pass@k methodology offers a principled and interpretable lens for reasoning boundary assessment with manual CoT correctness validation."
+    evidence: "Review section 2, bullet 2"
+    note: "Noted but the review simultaneously questions pass@k limitations in rejection reasons"
+
+  - id: "M3"
+    polarity: "pro_accept"
+    text: "Distillation vs RLVR contrast (Section 4.2) is a clean and insightful comparison that sharpens the narrative and offers actionable implications."
+    evidence: "Review section 2, bullet 3"
+    note: "Mentioned as a positive but not treated as overriding the methodological concerns"
+
+  - id: "M4"
+    polarity: "pro_accept"
+    text: "Sampling Efficiency Gap (Delta_SE) metric is a useful conceptual contribution for benchmarking RL algorithms against the base model upper bound."
+    evidence: "Review section 2, bullet 4"
+    note: "Recognized as contribution but not decisive"
+
+  - id: "M5"
+    polarity: "pro_accept"
+    text: "Clear writing and well-structured presentation with extensive supplementary material, prompt templates, and reproducibility details."
+    evidence: "Review section 2, bullet 5"
+    note: "Presentation quality acknowledged"
+
+  - id: "M6"
+    polarity: "pro_accept"
+    text: "Paper addresses a timely and important question — whether RLVR genuinely elicits new reasoning capabilities or merely reshapes the sampling distribution — which is provocative and practically consequential for the field's research prioritization."
+    evidence: "Review section 1 (Significance and novelty): 'This paper addresses a timely and important question in the LLM reasoning community'"
+    note: "Recognized as significant question but the review simultaneously questions the strength of the answer provided"
+
+concerns:
+  # ============================================================
+  # From rejection reason #1: Central claim may be overstated
+  # ============================================================
+  - id: "A1"
+    text: "Pass@k at realistic k values (128-1024) is a finite-sample approximation; the base model's apparent coverage advantage at large k may partly reflect its higher entropy and broader but lower-quality distribution rather than genuinely superior reasoning capacity."
+    severity:
+      level: "major"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "Review section 3, rejection reason #1 paragraph 1: 'the base model's apparent coverage advantage at large k may partly reflect its higher entropy / broader but lower-quality distribution'"
+    decisive: true
+    tags: ["overclaiming", "evaluation_validity", "entropy_confound", "pass_at_k"]
+    dimension_impact: ["B", "D"]
+
+  - id: "A2"
+    text: "Equating 'the base model can produce a correct answer in 1 out of 1024 samples' with 'possessing reasoning capability' is philosophically and practically debatable — probability ~0.1% may not reflect robust or reliable reasoning."
+    severity:
+      level: "major"
+      addressability: "unresolved"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "Review section 3, rejection reason #1 paragraph 2: 'A capability that surfaces with probability ~0.1% may not reflect robust or reliable reasoning'"
+    decisive: true
+    tags: ["framing", "capability_definition", "philosophical"]
+    dimension_impact: ["A", "B"]
+
+  # ============================================================
+  # From rejection reason #2: Limited scaling/training compute
+  # ============================================================
+  - id: "A3"
+    text: "Controlled RL experiments train for only 150-450 steps on 2,000 problems, extremely small-scale relative to frontier RLVR recipes (DeepSeek-R1 trains for orders of magnitude more). The conclusion that 'RLVR does not expand reasoning' may be an artifact of under-training."
+    severity:
+      level: "major"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "Review section 3, rejection reason #2 paragraph 1: 'extremely small-scale relative to frontier RLVR recipes...may be an artifact of under-training'"
+    decisive: true
+    tags: ["training_compute", "model_scale", "generalizability", "under_training"]
+    dimension_impact: ["D", "F"]
+
+  - id: "A4"
+    text: "Magistral-Medium experiment accessed via API with undisclosed training details, model sizes, and potential confounds (multi-stage training, data contamination). The pass@k curves do not clearly cross for this model, undermining the universality claim."
+    severity:
+      level: "major"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "Review section 3, rejection reason #2 paragraph 2: 'base and RL model are accessed via API with undisclosed training details...the curves do not clearly cross for this model'"
+    decisive: true
+    tags: ["frontier_models", "reproducibility", "confounds", "API_opacity"]
+    dimension_impact: ["D", "H"]
+
+  # ============================================================
+  # From rejection reason #3: Conflated confounds, missing controls
+  # ============================================================
+  - id: "A5"
+    text: "RLVR training reduces output entropy, which mechanically reduces pass@k at large k. Temperature scaling is a crude proxy for the distributional shift; more rigorous controls (rejection sampling, importance-weighted estimates) are needed to disentangle entropy from genuine reasoning scope loss."
+    severity:
+      level: "major"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "Review section 3, rejection reason #3 paragraph 1: 'temperature scaling is a crude proxy for the distributional shift induced by RL'"
+    decisive: true
+    tags: ["entropy_confound", "evaluation_methodology", "disentanglement", "controls"]
+    dimension_impact: ["D"]
+
+  - id: "A6"
+    text: "Base model evaluated with the same zero-shot prompt as the RL model but was never trained with this prompt format. Performance differences could partly reflect prompt sensitivity. Base models often produce 'unformatted or non-sensical responses,' raising questions about effective sample size."
+    severity:
+      level: "moderate"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "Review section 3, rejection reason #3 paragraph 2: 'performance differences could partly reflect prompt sensitivity rather than reasoning boundary differences'"
+    decisive: false
+    tags: ["prompt_sensitivity", "experimental_protocol", "confounds"]
+    dimension_impact: ["D"]
+
+  # ============================================================
+  # From rejection reason #4: Perplexity analysis limited
+  # ============================================================
+  - id: "A7"
+    text: "Perplexity analysis conducted on only 2 randomly sampled AIME24 problems with 16 responses each — far too small a sample to support a general claim about RLVR paths being a subset of base model paths."
+    severity:
+      level: "major"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "Review section 3, rejection reason #4 paragraph 1: 'only 2 randomly sampled AIME24 problems with 16 responses each, which is far too small'"
+    decisive: true
+    tags: ["sample_size", "perplexity_analysis", "insufficient_evidence"]
+    dimension_impact: ["D"]
+
+  - id: "A8"
+    text: "Low perplexity of RLVR outputs under the base model does not rule out that RLVR produces novel combinations or orderings of reasoning steps that, while individually plausible, would never be sampled as complete sequences. Analysis needed at reasoning-strategy level, not just token-level likelihood."
+    severity:
+      level: "moderate"
+      addressability: "unresolved"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "Review section 3, rejection reason #4 paragraph 2: 'does not analyze at the level of reasoning strategies or solution structures, only at the token-level likelihood'"
+    decisive: false
+    tags: ["analysis_granularity", "reasoning_strategies", "perplexity_analysis"]
+    dimension_impact: ["D"]
+
+method_specific:
+  review_format: "liang_etal"
+  note: "This is a liang_etal-style review without explicit verdict, scorecard, gates, or adversarial brief. Verdict inferred as REJECT from the substantive concerns outweighing acknowledged strengths. The review is structured as balanced assessment with 'Potential reasons for acceptance/rejection' without committing to a final decision."
+  adversarial_escalation_triggered: false
+  debate_outcome: null

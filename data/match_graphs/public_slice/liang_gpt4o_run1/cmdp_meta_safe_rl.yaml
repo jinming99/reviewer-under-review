@@ -1,0 +1,153 @@
+schema_version: "v1"
+paper: "cmdp_meta_safe_rl"
+version: "v0.9.2"
+condition: "own_group/liang_gpt4o_run1"
+method: "baseline_liang_etal"
+
+matches:
+  - official_id: O1
+    agentic_id: A5
+    match_type: exact
+    issue: "Experimental evaluation scope is limited to very few environments"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: major → gap=0
+    rationale: >
+      Both identify the same core concern: experiments cover too few environments
+      to demonstrate generality. O1 says "experimental evaluation is very sparse";
+      A5 says "limited set of environments, not fully capturing diversity." Same
+      issue, same scope.
+
+  - official_id: O14
+    agentic_id: A5
+    match_type: exact
+    issue: "Experimental evaluation limited to toy environments without Mujoco"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: major → gap=0
+    rationale: >
+      O14 is GvYx's restatement of O1, specifically asking "how about Mujoco?"
+      A5 captures the same limited-environment concern. Same underlying issue
+      as O1↔A5 from a different reviewer.
+
+  - official_id: O6
+    agentic_id: A7
+    match_type: exact
+    issue: "Theoretical analysis and notation are unclear and hard to follow"
+    judgment_alignment: aligned
+    severity_alignment: under  # official: major, agentic: minor → gap=-2
+    rationale: >
+      Both flag that the paper's theoretical presentation hinders comprehension.
+      O6: "Theoretical analysis is not always clear; notation is confusing." A7:
+      "Dense mathematical notation and extensive theoretical sections hinder
+      comprehension." The agentic system rated this minor; the AC explicitly
+      listed unclear theory as a weakness, and two reviewers flagged it as major.
+
+  - official_id: O12
+    agentic_id: A7
+    match_type: partial
+    issue: "Specific notation symbols are unclear and impede understanding"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: moderate, agentic: minor → gap=-1
+    rationale: >
+      O12 flags specific notation issues (V_{M_t}, π*); A7 flags dense notation
+      generally. A7 captures the family of notation concerns but not O12's
+      specific symbols. Partial because A7 is broader in scope.
+
+  - official_id: O2
+    agentic_id: A3
+    match_type: partial
+    issue: "Framework assumptions about distributions may not hold in practice"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: moderate, agentic: major → gap=+1
+    rationale: >
+      O2 specifically questions Assumption 1 (full support over shrinkage simplex)
+      and meta-initialization safety. A3 broadly flags "access to certain
+      distributions and parameters that may not be readily available." Same
+      assumption-validity family but A3 is broader and O2 targets a specific
+      assumption. Would require different author fixes.
+
+  - official_id: O11
+    agentic_id: A4
+    match_type: partial
+    issue: "Task-similarity assumptions may be invalid in diverse environments"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: moderate, agentic: major → gap=+1
+    rationale: >
+      O11 argues static regret is inappropriate because bounded task similarity
+      is assumed and environments differ. A4 flags that task-similarity and
+      task-relatedness assumptions may not hold in real-world settings. Both
+      target task-similarity validity, but O11 additionally critiques the metric
+      choice (static regret), which A4 does not capture.
+
+  - official_id: O15
+    agentic_id: A2
+    match_type: partial
+    issue: "Non-standard mathematical foundations (o-minimal/tame geometry) insufficiently explained"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: moderate, agentic: minor → gap=-1
+    rationale: >
+      O15 asks for clarification of Assumption 2's o-minimal structure. A2
+      flags reliance on "tame geometry, subgradient flow systems" as deterring
+      readers. Both concern the same mathematical material being insufficiently
+      accessible, but O15 targets assumption justification while A2 targets
+      reader accessibility. Partial because different facets of the same gap.
+
+positive_factor_matches:
+  - official_factor_id: D1
+    agentic_source: decision_driver
+    agentic_text: >
+      Novel CMDP-within-online framework provides the first provable guarantees
+      for meta-safe reinforcement learning with rigorous task-averaged regret
+      bounds for both reward maximization and constraint violations.
+    match_type: exact
+    judgment_alignment: aligned
+    rationale: >
+      R1 directly captures D1's core claim: the CMDP-within-online framework
+      is a highly innovative theoretical contribution providing first provable
+      guarantees. Both highlight the framework's novelty and theoretical rigor.
+
+  - official_factor_id: D2
+    agentic_source: decision_driver
+    agentic_text: >
+      Framework is adaptable to various RL settings with practical applicability
+      to real-world scenarios involving safety constraints, supported by
+      experimental validation across different environments.
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >
+      R2 captures D2's practical applicability and safe RL importance, but
+      misses D2's specific detail that the framework "only requires inexact
+      sub-CMDP solutions and data trajectories from previous tasks." The
+      agentic system recognized the practical value without identifying the
+      specific mechanism that enables it.
+
+  - official_factor_id: D3
+    agentic_source: decision_driver
+    agentic_text: >
+      Framework is adaptable to various RL settings with practical applicability
+      to real-world scenarios involving safety constraints, supported by
+      experimental validation across different environments.
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >
+      D3 emphasizes the specific advantage of requiring only inexact solutions
+      without optimal policy access. R2 captures general practical applicability
+      but does not articulate the inexact-solutions mechanism. The agentic system
+      saw the practical value but not the specific theoretical feature driving it.
+
+unmatched_official:
+  - O3   # Safety constraints should adapt to shifting environments — no agentic counterpart
+  - O4   # Missing comparison to safe policy improvement (Thomas et al.) — no agentic counterpart
+  - O5   # Simplified CRPO restricts framework applicability — no agentic counterpart
+  - O7   # Missing CRPO explanation and parameter justification — no agentic counterpart
+  - O8   # Theoretical contribution is composition of existing analysis (DualDICE+CRPO) — no agentic counterpart
+  - O9   # Poor paper organization: assumptions/references introduced without context — no agentic counterpart
+  - O10  # Missing ethics/fairness discussion for constrained RL applications — no agentic counterpart
+  - O13  # Theorem 3.3 regret bound assumptions unjustified — no agentic counterpart
+  - O16  # DualDICE choice not justified over offline CMDP alternatives — no agentic counterpart
+  - O17  # Writing unclear with vague/ambiguous claims and results — no strict match (A7 maxed)
+  - O18  # Novelty only marginally significant; combines existing algorithms/theory — no agentic counterpart
+  - O19  # Non-standard citation/cluster formats — no agentic counterpart
+
+unmatched_agentic:
+  - A1   # Framework complexity limits accessibility — phantom; reviewers flagged unclear writing, not inherent complexity
+  - A6   # Missing computational efficiency/scalability comparisons — phantom; no reviewer raised this

@@ -1,0 +1,98 @@
+schema_version: "v1"
+paper: "rl_backtracking_feedback"
+version: "v0.9.2"
+condition: "own_group/liang_gpt4o_run1"
+method: "baseline_liang_etal"
+
+# Summary: Extremely low coverage. The agentic review (liang_gpt4o) produced only
+# 4 generic concerns (error bars, compute, ethics, open code) that miss nearly all
+# 13 official concerns, which are paper-specific technical issues (critic quality,
+# adaptive attacks, efficiency metrics, reward design, baselines, benchmarks).
+# Only one partial match edge exists (O1-A2 on compute/implementation details).
+# 3 of 4 agentic concerns are phantoms with no official counterpart.
+
+matches:
+  - official_id: O1
+    agentic_id: A2
+    match_type: partial
+    issue: "Missing computational resource and implementation details hinder reproducibility"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: moderate -> gap of 1 -> within tolerance
+    rationale: >
+      O1 covers data splits, hyperparameters, prompt sampling, and compute budget
+      deferred to supplementary. A2 captures only the computational resources subset,
+      framed as a scalability concern rather than a reproducibility concern. Same issue
+      family but different scope: A2 is a narrow slice of O1's broader complaint.
+      Scope test: providing compute details would partially fix O1 but not fully
+      (data splits and hyperparameters would remain), confirming partial not exact.
+
+positive_factor_matches:
+  - official_factor_id: D1
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >
+      D1 praises writing quality and clear motivation. No agentic mention addresses
+      writing quality or clarity of exposition.
+
+  - official_factor_id: D2
+    agentic_source: mention
+    agentic_text: >
+      Integration of RL with critic feedback and streamlined backtracking mechanism
+      offers a unique contribution to LLM safety and alignment research.
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >
+      D2 highlights the targeted backtracking mechanism that removes only violating
+      spans for efficient safety correction. M3 recognizes the RL+critic+backtracking
+      integration as unique but does not specifically emphasize the targeted
+      span-removal efficiency that D2 foregrounds. Same contribution area, different
+      emphasis.
+
+  - official_factor_id: D3
+    agentic_source: mention
+    agentic_text: >
+      Comprehensive empirical evaluations demonstrate effectiveness of RLBF in
+      reducing attack success rates across diverse benchmarks and model scales.
+    match_type: exact
+    judgment_alignment: aligned
+    rationale: >
+      Both identify strong empirical validation across attacks and model scales as a
+      key strength. M2 closely mirrors D3's assessment of multi-scale, multi-benchmark
+      evidence for safety effectiveness.
+
+  - official_factor_id: D4
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >
+      D4 highlights backtracking effectiveness beyond safety (correcting generation
+      mistakes generally). No agentic mention captures this generalization aspect;
+      all pro_accept mentions focus narrowly on safety applications.
+
+  - official_factor_id: D8
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >
+      D8 is a rebuttal-stage factor (reviewer consensus after author discussion).
+      Not observable by the agentic system at review time.
+
+unmatched_official:
+  - O2   # Missing evaluation of safety critic quality
+  - O3   # Single LLM critic adversarial vulnerability
+  - O4   # Limited coverage of adaptive attacks
+  - O5   # Missing end-to-end efficiency comparison
+  - O6   # Missing contextual comparisons with non-backtracking methods
+  - O7   # Baseline BSAFE is arXiv preprint (not peer-reviewed)
+  - O8   # Reward function design is subjective and unverified
+  - O9   # Benchmark inconsistency with BSAFE paper
+  - O10  # Placeholder references and formatting errors
+  - O11  # Backtrack count representation unclear
+  - O12  # Token count prediction accuracy under tokenization
+  - O13  # Figure 1 illustration is confusing
+
+unmatched_agentic:
+  - A1   # No error bars or statistical significance measures (phantom)
+  - A3   # Insufficient societal impact exploration (phantom)
+  - A4   # No open access to code and data (phantom)

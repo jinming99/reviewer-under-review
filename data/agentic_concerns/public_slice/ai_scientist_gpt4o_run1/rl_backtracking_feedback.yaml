@@ -1,0 +1,172 @@
+schema_version: "v1"
+paper: rl_backtracking_feedback
+version: baseline
+method: baseline_ai_scientist
+verdict: REJECT
+score: 4
+
+decision_drivers:
+  - id: R1
+    polarity: pro_reject
+    text: >-
+      Lack of statistical significance documentation undermines confidence
+      in all reported experimental improvements.
+    evidence: "Weaknesses bullet 1: 'Lack of statistical significance documentation for experimental results'; Limitations bullet 4 (same issue restated)"
+    linked_concern_ids: [A1]
+
+  - id: R2
+    polarity: pro_reject
+    text: >-
+      No open access to code and data makes reproduction impossible, reducing
+      credibility of empirical claims.
+    evidence: "Weaknesses bullet 2: 'No open access to code and data, reducing reproducibility'"
+    linked_concern_ids: [A2]
+
+  - id: R3
+    polarity: pro_reject
+    text: >-
+      High computational demands may limit practical deployment and are not
+      quantified or analyzed.
+    evidence: "Weaknesses bullet 3: 'High computational demands may limit practical deployment'; Limitations bullet 1 (same issue)"
+    linked_concern_ids: [A3]
+
+mentions:
+  - id: M1
+    polarity: pro_accept
+    text: >-
+      Innovative method for in-generation correction of LLM safety violations.
+    evidence: "Strengths bullet 1"
+    note: "Listed as a strength but did not offset reproducibility and evaluation concerns"
+
+  - id: M2
+    polarity: pro_accept
+    text: >-
+      Significant reduction in diverse adversarial attack success rates.
+    evidence: "Strengths bullet 2"
+    note: "Positive empirical result noted but weakened by absent statistical significance"
+
+  - id: M3
+    polarity: pro_accept
+    text: >-
+      Maintains model utility and performance while enhancing safety.
+    evidence: "Strengths bullet 3"
+    note: "Utility preservation acknowledged but not decisive for verdict"
+
+concerns:
+  - id: A1
+    text: >-
+      No statistical significance tests or confidence intervals reported for
+      experimental results, reducing confidence in claimed improvements.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 1 + Limitations bullet 4 (merged: both flag absent statistical significance)"
+    decisive: true
+    tags: [statistical_rigor, missing_error_bars, evaluation_rigor]
+    dimension_impact: [D]
+
+  - id: A2
+    text: >-
+      No open access to code or data, making reproduction of results
+      impossible and reducing credibility of empirical claims.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 2"
+    decisive: true
+    tags: [reproducibility, missing_artifacts]
+    dimension_impact: [H]
+
+  - id: A3
+    text: >-
+      High computational demands of the RLBF framework may limit practical
+      deployment, with no efficiency analysis or resource quantification
+      provided.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 3 + Limitations bullet 1 + Questions bullet 2 (merged: all flag computational cost)"
+    decisive: true
+    tags: [scalability, efficiency, missing_analysis]
+    dimension_impact: [D, F]
+
+  - id: A4
+    text: >-
+      Potential challenges in precisely defining 'harmful' content are
+      acknowledged but not addressed, leaving a core design assumption
+      unvalidated.
+    severity:
+      level: moderate
+      addressability: unresolved
+      mechanism: none
+    source: other
+    source_detail: "Limitations bullet 2"
+    decisive: false
+    tags: [methodology, definition_ambiguity]
+    dimension_impact: [E]
+
+  - id: A5
+    text: >-
+      Insufficient practical validation and efficiency analysis across
+      different settings beyond the tested benchmarks.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Limitations bullet 3 + Questions bullet 3 (practical implications of backtracking efficiency in real-time)"
+    decisive: false
+    tags: [evaluation_rigor, generalization, missing_evaluation]
+    dimension_impact: [D, F]
+
+  - id: A6
+    text: >-
+      No analysis of how the RLBF framework scales across different LLM
+      sizes in operational settings.
+    severity:
+      level: minor
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Questions bullet 1"
+    decisive: false
+    tags: [scalability, missing_analysis]
+    dimension_impact: [F]
+
+  - id: A7
+    text: >-
+      No exploration of how varying the RL critic's feedback frequency
+      affects model performance — a missing ablation on a key design choice.
+    severity:
+      level: minor
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Questions bullet 4"
+    decisive: false
+    tags: [missing_ablation, hyperparameter_sensitivity]
+    dimension_impact: [E]
+
+method_specific:
+  review_system: "AI Scientist (GPT-4o)"
+  run: 1
+  note: >-
+    Review produced by The AI Scientist automated reviewer using GPT-4o (run 1).
+    No gates, scorecard, adversarial brief, or summary.yaml available.
+    All concerns extracted from review.md only.
+  individual_scores:
+    originality: 3
+    quality: 2
+    clarity: 3
+    significance: 3
+    soundness: 3
+    presentation: 3
+    contribution: 3
+    overall: 4
+    confidence: 4

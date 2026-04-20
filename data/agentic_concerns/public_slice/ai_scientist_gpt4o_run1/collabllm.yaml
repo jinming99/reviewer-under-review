@@ -1,0 +1,140 @@
+schema_version: "v1"
+paper: "collabllm"
+version: "baseline"
+method: "baseline_ai_scientist"
+verdict: "REJECT"
+score: 3  # AI Scientist "Overall" score on 1-10 scale (not our weighted scorecard)
+
+decision_drivers:
+  - id: "R1"
+    polarity: "pro_reject"
+    text: "Novelty of the Multiturn-aware Reward approach is not clearly distinguished from existing methods."
+    evidence: "Weaknesses bullet 1; Questions Q1"
+    linked_concern_ids: ["A1"]
+
+  - id: "R2"
+    polarity: "pro_reject"
+    text: "Methodology lacks strong theoretical underpinnings, potentially undermining claimed improvements."
+    evidence: "Weaknesses bullet 2"
+    linked_concern_ids: ["A2"]
+
+  - id: "R3"
+    polarity: "pro_reject"
+    text: "Evaluation primarily in simulated settings limits the significance of real-world applicability claims."
+    evidence: "Weaknesses bullets 4-5; Limitations bullet 1"
+    linked_concern_ids: ["A4"]
+
+mentions:
+  - id: "M1"
+    polarity: "pro_accept"
+    text: "Paper presents a structured training approach for LLMs targeting multiturn interactions."
+    evidence: "Strengths bullet 1"
+    note: "Acknowledged as positive but insufficient to overcome reject concerns."
+
+  - id: "M2"
+    polarity: "pro_accept"
+    text: "Extensive experimental analysis shows improvements over existing baselines in simulated environments."
+    evidence: "Strengths bullet 2"
+    note: "Improvements acknowledged but qualified as 'in simulated environments' — strength undermined by own criticism."
+
+concerns:
+  # ============================================================
+  # A1: Novelty not distinguished
+  # From: Weaknesses bullet 1 + Questions Q1
+  # ============================================================
+  - id: "A1"
+    text: "Novelty of the Multiturn-aware Reward approach is not clearly distinguished from existing multiturn dialogue methods."
+    severity:
+      level: "major"
+      addressability: "unresolved"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "Weaknesses bullet 1: 'The novelty of the Multiturn-aware Reward approach is not clearly distinguished from existing methods'; reinforced by Questions Q1: 'How does the proposed multiturn-aware reward specifically differ from existing multiturn dialogue approaches?'"
+    decisive: true
+    tags: ["novelty_delta", "methodology_distinction"]
+    dimension_impact: ["B"]
+
+  # ============================================================
+  # A2: Lacks theoretical underpinnings
+  # From: Weaknesses bullet 2
+  # ============================================================
+  - id: "A2"
+    text: "Methodology lacks strong theoretical underpinnings, potentially undermining the claimed improvements."
+    severity:
+      level: "major"
+      addressability: "unresolved"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "Weaknesses bullet 2: 'The methodology lacks strong theoretical underpinnings, potentially undermining claimed improvements'"
+    decisive: true
+    tags: ["theoretical_rigor", "methodology"]
+    dimension_impact: ["B", "E"]
+
+  # ============================================================
+  # A3: Clarity / experimental overload
+  # From: Weaknesses bullet 3
+  # ============================================================
+  - id: "A3"
+    text: "Paper's clarity suffers from overwhelming experimental details that overshadow key contributions."
+    severity:
+      level: "major"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "Weaknesses bullet 3: 'The paper's clarity suffers due to overwhelming experimental details overshadowing key contributions'"
+    decisive: false
+    tags: ["clarity", "presentation"]
+    dimension_impact: ["G"]
+
+  # ============================================================
+  # A4: Simulated evaluation limits applicability
+  # From: Weaknesses bullets 4-5 + Limitations bullet 1
+  # ============================================================
+  - id: "A4"
+    text: "Evaluation primarily in simulated settings limits the significance of real-world applicability claims; transference to real-world usage is unconvincing without concrete validation."
+    severity:
+      level: "major"
+      addressability: "unresolved"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "Weaknesses bullet 4: 'Evaluation primarily in simulated settings limits the significance of real-world applicability claims'; Weaknesses bullet 5: 'Transference and applicability to real-world usage are unconvincing without concrete validation'; Limitations bullet 1: 'The performance improvement results come from simulated tests, lacking diverse real-world validation'"
+    decisive: true
+    tags: ["evaluation_scope", "real_world_validation", "sim_to_real_gap"]
+    dimension_impact: ["D", "F"]
+
+  # ============================================================
+  # A5: User simulator reliability
+  # From: Limitations bullet 2 + Questions Q2
+  # ============================================================
+  - id: "A5"
+    text: "Heavy reliance on user simulators that may not account for the unpredictable nature of real human interactions."
+    severity:
+      level: "major"
+      addressability: "unresolved"
+      mechanism: "none"
+    source: "other"
+    source_detail: "Limitations bullet 2: 'The approach heavily relies on user simulators, which may not account for the unpredictable nature of human interactions'; reinforced by Questions Q2: 'What measures have been taken to ensure that simulated user interactions represent real-world user expectations and behavior?'"
+    decisive: false
+    tags: ["user_simulation_bias", "sim_to_real_gap"]
+    dimension_impact: ["D", "F"]
+
+method_specific:
+  system: "ai_scientist"
+  model: "gpt-4o"
+  note: >-
+    External baseline (AI Scientist, GPT-4o). Single-pass review without gates,
+    adversarial brief, scorecard, or debate. Very sparse review (1827 chars) with
+    generic criticisms lacking specific paper references, page citations, or
+    quantitative details. Notably misses the paper's real-world user study (Section 6,
+    201 MTurk participants) and detailed ablation (Figure 4/9), suggesting shallow
+    engagement with the paper's content.
+  confidence: 4
+  scores:
+    originality: 2
+    quality: 2
+    clarity: 2
+    significance: 2
+    soundness: 2
+    presentation: 2
+    contribution: 2
+    overall: 3

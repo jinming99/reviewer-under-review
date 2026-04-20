@@ -1,0 +1,769 @@
+schema_version: v1
+version: "own_group"
+generated_by: skill_5b_claude_code
+
+edge_overrides:
+  # ── ai_scientist_gpt4o_run1 (3 edges) ──
+  - method: ai_scientist_gpt4o_run1
+    paper: rl_reasoning_limits
+    official_id: O12
+    agentic_id: A2
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both target same defect: paper diagnoses RLVR limitations without proposing actionable solutions. Fixing one necessarily fixes the other. Severity gap moderate vs major = 1, within tolerance."
+    confidence: high
+
+  - method: ai_scientist_gpt4o_run1
+    paper: rl_reasoning_limits
+    official_id: O11
+    agentic_id: A1
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both concern scope of RLVR paradigms explored. O11 adds reward-structure dimension (process vs outcome rewards) that A1 does not address. Same issue family, different scope. Severity gap moderate vs major = 1, within tolerance."
+    confidence: high
+
+  - method: ai_scientist_gpt4o_run1
+    paper: rl_reasoning_limits
+    official_id: O17
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both raise novelty concerns about RLVR findings being known from prior work. O17 cites DeepSeekMath Section 5.2.2 specifically; A3 is generic. Same issue family, different specificity. Both major severity."
+    confidence: high
+
+  # ── panel_no_ls (6 edges) ──
+  - method: panel_no_ls
+    paper: rl_reasoning_limits
+    official_id: O19
+    agentic_id: A1
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both target identical defect: perplexity analysis uses only 2 AIME problems — insufficient sample size for distributional claims. Severity gap moderate vs major = 1, within tolerance."
+    confidence: high
+
+  - method: panel_no_ls
+    paper: rl_reasoning_limits
+    official_id: O17
+    agentic_id: A2
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both target same novelty concern: RLVR limitation finding anticipated by prior work. O17 cites DeepSeekMath, A2 cites Dang et al./Liu et al. Different citations but identical canonical defect. Both major severity."
+    confidence: high
+
+  - method: panel_no_ls
+    paper: rl_reasoning_limits
+    official_id: O1
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O1 bundles model scale (7-32B) AND training data diversity. A3 captures only model scale (no frontier models). Training data diversity unaddressed by A3. Correctly partial. Both major severity."
+    confidence: high
+
+  - method: panel_no_ls
+    paper: rl_reasoning_limits
+    official_id: O20
+    agentic_id: A3
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both target same gap: no frontier-scale model validation. O20 asks about 70B+/o1/DeepSeek-R1-Zero; A3 flags same gap naming same models. Fix is identical. Both major severity."
+    confidence: high
+
+  - method: panel_no_ls
+    paper: rl_reasoning_limits
+    official_id: O10
+    agentic_id: A7
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "Both target same defect: paper lacks rigorous explanation for why RLVR fails to expand reasoning. O10 says explanation missing/informal; A7 says Appendix C attempt is speculative. Severity gap major vs minor = 2, agentic under-rates."
+    confidence: high
+
+  - method: panel_no_ls
+    paper: rl_reasoning_limits
+    official_id: O14
+    agentic_id: A7
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "O14 is same complaint as O10 from different reviewer: no theoretical explanation. A7 captures this as speculative Appendix C discussion. Severity gap major vs minor = 2, agentic under-rates."
+    confidence: high
+
+  # ── panel_arch_b (5 edges) ──
+  - method: panel_arch_b
+    paper: rl_reasoning_limits
+    official_id: O17
+    agentic_id: A1
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify same novelty concern: RLVR limitation finding anticipated by prior work. O17 cites DeepSeekMath, A1 cites Dang et al. Identical canonical defect. Both major severity."
+    confidence: high
+
+  - method: panel_arch_b
+    paper: rl_reasoning_limits
+    official_id: O20
+    agentic_id: A7
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "Both target same gap: no validation on frontier-scale (70B+) models. O20 asks about scaling persistence; A7 notes frontier models unavailable. Severity gap major vs minor = 2, agentic under-rates."
+    confidence: high
+
+  - method: panel_arch_b
+    paper: rl_reasoning_limits
+    official_id: O1
+    agentic_id: A7
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "O1 raises joint concern about small model scale AND low training data diversity. A7 captures only model scale dimension (frontier models unavailable). Partial is correct. Severity gap major vs minor = 2, agentic under-rates."
+    confidence: high
+
+  - method: panel_arch_b
+    paper: rl_reasoning_limits
+    official_id: O19
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O19 flags perplexity sample size (only 2 AIME samples). A3 flags that token-level perplexity is a flawed proxy for distributional membership. Different specific defects within the same perplexity analysis. Severity gap moderate vs major = 1, within tolerance."
+    confidence: high
+
+  - method: panel_arch_b
+    paper: rl_reasoning_limits
+    official_id: O18
+    agentic_id: A8
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both flag missing reproducibility details but target different specific gaps: O18 wants PPO hyperparameters, A8 wants random seeds and compute budget. Same issue family, different specific information. Both minor severity."
+    confidence: high
+
+  # ── df_no_ls (7 edges) ──
+  - method: df_no_ls
+    paper: rl_reasoning_limits
+    official_id: O19
+    agentic_id: A1
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both target identical defect: perplexity analysis uses only 2 AIME24 problems, too few for distributional claims. Severity gap moderate vs major = 1, within tolerance."
+    confidence: high
+
+  - method: df_no_ls
+    paper: rl_reasoning_limits
+    official_id: O17
+    agentic_id: A9
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both target same novelty concern: RLVR findings anticipated by prior/concurrent work. O17 cites DeepSeekMath; A9 cites Dang et al., Liu et al., Zhao et al. Same canonical defect. Severity gap major vs moderate = 1, within tolerance."
+    confidence: high
+
+  - method: df_no_ls
+    paper: rl_reasoning_limits
+    official_id: O26
+    agentic_id: A3
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both target same defect: paper only tests zero-RL (RL on base model without SFT warmup) and does not test SFT-then-RL. O26 asks whether SFT pre-training modifies conclusions; A3 flags zero-RL scope limitation. Severity gap moderate vs major = 1, within tolerance."
+    confidence: high
+
+  - method: df_no_ls
+    paper: rl_reasoning_limits
+    official_id: O11
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O11 is about generalizability to future paradigms and reward structures; A3 is about zero-RL scope. Both belong to the generalizability family but O11 is substantially broader. A3 is already exact-matched with O26, so this partial captures residual overlap. Severity gap moderate vs major = 1, within tolerance."
+    confidence: high
+
+  - method: df_no_ls
+    paper: rl_reasoning_limits
+    official_id: O10
+    agentic_id: A8
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "O10 says theoretical explanation is entirely missing. A8 says theory exists in Appendix C but is relegated from main text. Same issue family (theory gap), but O10 claims absence while A8 acknowledges presence in appendix. Partial is correct. Severity gap major vs minor = 2, agentic under-rates."
+    confidence: high
+
+  - method: df_no_ls
+    paper: rl_reasoning_limits
+    official_id: O14
+    agentic_id: A8
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "O14 (different reviewer) makes same complaint as O10: no theoretical explanation. A8 again notes theory is in Appendix C. Same pattern: same issue family, different scoping. Severity gap major vs minor = 2, agentic under-rates."
+    confidence: high
+
+  - method: df_no_ls
+    paper: rl_reasoning_limits
+    official_id: O20
+    agentic_id: A6
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "O20 broadly asks whether findings extend to 70B+ models. A6 specifically notes Magistral-Medium results on AIME25 show no clear crossover within k=1024. O20 is the general question; A6 captures one specific data point. Severity gap major vs minor = 2, agentic under-rates."
+    confidence: high
+
+  # ── df_arch_c (7 edges, 2 reclassified) ──
+  - method: df_arch_c
+    paper: rl_reasoning_limits
+    official_id: O1
+    agentic_id: A8
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "O1 broadly concerns small model scale AND low training data diversity. A8 narrowly notes frontier models excluded because base models unavailable. Both about frontier model coverage; O1 is broader. Severity gap major vs minor = 2, agentic under-rates."
+    confidence: high
+
+  - method: df_arch_c
+    paper: rl_reasoning_limits
+    official_id: O11
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: related
+    override_judgment_alignment: "n/a"
+    override_severity_alignment: "n/a"
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O11 asks whether findings generalize to different reward structures (process vs outcome rewards) — a methodology robustness concern. A3 cites ProRL contradicting the core finding and concurrent work crowding the space — a novelty concern. These are fundamentally different defects: robustness of conclusions vs novelty of contribution. Fixing one does not address the other. Downgrade from partial to related."
+    confidence: high
+
+  - method: df_arch_c
+    paper: rl_reasoning_limits
+    official_id: O16
+    agentic_id: A1
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O16 wants more diverse analyses beyond pass@k. A1 questions whether pass@k conflates distributional breadth with reasoning capacity. Both target pass@k centrality from different angles (breadth of evaluation vs validity of the metric). Severity gap moderate vs major = 1, within tolerance."
+    confidence: high
+
+  - method: df_arch_c
+    paper: rl_reasoning_limits
+    official_id: O17
+    agentic_id: A3
+    original_match_type: exact
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O17 cites prior work (DeepSeekMath) making SIMILAR observations — novelty by precedence. A3 cites concurrent work (ProRL) that CONTRADICTS the finding — novelty by crowding plus contradiction. Different novelty challenges: demonstrating advantage over agreeing prior work vs addressing contradictory concurrent work require different author responses. Downgrade from exact to partial."
+    confidence: high
+
+  - method: df_arch_c
+    paper: rl_reasoning_limits
+    official_id: O19
+    agentic_id: A5
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both flag identical concern: perplexity analysis uses only 2 AIME24 problems — insufficient sample size for distributional claims. Severity gap moderate vs minor = 1, within tolerance."
+    confidence: high
+
+  - method: df_arch_c
+    paper: rl_reasoning_limits
+    official_id: O20
+    agentic_id: A8
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "O20 asks whether findings extend to 70B+ models and requests o1/DeepSeek-R1-Zero evaluation. A8 notes frontier models excluded because base models unavailable, Magistral-Medium as partial proxy. Severity gap major vs minor = 2, agentic under-rates."
+    confidence: high
+
+  - method: df_arch_c
+    paper: rl_reasoning_limits
+    official_id: O25
+    agentic_id: A1
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O25 cites concurrent paper with CoT-Pass@k drawing opposite conclusions (metric sensitivity). A1 questions pass@k construct validity theoretically. Both challenge the central metric from different angles: empirical contradiction vs construct validity. Severity gap moderate vs major = 1, within tolerance."
+    confidence: high
+
+  # ── ai_scientist_run1 (9 edges) ──
+  - method: ai_scientist_run1
+    paper: rl_reasoning_limits
+    official_id: O17
+    agentic_id: A1
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify same novelty concern: prior work (DeepSeekMath, Dang et al.) already noted RLVR limitations. O17 cites DeepSeekMath Section 5.2.2; A1 cites Dang et al., DeepSeekMath, and Liu et al. Same canonical defect. Both major severity."
+    confidence: high
+
+  - method: ai_scientist_run1
+    paper: rl_reasoning_limits
+    official_id: O19
+    agentic_id: A2
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify identical flaw: perplexity analysis uses only 2 AIME24 problems — too small for distributional claims. Same section, same defect. Severity gap moderate vs major = 1, within tolerance."
+    confidence: high
+
+  - method: ai_scientist_run1
+    paper: rl_reasoning_limits
+    official_id: O10
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O10 asks for a theoretical explanation of why RLVR fails. A3 argues the finding is theoretically unsurprising given standard RL policy gradient theory. Same issue family (missing theoretical grounding) but different normative implications: O10 wants theory added, A3 says existing theory predicts it. Both major severity."
+    confidence: high
+
+  - method: ai_scientist_run1
+    paper: rl_reasoning_limits
+    official_id: O14
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O14 is same complaint as O10 from different reviewer. A3 targets same theoretical grounding gap. Same partial match reasoning. Both major severity."
+    confidence: high
+
+  - method: ai_scientist_run1
+    paper: rl_reasoning_limits
+    official_id: O8
+    agentic_id: A4
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O8 flags specific empirical inconsistency in Figure 16 (higher temp benefits RL model, contradicting T=0.6). A4 critiques entropy-matching methodology — temperature scaling is too crude. Both question temperature/entropy experiment adequacy at different granularity. Severity gap minor vs moderate = 1, within tolerance."
+    confidence: high
+
+  - method: ai_scientist_run1
+    paper: rl_reasoning_limits
+    official_id: O1
+    agentic_id: A8
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O1 concerns small models (7-32B) and low training data diversity. A8 concerns modest RLVR training compute (SimpleRLZoo, 450 steps). Both about generalizability to frontier scale but target different dimensions: model size + data diversity vs RL training compute. Severity gap major vs moderate = 1, within tolerance."
+    confidence: high
+
+  - method: ai_scientist_run1
+    paper: rl_reasoning_limits
+    official_id: O20
+    agentic_id: A8
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O20 asks about 70B+ models and frontier evaluation. A8 focuses on training compute budgets. Both about scaling but target different dimensions (model size vs training steps). Severity gap major vs moderate = 1, within tolerance."
+    confidence: high
+
+  - method: ai_scientist_run1
+    paper: rl_reasoning_limits
+    official_id: O21
+    agentic_id: A6
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O21 asks how pass@k gap changes with task difficulty. A6 asks what types of problems RLVR loses coverage on (difficulty, domains, strategies). Both seek characterization of affected problems; A6 subsumes O21 within wider scope. Both moderate severity."
+    confidence: high
+
+  - method: ai_scientist_run1
+    paper: rl_reasoning_limits
+    official_id: O16
+    agentic_id: A9
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O16 wants more analyses beyond pass@k. A9 argues pass@k fundamentally conflates output diversity with reasoning capability. Both question pass@k centrality but differently: O16 wants supplementary analyses, A9 questions metric validity. Both moderate severity."
+    confidence: high
+
+  # ── liang_run1 (5 edges) ──
+  - method: liang_run1
+    paper: rl_reasoning_limits
+    official_id: O19
+    agentic_id: A7
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify exact same flaw: perplexity analysis uses only 2 AIME24 problems with 16 responses each — too small for distributional claims. Severity gap moderate vs major = 1, within tolerance."
+    confidence: high
+
+  - method: liang_run1
+    paper: rl_reasoning_limits
+    official_id: O1
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O1 targets small model sizes (7-32B) and low training data diversity. A3 targets tiny training compute (150-450 steps on 2000 problems). Both concern limited experimental scale but target different facets. Both major severity."
+    confidence: high
+
+  - method: liang_run1
+    paper: rl_reasoning_limits
+    official_id: O20
+    agentic_id: A4
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O20 asks whether findings extend to 70B+ models. A4 critiques the Magistral-Medium experiment — API opacity, undisclosed training details, non-crossing pass@k curves. Both concern frontier model evidence but differently: O20 requests more, A4 argues what exists is inadequate. Both major severity."
+    confidence: high
+
+  - method: liang_run1
+    paper: rl_reasoning_limits
+    official_id: O2
+    agentic_id: A1
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O2 targets the random guessing confound (correct answers from flawed CoTs). A1 targets the entropy confound (higher entropy base model gets higher pass@k regardless of reasoning). Both question whether pass@k reflects reasoning vs artifacts but identify different mechanisms. Severity gap moderate vs major = 1, within tolerance."
+    confidence: high
+
+  - method: liang_run1
+    paper: rl_reasoning_limits
+    official_id: O9
+    agentic_id: A2
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: over
+    verdict: correct
+    action: confirmed
+    rationale: "O9 flags 'reasoning capacity/boundary' as terminology misnomer. A2 challenges the conceptual framework: equating ~0.1% probability with 'possessing reasoning capability.' Same issue family (framing of reasoning capacity) but very different depth. Severity gap minor vs major = 2, agentic over-rates."
+    confidence: high
+
+  # ── liang_gpt4o_run1 (6 edges, 1 reclassified) ──
+  - method: liang_gpt4o_run1
+    paper: rl_reasoning_limits
+    official_id: O17
+    agentic_id: A1
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both target novelty concerns. O17 cites DeepSeekMath specifically; A1 is generic about confirming existing suspicions. Same issue family, different specificity. Severity gap major vs moderate = 1, within tolerance."
+    confidence: high
+
+  - method: liang_gpt4o_run1
+    paper: rl_reasoning_limits
+    official_id: O12
+    agentic_id: A2
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both flag identical gap: paper diagnoses RLVR limitations without proposing concrete solutions or future directions. Fixing one necessarily fixes the other. Both moderate severity."
+    confidence: high
+
+  - method: liang_gpt4o_run1
+    paper: rl_reasoning_limits
+    official_id: O11
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: related
+    override_judgment_alignment: "n/a"
+    override_severity_alignment: "n/a"
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O11 questions generalizability to different reward structures (process vs outcome rewards) — a robustness concern. A3 criticizes lack of exploration of alternative methods beyond distillation — a completeness concern. These are different defects: 'do your conclusions hold elsewhere?' vs 'why didn't you try other approaches?' Fixing one does not address the other. Downgrade from partial to related."
+    confidence: high
+
+  - method: liang_gpt4o_run1
+    paper: rl_reasoning_limits
+    official_id: O10
+    agentic_id: A4
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both target identical gap: missing explanation for why RLVR fails to expand reasoning boundaries. O10 notes informal descriptions; A4 notes 'vast action space and pretrained priors' mentioned without detailed analysis. Same defect, same scope. Severity gap major vs moderate = 1, within tolerance."
+    confidence: high
+
+  - method: liang_gpt4o_run1
+    paper: rl_reasoning_limits
+    official_id: O14
+    agentic_id: A4
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O14 is same theory-gap concern as O10 from different reviewer (6ryS). A4 captures both. Severity gap major vs moderate = 1, within tolerance."
+    confidence: high
+
+  - method: liang_gpt4o_run1
+    paper: rl_reasoning_limits
+    official_id: O16
+    agentic_id: A5
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify overreliance on pass@k as primary evaluation metric and request diversification. Specific suggestions differ but core defect is identical. Both moderate severity."
+    confidence: high
+
+  # ── marg_gpt4o_run1 (3 edges, 1 reclassified) ──
+  - method: marg_gpt4o_run1
+    paper: rl_reasoning_limits
+    official_id: O16
+    agentic_id: A1
+    original_match_type: partial
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: wrong_type
+    action: reclassified
+    rationale: "Both identify the same core defect: evaluation is too pass@k-centric and needs additional diverse metrics. O16 says 'evaluation is too centered on pass@k curves'; A1 says 'need additional metrics and analyses beyond pass@k.' Different suggested additions are remediation details, not different defects. Upgrade from partial to exact."
+    confidence: high
+
+  - method: marg_gpt4o_run1
+    paper: rl_reasoning_limits
+    official_id: O18
+    agentic_id: A5
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: over
+    verdict: correct
+    action: confirmed
+    rationale: "Both target RLVR reproducibility but at different levels: O18 wants specific PPO parameter values, A5 wants full algorithmic pseudocode. Same issue family, different scope. Severity gap minor vs major = 2, agentic over-rates."
+    confidence: high
+
+  - method: marg_gpt4o_run1
+    paper: rl_reasoning_limits
+    official_id: O12
+    agentic_id: A9
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both target underdeveloped improvement suggestions. O12 wants more suggestions (breadth); A9 wants more detail on existing suggestions (depth). Same issue family, different scope. Severity gap moderate vs minor = 1, within tolerance."
+    confidence: high
+
+  # ── oar_run1 (1 edge) ──
+  - method: oar_run1
+    paper: rl_reasoning_limits
+    official_id: O19
+    agentic_id: A3
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both target identical defect: perplexity analysis uses only 2 AIME24 problems — insufficient sample size for distributional claims. Severity gap moderate vs major = 1, within tolerance."
+    confidence: high
+
+missed_matches:
+  - method: panel_no_ls
+    paper: rl_reasoning_limits
+    official_id: O15
+    agentic_id: A4
+    recommended_match_type: partial
+    recommended_judgment_alignment: aligned
+    recommended_severity_alignment: match
+    rationale: "O15 raises broad concern about Qwen model series domination across all experiments. A4 flags a specific instance: entropy-matched comparison (Figure 18) limited to Qwen2.5-7B only. A4 is a narrower manifestation of O15's broader model diversity concern. Fixing O15 (diversifying model families) would fix A4, but not vice versa. O15=moderate, A4=minor, gap=1, within tolerance."
+    confidence: medium
+
+phantom_judgments: []
+
+verification_summary:
+  total_edges_verified: 52
+  total_unmatched_verified: 242
+  error_counts:
+    false_matches: 0
+    type_errors: 4
+    severity_errors: 0
+    missed_matches: 1
+  error_rates:
+    false_match_rate: "0.0%"
+    type_error_rate: "7.7%"
+    severity_error_rate: "0.0%"
+    missed_match_rate: "0.4%"
+  skill26_health: healthy
+  papers_verified:
+    - paper: rl_reasoning_limits
+      method: ai_scientist_gpt4o_run1
+      edges_verified: 3
+      unmatched_verified: 24
+      errors_found: 0
+    - paper: rl_reasoning_limits
+      method: panel_no_ls
+      edges_verified: 6
+      unmatched_verified: 24
+      errors_found: 0
+    - paper: rl_reasoning_limits
+      method: panel_arch_b
+      edges_verified: 5
+      unmatched_verified: 25
+      errors_found: 0
+    - paper: rl_reasoning_limits
+      method: df_no_ls
+      edges_verified: 7
+      unmatched_verified: 23
+      errors_found: 0
+    - paper: rl_reasoning_limits
+      method: df_arch_c
+      edges_verified: 7
+      unmatched_verified: 24
+      errors_found: 2
+    - paper: rl_reasoning_limits
+      method: ai_scientist_run1
+      edges_verified: 9
+      unmatched_verified: 19
+      errors_found: 0
+    - paper: rl_reasoning_limits
+      method: liang_run1
+      edges_verified: 5
+      unmatched_verified: 24
+      errors_found: 0
+    - paper: rl_reasoning_limits
+      method: liang_gpt4o_run1
+      edges_verified: 6
+      unmatched_verified: 20
+      errors_found: 1
+    - paper: rl_reasoning_limits
+      method: marg_gpt4o_run1
+      edges_verified: 3
+      unmatched_verified: 29
+      errors_found: 1
+    - paper: rl_reasoning_limits
+      method: oar_run1
+      edges_verified: 1
+      unmatched_verified: 30
+      errors_found: 0

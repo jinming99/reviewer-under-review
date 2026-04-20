@@ -1,0 +1,21 @@
+slug: rl_reasoning_limits
+baseline: marg
+model: gpt-4o
+timestamp: '2026-04-12T02:06:25.038300+00:00'
+git_sha: 6b601aec
+git_branch: main
+elapsed_s: 290.0
+usage:
+  input_tokens: 3068285
+  output_tokens: 65833
+cost_usd: 0.0
+num_sdk_calls: 0
+num_api_calls: null
+num_chunks: 8
+specialties:
+- experiments_proofs
+- novelty_impact
+- clarity_reproducibility
+paper_text_chars: 107082
+review_text_chars: 15255
+skip_refinement: false

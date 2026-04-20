@@ -1,0 +1,146 @@
+schema_version: "v1"
+paper: artificial_hivemind
+version: baseline
+method: baseline
+verdict: ACCEPT
+score: null
+
+# ============================================================
+# Agentic Concern Sheet: OAR run1 review of Artificial Hivemind
+# ============================================================
+# The OAR review produced 5 comments (2 technical, 3 logical) focused on
+# reporting precision and internal consistency. The overall feedback
+# explicitly acknowledges the paper as a "substantial empirical contribution"
+# and states the identified issues "do not undermine the central thesis."
+# Verdict inferred as ACCEPT based on predominantly positive framing.
+
+decision_drivers:
+  - id: R1
+    polarity: pro_accept
+    text: >-
+      Substantial empirical contribution: large-scale dataset, query taxonomy, and
+      systematic evidence of mode collapse across language models, with the 'Artificial
+      Hivemind' framing vivid and well-supported by core experiments.
+    evidence: >-
+      Overall Feedback: 'This paper presents a substantial empirical contribution:
+      a large-scale dataset of open-ended queries, a taxonomy of query types, and
+      systematic evidence of mode collapse both within and across language models.
+      The Artificial Hivemind framing is vivid and well-supported by the core experiments.'
+    linked_concern_ids: []
+
+mentions:
+  - id: M1
+    polarity: pro_accept
+    text: >-
+      The human annotation effort (31,250 labels with 25 annotators per example) is
+      commendable and enables meaningful analysis of distributional preferences.
+    evidence: >-
+      Overall Feedback: 'The human annotation effort (31,250 labels with 25 annotators
+      per example) is commendable and enables meaningful analysis of distributional
+      preferences.'
+    note: "Observed as a strength but not framed as a decisive factor for the verdict"
+
+concerns:
+  # ============================================================
+  # A1: Pearson vs Spearman naming inconsistency
+  # ============================================================
+  - id: A1
+    text: >-
+      Section 4.3 text consistently names Pearson correlation but all figures (10, 11),
+      captions, and tables (19, 23-26) report Spearman correlation coefficients, creating
+      confusion about which statistical test was actually performed.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 1 (Type: technical)"
+    decisive: false
+    tags: [reporting_consistency, statistical_methodology]
+    dimension_impact: [D, G]
+
+  # ============================================================
+  # A2: Disagreement formula treats unanimous ties as 50% disagreed
+  # ============================================================
+  - id: A2
+    text: >-
+      Percentage disagreement formula assigns 50% disagreement to unanimous tie annotations
+      (all 25 annotators agree neither response is better), conflating consensus-on-tie with
+      genuine preference disagreement, which affects downstream subset selection for the
+      top-60% disagreement analysis.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 2 (Type: technical)"
+    decisive: false
+    tags: [metric_design, methodology, disagreement_measurement]
+    dimension_impact: [D, E]
+
+  # ============================================================
+  # A3: Inter > intra similarity claim not well-supported
+  # ============================================================
+  - id: A3
+    text: >-
+      Claim that inter-model similarity sometimes exceeds intra-model similarity is not
+      well-supported by aggregate data; Tables 7-11 show diagonal (intra-model) values
+      consistently exceed off-diagonal (inter-model) values, and the phrasing overstates
+      what are at best instance-level occurrences as a more general pattern.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 3 (Type: logical)"
+    decisive: false
+    tags: [overclaiming, evidence_support]
+    dimension_impact: [D, G]
+
+  # ============================================================
+  # A4: Taxonomy subcategory count inconsistency (17 vs 15)
+  # ============================================================
+  - id: A4
+    text: >-
+      Abstract claims 6 top-level categories break down to 17 subcategories but only
+      15 are true subcategories; two top-level categories (Creative Content Generation,
+      Brainstorm & Ideation) have no subcategories yet are counted as their own.
+    severity:
+      level: minor
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 4 (Type: logical)"
+    decisive: false
+    tags: [presentation, internal_consistency]
+    dimension_impact: [G]
+
+  # ============================================================
+  # A5: Min-p caption overstates similarity frequency
+  # ============================================================
+  - id: A5
+    text: >-
+      Figure 5 caption claims similarity 'typically exceeds 0.8' under min-p sampling
+      but only 61.2% of cases do, overstating the robustness of mode collapse under
+      diversity-oriented decoding and weakening the precision of the comparison with
+      standard top-p settings (where 79% exceed 0.8).
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 5 (Type: logical)"
+    decisive: false
+    tags: [overclaiming, precision, decoding_analysis]
+    dimension_impact: [D, G]
+
+method_specific:
+  system: oar
+  run: run_1
+  note: >-
+    Baseline review from OpenAI Automated Reviewer (OAR). Contains only review.md
+    with no summary.yaml, gates, scorecard, or adversarial brief. Verdict inferred
+    as ACCEPT from predominantly positive overall feedback: 'substantial empirical
+    contribution,' 'vivid and well-supported,' 'commendable' annotation effort.
+    Issues are framed as precision concerns that 'do not undermine the central thesis.'
+    All concerns sourced from a single review.md artifact with 5 comments.

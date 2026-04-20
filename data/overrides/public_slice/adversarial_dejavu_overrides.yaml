@@ -1,0 +1,656 @@
+schema_version: v1
+version: "own_group"
+generated_by: skill_5b_claude_code
+
+edge_overrides:
+  # === panel_no_ls (4 edges) ===
+  - method: panel_no_ls
+    paper: adversarial_dejavu
+    official_id: O11
+    agentic_id: A1
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both target GPT-4.1 circularity: O11 flags bias/leakage from GPT-4.1 doing both extraction and scoring with unquantified human check; A1 flags the entire LLM-mediated pipeline with no out-of-domain null control. Core complaint identical per E20 — A1's elaboration (random baseline scoring 3.0+) does not constitute an independent fix-action."
+    confidence: high
+
+  - method: panel_no_ls
+    paper: adversarial_dejavu
+    official_id: O14
+    agentic_id: A2
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both flag missing variance/CI/multi-run reporting. O14: 'statistics (variance, CIs) and multiple-run stability are not reported.' A2: 'single-run numbers with no standard deviations, confidence intervals, or seed counts.' Identical defect. O14's SBAT typo is incidental. Severity moderate vs major, gap=1."
+    confidence: high
+
+  - method: panel_no_ls
+    paper: adversarial_dejavu
+    official_id: O12
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both target gain attribution. O12 lists four controls (random skill, harmful-data-only, helper swap, refusal-template removal). A3 targets data diversity confound via Figure 5a. Same root (is ASCoT's gain from composition or augmentation?) but different experiments needed. Both major."
+    confidence: high
+
+  - method: panel_no_ls
+    paper: adversarial_dejavu
+    official_id: O13
+    agentic_id: A4
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "Both target single-turn/multi-turn gap. O13 demands mechanism analysis + multi-turn extraction pipeline; A4 flags abstract overclaiming. O13 is broader. Fixing A4 (toning down claims) would not fix O13 (mechanism analysis). Severity major vs minor, gap=2 → under."
+    confidence: high
+
+  # === panel_arch_b (7 edges) ===
+  - method: panel_arch_b
+    paper: adversarial_dejavu
+    official_id: O11
+    agentic_id: A1
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both target GPT-4.1 circularity in extraction/scoring. A1 frames it as 'self-referential loop.' Identical defect. Both major."
+    confidence: high
+
+  - method: panel_arch_b
+    paper: adversarial_dejavu
+    official_id: O14
+    agentic_id: A2
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both flag missing variance/CI/multi-run stability. Identical defect. Severity moderate vs major, gap=1."
+    confidence: high
+
+  - method: panel_arch_b
+    paper: adversarial_dejavu
+    official_id: O17
+    agentic_id: A3
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both target unclear faithfulness of CAT*/LAT* re-implementations. O17 questions whether 40K samples used original algorithms. A3 flags adapted data sizes and hyperparameters. Same defect — are baselines faithfully reproduced? Both minor."
+    confidence: high
+
+  - method: panel_arch_b
+    paper: adversarial_dejavu
+    official_id: O10
+    agentic_id: A4
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O10 requests subset dictionary ablation for temporal generalization. A4 questions whether the 32-paper corpus conflates conventions with universal primitives. Same root (temporal generalization validity) but different fixes — O10 wants a specific experiment, A4 wants an independent source split. Severity moderate vs minor, gap=1."
+    confidence: high
+
+  - method: panel_arch_b
+    paper: adversarial_dejavu
+    official_id: O12
+    agentic_id: A6
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "O12 requests four control experiments to isolate ASCoT's contribution. A6 requests one specific ablation (dictionary-guided vs random composition). A6 is a subset of O12's requested controls. Severity major vs minor, gap=2 → under."
+    confidence: high
+
+  - method: panel_arch_b
+    paper: adversarial_dejavu
+    official_id: O13
+    agentic_id: A8
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "O13 targets single-turn/multi-turn mechanism gap specifically. A8 bundles multi-turn as one of several scope limitations (also mentions >8B models, multimodal, reasoning attacks). Per E21-E27, A8 bundles O13's complaint plus independent items. Severity major vs minor, gap=2 → under."
+    confidence: high
+
+  - method: panel_arch_b
+    paper: adversarial_dejavu
+    official_id: O1
+    agentic_id: A8
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "O1 wants model family breadth. A8 wants scale expansion (>8B). Both concern model coverage but target different axes — family diversity vs scale range. Partial because both live in insufficient model coverage space. Severity major vs minor, gap=2 → under."
+    confidence: high
+
+  # === df_no_ls (6 edges, 1 reclassified) ===
+  - method: df_no_ls
+    paper: adversarial_dejavu
+    official_id: O11
+    agentic_id: A2
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both target GPT-4.1 circularity in extraction and scoring pipeline. Identical defect. Both major."
+    confidence: high
+
+  - method: df_no_ls
+    paper: adversarial_dejavu
+    official_id: O14
+    agentic_id: A3
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both flag missing variance/CI reporting. Identical defect. Severity moderate vs minor, gap=1."
+    confidence: high
+
+  - method: df_no_ls
+    paper: adversarial_dejavu
+    official_id: O12
+    agentic_id: A1
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both target causal isolation of ASCoT's gains. O12 requests four controls; A1 requests diverse-data-without-dictionary ablation. Same root, different specific experiments. Both major."
+    confidence: high
+
+  - method: df_no_ls
+    paper: adversarial_dejavu
+    official_id: O1
+    agentic_id: A4
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "O1 targets model family breadth; A4 targets model scale range. Same root (model coverage gaps) but different facets. Severity major vs minor, gap=2 → under."
+    confidence: high
+
+  - method: df_no_ls
+    paper: adversarial_dejavu
+    official_id: O13
+    agentic_id: A9
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "O13 targets single-turn/multi-turn mechanism gap with specific pipeline request. A9 is broader, listing multi-turn as one of several excluded categories (also fine-tuning, reasoning attacks). Multi-turn overlap real but O13's mechanism analysis demand is distinct. Severity major vs minor, gap=2 → under."
+    confidence: high
+
+  - method: df_no_ls
+    paper: adversarial_dejavu
+    official_id: O11
+    agentic_id: A10
+    original_match_type: partial
+    override_match_type: related
+    override_judgment_alignment: n/a
+    override_severity_alignment: n/a
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O11 targets GPT-4.1 in skill extraction/explainability scoring stage. A10 targets GPT-4.1-mini in StrongReject harmfulness evaluation stage. Different pipeline stages, different models, different specific defects. Fixing extraction/scoring independence would not fix evaluation-judge independence. Per E10-E14, same broad topic (GPT-family dependence) but different specific issues = related."
+    confidence: medium
+
+  # === df_arch_c (7 edges, 2 reclassified) ===
+  - method: df_arch_c
+    paper: adversarial_dejavu
+    official_id: O11
+    agentic_id: A1
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both target GPT-4.1 circularity in extraction and explainability scoring. Identical defect. Both major."
+    confidence: high
+
+  - method: df_arch_c
+    paper: adversarial_dejavu
+    official_id: O14
+    agentic_id: A2
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both flag missing variance/CI/multi-run stability. Identical defect. Severity moderate vs major, gap=1."
+    confidence: high
+
+  - method: df_arch_c
+    paper: adversarial_dejavu
+    official_id: O11
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: related
+    override_judgment_alignment: n/a
+    override_severity_alignment: n/a
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O11 targets GPT-4.1 in extraction/explainability scoring (evaluation bias). A3 targets GPT-4.1 dependency for implementation complexity/reproducibility. Different pipeline concerns: O11 = circular validation, A3 = replication barriers. Fixing O11 (independent judge) does not fix A3 (simplify implementation). Per E10-E14, same component but different defects = related."
+    confidence: high
+
+  - method: df_arch_c
+    paper: adversarial_dejavu
+    official_id: O22
+    agentic_id: A4
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O22 questions DL necessity vs clustering. A4 points to random-skill ablation as evidence DL's incremental value is limited. Same root (DL may not be needed) but different evidence bases. Severity moderate vs major, gap=1."
+    confidence: high
+
+  - method: df_arch_c
+    paper: adversarial_dejavu
+    official_id: O19
+    agentic_id: A4
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O19 asks to demonstrate DL advantages over clustering/deduplication. A4 interprets existing ablation data about random-skill baseline. Same underlying worry (DL's value not demonstrated), different specific fix-actions. Severity moderate vs major, gap=1."
+    confidence: high
+
+  - method: df_arch_c
+    paper: adversarial_dejavu
+    official_id: O1
+    agentic_id: A6
+    original_match_type: partial
+    override_match_type: related
+    override_judgment_alignment: n/a
+    override_severity_alignment: n/a
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O1 targets model FAMILY breadth (need more families like Qwen, Gemma). A6 targets model SCALE range (only 7-8B, need 70B+). Adding more small model families (fixing O1) would not address A6's scale concern. Adding large models (fixing A6) would not address O1's family diversity concern. Per E10-E14, different specific defects in same broad area = related."
+    confidence: high
+
+  - method: df_arch_c
+    paper: adversarial_dejavu
+    official_id: O13
+    agentic_id: A8
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "O13 targets single-turn/multi-turn mechanism gap. A8 targets multi-turn coverage (GALA as sole data point). A8 is narrower — only coverage breadth, not mechanism analysis. Severity major vs minor, gap=2 → under."
+    confidence: high
+
+  # === ai_scientist_run1 (5 edges, 1 reclassified) ===
+  - method: ai_scientist_run1
+    paper: adversarial_dejavu
+    official_id: O11
+    agentic_id: A1
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both target GPT-4.1 circularity. O11: GPT-4.1 in extraction/scoring with unquantified human verification. A1: GPT-4.1 extracts, K-SVD compresses, GPT-4.1 names and judges. Identical defect. Both major."
+    confidence: high
+
+  - method: ai_scientist_run1
+    paper: adversarial_dejavu
+    official_id: O14
+    agentic_id: A2
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both flag missing variance/CI reporting across experiments. Identical defect. Severity moderate vs major, gap=1."
+    confidence: high
+
+  - method: ai_scientist_run1
+    paper: adversarial_dejavu
+    official_id: O13
+    agentic_id: A6
+    original_match_type: exact
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O13 identifies TWO defects: (a) GALA is the only multi-turn attack tested, AND (b) the mechanism is not analyzed and a multi-turn extraction pipeline is needed. A6 identifies only (a). Fixing A6 (testing more multi-turn attacks) would not fix O13's mechanism analysis or pipeline demands. Per E21-E27, O13 bundles A6's complaint plus independent fix-actions → partial. Both major."
+    confidence: high
+
+  - method: ai_scientist_run1
+    paper: adversarial_dejavu
+    official_id: O20
+    agentic_id: A5
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both demand training data component ablation. O20: 'composition not justified with experiments showing each component's contribution.' A5: 'relative contributions not isolated.' Same defect — component-wise ablation resolves both. Severity moderate vs major, gap=1."
+    confidence: high
+
+  - method: ai_scientist_run1
+    paper: adversarial_dejavu
+    official_id: O12
+    agentic_id: A5
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O12 requests four control experiments for attribution. A5 requests data component ablation. O12 includes controls beyond data composition (helper swap, refusal templates). Overlapping root (ablation to attribute gains) but partially different experiments. Both major."
+    confidence: high
+
+  # === ai_scientist_gpt4o_run1 (4 edges, 1 reclassified) ===
+  - method: ai_scientist_gpt4o_run1
+    paper: adversarial_dejavu
+    official_id: O4
+    agentic_id: A1
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O4 names AutoDAN-Turbo as specific precedent for skill extraction. A1 makes generic 'limited originality' claim. A1 subsumes O4 as one possible instance but is broader. Fixing O4 (demonstrating delta over AutoDAN-Turbo) would not fully resolve A1's vague novelty complaint. Both major."
+    confidence: high
+
+  - method: ai_scientist_gpt4o_run1
+    paper: adversarial_dejavu
+    official_id: O7
+    agentic_id: A1
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O7 targets structural resemblance to AutoDAN-Turbo and requests direct comparison. A1 is the same generic novelty complaint. A1 absorbs O7 as one instance but is much broader. Both major."
+    confidence: high
+
+  - method: ai_scientist_gpt4o_run1
+    paper: adversarial_dejavu
+    official_id: O12
+    agentic_id: A2
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O12 enumerates four missing controls. A2 broadly claims the hypothesis lacks adequate experimental validation. O12 is one concrete instance of A2's sweeping empirical concern. Both major."
+    confidence: high
+
+  - method: ai_scientist_gpt4o_run1
+    paper: adversarial_dejavu
+    official_id: O11
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: related
+    override_judgment_alignment: n/a
+    override_severity_alignment: n/a
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O11 targets evaluation bias/leakage from GPT-4.1 dual-role (skill extraction + scoring). A3 targets overly complex implementation with unclear reproducibility compounded by GPT-4.1 dependency. O11 = evaluation independence concern, A3 = reproducibility/complexity concern. Different defects despite shared GPT-4.1 surface feature. Fixing one does not fix the other."
+    confidence: medium
+
+  # === liang_run1 (2 edges) ===
+  - method: liang_run1
+    paper: adversarial_dejavu
+    official_id: O11
+    agentic_id: A1
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O11 targets GPT-4.1 in extraction/scoring (evaluator bias). A1 targets end-to-end pipeline circularity (broader). A1 subsumes O11 but adds independent fix-actions (human annotation, calibration baselines). Same issue family, different scope → partial. Both major."
+    confidence: high
+
+  - method: liang_run1
+    paper: adversarial_dejavu
+    official_id: O2
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O2 flags missing representative attack baselines. A3 flags narrow attack scope (6 unseen attacks, mostly single-turn) plus distribution overlap confound. Both flag narrow attack coverage but A3 adds an independent confound concern. Both major."
+    confidence: high
+
+  # === liang_gpt4o_run1 (4 edges, 1 reclassified) ===
+  - method: liang_gpt4o_run1
+    paper: adversarial_dejavu
+    official_id: O6
+    agentic_id: A1
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O6 wants before-and-after skill composition examples. A1 wants hypothesis clarity with examples + hypothesis-ASCoT connection. Both want concrete walk-throughs but at different levels. Fixing O6 would not fully address A1's broader hypothesis clarity concern. Severity major vs moderate, gap=1."
+    confidence: high
+
+  - method: liang_gpt4o_run1
+    paper: adversarial_dejavu
+    official_id: O13
+    agentic_id: A2
+    original_match_type: exact
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O13 demands mechanism analysis + multi-turn extraction pipeline beyond the scope limitation A2 flags. A2 notes single-turn focus limits generalizability; O13 requires understanding WHY single-turn dictionary transfers to multi-turn (mechanism analysis) and building a new pipeline. Per E23, different satisfaction thresholds: A2 would be satisfied by multi-turn coverage, O13 requires deeper investigation. Both major."
+    confidence: high
+
+  - method: liang_gpt4o_run1
+    paper: adversarial_dejavu
+    official_id: O1
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O1 specifically targets model family coverage (only 2 families). A3 broadly flags reliance on specific datasets and models. A3 subsumes O1 but adds dataset breadth. Both major."
+    confidence: high
+
+  - method: liang_gpt4o_run1
+    paper: adversarial_dejavu
+    official_id: O2
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O2 targets missing representative attack baselines. A3 broadly flags evaluation reliance on specific datasets/models. A3's attack facet overlaps O2 but is much broader. Both major."
+    confidence: high
+
+  # === marg_gpt4o_run1 (4 edges, 1 reclassified) ===
+  - method: marg_gpt4o_run1
+    paper: adversarial_dejavu
+    official_id: O6
+    agentic_id: A1
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both demand concrete examples of skill composition. O6 wants before-and-after prompt transformations; A1 wants case studies of unseen jailbreak recomposition. Same core complaint — show us concrete skill composition in action. Severity major vs moderate, gap=1."
+    confidence: high
+
+  - method: marg_gpt4o_run1
+    paper: adversarial_dejavu
+    official_id: O8
+    agentic_id: A7
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "O8 flags specific fairness concern: AutoDAN-Turbo in 32-paper set but classified as unseen. A7 flags general lack of temporal cutoff rationale. Both concern the temporal cutoff mechanism but from different angles — specific data leakage vs general methodology documentation. Borderline with related but shared mechanism keeps it partial. Severity major vs minor, gap=2 → under."
+    confidence: medium
+
+  - method: marg_gpt4o_run1
+    paper: adversarial_dejavu
+    official_id: O3
+    agentic_id: A8
+    original_match_type: partial
+    override_match_type: related
+    override_judgment_alignment: n/a
+    override_severity_alignment: n/a
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O3 targets StrongReject metric definition/dataset/calculation specifics. A8 targets three different evaluation criteria (general capability, harmfulness, over-refusal rates) lacking definitions. Different specific metrics targeted, different fixes required. Broad theme (evaluation underspecification) shared, but per E10-E14, different specific defects = related."
+    confidence: high
+
+  - method: marg_gpt4o_run1
+    paper: adversarial_dejavu
+    official_id: O16
+    agentic_id: A2
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: over
+    verdict: correct
+    action: confirmed
+    rationale: "O16 is narrow notation issue (D_over undefined). A2 is broad dictionary clarity concern that subsumes O16. Classic broad/narrow = partial. Fixing A2 would fix O16 but not vice versa. Severity minor vs major, gap=2 with agentic higher → over."
+    confidence: high
+
+  # === oar_run1 (1 edge) ===
+  - method: oar_run1
+    paper: adversarial_dejavu
+    official_id: O14
+    agentic_id: A5
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O14 targets missing variance/CIs for training reproducibility. A5 targets suspiciously perfect zero scores plus missing CIs for evaluation sensitivity. Both under statistical rigor family but different facets (training vs evaluation). Severity moderate vs major, gap=1."
+    confidence: high
+
+missed_matches: []
+
+phantom_judgments: []
+
+verification_summary:
+  total_edges_verified: 44
+  total_unmatched_verified: 220
+  error_counts:
+    false_matches: 0
+    type_errors: 7
+    severity_errors: 0
+    missed_matches: 0
+  error_rates:
+    false_match_rate: "0.0%"
+    type_error_rate: "15.9%"
+    severity_error_rate: "0.0%"
+    missed_match_rate: "0.0%"
+  skill26_health: needs_improvement
+  papers_verified:
+    - paper: adversarial_dejavu
+      method: panel_no_ls
+      edges_verified: 4
+      unmatched_verified: 22
+      errors_found: 0
+    - paper: adversarial_dejavu
+      method: panel_arch_b
+      edges_verified: 7
+      unmatched_verified: 17
+      errors_found: 0
+    - paper: adversarial_dejavu
+      method: df_no_ls
+      edges_verified: 6
+      unmatched_verified: 22
+      errors_found: 1
+    - paper: adversarial_dejavu
+      method: df_arch_c
+      edges_verified: 7
+      unmatched_verified: 20
+      errors_found: 2
+    - paper: adversarial_dejavu
+      method: ai_scientist_run1
+      edges_verified: 5
+      unmatched_verified: 22
+      errors_found: 1
+    - paper: adversarial_dejavu
+      method: ai_scientist_gpt4o_run1
+      edges_verified: 4
+      unmatched_verified: 23
+      errors_found: 1
+    - paper: adversarial_dejavu
+      method: liang_run1
+      edges_verified: 2
+      unmatched_verified: 22
+      errors_found: 0
+    - paper: adversarial_dejavu
+      method: liang_gpt4o_run1
+      edges_verified: 4
+      unmatched_verified: 19
+      errors_found: 1
+    - paper: adversarial_dejavu
+      method: marg_gpt4o_run1
+      edges_verified: 4
+      unmatched_verified: 24
+      errors_found: 1
+    - paper: adversarial_dejavu
+      method: oar_run1
+      edges_verified: 1
+      unmatched_verified: 29
+      errors_found: 0

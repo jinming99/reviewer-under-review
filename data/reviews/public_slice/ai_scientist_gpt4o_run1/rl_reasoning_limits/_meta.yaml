@@ -1,0 +1,16 @@
+slug: rl_reasoning_limits
+baseline: ai_scientist
+model: gpt-4o
+timestamp: '2026-04-12T01:47:15.590136+00:00'
+git_sha: 6b601aec
+git_branch: main
+elapsed_s: 10.1
+usage: {}
+cost_usd: 0.0
+num_sdk_calls: 2
+num_api_calls: 5
+num_chunks: null
+specialties: null
+paper_text_chars: 107082
+review_text_chars: 2015
+skip_refinement: false

@@ -1,0 +1,41 @@
+Command failed with exit code 1 (exit code: 1)
+Error output: Check stderr output for details
+
+Traceback (most recent call last):
+  File "/Users/jinming/Dropbox/CodingProjects/agentic_ai_reviewer/scripts/run_baseline_batch.py", line 181, in run_one_paper
+    result = run_openaireview(
+             ^^^^^^^^^^^^^^^^^
+  File "/Users/jinming/Dropbox/CodingProjects/agentic_ai_reviewer/baselines/openaireview_adapter.py", line 142, in run_openaireview
+    consolidated, full = review_progressive(slug, paper_text, model=model)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jinming/opt/anaconda3/envs/reviewer/lib/python3.12/site-packages/reviewer/method_progressive.py", line 276, in review_progressive
+    response, usage = chat(
+                      ^^^^^
+  File "/Users/jinming/Dropbox/CodingProjects/agentic_ai_reviewer/baselines/openaireview_adapter.py", line 96, in sdk_chat
+    text = sdk_complete_chat(
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/jinming/Dropbox/CodingProjects/agentic_ai_reviewer/baselines/sdk_llm.py", line 399, in complete_chat
+    return _run_sync(_async_complete(prompt, combined_system, model))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jinming/Dropbox/CodingProjects/agentic_ai_reviewer/baselines/sdk_llm.py", line 234, in _run_sync
+    return asyncio.run(coro)
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/jinming/opt/anaconda3/envs/reviewer/lib/python3.12/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/Users/jinming/opt/anaconda3/envs/reviewer/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jinming/opt/anaconda3/envs/reviewer/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/Users/jinming/Dropbox/CodingProjects/agentic_ai_reviewer/baselines/sdk_llm.py", line 185, in _async_complete
+    async for message in query(
+  File "/Users/jinming/opt/anaconda3/envs/reviewer/lib/python3.12/site-packages/claude_code_sdk/query.py", line 123, in query
+    async for message in client.process_query(
+  File "/Users/jinming/opt/anaconda3/envs/reviewer/lib/python3.12/site-packages/claude_code_sdk/_internal/client.py", line 117, in process_query
+    async for data in query.receive_messages():
+  File "/Users/jinming/opt/anaconda3/envs/reviewer/lib/python3.12/site-packages/claude_code_sdk/_internal/query.py", line 491, in receive_messages
+    raise Exception(message.get("error", "Unknown error"))
+Exception: Command failed with exit code 1 (exit code: 1)
+Error output: Check stderr output for details

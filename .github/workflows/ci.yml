@@ -1,0 +1,117 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-demo:
+    name: Demo asset references
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check demo asset references resolve
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd demo
+          missing=0
+          # Extract src="..." and href="..." attributes from index.html, drop
+          # URL schemes, anchors, and dynamic JS-constructed hrefs (anything
+          # containing a space, quote, or plus), and verify each resolves to
+          # a real file on disk.
+          while IFS= read -r ref; do
+            [[ -z "$ref" ]] && continue
+            path="${ref%%\?*}"
+            path="${path%%#*}"
+            if [[ "$path" == /* ]]; then
+              check="..${path}"
+            else
+              check="$path"
+            fi
+            if [[ ! -e "$check" ]]; then
+              echo "::error file=demo/index.html::missing asset: $ref"
+              missing=$((missing + 1))
+            fi
+          done < <(
+            grep -oE '(src|href)="[^"#?]+"' index.html \
+              | sed -E 's/^(src|href)="//; s/"$//' \
+              | grep -vE "^(https?:|mailto:|data:|#|javascript:)" \
+              | grep -vE "[[:space:]'+]" \
+              | sort -u
+          )
+          if [[ $missing -gt 0 ]]; then
+            echo "::error ::demo/index.html references $missing missing asset(s)"
+            exit 1
+          fi
+
+  scope-hygiene-grep:
+    name: Scope hygiene
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Ban forbidden scope vocabulary in public files
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Files to scan: everything that ships in the public release
+          # (README, demo, case studies, release manifest, public data).
+          # docs/internal/ is explicitly excluded because it holds the
+          # pre-scope-lock reference material.
+          targets=(
+            README.md
+            CHANGELOG.md
+            RELEASE_MANIFEST.md
+            demo/index.html
+            docs/case_studies
+            data/reports/public_slice
+            data/metrics/public_slice
+          )
+          # Banned phrases. `insider` and `external` are allowed inside JSON
+          # under demo/data/ because the case-study concern text legitimately
+          # uses those words (external validity, external comparisons). They
+          # are banned only as path segments and scope labels, which is what
+          # the list below targets.
+          pattern='regeneration pending|10 papers|hidden systems|panel_[a-z_]+|decide_first_[a-z_]+|df_arch_|df_no_ls|calset-6|calset6'
+          found=0
+          for target in "${targets[@]}"; do
+            if [[ ! -e "$target" ]]; then
+              continue
+            fi
+            if grep -rEIn "$pattern" "$target" 2>/dev/null; then
+              found=1
+            fi
+          done
+          if [[ $found -ne 0 ]]; then
+            echo "::error ::scope hygiene grep matched banned vocabulary in a public file"
+            exit 1
+          fi
+
+  codespell:
+    name: Spell check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install codespell
+        run: pip install codespell
+
+      - name: Run codespell on public prose
+        run: |
+          codespell \
+            README.md \
+            CHANGELOG.md \
+            RELEASE_MANIFEST.md \
+            demo/index.html \
+            docs/case_studies/ \
+            --skip='*.json,*.yaml,*.yml,*.csv,*.svg,*.png,*.ico,*.pdf' \
+            --ignore-words-list='nin,thats,ue,fo,hel'

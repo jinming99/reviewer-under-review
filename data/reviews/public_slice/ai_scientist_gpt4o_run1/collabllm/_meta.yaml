@@ -1,0 +1,16 @@
+slug: collabllm
+baseline: ai_scientist
+model: gpt-4o
+timestamp: '2026-04-12T01:47:04.752375+00:00'
+git_sha: 6b601aec
+git_branch: main
+elapsed_s: 14.3
+usage: {}
+cost_usd: 0.0
+num_sdk_calls: 2
+num_api_calls: 5
+num_chunks: null
+specialties: null
+paper_text_chars: 90824
+review_text_chars: 1827
+skip_refinement: false

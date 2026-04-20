@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use this framework, please cite it as below."
+title: "What Makes a Good AI Review? Concern-Level Diagnostics for AI Peer Review"
+type: software
+version: 0.1.0
+date-released: 2026-04-14
+authors:
+  - family-names: Jin
+    given-names: Ming
+license: Apache-2.0
+repository-code: "https://github.com/jinming99/reviewer-under-review"
+keywords:
+  - ai peer review
+  - evaluation
+  - concern alignment
+  - meta-evaluation
+  - benchmark
+preferred-citation:
+  type: conference-paper
+  title: "What Makes a Good AI Review? Concern-Level Diagnostics for AI Peer Review"
+  authors:
+    - family-names: Jin
+      given-names: Ming
+  year: 2026
+  note: "Under review"

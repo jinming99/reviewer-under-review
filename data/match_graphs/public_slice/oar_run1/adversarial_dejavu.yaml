@@ -1,0 +1,202 @@
+schema_version: "v1"
+paper: "adversarial_dejavu"
+version: "v0.9.2"
+condition: "own_group/oar_run1"
+method: "baseline_openaireview"
+
+# ============================================================
+# Match Graph: Official (22 concerns) ↔ Agentic OAR (9 concerns)
+# ============================================================
+# The agentic system (OAR run1) produced a single review focused on
+# technical rigor issues (notation, statistics, experimental design).
+# Official reviewers (4 reviewers + AC) focused on model coverage,
+# baseline fairness, novelty vs AutoDAN-Turbo, control experiments,
+# method justification, and formatting — almost entirely different
+# concern space. Result: very low recall, high phantom rate.
+
+matches:
+  # ---------------------------------------------------------------
+  # O14 ↔ A5: Missing statistical rigor in reporting
+  # ---------------------------------------------------------------
+  - official_id: O14
+    agentic_id: A5
+    match_type: partial
+    issue: "Missing statistical rigor: variance, confidence intervals, and multi-run stability not reported"
+    judgment_alignment: aligned
+    severity_alignment: match  # official=moderate, agentic=major → gap=+1, within tolerance
+    rationale: >-
+      Both flag absent statistical reporting. O14 targets training reproducibility
+      (multi-seed variance for fine-tuning sensitivity) while A5 targets evaluation
+      sensitivity (suspiciously perfect zero scores, missing CIs and evaluation set
+      sizes). Same issue family (statistical rigor) but different facets requiring
+      different fixes. Partial because fixing one does not fix the other.
+
+  # ---------------------------------------------------------------
+  # O8 ↔ A9: Attack set categorization integrity
+  # ---------------------------------------------------------------
+  - official_id: O8
+    agentic_id: A9
+    match_type: related
+    issue: "Integrity of attack categorization in dictionary vs robustness evaluation"
+    judgment_alignment: n/a
+    severity_alignment: n/a
+    rationale: >-
+      Both concern how attacks are categorized across evaluation contexts. O8 flags
+      that AutoDAN-Turbo appears in the 32-paper dictionary source but is listed as
+      unseen (data leakage concern). A9 flags that the dictionary evaluation and
+      robustness evaluation use different attack sets (experimental design inconsistency).
+      Nearby topic but different specific complaints requiring different fixes. O8 was
+      resolved via temporal cutoff clarification; A9 would require attack set unification.
+
+  # ---------------------------------------------------------------
+  # O20 ↔ A6: Training data composition issues
+  # ---------------------------------------------------------------
+  - official_id: O20
+    agentic_id: A6
+    match_type: related
+    issue: "Training dataset composition not adequately justified or balanced"
+    judgment_alignment: n/a
+    severity_alignment: n/a
+    rationale: >-
+      Both raise concerns about ASCoT training data. O20 asks whether each source
+      component (HEx-PHI, AdvBench, HarmBench, benign, over-refusal) is justified
+      via component-level ablations. A6 flags the ~20x imbalance between k=1-3
+      (3150-4098 examples each) and k=4-5 (190 each) within the adversarial portion,
+      confounding depth analysis. Same component (training data) but different
+      complaints (source mix justification vs depth distribution balance). False
+      match pattern 4 applies.
+
+# ============================================================
+# Positive Factor Matches (paper was accepted)
+# ============================================================
+# Official pro_accept drivers: D1-D7. D8-D9 are pro_reject (excluded).
+# Agentic pro_accept sources: M1, M2 (mentions with pro_accept polarity).
+# The agentic system rejected this paper, so positive factors appear
+# only as acknowledged-but-insufficient mentions, not as decision drivers.
+
+positive_factor_matches:
+  - official_factor_id: D1
+    agentic_source: mention
+    agentic_text: >-
+      The Adversarial Deja Vu hypothesis is creative and well-motivated as a
+      framework for understanding jailbreak recurrence.
+    match_type: exact
+    judgment_alignment: aligned
+    rationale: >-
+      Both recognize the Deja Vu hypothesis as a novel and important contribution.
+      D1: "novel and important observation with wide implications." M1: "creative
+      and well-motivated framework." Same value recognized. However, the agentic
+      system treated this as insufficient to outweigh technical concerns.
+
+  - official_factor_id: D2
+    agentic_source: mention
+    agentic_text: >-
+      The large-scale temporal analysis across 32 attack papers and the dictionary
+      learning pipeline are substantial contributions.
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >-
+      D2 specifically praises the principled DL-based pipeline and LLM-augmented
+      basis pursuit as 'smart' and 'novel.' M2 recognizes the DL pipeline as
+      a substantial contribution but does not single out basis pursuit or the
+      specific methodological innovation. Partial because M2 captures the broad
+      value but misses the specific technical praise.
+
+  - official_factor_id: D3
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >-
+      D3 concerns Q4KG's score reversal from 2 to 6 post-rebuttal. This is a
+      reviewer-dynamics factor from the discussion phase, not observable to the
+      agentic system which operates on the paper PDF alone.
+
+  - official_factor_id: D4
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >-
+      D4 is about reviewer consensus (three positive pre-rebuttal + Q4KG reversal).
+      Post-discussion dynamics are not observable to the agentic system.
+
+  - official_factor_id: D5
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >-
+      D5 praises ASCoT's empirical robustness validated with key control experiments.
+      The agentic system did not capture robustness as a positive factor; instead it
+      questioned the robustness claims (A5 zero scores, A7 frontier comparison, A9
+      attack set mismatch). Judgment effectively inverted at the system level, though
+      no single agentic concern maps cleanly to this driver.
+
+  - official_factor_id: D6
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >-
+      D6 is the AC's holistic merit judgment ("merits outweigh by a lot the missing
+      opportunities"). This is a post-discussion meta-judgment not observable to the
+      agentic system, which reached the opposite verdict.
+
+  - official_factor_id: D7
+    agentic_source: mention
+    agentic_text: >-
+      The large-scale temporal analysis across 32 attack papers and the dictionary
+      learning pipeline are substantial contributions.
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >-
+      D7 highlights the novelty measurement aspect as independently valuable for
+      tracking jailbreak evolution. M2 recognizes the "large-scale temporal analysis"
+      as substantial but does not explicitly frame it as a prospective novelty
+      measurement tool for future attacks. Partial because M2 captures the
+      retrospective analysis value but misses the forward-looking utility.
+
+# ============================================================
+# Unmatched Concerns
+# ============================================================
+# Related-only edges count as strict-unmatched per schema.
+
+unmatched_official:
+  # Model coverage and baselines (jXni)
+  - O1   # Too few base models (only 2 LLM families)
+  - O2   # Missing widely-adopted jailbreak attack baselines
+  - O3   # StrongReject metric/dataset/procedure unclear
+  # Novelty vs AutoDAN-Turbo (jXni, Q4KG)
+  - O4   # Skill extraction technique from AutoDAN-Turbo
+  - O7   # Overall approach resembles AutoDAN-Turbo
+  # Formatting (jXni)
+  - O5   # Paper width exceeds ICLR template
+  # Interpretability and examples (Q4KG)
+  - O6   # No concrete skill composition before/after examples
+  # Evaluation design (Q4KG)
+  - O8   # AutoDAN-Turbo unseen classification fairness (related-only edge with A9)
+  # Extraction and pipeline robustness (DHsL)
+  - O9   # Prompt-based extraction stability
+  - O10  # Dictionary subset ablation and verification gap
+  # Evaluator model concerns (5oss)
+  - O11  # GPT-4.1 bias in both extraction and evaluation
+  - O12  # Missing control experiments to isolate ASCoT contribution
+  # Scope and generalization (5oss)
+  - O13  # Single-turn to multi-turn gap (GALA)
+  # Positioning and related work (5oss)
+  - O15  # No comparison to skill-mix / instruction-tuning methods
+  # AC concerns — notation, detail, method justification
+  - O16  # D_over not defined in paper
+  - O17  # CAT*/LAT* 40K sample generation details unclear
+  - O18  # What skills extracted from non-interpretable attacks like GCG
+  - O19  # DL advantages over clustering/deduplication not shown
+  - O20  # Training dataset composition not justified (related-only edge with A6)
+  - O21  # Should report ALO metric alongside ASR
+  - O22  # Whether DL is truly necessary vs simpler alternatives
+
+unmatched_agentic:
+  - A1   # Abstract truncated mid-clause (presentation, no official counterpart)
+  - A2   # Orphaned statistics in Section 4.3 (~9.7, ~14.8 skills not in Table 5)
+  - A3   # AT formulation notation: sampled r unused, loss uses template r*
+  - A4   # ASCoT is standard SFT mislabeled as adversarial training
+  - A6   # ~20x depth imbalance in training data (related-only edge with O20)
+  - A7   # Frontier model comparison overstates conclusions (scale vs coverage)
+  - A8   # Sparsity parameter lambda unspecified for unseen attack evaluation
+  - A9   # Dictionary eval vs robustness eval use different attack sets (related-only edge with O8)

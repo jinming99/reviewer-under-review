@@ -1,0 +1,119 @@
+schema_version: "v1"
+paper: adversarial_dejavu
+version: baseline
+method: baseline_liang_etal
+verdict: ACCEPT
+score: null
+
+decision_drivers:
+  - id: R1
+    polarity: pro_accept
+    text: >-
+      Novel Adversarial Deja Vu hypothesis reframes jailbreaks as
+      recombinations of existing adversarial skills, offering a new
+      perspective on AI safety defense.
+    evidence: "review.md section 1 (Significance and novelty)"
+    linked_concern_ids: []
+
+  - id: R2
+    polarity: pro_accept
+    text: >-
+      Proposed ASCoT training paradigm demonstrates significant empirical
+      improvements in robustness against unseen jailbreak attacks.
+    evidence: "review.md section 2 bullet 2 (Potential reasons for acceptance)"
+    linked_concern_ids: []
+
+mentions:
+  - id: M1
+    polarity: pro_accept
+    text: >-
+      Comprehensive analysis of adversarial skills across a large jailbreak
+      dataset provides valuable insights into the nature of adversarial threats.
+    evidence: "review.md section 2 bullet 1"
+    note: "Noted as a positive contribution but not treated as a decisive factor."
+
+  - id: M2
+    polarity: pro_accept
+    text: >-
+      Skill-composition approach to adversarial training could inspire
+      further research beyond isolated attack instances.
+    evidence: "review.md section 2 bullet 3"
+    note: "Framed as forward-looking impact, not weighted as decisive."
+
+  - id: M3
+    polarity: pro_accept
+    text: >-
+      Paper is well-structured with detailed experimental evaluations,
+      enhancing credibility and reproducibility.
+    evidence: "review.md section 2 bullet 4"
+    note: "Acknowledged as a positive quality but not a decisive driver."
+
+concerns:
+  - id: A1
+    text: >-
+      Adversarial Deja Vu hypothesis lacks clarity: insufficient examples
+      illustrating how it applies to different jailbreak types, and the
+      connection between hypothesis and proposed ASCoT method is not
+      explicitly articulated.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "review.md section 3 bullet 1 (Lack of clarity in the explanation of the Adversarial Deja Vu hypothesis)"
+    decisive: false
+    tags: [clarity, hypothesis_formulation]
+    dimension_impact: [G]
+
+  - id: A2
+    text: >-
+      Limited exploration of multi-turn jailbreaks: evaluation focuses
+      primarily on single-turn scenarios, which may limit generalizability
+      of the robustness claims for ASCoT.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "review.md section 3 bullet 2 (Limited exploration of multi-turn jailbreaks)"
+    decisive: false
+    tags: [limited_scope, generalizability]
+    dimension_impact: [D, F]
+
+  - id: A3
+    text: >-
+      Evaluation relies heavily on specific datasets and models, which may
+      not represent the diversity of real-world jailbreak scenarios; broader
+      model and dataset coverage needed to validate general applicability.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "review.md section 3 bullet 3 (Potential over-reliance on specific datasets and models)"
+    decisive: false
+    tags: [evaluation_breadth, generalizability]
+    dimension_impact: [D, F]
+
+  - id: A4
+    text: >-
+      Insufficient discussion of limitations and ethical implications:
+      potential failure modes are not addressed, and the risk of misuse of
+      the jailbreak dictionary is not comprehensively considered.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "review.md section 3 bullet 4 (Insufficient discussion on the limitations and ethical implications)"
+    decisive: false
+    tags: [limitations, ethics]
+    dimension_impact: [G]
+
+method_specific:
+  review_format: "outline_style"
+  verdict_inference: >-
+    No explicit verdict stated. Inferred ACCEPT from overall positive framing:
+    significance and novelty emphasized, rejection reasons use hedging language
+    (could, may, should), and suggestions section frames issues as improvements
+    rather than fundamental flaws.

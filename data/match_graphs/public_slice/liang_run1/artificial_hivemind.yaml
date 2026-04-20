@@ -1,0 +1,175 @@
+schema_version: "v1"
+paper: "artificial_hivemind"
+version: "own_group/liang_run1"
+method: "baseline"
+
+matches:
+  # ============================================================
+  # A1 (embedding metric validity) ↔ O10 (similarity scores lack baseline)
+  # ============================================================
+  - official_id: "O10"
+    agentic_id: "A1"
+    match_type: "partial"
+    issue: "Embedding-based similarity metric lacks proper grounding for interpreting diversity"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # both major
+    rationale: "Both flag inadequacy of the cosine similarity metric. O10 specifically asks for a reference baseline to interpret scores; A1 is broader, questioning the metric's validity against human diversity judgments and the choice of embedding model. A1 encompasses O10's concern but goes further — fixing O10 (adding a random baseline) would not fully address A1 (human validation of the metric). Partial because A1 is strictly broader in scope."
+
+  # ============================================================
+  # A1 (embedding metric validity) ↔ O12 (similarity score range too narrow)
+  # ============================================================
+  - official_id: "O12"
+    agentic_id: "A1"
+    match_type: "related"
+    issue: "Embedding similarity scores do not meaningfully differentiate models"
+    judgment_alignment: "aligned"
+    severity_alignment: "n/a"  # related match
+    rationale: "O12 raises the narrow clustering of scores (0.7-0.8) making comparison difficult; A1 questions whether the metric captures diversity at all. Both point to limitations of the cosine similarity approach but target different specific issues: O12 is about visualization granularity, A1 is about metric validity. Different author fixes needed."
+
+  # ============================================================
+  # A2 (absent causal analysis) ↔ O3 (insufficient causal analysis)
+  # ============================================================
+  - official_id: "O3"
+    agentic_id: "A2"
+    match_type: "exact"
+    issue: "Paper lacks causal analysis of inter-model homogenization mechanisms"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # both major
+    rationale: "Both identify the same core gap: the paper diagnoses the Hivemind phenomenon but does not mechanistically disentangle causes (shared training data, alignment, decoding, memorization). A2 explicitly suggests comparing base vs instruction-tuned models; O3 similarly asks for disentangling pretraining vs alignment effects. Same complaint, same scope."
+
+  # ============================================================
+  # A2 (absent causal analysis) ↔ O15 (need foundation model baseline)
+  # ============================================================
+  - official_id: "O15"
+    agentic_id: "A2"
+    match_type: "partial"
+    issue: "Need controlled experiments on base/foundation models to isolate causes of homogenization"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # A2=major, O15=moderate → within ±1
+    rationale: "O15 specifically asks for experiments on foundation models without instruction-following to disentangle pre- vs post-training effects. A2 makes the same point more broadly ('comparing base models vs. their instruction-tuned variants'). O15 is one specific experiment that would partially address A2's broader call for causal analysis."
+
+  # ============================================================
+  # A3 (Section 4 disconnected + statistical artifact) ↔ O11 (Section 4 technically flawed)
+  # ============================================================
+  - official_id: "O11"
+    agentic_id: "A3"
+    match_type: "exact"
+    issue: "Section 4 human annotation analysis has fundamental methodological problems"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # both major
+    rationale: "Both target Section 4's correlation analysis as methodologically flawed. O11 questions the subset selection methodology, entropy as disagreement measure, and averaging of human ratings. A3 flags the statistical artifact (reduced correlation from reduced variance) and small sample size. Different specific sub-complaints but both conclude Section 4's analysis is fundamentally problematic. Same author fix needed: proper null-model controls and alternative analysis methods."
+
+  # ============================================================
+  # A3 (Section 4 disconnected + statistical artifact) ↔ O19 (justification for averaging)
+  # ============================================================
+  - official_id: "O19"
+    agentic_id: "A3"
+    match_type: "partial"
+    issue: "Averaging human ratings as ground truth for correlation analysis is questionable"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # A3=major, O19=moderate → within ±1
+    rationale: "O19 specifically questions why human ratings are averaged rather than accounting for annotator disagreement. A3's broader critique of Section 4 encompasses this (the 'reduced signal-to-noise ratio' argument directly relates to averaging noisy annotations). O19 is a specific sub-issue within A3's broader Section 4 critique."
+
+  # ============================================================
+  # A4 (GPT-4o reliance in dataset construction) ↔ O9 (open-endedness not verified)
+  # ============================================================
+  - official_id: "O9"
+    agentic_id: "A4"
+    match_type: "partial"
+    issue: "Dataset construction lacks sufficient human validation"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # A4=moderate, O9=major → within ±1
+    rationale: "O9 specifically targets the lack of human verification that queries are genuinely open-ended. A4 is broader — questions GPT-4o reliance for taxonomy labeling, query classification, AND open-endedness validation. A4 mentions the 3-annotator validation as limited, directly addressing the same issue as O9, but embeds it within a broader critique of automation reliance. Partial because A4 is broader and the specific complaint about open-endedness is one sub-point."
+
+  # ============================================================
+  # A5 (incremental novelty) ↔ O4 (Hivemind effect statistically expected)
+  # ============================================================
+  - official_id: "O4"
+    agentic_id: "A5"
+    match_type: "partial"
+    issue: "The paper's contribution may not be sufficiently novel or surprising"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # A5=moderate, O4=major → within ±1
+    rationale: "Both question the significance of the contribution but from different angles. A5 says 'LM diversity loss is well-documented, this just scales up existing intuitions.' O4 argues from first principles that 'autoregressive LMs are designed to approximate average behavior, so cross-model similarity is statistically expected.' Same issue family (contribution significance) but different arguments: A5 is empirical precedent-based, O4 is theoretical/statistical. Partial because they share the conclusion (not novel enough) but differ in reasoning."
+
+positive_factor_matches:
+  # ============================================================
+  # D1: Benchmark meticulously constructed with high-density annotations
+  # ============================================================
+  - official_factor_id: "D1"
+    agentic_source: "mention"
+    agentic_text: "High-quality dataset and annotation effort: INFINITY-CHAT fills a genuine gap with 25 annotations per example enabling distributional analysis of human preferences; taxonomy grounded in real WildChat user behavior."
+    match_type: "exact"
+    judgment_alignment: "aligned"
+    rationale: "M2 directly captures D1's recognition of annotation density (25 per example) and dataset quality. Both highlight this as a notable strength."
+
+  # ============================================================
+  # D2: Evaluation framework is fine-grained and comprehensive
+  # ============================================================
+  - official_factor_id: "D2"
+    agentic_source: "mention"
+    agentic_text: "Scale and comprehensiveness of the empirical study: 70+ models evaluated across open-source and closed-source families with 50 samples per query per model."
+    match_type: "partial"
+    judgment_alignment: "aligned"
+    rationale: "M1 captures the comprehensiveness and scale aspect of D2 but focuses on model count and sampling density rather than the specific framework dimensions (diversity, human alignment, inter-model homogenization) that D2 highlights."
+
+  # ============================================================
+  # D3: Reveals Artificial Hivemind effect across 70+ LMs
+  # ============================================================
+  - official_factor_id: "D3"
+    agentic_source: "mention"
+    agentic_text: "Scale and comprehensiveness of the empirical study: 70+ models evaluated across open-source and closed-source families with 50 samples per query per model, providing the most extensive cross-model diversity analysis to date."
+    match_type: "partial"
+    judgment_alignment: "aligned"
+    rationale: "M1 captures the scale (70+ LMs) and acknowledges it as 'the most extensive cross-model diversity analysis to date,' but does not explicitly name the Hivemind effect or highlight the intra- vs inter-model distinction that D3 emphasizes as the core finding."
+
+  # ============================================================
+  # D4: Results highlight critical challenges for aligned LLMs
+  # ============================================================
+  - official_factor_id: "D4"
+    agentic_source: "mention"
+    agentic_text: "Actionable downstream findings: demonstration that reward models and LM judges are poorly calibrated on similar-quality and high-disagreement subsets has direct implications for RLHF pipelines."
+    match_type: "partial"
+    judgment_alignment: "aligned"
+    rationale: "M3 captures the implications for alignment (RLHF pipelines) but focuses on calibration failure rather than the broader tension between alignment and diversity that D4 emphasizes. Different facets of the same actionability theme."
+
+  # ============================================================
+  # D5: Well-written with clear figures and strong documentation
+  # ============================================================
+  - official_factor_id: "D5"
+    agentic_source: "mention"
+    agentic_text: "Thorough experimental design with robustness checks: multiple subset selection methods, alternative decoding strategies, paraphrase robustness experiments, and human validation of open-endedness."
+    match_type: "partial"
+    judgment_alignment: "aligned"
+    rationale: "M4 touches on experimental thoroughness and robustness but focuses on methodology rather than presentation quality (writing, figures, code documentation) which is D5's primary point. Partial overlap on the 'well-executed' dimension."
+
+  # ============================================================
+  # D6: Authors addressed reviewer concerns in rebuttal
+  # ============================================================
+  - official_factor_id: "D6"
+    agentic_source: "none"
+    agentic_text: ""
+    match_type: "none"
+    judgment_alignment: "n/a"
+    rationale: "The Liang system produces a single-pass review without access to the rebuttal process. Rebuttal responsiveness is not observable and cannot be captured."
+
+unmatched_positive_factors: []  # DEPRECATED — all factors encoded in positive_factor_matches above
+
+unmatched_official:
+  - "O1"   # English-only scope — not raised by agentic review
+  - "O2"   # Limited actionable guidance for the metric — not raised
+  - "O5"   # Need paraphrase robustness test — not raised (rebuttal follow-up)
+  - "O6"   # Query entropy impact on Hivemind effect — not raised (rebuttal follow-up)
+  - "O7"   # Figure 1 cluttered — not raised (minor presentation)
+  - "O8"   # Missing taxonomy discussion in related work — not raised (minor)
+  - "O12"  # Similarity score range too narrow — related-only edge to A1, counts as unmatched
+  - "O13"  # Cosine metric inconsistency — not raised (minor)
+  - "O14"  # Data availability broken link — not raised (fixed in camera-ready)
+  - "O16"  # Codebase test scripts — not raised (minor)
+  - "O17"  # New results should be in camera-ready — not raised (AC directive, not observable)
+  - "O18"  # Results need deeper interpretation — not raised as distinct concern
+
+unmatched_agentic: []
+# All five agentic concerns have at least one exact or partial match:
+# A1 ↔ O10 (partial), A2 ↔ O3 (exact) + O15 (partial),
+# A3 ↔ O11 (exact) + O19 (partial), A4 ↔ O9 (partial), A5 ↔ O4 (partial)

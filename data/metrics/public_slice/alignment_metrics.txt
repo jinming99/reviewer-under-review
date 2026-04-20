@@ -1,0 +1,78 @@
+Concern Alignment Metrics — public_slice (public 9-paper slice)
+========================================================================
+
+Paper count: 9 (7 accepted, 2 rejected)
+Official concerns: 150 total | 102 resolved | 48 unresolved | 7 decisive
+Released match graphs in this slice: 54 (6 methods x 9 papers)
+
+VERDICT-INFERENCE SCOPE (read first)
+- Verdict accuracy and the TP/TN/FP/FN counts below reflect our extraction pipeline's interpretation of each system's review. Native verdicts are produced by both System A configurations (Opus and GPT-4o), which emit an explicit Decision field; for the other four configurations the verdict is inferred from review text.
+- The values below are single run (run 1) on the 9-paper Named Papers slice. The website homepage displays 3-run means and will not numerically match.
+- The paper appendix's sensitivity audit (covering a separate 48-paper safety/alignment benchmark) shows verdict-level numbers vary with inference method, while concern-level metrics — strict/loose recall, phantom rate, decisive recall — do not.
+- The audit has since been extended to the 9-paper public slice this file describes. Per-configuration flip rate between pipeline and final (audited) verdict: A.GPT4o 0/9, A.Opus 0/9, L.GPT4o 2/9, L.Opus 0/9, M.GPT4o 7/9 (all UNRELIABLE), O.Opus 1/9. The reconciled CSV is at data/audit/verdict_inference_named_9.csv.
+- System M reviews additionally contain multi-agent coordination artifacts that make verdict inference unreliable for that configuration regardless of method.
+
+SYSTEM SNAPSHOT
+- System L · GPT-4o: accuracy 77.8% | TP/TN/FP/FN 6/1/1/1 | strict recall 22.4% | loose recall 27.0% | precision 69.4% | phantom 30.6% | decisive recall 29.2%
+- System M · GPT-4o: accuracy 44.4% | TP/TN/FP/FN 3/1/1/4 | strict recall 33.0% | loose recall 43.9% | precision 57.6% | phantom 42.4% | decisive recall 29.2%
+- System O · Opus: accuracy 44.4% | TP/TN/FP/FN 2/2/0/5 | strict recall 13.2% | loose recall 27.7% | precision 28.6% | phantom 71.4% | decisive recall 0.0%
+- System A · Opus: accuracy 33.3% | TP/TN/FP/FN 1/2/0/6 | strict recall 32.7% | loose recall 38.0% | precision 48.4% | phantom 51.6% | decisive recall 62.5%
+- System L · Opus: accuracy 22.2% | TP/TN/FP/FN 0/2/0/7 | strict recall 30.3% | loose recall 38.7% | precision 63.1% | phantom 36.9% | decisive recall 50.0%
+- System A · GPT-4o: accuracy 22.2% | TP/TN/FP/FN 0/2/0/7 | strict recall 20.2% | loose recall 26.1% | precision 60.4% | phantom 39.6% | decisive recall 25.0%
+
+BY ISSUE TYPE (strict recall)
+- empirical: 75 official concerns
+  - System A · GPT-4o: 10.7%
+  - System A · Opus: 37.3%
+  - System L · GPT-4o: 24.0%
+  - System L · Opus: 32.0%
+  - System M · GPT-4o: 32.0%
+  - System O · Opus: 13.3%
+- conceptual: 46 official concerns
+  - System A · GPT-4o: 32.6%
+  - System A · Opus: 32.6%
+  - System L · GPT-4o: 28.3%
+  - System L · Opus: 30.4%
+  - System M · GPT-4o: 28.3%
+  - System O · Opus: 10.9%
+- framing: 29 official concerns
+  - System A · GPT-4o: 17.2%
+  - System A · Opus: 10.3%
+  - System L · GPT-4o: 13.8%
+  - System L · Opus: 6.9%
+  - System M · GPT-4o: 17.2%
+  - System O · Opus: 0.0%
+
+RESOLVED / UNRESOLVED / DECISIVE (strict recall)
+- System A · GPT-4o: resolved 16.7% | unresolved 22.9% | decisive 28.6%
+- System A · Opus: resolved 29.4% | unresolved 33.3% | decisive 57.1%
+- System L · GPT-4o: resolved 22.5% | unresolved 25.0% | decisive 28.6%
+- System L · Opus: resolved 22.5% | unresolved 35.4% | decisive 42.9%
+- System M · GPT-4o: resolved 26.5% | unresolved 31.2% | decisive 28.6%
+- System O · Opus: resolved 8.8% | unresolved 12.5% | decisive 0.0%
+
+MATCH-TYPE COUNTS
+- System A · GPT-4o: exact 6 | partial 24 | related 9
+- System A · Opus: exact 18 | partial 28 | related 8
+- System L · GPT-4o: exact 15 | partial 21 | related 6
+- System L · Opus: exact 11 | partial 29 | related 13
+- System M · GPT-4o: exact 8 | partial 37 | related 17
+- System O · Opus: exact 4 | partial 14 | related 22
+
+PAPER-LEVEL VERDICT SUMMARY
+- adversarial_dejavu: ACCEPTED | official concerns 22 | correct methods 3/6 | TP/TN/FP/FN 3/0/0/3
+- artificial_hivemind: ACCEPTED | official concerns 19 | correct methods 2/6 | TP/TN/FP/FN 2/0/0/4
+- beyond_problem_solving: REJECTED | official concerns 9 | correct methods 5/6 | TP/TN/FP/FN 0/5/1/0
+- cmdp_meta_safe_rl: ACCEPTED | official concerns 19 | correct methods 1/6 | TP/TN/FP/FN 1/0/0/5
+- collabllm: ACCEPTED | official concerns 22 | correct methods 3/6 | TP/TN/FP/FN 3/0/0/3
+- from_assistant_pentest: REJECTED | official concerns 10 | correct methods 5/6 | TP/TN/FP/FN 0/5/1/0
+- from_capabilities_pentest: ACCEPTED | official concerns 10 | correct methods 2/6 | TP/TN/FP/FN 2/0/0/4
+- rl_backtracking_feedback: ACCEPTED | official concerns 13 | correct methods 0/6 | TP/TN/FP/FN 0/0/0/6
+- rl_reasoning_limits: ACCEPTED | official concerns 26 | correct methods 1/6 | TP/TN/FP/FN 1/0/0/5
+
+TOP PUBLIC-SLICE TAKEAWAYS
+- System L · GPT-4o is strongest on raw verdict accuracy in the nine-paper slice.
+- System A · Opus is strongest on decisive recall, but still rejects most accepted papers.
+- System O · Opus shows the clearest 'technical auditor' profile: low alignment to official blockers despite many specific observations.
+- The hardest public paper is rl_backtracking_feedback: under the pipeline headline extraction every released baseline reads as REJECT; under the follow-up audit five of six still reject and one (L · GPT-4o) flips to ACCEPT under both independent raters.
+- The two rejected papers are easy at L0 but still informative at L3/L4 because systems disagree on why they should be rejected.

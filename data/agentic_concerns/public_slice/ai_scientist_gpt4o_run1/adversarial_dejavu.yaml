@@ -1,0 +1,179 @@
+schema_version: "v1"
+paper: adversarial_dejavu
+version: baseline
+method: baseline_ai_scientist
+verdict: REJECT
+score: 3
+
+decision_drivers:
+  - id: R1
+    polarity: pro_reject
+    text: >-
+      Insufficient empirical grounding of the theoretical claims, with all
+      quality and soundness scores at 2/10.
+    evidence: "Weaknesses bullet 2: 'Insufficient empirical grounding of theory'; Scores: Quality 2, Soundness 2"
+    linked_concern_ids: [A2]
+
+  - id: R2
+    polarity: pro_reject
+    text: >-
+      Limited originality — the approach leverages existing adversarial concepts
+      without demonstrating a clear novelty delta.
+    evidence: "Weaknesses bullet 1: 'Limited originality in leveraging existing adversarial concepts'; Scores: Originality 2"
+    linked_concern_ids: [A1]
+
+  - id: R3
+    polarity: pro_reject
+    text: >-
+      Overly complex implementation with unclear reproducibility, compounded by
+      dependency on specific proprietary LLMs.
+    evidence: "Weaknesses bullet 3; Limitations bullet 3: 'Dependency on specific LLMs like GPT-4.1 raises reproducibility concerns'"
+    linked_concern_ids: [A3]
+
+mentions:
+  - id: M1
+    polarity: pro_accept
+    text: >-
+      Novel approach to using adversarial skill recombination.
+    evidence: "Strengths bullet 1"
+    note: "Listed as a strength but contradicted by Originality score of 2 and weakness about limited originality"
+
+  - id: M2
+    polarity: pro_accept
+    text: >-
+      Comprehensive analysis of jailbreak trends.
+    evidence: "Strengths bullet 2"
+    note: "Acknowledged but did not offset empirical and reproducibility concerns"
+
+  - id: M3
+    polarity: pro_accept
+    text: >-
+      Innovative concept of Adversarial Skill Compositional Training (ASCoT).
+    evidence: "Strengths bullet 3"
+    note: "Noted as innovative but not sufficient to overcome low scores across all dimensions"
+
+concerns:
+  - id: A1
+    text: >-
+      Limited originality — the paper leverages existing adversarial concepts
+      without sufficient novelty over prior work.
+    severity:
+      level: major
+      addressability: unresolved
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 1; Originality score 2/10"
+    decisive: true
+    tags: [novelty, prior_work]
+    dimension_impact: [B]
+
+  - id: A2
+    text: >-
+      Insufficient empirical grounding of the theoretical claims; the
+      Adversarial Deja Vu hypothesis lacks adequate experimental validation.
+    severity:
+      level: major
+      addressability: unresolved
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 2; Quality score 2/10, Soundness score 2/10"
+    decisive: true
+    tags: [empirical_support, claim_evidence_mismatch]
+    dimension_impact: [D, E]
+
+  - id: A3
+    text: >-
+      Overly complex implementation with unclear reproducibility, compounded by
+      dependency on specific LLMs (GPT-4.1) that limits independent replication.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 3 + Limitations bullet 3 (merged: both flag reproducibility)"
+    decisive: true
+    tags: [reproducibility, complexity]
+    dimension_impact: [H]
+
+  - id: A4
+    text: >-
+      Lack of robust longitudinal studies and practical application validation
+      beyond academic benchmarks.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 4; Questions bullet 3 ('How does ASCoT compare with state-of-the-art methods in diverse and non-academic real-world scenarios?')"
+    decisive: false
+    tags: [evaluation_rigor, generalization]
+    dimension_impact: [D, F]
+
+  - id: A5
+    text: >-
+      Dense language diminishes clarity and accessibility of the paper.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 5; Clarity score 2/10, Presentation score 2/10"
+    decisive: false
+    tags: [clarity, writing_quality]
+    dimension_impact: [G]
+
+  - id: A6
+    text: >-
+      Computational scalability not addressed for extremely large skill
+      compositions in the dictionary learning process.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Limitations bullet 1; Questions bullet 2 (computational costs)"
+    decisive: false
+    tags: [scalability, missing_analysis]
+    dimension_impact: [F]
+
+  - id: A7
+    text: >-
+      Potential ethical misuse risk from detailed understanding of adversarial
+      skill decomposition.
+    severity:
+      level: minor
+      addressability: unknown
+      mechanism: none
+    source: other
+    source_detail: "Limitations bullet 2"
+    decisive: false
+    tags: [ethics, dual_use]
+    dimension_impact: []
+
+  - id: A8
+    text: >-
+      The skill dictionary may not handle genuinely novel attack primitives that
+      deviate from historical patterns, undermining the core hypothesis.
+    severity:
+      level: moderate
+      addressability: unresolved
+      mechanism: none
+    source: other
+    source_detail: "Questions bullet 1: 'How does the dictionary handle novel primitives that genuinely deviate from historical patterns?'"
+    decisive: false
+    tags: [method_limitation, generalization]
+    dimension_impact: [E, F]
+
+method_specific:
+  review_system: "AI Scientist (GPT-4o)"
+  run: 1
+  individual_scores:
+    originality: 2
+    quality: 2
+    clarity: 2
+    significance: 2
+    soundness: 2
+    presentation: 2
+    contribution: 2
+    overall: 3
+    confidence: 4

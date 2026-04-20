@@ -1,0 +1,66 @@
+name: Bug report
+description: Something in the repo, the demo, the pipeline, or the metrics is wrong.
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. Please keep the description focused on one problem at a time; if you have multiple, open separate issues so each gets a clean resolution thread.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: Describe the behavior you actually saw. Paste error messages verbatim when relevant.
+      placeholder: "When I ran X, I expected Y, but got Z."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: How to reproduce
+      description: Minimal sequence of steps, commands, or clicks that gets back to the same failure.
+      placeholder: |
+        1. Clone the repo at commit abc1234
+        2. Run `python scripts/build_public_slice_web_data.py`
+        3. Open demo/index.html in Safari 17 and click the Stories tab
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected area
+      options:
+        - Demo website / HTML / JS
+        - Build pipeline / scripts
+        - Case studies or narrative copy
+        - Aggregate metrics or scoring
+        - Raw data artifacts (YAML / JSON)
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: commit
+    attributes:
+      label: Commit or release
+      description: Short SHA or tag you were running against.
+      placeholder: "aebb83f, v0.1.0, main as of 2026-04-14"
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Python version, browser — whatever is relevant to the failure.
+      placeholder: "macOS 14.5, Python 3.11.8, Chrome 124"
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs, screenshots, or stack traces
+      description: Optional but very welcome. Fenced code blocks render better than plain text.
+      render: shell

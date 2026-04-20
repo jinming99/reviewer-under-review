@@ -1,0 +1,243 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: SemanticOverrideSheet
+description: >
+  Structured override judgments produced by Skill 5b (semantic edge verification).
+  Contains four sections: edge overrides for ALL verified match graph edges,
+  missed matches found during unmatched concern review, phantom judgments for
+  numeric groundedness, and a verification summary with Skill 3 health diagnostic.
+  One file per version, aggregating overrides across all papers and methods.
+type: object
+required:
+  - schema_version
+  - version
+  - generated_by
+properties:
+  schema_version: { type: string, enum: ["v1"] }
+  version: { type: string, description: "Artifact version, e.g., v0.9" }
+  generated_by:
+    type: string
+    description: "How overrides were produced (e.g., skill_5b_claude_code, human)"
+
+  edge_overrides:
+    type: array
+    description: >
+      Override judgments for ALL strict (exact/partial) match graph edges.
+      Every verified edge gets an entry — confirmed edges are included for
+      audit trail completeness.
+    items:
+      type: object
+      required:
+        - method
+        - paper
+        - official_id
+        - agentic_id
+        - original_match_type
+        - override_match_type
+        - override_judgment_alignment
+        - override_severity_alignment
+        - verdict
+        - action
+        - rationale
+        - confidence
+      properties:
+        method:
+          type: string
+          description: "Review method (baseline, decide_first, panel, delta_only)"
+        paper:
+          type: string
+          description: "Paper slug"
+        official_id:
+          type: string
+          pattern: "^O\\d+$"
+        agentic_id:
+          type: string
+          pattern: "^A\\d+$"
+        original_match_type:
+          type: string
+          enum: ["exact", "partial", "related"]
+          description: "match_type from the original match graph"
+        override_match_type:
+          type: string
+          enum: ["exact", "partial", "related", "none"]
+          description: "Corrected match_type after semantic verification"
+        override_judgment_alignment:
+          type: string
+          enum: ["aligned", "inverted", "mixed", "n/a"]
+          description: "Corrected judgment_alignment after semantic verification"
+        override_severity_alignment:
+          type: string
+          enum: ["match", "under", "over", "n/a"]
+          description: "Corrected severity_alignment after semantic verification"
+        verdict:
+          type: string
+          enum: ["correct", "wrong_match", "wrong_type", "wrong_severity", "multiple_errors"]
+          description: >
+            correct: all labels are accurate.
+            wrong_match: edge should not exist (false match).
+            wrong_type: match_type label is wrong (e.g., exact should be partial).
+            wrong_severity: severity_alignment label is wrong.
+            multiple_errors: more than one label is wrong.
+        action:
+          type: string
+          enum: ["confirmed", "reclassified", "removed"]
+          description: >
+            confirmed: original labels are correct, no change needed.
+            reclassified: match_type or alignment labels changed.
+            removed: edge should be deleted (concerns are unrelated).
+        rationale:
+          type: string
+          description: "1-3 sentence explanation of the override decision"
+        confidence:
+          type: string
+          enum: ["high", "medium", "low"]
+
+  missed_matches:
+    type: array
+    description: >
+      Matches that Skill 3 failed to create, discovered during verification
+      of unmatched concerns. Each entry recommends a new edge to add.
+    items:
+      type: object
+      required:
+        - method
+        - paper
+        - official_id
+        - agentic_id
+        - recommended_match_type
+        - recommended_judgment_alignment
+        - recommended_severity_alignment
+        - rationale
+        - confidence
+      properties:
+        method:
+          type: string
+        paper:
+          type: string
+        official_id:
+          type: string
+          pattern: "^O\\d+$"
+        agentic_id:
+          type: string
+          pattern: "^A\\d+$"
+        recommended_match_type:
+          type: string
+          enum: ["exact", "partial"]
+          description: "Recommended match_type for the new edge"
+        recommended_judgment_alignment:
+          type: string
+          enum: ["aligned", "inverted", "mixed"]
+        recommended_severity_alignment:
+          type: string
+          enum: ["match", "under", "over"]
+        rationale:
+          type: string
+          description: "1-3 sentence explanation of why this match was missed and why it should exist"
+        confidence:
+          type: string
+          enum: ["high", "medium", "low"]
+
+  phantom_judgments:
+    type: array
+    description: >
+      Judgments for phantom concerns with numeric claims checked against
+      paper PDF text for groundedness.
+    items:
+      type: object
+      required:
+        - method
+        - paper
+        - agentic_id
+        - unfound_numbers
+        - judgment
+        - rationale
+        - confidence
+      properties:
+        method:
+          type: string
+        paper:
+          type: string
+        agentic_id:
+          type: string
+          pattern: "^A\\d+$"
+        unfound_numbers:
+          type: array
+          items: { type: string }
+          description: "Numbers from the agentic concern text that were not found in the paper PDF"
+        judgment:
+          type: string
+          enum: ["grounded", "hallucinated", "policy_artifact", "inconclusive"]
+          description: >
+            grounded: numbers are in the paper (OCR/extraction miss, or in figures/tables).
+            hallucinated: numbers do not appear anywhere in the paper.
+            policy_artifact: numbers come from a rubric rule or scoring formula, not the paper.
+            inconclusive: cannot determine with available evidence.
+        rationale:
+          type: string
+          description: "1-3 sentence explanation with evidence location if grounded"
+        confidence:
+          type: string
+          enum: ["high", "medium", "low"]
+        evidence_location:
+          type: string
+          description: "Page/figure/table where the numbers actually appear (if grounded)"
+
+  verification_summary:
+    type: object
+    description: >
+      Aggregate statistics from the verification run. Includes error counts,
+      error rates, Skill 3 health diagnostic, and per-paper breakdowns.
+    required:
+      - total_edges_verified
+      - total_unmatched_verified
+      - error_counts
+      - error_rates
+      - skill26_health
+    properties:
+      total_edges_verified:
+        type: integer
+        description: "Total strict edges verified across all papers × methods"
+      total_unmatched_verified:
+        type: integer
+        description: "Total unmatched concerns (official + agentic) verified"
+      error_counts:
+        type: object
+        properties:
+          false_matches:
+            type: integer
+            description: "Edges removed (wrong_match verdict)"
+          type_errors:
+            type: integer
+            description: "Edges with wrong match_type (wrong_type verdict)"
+          severity_errors:
+            type: integer
+            description: "Edges with wrong severity_alignment (wrong_severity verdict)"
+          missed_matches:
+            type: integer
+            description: "New edges discovered from unmatched concerns"
+      error_rates:
+        type: object
+        description: "Rates computed as count / total_edges_verified (or total_unmatched for missed)"
+        properties:
+          false_match_rate: { type: string }
+          type_error_rate: { type: string }
+          severity_error_rate: { type: string }
+          missed_match_rate: { type: string }
+      skill26_health:
+        type: string
+        enum: ["healthy", "needs_improvement", "needs_overhaul"]
+        description: >
+          Advisory diagnostic on Skill 3 quality. Determined by worst threshold:
+          false_match_rate (<5% healthy, 5-10% needs_improvement, >10% needs_overhaul),
+          total_error_rate (<15% / 15-25% / >25%),
+          missed_match_rate (<20% / 20-35% / >35%).
+      papers_verified:
+        type: array
+        description: "Per-paper breakdown of verification results"
+        items:
+          type: object
+          properties:
+            paper: { type: string }
+            method: { type: string }
+            edges_verified: { type: integer }
+            unmatched_verified: { type: integer }
+            errors_found: { type: integer }

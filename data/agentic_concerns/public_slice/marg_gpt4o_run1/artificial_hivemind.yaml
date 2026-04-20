@@ -1,0 +1,221 @@
+schema_version: "v1"
+paper: "artificial_hivemind"
+version: "own_group/marg_gpt4o_run1"
+method: "baseline"  # MARG multi-agent external baseline; closest analog for schema compliance
+verdict: "REJECT"  # MARG does not produce explicit verdicts; coded REJECT as review focuses solely on weaknesses
+score: null  # MARG produces no numerical score
+
+decision_drivers:
+  # MARG does not produce explicit decisive reasons. The review identifies
+  # multiple areas for improvement but never frames any as deal-breaking.
+  # No decision_drivers can be reliably extracted.
+  []
+
+mentions:
+  - id: "M1"
+    polarity: "pro_accept"
+    text: "The paper provides a thorough evaluation of LM output diversity and the Artificial Hivemind effect."
+    evidence: "review.md Experiments Proofs section, refined comment preamble"
+    note: "Positive framing acknowledged in passing but not elaborated or weighted."
+
+  - id: "M2"
+    polarity: "pro_accept"
+    text: "The paper effectively evaluates model alignment with human ratings."
+    evidence: "review.md Experiments Proofs section, refined comment 2 preamble"
+    note: "Brief positive acknowledgment before suggesting extensions."
+
+  - id: "M3"
+    polarity: "pro_accept"
+    text: "The INFINITY-CHAT dataset is recognized as crucial for evaluating language model output diversity."
+    evidence: "review.md Clarity Reproducibility section, refined comment 1"
+    note: "Dataset value acknowledged as context for requesting more detail."
+
+concerns:
+  # ============================================================
+  # A1: Decoding strategy analysis insufficient
+  # Sources: Experiments Proofs comment 1, Clarity Reproducibility comment 3
+  # ============================================================
+  - id: "A1"
+    text: "The paper needs more detailed analysis of how different decoding strategies (temperature, top-p, min-p) affect intra-model repetition and inter-model homogeneity, including systematic parameter comparisons."
+    severity:
+      level: "moderate"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_minor"
+    source_detail: >
+      Experiments Proofs refined comment 1: 'explore how varying decoding parameters
+      (e.g., temperature, top-p) affect intra-model repetition and inter-model homogeneity';
+      Clarity Reproducibility comment 3: 'include a rationale for choosing these parameters
+      and any variations used in different experiments'
+    decisive: false
+    tags: ["decoding_strategies", "parameter_sensitivity", "experimental_depth"]
+    dimension_impact: ["D", "F"]
+
+  # ============================================================
+  # A2: Need ablation studies on model architecture effects
+  # Source: Experiments Proofs comment 2
+  # ============================================================
+  - id: "A2"
+    text: "The paper should conduct ablation studies to assess how variations in model architecture and training data influence alignment with human preferences."
+    severity:
+      level: "moderate"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_minor"
+    source_detail: >
+      Experiments Proofs refined comment 2: 'conduct ablation studies to assess how
+      variations in model design and data influence alignment with human preferences'
+    decisive: false
+    tags: ["ablation_studies", "model_architecture", "alignment"]
+    dimension_impact: ["D", "E"]
+
+  # ============================================================
+  # A3: Insufficient comparison with existing benchmarks
+  # Source: Novelty Impact refined comment
+  # ============================================================
+  - id: "A3"
+    text: "The paper lacks detailed comparisons with existing methods and benchmarks, particularly regarding how INFINITY-CHAT improves upon previous benchmarks for evaluating LM diversity."
+    severity:
+      level: "moderate"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_minor"
+    source_detail: >
+      Novelty Impact refined comment: 'more detailed comparisons with existing methods,
+      particularly regarding how the INFINITY-CHAT dataset improves upon previous benchmarks'
+    decisive: false
+    tags: ["baseline_comparison", "benchmark_positioning", "novelty"]
+    dimension_impact: ["B", "D"]
+
+  # ============================================================
+  # A4: Dataset construction methodology under-documented
+  # Sources: Novelty Impact comment, Clarity Reproducibility comment 1
+  # ============================================================
+  - id: "A4"
+    text: "The criteria for selecting queries from WildChat, preprocessing steps, taxonomy construction assumptions, and annotation processes are not fully detailed."
+    severity:
+      level: "moderate"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_minor"
+    source_detail: >
+      Novelty Impact refined comment: 'more thorough explanation of the specific
+      methodologies used for data collection and analysis, including the assumptions
+      made during the taxonomy construction and the annotation process';
+      Clarity Reproducibility comment 1: 'criteria for selecting queries from the
+      WILDCHAT dataset and the specific processes for mining and categorizing these
+      queries are not fully detailed'
+    decisive: false
+    tags: ["dataset_construction", "methodology_detail", "taxonomy"]
+    dimension_impact: ["H"]
+
+  # ============================================================
+  # A5: Artificial Hivemind effect needs clearer definition
+  # Source: Clarity Reproducibility comment 2
+  # ============================================================
+  - id: "A5"
+    text: "The concept of the Artificial Hivemind effect needs a clearer definition and explanation of how it is systematically measured and identified."
+    severity:
+      level: "minor"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_minor"
+    source_detail: >
+      Clarity Reproducibility refined comment 2: 'include a more detailed explanation
+      of how this effect is systematically measured and identified. Providing examples
+      or case studies would help readers understand the implications'
+    decisive: false
+    tags: ["concept_clarity", "measurement_methodology", "definition"]
+    dimension_impact: ["G"]
+
+  # ============================================================
+  # A6: Model configurations and experimental details insufficient
+  # Source: Clarity Reproducibility comment 4
+  # ============================================================
+  - id: "A6"
+    text: "The paper lacks specific details on model configurations, pre-training procedures, hardware/software specifications, and experimental conditions across 70+ models."
+    severity:
+      level: "minor"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_minor"
+    source_detail: >
+      Clarity Reproducibility refined comment 4: 'the paper discusses the use of over
+      70 language models, it lacks specific details on model configurations, pre-training,
+      and experimental conditions'
+    decisive: false
+    tags: ["experimental_detail", "model_specifications", "reproducibility"]
+    dimension_impact: ["H"]
+
+  # ============================================================
+  # A7: Evaluation metrics lack formal definitions
+  # Source: Clarity Reproducibility comment 5
+  # ============================================================
+  - id: "A7"
+    text: "Evaluation metrics such as entropy and Spearman's correlation are used without providing specific formulas or methodological detail."
+    severity:
+      level: "minor"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_minor"
+    source_detail: >
+      Clarity Reproducibility refined comment 5: 'uses various metrics, such as entropy
+      and Spearman's correlation, to assess human disagreement and model calibration.
+      However, it does not provide specific formulas or methodologies'
+    decisive: false
+    tags: ["metric_definition", "statistical_methodology", "evaluation"]
+    dimension_impact: ["D", "G"]
+
+  # ============================================================
+  # A8: English-only scope limits generalizability
+  # Source: Clarity Reproducibility comment 6
+  # ============================================================
+  - id: "A8"
+    text: "The dataset focuses on English-language prompts, limiting linguistic, cultural, and regional diversity and potentially constraining generalizability of findings."
+    severity:
+      level: "moderate"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_minor"
+    source_detail: >
+      Clarity Reproducibility refined comment 6: 'The focus on English-language prompts
+      may limit linguistic, cultural, and regional diversity. Addressing this limitation
+      and discussing potential impacts on the study's findings would be beneficial'
+    decisive: false
+    tags: ["language_scope", "generalizability", "dataset_limitation"]
+    dimension_impact: ["F"]
+
+  # ============================================================
+  # A9: Reproducibility concerns
+  # Source: Clarity Reproducibility comment 7
+  # ============================================================
+  - id: "A9"
+    text: "Insufficient detail is provided for full study reproduction, including barriers from proprietary model access and incomplete specification of data collection to analysis pipeline."
+    severity:
+      level: "minor"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_minor"
+    source_detail: >
+      Clarity Reproducibility refined comment 7: 'ensuring that all steps, from data
+      collection to analysis, are described in sufficient detail is crucial for
+      replication. Addressing potential barriers to reproducibility, such as proprietary
+      tools or data restrictions'
+    decisive: false
+    tags: ["reproducibility", "data_availability", "replication"]
+    dimension_impact: ["H"]
+
+method_specific:
+  system: "MARG (Multi-Agent Review Generation, allenai/marg-reviewer)"
+  model: "gpt-4o"
+  specialties: ["experiments_proofs", "novelty_impact", "clarity_reproducibility"]
+  review_format: >
+    MARG produces constructive review comments organized by specialty through
+    multi-agent collaboration. It does not produce explicit accept/reject verdicts,
+    numerical scores, gates, scorecards, or adversarial briefs. All outputs are
+    improvement-oriented suggestions. Verdict coded as REJECT for schema compliance
+    since the system identifies only weaknesses and never endorses acceptance.
+  no_explicit_verdict: true
+  no_gates: true
+  no_scorecard: true
+  no_adversarial_brief: true

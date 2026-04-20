@@ -1,0 +1,128 @@
+schema_version: "v1"
+paper: "rl_reasoning_limits"
+version: "own_group/liang_run1"
+method: "baseline"
+
+matches:
+  # ============================================================
+  # Exact matches
+  # ============================================================
+  - official_id: "O19"
+    agentic_id: "A7"
+    match_type: "exact"
+    issue: "Perplexity analysis limited to only two AIME samples, insufficient to support general claims"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # official: moderate, agentic: major → gap +1, within tolerance
+    rationale: "Both identify the same specific concern: the perplexity analysis in Section 4.1 uses only 2 AIME24 problems, which is too small a sample for general conclusions. O19 frames as question ('Why only two?'), A7 frames as critique ('far too small'). Same issue, same direction."
+
+  # ============================================================
+  # Partial matches
+  # ============================================================
+  - official_id: "O1"
+    agentic_id: "A3"
+    match_type: "partial"
+    issue: "Limited experimental scale undermines generality of conclusions"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # official: major, agentic: major → gap 0
+    rationale: "Both concern limited experimental scale but target different facets. O1 focuses on model size (7-32B) and training data diversity. A3 focuses on training compute (150-450 steps, 2000 problems) being too small versus frontier recipes. Same issue family — experiments not at frontier scale — but would require different fixes."
+
+  - official_id: "O20"
+    agentic_id: "A4"
+    match_type: "partial"
+    issue: "Frontier-scale model evidence is insufficient or unconvincing"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # official: major, agentic: major → gap 0
+    rationale: "O20 asks whether findings extend to 70B+ models. A4 critiques the Magistral-Medium experiment as unconvincing due to API opacity and non-crossing curves. Both are about frontier model evidence but from different angles: O20 asks for it, A4 says what was provided is inadequate."
+
+  - official_id: "O2"
+    agentic_id: "A1"
+    match_type: "partial"
+    issue: "Pass@k evaluation validity questioned — alternative explanations not fully ruled out"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # official: moderate, agentic: major → gap +1, within tolerance
+    rationale: "Both question whether pass@k results truly reflect reasoning capacity vs artifacts. O2 targets the random guessing confound (correct final answers from incorrect CoTs). A1 targets the entropy confound (higher entropy gives broader coverage regardless of reasoning quality). Same issue family (evaluation validity) but different specific mechanisms requiring different fixes."
+
+  - official_id: "O9"
+    agentic_id: "A2"
+    match_type: "partial"
+    issue: "Conceptual framing of 'reasoning capability' via pass@k is problematic"
+    judgment_alignment: "aligned"
+    severity_alignment: "over"  # official: minor, agentic: major → gap +2
+    rationale: "Both question the paper's conceptual framing of reasoning capacity. O9 is a terminology concern ('reasoning capacity/boundary' is a misnomer, should be 'coverage/scope'). A2 is a deeper philosophical concern (probability ~0.1% may not constitute a genuine 'capability'). Same concept — what does pass@k actually measure? — but A2 elevates this from minor terminology to a major conceptual challenge."
+
+  # ============================================================
+  # Related matches (near-misses, not strict matches)
+  # ============================================================
+  - official_id: "O8"
+    agentic_id: "A5"
+    match_type: "related"
+    issue: "Temperature/entropy effects on pass@k evaluation"
+    judgment_alignment: "n/a"
+    severity_alignment: "n/a"
+    rationale: "Both involve the temperature/entropy dimension but at very different scales. O8 flags a specific empirical anomaly in Figure 16 (higher temperature benefits RL model on AIME24, contradicting T=0.6 choice). A5 makes the much broader methodological argument that temperature scaling is a crude proxy for distributional shift and importance-weighted estimates are needed. Same topic area but different scope and specificity."
+
+# ============================================================
+# Positive factor matches (paper was accepted as Oral)
+# ============================================================
+positive_factor_matches:
+  - official_factor_id: "D1"
+    agentic_source: "mention"
+    agentic_text: "Paper addresses a timely and important question — whether RLVR genuinely elicits new reasoning capabilities or merely reshapes the sampling distribution — which is provocative and practically consequential (M6). Pass@k methodology offers a principled and interpretable lens (M2)."
+    match_type: "partial"
+    judgment_alignment: "aligned"
+    rationale: "The agentic system recognizes the question's importance (M6) and the methodology's value (M2), but frames these as context rather than as decisive factors for acceptance. D1's emphasis on pass@k being 'linked with diversity of reasoning' is not captured."
+
+  - official_factor_id: "D2"
+    agentic_source: "mention"
+    agentic_text: "Comprehensive empirical coverage spanning 4+ model families, 3 task domains, 6 RL algorithms (M1)"
+    match_type: "partial"
+    judgment_alignment: "aligned"
+    rationale: "M1 recognizes breadth of evidence, partially capturing D2's 'masterful execution.' However, D2's key element — that the rebuttal addresses all concerns leading to perfect scores — is not observable pre-rebuttal and thus not captured. The system acknowledges execution quality but underweights it relative to the methodological concerns."
+
+  - official_factor_id: "D3"
+    agentic_source: "none"
+    agentic_text: ""
+    match_type: "none"
+    judgment_alignment: "n/a"
+    rationale: "D3 (unanimous 6/6 Strong Accept post-rebuttal) is a post-discussion signal not observable to the agentic system. No match expected."
+
+  - official_factor_id: "D4"
+    agentic_source: "mention"
+    agentic_text: "Distillation vs RLVR contrast (Section 4.2) is a clean and insightful comparison that sharpens the narrative and offers actionable implications (M3)"
+    match_type: "exact"
+    judgment_alignment: "aligned"
+    rationale: "Both explicitly highlight the distillation vs RLVR comparison as a key insight. D4 emphasizes the diagnostic value ('limitation is specific to RLVR, not inherent to all post-training'). M3 says 'clean and insightful comparison that sharpens the narrative.' Same value recognition."
+
+# ============================================================
+# Unmatched concerns
+# ============================================================
+unmatched_official:
+  # Major concerns unmatched
+  - "O10"   # Lacks theoretical explanation for why RLVR fails (tKuY)
+  - "O14"   # No theoretical explanation, only experiments (6ryS) — overlaps O10
+  - "O17"   # Similar insights in prior work / DeepSeekMath novelty concern (6ryS)
+  # Moderate concerns unmatched
+  - "O3"    # Overfitting to test set as alternative explanation (79qN)
+  - "O11"   # May not generalize to future RL paradigms/reward structures (tKuY)
+  - "O12"   # Limited improvement suggestions (tKuY)
+  - "O13"   # Base model dependency (tKuY)
+  - "O15"   # Experiments focus on Qwen model series (6ryS)
+  - "O16"   # Evaluation too centered on pass@k (6ryS)
+  - "O21"   # Effect of task difficulty on pass@k gap (KdU6)
+  - "O22"   # Train vs test pass@k curves not distinguished (KdU6)
+  - "O23"   # Perplexity evolution during training not shown (KdU6)
+  - "O24"   # Limitations section missing/insufficient (KdU6, 79qN)
+  - "O25"   # Contradicting CoT-Pass@k paper (KdU6)
+  - "O26"   # SFT pre-training effect on conclusions (79qN)
+  # Minor concerns unmatched
+  - "O4"    # Table 1 training data layout (79qN)
+  - "O5"    # Figure 6 perplexity vs o1 clarity (79qN)
+  - "O6"    # Figure 8 readability (79qN)
+  - "O7"    # Tables 4&5 percentage overlap (79qN)
+  - "O8"    # Figure 16 temperature inconsistency (79qN) — related-only to A5
+  - "O18"   # Hyperparameters not reported (6ryS)
+
+unmatched_agentic:
+  - "A5"    # Entropy reduction confound / temperature as crude proxy — related-only to O8
+  - "A6"    # Prompt sensitivity confound (base model not trained with RL prompt format)
+  - "A8"    # Token-level perplexity doesn't rule out novel reasoning strategy combinations

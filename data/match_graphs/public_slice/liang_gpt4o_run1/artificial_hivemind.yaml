@@ -1,0 +1,237 @@
+schema_version: "v1"
+paper: "artificial_hivemind"
+version: "v0.9.2"
+condition: "own_group/liang_gpt4o_run1"
+method: "baseline_liang_etal"
+
+matches:
+  # ----------------------------------------------------------------
+  # A2 ↔ O1: Exact — same specific concern about English-only dataset
+  # ----------------------------------------------------------------
+  - official_id: O1
+    agentic_id: A2
+    match_type: exact
+    issue: "Dataset is limited to English-language queries, constraining generalizability across languages and cultures"
+    judgment_alignment: aligned
+    severity_alignment: match  # O1: moderate, A2: moderate — same level
+    rationale: >-
+      Both identify the same specific limitation: INFINITY-CHAT contains only
+      English queries from WildChat, which limits generalizability to other
+      languages and cultures. Same scope, same normative conclusion.
+
+  # ----------------------------------------------------------------
+  # A4 ↔ O3: Exact — both flag insufficient causal/mechanistic analysis
+  # ----------------------------------------------------------------
+  - official_id: O3
+    agentic_id: A4
+    match_type: exact
+    issue: "Insufficient mechanistic analysis of why inter-model homogenization occurs"
+    judgment_alignment: aligned
+    severity_alignment: match  # O3: major, A4: moderate — gap=1, within tolerance
+    rationale: >-
+      Both flag the same gap: the paper diagnoses the Hivemind effect but does
+      not mechanistically disentangle causes (training data, alignment, decoding).
+      O3 is more specific (names contributing factors); A4 broadly says "could
+      delve deeper into underlying causes, exploring role of training data and
+      model architecture." Same underlying complaint.
+
+  # ----------------------------------------------------------------
+  # A4 ↔ O4: Related — A4 asks for more depth; O4 challenges whether
+  # the finding is even surprising (different normative implication)
+  # ----------------------------------------------------------------
+  - official_id: O4
+    agentic_id: A4
+    match_type: related
+    issue: "Understanding why the Hivemind effect occurs and whether it is expected"
+    judgment_alignment: mixed
+    severity_alignment: n/a  # related match
+    rationale: >-
+      Both concern the lack of mechanistic understanding, but from different
+      angles. A4 wants more analytical depth. O4 fundamentally challenges whether
+      the finding is surprising given shared training data and the law of large
+      numbers. A4 accepts the finding's significance and wants more explanation;
+      O4 questions the contribution's value. Different normative implications.
+
+  # ----------------------------------------------------------------
+  # A5 ↔ O11: Partial — both about human annotation analysis, but
+  # vastly different specificity
+  # ----------------------------------------------------------------
+  - official_id: O11
+    agentic_id: A5
+    match_type: partial
+    issue: "Human annotation analysis methodology needs improvement"
+    judgment_alignment: aligned
+    severity_alignment: under  # O11: major, A5: minor — gap=2, agentic too lenient
+    rationale: >-
+      Both target the Section 4 human annotation analysis. However, O11
+      identifies specific technical flaws (questionable subset selection,
+      unjustified entropy metric, unclear averaging motivation) while A5
+      vaguely suggests the analysis "could be expanded to explore more nuanced
+      aspects." The agentic system noticed the area but missed the specific
+      technical problems. Severity gap of 2 levels (minor vs major) reflects
+      the shallow critique.
+
+  # ----------------------------------------------------------------
+  # A3 ↔ O15: Partial — both about model scope limitations, but
+  # different specifics
+  # ----------------------------------------------------------------
+  - official_id: O15
+    agentic_id: A3
+    match_type: partial
+    issue: "Model coverage limitations may constrain generalizability of findings"
+    judgment_alignment: aligned
+    severity_alignment: match  # O15: moderate, A3: minor — gap=1, within tolerance
+    rationale: >-
+      Both flag that the model selection limits generalizability. O15 specifically
+      calls for testing on foundation models without instruction-following to
+      disentangle pre/post-training effects. A3 broadly notes that focus on
+      "specific models and configurations might limit applicability." Partial
+      because A3's broader scope includes O15's specific concern, but fixing
+      O15 alone (adding foundation models) would not fully resolve A3.
+
+  # ----------------------------------------------------------------
+  # A7 ↔ O14: Partial — both about dataset accessibility, different facets
+  # ----------------------------------------------------------------
+  - official_id: O14
+    agentic_id: A7
+    match_type: partial
+    issue: "Dataset accessibility barriers for the research community"
+    judgment_alignment: aligned
+    severity_alignment: match  # O14: moderate, A7: minor — gap=1, within tolerance
+    rationale: >-
+      Both concern the accessibility of INFINITY-CHAT. O14 specifically reports
+      a broken dataset link at review time. A7 more broadly requests better
+      documentation and instructions for accessing and using the dataset.
+      Related family (data accessibility) but different facets: broken link
+      vs documentation quality.
+
+  # ----------------------------------------------------------------
+  # A1 ↔ O7: Related — both about presentation conciseness, vastly
+  # different scope
+  # ----------------------------------------------------------------
+  - official_id: O7
+    agentic_id: A1
+    match_type: related
+    issue: "Presentation could be more concise"
+    judgment_alignment: aligned
+    severity_alignment: n/a  # related match
+    rationale: >-
+      Both flag conciseness concerns. O7 specifically targets Figure 1 as
+      cluttered with too many models. A1 broadly flags the entire paper as
+      dense and overwhelming, with experimental setup needing clearer
+      presentation. Very different scope — fixing O7 (simplifying one figure)
+      would not address A1's broader density concern.
+
+positive_factor_matches:
+  # ----------------------------------------------------------------
+  # D1 ↔ R1: Dataset quality — captured but less specific
+  # ----------------------------------------------------------------
+  - official_factor_id: D1
+    agentic_source: decision_driver
+    agentic_text: >-
+      Introduction of INFINITY-CHAT dataset and comprehensive open-ended prompt
+      taxonomy fills a gap in studying language model output diversity.
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >-
+      D1 praises the benchmark as "meticulously constructed" with "31K+
+      annotations, 25 per example." R1 captures the dataset contribution and
+      taxonomy but does not mention the specific annotation density or
+      construction quality that the AC found compelling.
+
+  # ----------------------------------------------------------------
+  # D2 ↔ M2: Evaluation framework — partially captured as methodology
+  # ----------------------------------------------------------------
+  - official_factor_id: D2
+    agentic_source: mention
+    agentic_text: >-
+      Methodology is robust, employing a large number of models and human
+      annotations to ensure reliability of results.
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >-
+      D2 highlights the "fine-grained and comprehensive" evaluation framework
+      measuring diversity, human alignment, and inter-model homogenization.
+      M2 captures robustness with many models and annotations but does not
+      identify the specific framework dimensions (diversity, alignment,
+      homogenization) that the AC found distinctive.
+
+  # ----------------------------------------------------------------
+  # D3 ↔ R2: Hivemind effect discovery — captured with less specificity
+  # ----------------------------------------------------------------
+  - official_factor_id: D3
+    agentic_source: decision_driver
+    agentic_text: >-
+      Artificial Hivemind findings are well-supported by extensive empirical
+      analysis across a large number of models and human annotations.
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >-
+      D3 specifically notes the effect is demonstrated "through automatic and
+      hand-written queries, with both intra- and inter-model homogeneity
+      demonstrated across 70+ LMs." R2 captures the well-supported findings
+      but does not mention the 70+ model scale, the dual query sources
+      (automatic + hand-written), or the intra/inter distinction.
+
+  # ----------------------------------------------------------------
+  # D4 ↔ M3: Alignment/diversity tension — thematically captured
+  # ----------------------------------------------------------------
+  - official_factor_id: D4
+    agentic_source: mention
+    agentic_text: >-
+      Discussion on implications of homogenization for AI safety and human
+      creativity is timely and relevant, potentially guiding future research.
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >-
+      D4 highlights the tension between alignment and diversity and the
+      importance of capturing human pluralism. M3 captures the AI safety and
+      creativity implications as "timely and relevant" but does not articulate
+      the specific alignment-diversity tension or pluralism framing that the
+      AC found important.
+
+  # ----------------------------------------------------------------
+  # D5: Presentation quality — agentic system saw opposite
+  # ----------------------------------------------------------------
+  - official_factor_id: D5
+    agentic_source: none
+    match_type: none
+    judgment_alignment: inverted
+    rationale: >-
+      D5 praises the paper as "well-written with clear figures, well-structured
+      code, and strong documentation." The agentic system raised the opposite
+      concern (A1: paper is dense and overwhelming, experimental setup lacks
+      clarity). The system noticed presentation but framed it negatively rather
+      than positively.
+
+  # ----------------------------------------------------------------
+  # D6: Rebuttal quality — post-rebuttal process, not observable
+  # ----------------------------------------------------------------
+  - official_factor_id: D6
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >-
+      D6 is about authors addressing reviewer concerns during rebuttal, leading
+      to score increases. This is a post-submission review process dynamic that
+      the agentic system cannot observe from the paper alone.
+
+unmatched_official:
+  - O2   # Limited actionable guidance for applying the metric
+  - O4   # Hivemind effect is statistically expected (related-only via A4)
+  - O5   # Need to test with paraphrased queries (robustness check)
+  - O6   # Query entropy impact on Hivemind effect
+  - O7   # Figure 1 could be more concise (related-only via A1)
+  - O8   # Missing taxonomy discussion in related work
+  - O9   # Open-endedness of queries not verified
+  - O10  # Similarity scores lack reference/baseline for interpretation
+  - O12  # Similarity score range too narrow for meaningful comparison
+  - O13  # Cosine metric vs inter/intra model metric inconsistency
+  - O16  # Codebase should include scripts for testing each model
+  - O17  # New human annotation results should be in camera-ready
+  - O18  # Results need deeper interpretation and discussion
+  - O19  # Justification for averaging human ratings
+
+unmatched_agentic:
+  - A1   # Paper density/clarity (related-only via O7)
+  - A6   # Proprietary model reproducibility — no official counterpart

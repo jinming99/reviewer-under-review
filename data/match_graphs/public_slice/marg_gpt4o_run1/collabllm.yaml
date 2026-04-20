@@ -1,0 +1,177 @@
+schema_version: v1
+paper: collabllm
+version: own_group/marg_gpt4o_run1
+method: baseline
+
+matches:
+  # ── Strict matches (exact / partial) ──────────────────────────
+
+  - official_id: O22
+    agentic_id: A10
+    match_type: exact
+    issue: "LLM user simulator limitations need comprehensive discussion"
+    judgment_alignment: aligned
+    severity_alignment: match  # minor ↔ minor
+    rationale: >
+      Both directly request more discussion of user simulator limitations.
+      O22 specifically mentions instruction-tuned LLMs being overly agreeable;
+      A10 asks generally for challenges and potential impact on findings. Same
+      underlying ask — elaborate on simulator shortcomings.
+
+  - official_id: O1
+    agentic_id: A6
+    match_type: partial
+    issue: "Multiturn-aware Reward mechanism clarity"
+    judgment_alignment: aligned
+    severity_alignment: match  # major ↔ moderate (±1)
+    rationale: >
+      Both target MR clarity but from different angles. O1 asks how MR
+      mechanistically encourages collaboration (why does it work?). A6 asks
+      for specific metrics/criteria in the MR calculation (how is it computed?).
+      Same issue family — MR explanation gaps — but different facets.
+
+  - official_id: O12
+    agentic_id: A4
+    match_type: partial
+    issue: "Ablation study does not isolate individual component contributions"
+    judgment_alignment: aligned
+    severity_alignment: match  # major ↔ moderate (±1)
+    rationale: >
+      Both want better disentangling of what drives the improvements. O12
+      specifically asks whether gains stem from MR framework vs reward
+      modification (replacing helpfulness with extrinsic+intrinsic). A4
+      generically requests regression analysis to quantify individual reward
+      components. Same issue family but A4 is less specific.
+
+  - official_id: O9
+    agentic_id: A9
+    match_type: partial
+    issue: "Gap between simulated/synthetic training data and real-world interactions"
+    judgment_alignment: aligned
+    severity_alignment: match  # moderate ↔ moderate
+    rationale: >
+      Both concern the sim-to-real gap but at different levels. O9 specifically
+      flags that LLM-prompted user simulators could be substantially biased
+      vs real human users during training. A9 asks about validation techniques
+      for synthetic datasets generally. O9 would require a bias comparison
+      study; A9 would require dataset validation metrics — different fixes.
+
+  - official_id: O14
+    agentic_id: A7
+    match_type: partial
+    issue: "Forward sampling window size effects need explanation"
+    judgment_alignment: aligned
+    severity_alignment: match  # minor ↔ minor
+    rationale: >
+      Both relate to the window size hyperparameter. O14 flags a specific
+      counterintuitive observation (ITR decreasing from w=2 to w=3). A7
+      generically asks for more explanation of how window size is determined
+      and its effect on performance. A7 is broader but less specific than O14.
+
+  # ── Related-only matches (near-misses) ────────────────────────
+
+  - official_id: O11
+    agentic_id: A1
+    match_type: related
+    issue: "Evidence quality for claimed performance improvements"
+    judgment_alignment: aligned
+    severity_alignment: n/a
+    rationale: >
+      Both are about whether the improvements are convincingly demonstrated,
+      but the complaints are different. O11 argues the improvements are
+      *small* (35% to 36-38% BLEU) and questions real impact. A1 asks for
+      *statistical significance tests* (t-tests/ANOVA). O11 is an effect-size
+      concern; A1 is a statistical-rigor concern. Different author fixes needed.
+
+# ── Positive factor matches ──────────────────────────────────────
+
+positive_factor_matches:
+  - official_factor_id: D1
+    agentic_source: decision_driver
+    agentic_text: >
+      CollabLLM framework enhances multiturn human-LLM collaboration using
+      Multiturn-aware Rewards and reinforcement fine-tuning, showing improvements
+      in user satisfaction and efficiency.
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >
+      R1 mentions enhancing multiturn collaboration, partially capturing the
+      problem importance. However, R1 frames it descriptively (what the paper
+      does) rather than evaluatively (this addresses an essential/important
+      problem). The importance judgment is implicit at best.
+
+  - official_factor_id: D2
+    agentic_source: mention
+    agentic_text: >
+      Forward sampling strategy for estimating long-term impact of responses
+      recognized as a meaningful methodological contribution.
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >
+      M2 recognizes the forward sampling strategy as meaningful, partially
+      capturing D2's praise of the data generation method and multi-turn
+      reward as technically sound. But M2 only credits forward sampling,
+      missing the user simulator data generation and the holistic MR design
+      that the AC praised as "technically sound."
+
+  - official_factor_id: D3
+    agentic_source: mention
+    agentic_text: >
+      Framework evaluated through a multiturn interaction benchmark and large
+      user study (201 MTurk participants), demonstrating practical impact.
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >
+      M1 captures the evaluation breadth (benchmark + user study) but does
+      not specifically note "strong results" or "strong baselines" as the AC
+      did. The user study size (201 participants) is noted but the comparison
+      to strong baselines is absent.
+
+  - official_factor_id: D4
+    agentic_source: none
+    agentic_text: ""
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >
+      The agentic review does not mention the three public benchmark
+      contributions (MediumDocEdit-Chat, BigCodeBench-Chat, MATH-Chat)
+      as a positive factor. This community resource contribution was
+      completely missed.
+
+  - official_factor_id: D5
+    agentic_source: none
+    agentic_text: ""
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >
+      D5 is about author responsiveness during rebuttal, which is not
+      observable to the agentic system (it reviews the paper, not the
+      rebuttal process). This is a structural miss, not a system failure.
+
+# ── Unmatched concerns ───────────────────────────────────────────
+
+unmatched_official:
+  - O2   # Causal effect estimation claim unconvincing
+  - O3   # Dataset access / reproducibility
+  - O4   # Novelty — resemblance to self-training
+  - O5   # Missing related references on multi-turn RL benchmarks
+  - O6   # Computational overhead / scalability
+  - O7   # Generalization tested on single dataset only
+  - O8   # Integration with existing RL frameworks
+  - O10  # MR hard to define for ambiguous tasks
+  - O11  # Small improvements over prompt engineering (related-only)
+  - O13  # BLEU metric appropriateness
+  - O15  # ITR metric scoring clarity
+  - O16  # Caption typo in Figure 2
+  - O17  # Helpfulness as w=0 reward not optimized
+  - O18  # Broader literature missing from main text
+  - O19  # Missing comparison with user-simulator-based prior work
+  - O20  # Discussion of user simulator model choice (GPT-4o)
+  - O21  # Quantitative comparison with prior multi-turn training methods
+
+unmatched_agentic:
+  - A1   # Statistical significance tests needed (related-only match to O11)
+  - A2   # Qualitative analysis of user interactions — phantom (no reviewer asked)
+  - A3   # Thematic analysis of user feedback — phantom (no reviewer asked)
+  - A5   # Longitudinal study — phantom (no reviewer asked)
+  - A8   # User study participant selection details — phantom (no reviewer asked)

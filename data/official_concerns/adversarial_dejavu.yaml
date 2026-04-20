@@ -1,0 +1,576 @@
+schema_version: "v1"
+paper: "adversarial_dejavu"
+title: "Adversarial Deja Vu: Jailbreak Dictionary Learning for Stronger Generalization to Unseen Attacks"
+venue: "ICLR 2026"
+official_verdict: "accepted"
+decision_type: "Poster"
+reviewer_scores: [6, 2, 8, 6]  # jXni, Q4KG, DHsL, 5oss (pre-rebuttal)
+reviewer_scores_post: [6, 6, 8, 6]  # Q4KG raised from 2 to 6 post-rebuttal
+
+ac_rationale_quality: "detailed"
+# AC 1jTh provides a structured meta-review with: summary of methodology, personal
+# endorsement of the DL approach, explicit per-reviewer concern analysis, specific
+# suggestions for the final version, predicted score changes per reviewer, and a
+# clear recommendation to accept. Multi-paragraph with decisive reasoning.
+
+# ============================================================
+# PDF version status (Skill 1b Step 0)
+# ============================================================
+pdf_is_revised: true
+revision_evidence: "OpenReview shows '2 Versions' badge (Published: 26 Jan 2026, Last Modified: 01 Mar 2026). Authors' Discussion-Period Summary explicitly states 'No core changes were made to the method or claims, and the main contributions remain intact' but lists substantive additions: Mistral-7B model (Table 2), BEAST and SAA attacks (Table 2), Figure 4 skill composition example, Claude 3.7 Sonnet as second judge (Table 1), control experiments (random skill, refusal training, DeepSeek helper, 20 refusal templates), three-seed stability results, StrongReject clarification, and revised Introduction citing AutoDAN-Turbo/WildTeaming. PDF contains Figure 4 (new), Table 2 with Mistral rows and BEAST/SAA columns, Table 1 with Claude scores, and references to Claude Sonnet 4 (October 2025) confirming post-submission content."
+
+concerns:
+  # ============================================================
+  # O1: Too few base models for ASCoT experiments
+  # Raised by: jXni (W1)
+  # ============================================================
+  - id: "O1"
+    text: "ASCoT experiments are limited to only two LLM families (Llama-3.1-8B, Zephyr-7B); more model families needed to justify generality claims."
+    verbatim: "Too few base models. The AT experiments in Section 3 were only conducted on two LLMs"
+    raised_by: ["jXni"]
+    severity: "major"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors added Mistral-7B-Instruct-v0.2 as a third model family. ASCoT outperforms baselines across all attack suites on all three models."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["model_coverage", "generalizability", "evaluation_scope"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Table 2 (p.8) now includes a full 'Mistral' section with rows for Refusal Trained, PAP Trained, CAT, CAT*, LAT, LAT*, WildJailbreak, ASCoT (closed), and ASCoT (open) across all seen and unseen attacks. Three model families are now evaluated."
+    note: "jXni suggested Qwen2.5/3, Gemma-2/3, Llama-2, Vicuna, and Mistral. Authors added Mistral only. AC does not explicitly address this concern but states 'If I were the reviewer, I would have raised the score to an 8' for jXni."
+
+  # ============================================================
+  # O2: Missing important representative jailbreak baselines
+  # Raised by: jXni (W2)
+  # ============================================================
+  - id: "O2"
+    text: "Missing important representative jailbreak baselines; most attacks evaluated (except AutoDAN-Turbo) are not widely adopted for jailbreak robustness analysis."
+    verbatim: "Missing important representative jailbreak baselines...most of these attacks are not widely adopted"
+    raised_by: ["jXni"]
+    severity: "major"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors added BEAST and Simple Adaptive Attack (SAA) as non-language-based attacks. ASCoT remains robust against these, demonstrating cross-attack generality."
+    ac_treatment: "resolved"
+    decisive: false
+    tags: ["missing_baselines", "evaluation_scope", "attack_coverage"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Table 2 (p.8) now includes 'BEAST' and 'Adaptive' (SAA) columns under 'Unseen Attacks' for all three model families. Section 3.2 Evaluation paragraph (p.8) explicitly lists 'BEAST (Sadasivan et al., 2024), Simple Adaptive Attack (Andriushchenko et al., 2024)' among unseen attacks."
+    note: "jXni suggested attacks from [r1] Hayase et al., [r2] Sadasivan et al. (BEAST), [r3] Andriushchenko et al. (SAA). Authors added [r2] and [r3]; [r1] had no open-source implementation. AC notes this under outstanding concerns: 'the authors add BEAST and the adaptive attack in the seen category, but I think the reviewer wanted them in the unseen one' -- AC appears to have misread, as they are listed as unseen in Table 2."
+
+  # ============================================================
+  # O3: StrongReject evaluation details unclear
+  # Raised by: jXni (W3)
+  # ============================================================
+  - id: "O3"
+    text: "Missing important details about StrongReject evaluation metric: definition, dataset, and calculation procedure for Table 2 are unclear."
+    verbatim: "What is 'StrongReject score'? Is it a variant of the 'Attack Success Rate'?"
+    raised_by: ["jXni"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors clarified StrongReject is a rubric-based harmfulness metric from Souly et al. (NeurIPS 2024) using GPT-4.1-mini as judge on the official forbidden-prompt dataset. Paper updated to include explicit description."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["evaluation_detail", "metric_definition", "clarity"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Section 3.2 Evaluation paragraph (p.8) now states: 'harmfulness using StrongReject scores (0-1) (Souly et al., 2024), following the official StrongReject evaluation pipeline. For each harmful instruction in the StrongReject forbidden-prompt dataset, we apply the jailbreak transformation and score the model's response using the StrongReject evaluator, using OpenAI GPT-4.1-mini as the judge.'"
+    note: "jXni asked three specific sub-questions about StrongReject. Authors provided comprehensive clarification and updated the paper text."
+
+  # ============================================================
+  # O4: Prompting-based skill extraction not novel (AutoDAN-Turbo overlap)
+  # Raised by: jXni (W4), Q4KG (W2)
+  # ============================================================
+  - id: "O4"
+    text: "The prompting-based skill extraction and attack-via-prompting-with-skill-descriptions techniques were first proposed in AutoDAN-Turbo (2024), making the contribution feel incremental."
+    verbatim: "these methods were first proposed in the AutoDAN-Turbo paper in 2024"
+    raised_by: ["jXni", "Q4KG"]
+    severity: "major"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors explicitly acknowledged AutoDAN-Turbo and WildTeaming in the Introduction. Argued the full pipeline (hypothesis + DL + temporal analysis + basis pursuit + ASCoT) is distinct from prompting alone. Q4KG was convinced: 'I am now convinced the contribution is not incremental.'"
+    ac_treatment: "resolved"
+    decisive: false
+    tags: ["novelty_delta", "overlap_with_prior_work", "autodan_turbo"]
+    issue_type: "conceptual"
+    addressed_in_pdf: true
+    pdf_evidence: "Introduction (p.2) now explicitly cites AutoDAN-Turbo (Liu et al., 2024b) and WildTeaming (Jiang et al., 2024) in the paragraph discussing compositional generalization, distinguishing the paper's hypothesis-driven approach from prior prompting-based methods."
+    note: "Q4KG's central concern. After rebuttal, Q4KG explicitly stated: 'The authors' response effectively clarified three key distinctions: objective difference, technical novelty, and empirical validation.' Score raised from 2 to 6."
+
+  # ============================================================
+  # O5: Paper format violation (width exceeds ICLR template)
+  # Raised by: jXni (W5)
+  # ============================================================
+  - id: "O5"
+    text: "Paper width exceeds the ICLR submission template restriction."
+    verbatim: "The width of this paper is far larger than the restriction of the ICLR submission template"
+    raised_by: ["jXni"]
+    severity: "minor"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors fixed formatting in revised version."
+    ac_treatment: "accepted_limitation"
+    decisive: false
+    tags: ["formatting", "template_compliance"]
+    issue_type: "framing"
+    addressed_in_pdf: true
+    pdf_evidence: "The PDF appears to follow standard ICLR formatting with normal margins and column width. The title page matches standard ICLR 2026 template layout."
+    note: "AC flags this under outstanding concerns: 'this is potentially a very serious breach of the rules of ICLR. I employ the authors to ensure that the final version of the paper follows the paper template very closely.' Despite the strong language, AC recommends acceptance, treating it as non-blocking after the fix. AC also says: 'You can legitimately be desk rejected for this.'"
+
+  # ============================================================
+  # O6: Lacks concrete skill composition examples
+  # Raised by: Q4KG (W1)
+  # ============================================================
+  - id: "O6"
+    text: "Paper lacks concrete before-and-after examples showing how skill primitives from the Jailbreak Dictionary transform base prompts into adversarial ones."
+    verbatim: "The paper lacks concrete examples illustrating how the skill primitives...are applied to transform base prompts"
+    raised_by: ["Q4KG"]
+    severity: "major"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors added Figure 4 in the main text showing an illustrative example of skill composition with explicit before/after prompt transformations."
+    ac_treatment: "resolved"
+    decisive: false
+    tags: ["examples", "interpretability", "skill_composition"]
+    issue_type: "framing"
+    addressed_in_pdf: true
+    pdf_evidence: "Figure 4 (p.7) shows a concrete example: an 'Original Query' about forging payment evidence is transformed via two skills (executable_code_request + authority_narrative_priming) into a 'Mutated Query' with academic framing. The before-and-after transformation is explicit with skill labels shown."
+    note: "Q4KG confirmed resolution in post-rebuttal comment: 'The addition of Figure 4 in the main text significantly improves clarity. The before-and-after prompt transformations now make the skill composition mechanism tangible and understandable.'"
+
+  # ============================================================
+  # O7: AutoDAN-Turbo resemblance / incremental contribution
+  # Raised by: Q4KG (W2)
+  # ============================================================
+  - id: "O7"
+    text: "The overall structure of using composed attack strategies for prompt generation resembles AutoDAN-Turbo, making the Jailbreak Dictionary contribution feel incremental; a direct comparative experiment is needed."
+    verbatim: "the overall structure of using composed attack strategies for prompt generation resembles AutoDAN-Turbo"
+    raised_by: ["Q4KG"]
+    severity: "major"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors provided a direct comparative experiment: trained a defense using AutoDAN-Turbo's strategy set (matched data size). ASCoT-trained model (StrongReject 0.11) substantially outperformed AutoDAN-Turbo-trained model (0.20) on PAIR. Q4KG was fully convinced."
+    ac_treatment: "resolved"
+    decisive: false
+    tags: ["autodan_turbo", "novelty_delta", "direct_comparison"]
+    issue_type: "conceptual"
+    addressed_in_pdf: false
+    pdf_evidence: "No direct ASCoT-vs-AutoDAN-Turbo-trained defense comparison table appears in the main paper or appendix. The comparative experiment was presented only in the rebuttal response to Q4KG. Table 2 includes AutoDAN-Turbo as an unseen attack but does not include an 'AutoDAN-Turbo-trained defense' baseline row."
+    note: "Q4KG's most critical concern, directly addressed with empirical evidence in rebuttal. Post-rebuttal: 'I am now convinced the contribution is not incremental.' AC suggests 'The comparative experiment with AutoDAN-Turbo could be highlighted more prominently' as a remaining minor suggestion from Q4KG."
+
+  # ============================================================
+  # O8: AutoDAN-Turbo as unseen attack fairness
+  # Raised by: Q4KG (W3)
+  # ============================================================
+  - id: "O8"
+    text: "AutoDAN-Turbo is listed as an unseen attack in evaluation but its paper is included in the curated set of 32 jailbreak papers used to construct the skill dictionary, raising fairness concerns."
+    verbatim: "I do not think this can be called 'unseen attack'. Authors should clarify the rationale"
+    raised_by: ["Q4KG"]
+    severity: "major"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors clarified that Appendix B lists all 32 surveyed papers but the temporal cutoff (August 15, 2024) determines seen/unseen. AutoDAN-Turbo was released October 2024, thus correctly treated as unseen."
+    ac_treatment: "resolved"
+    decisive: false
+    tags: ["evaluation_fairness", "temporal_cutoff", "data_leakage"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Appendix B (pp.16-17) lists all 32 attack papers with dates. AutoDAN-Turbo is listed with date '10/03/2024'. Section 2.4 (p.5) states the temporal cutoff: 't_cutoff = August 15, 2024' with 'n_seen = 26 jailbreaks before the cutoff' and 'n_unseen = 6 post-cutoff jailbreaks including AutoDAN-Turbo (Liu et al., 2024b).' The temporal cutoff mechanism is explicit in the paper."
+    note: "Q4KG confirmed: 'The clarification about the August 15, 2024 cutoff fully resolves my concern. AutoDAN-Turbo (October 2024) was correctly treated as unseen.'"
+
+  # ============================================================
+  # O9: Stability of automated skill extraction
+  # Raised by: DHsL (W1)
+  # ============================================================
+  - id: "O9"
+    text: "Since seen attack methods use automated processes relying on prompts, this may affect the stability of extracting skills."
+    verbatim: "it seems to rely on prompts, which may affect the stability of extracting skills"
+    raised_by: ["DHsL"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors argued the corpus contains both static and automated attacks, extraction aggregates across many attack pairs smoothing noise, and dictionary behavior (Figure 3) shows stable rise-and-plateau pattern indicating consistent skill capture."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["robustness", "extraction_stability", "automation_bias"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Figure 3 (p.6) shows explainability scores rising monotonically from ~3.02 (Seen: 2) to ~4.36 (Seen: 29) and plateauing, empirically demonstrating extraction stability. Section 2.2 (p.3) describes extracting from 1,494 original-mutated prompt pairs producing 16,901 skills, providing scale that smooths idiosyncratic noise. The plateau pattern is visible in the published figure."
+    note: "DHsL rated 8 (accept, good paper). This was a secondary concern. Authors provided empirical evidence of extraction stability through the dictionary's saturation behavior."
+
+  # ============================================================
+  # O10: Dictionary from subset + experimental verification gap
+  # Raised by: DHsL (W2)
+  # ============================================================
+  - id: "O10"
+    text: "Paper lacks extracting dictionaries from a subset of 32 research papers, forming a combination method, and experimentally verifying the gap in capabilities."
+    verbatim: "The paper lacks extracting dictionaries from a subset of 32 research papers, forming a combination method"
+    raised_by: ["DHsL"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors pointed to existing temporal-subset ablation in Figure 3 and added new robustness evidence training ASCoT at two temporal cutoffs (7 and 26 seen attacks) showing consistent improvement."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["ablation", "subset_analysis", "temporal_generalization"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Figure 3 (p.6) shows temporal subset ablation with five cutoff points (Seen: 2, 7, 17, 26, 29). Section 4.2 (p.9) presents the 'Coverage Dividend' analysis with four nested dictionaries of size 12, 50, 200, and all primitives. Figure 5(a) (p.9) shows harmfulness steadily decreasing as more primitives are included. These together demonstrate subset-based verification."
+    note: "DHsL's second weakness. Authors argued temporal subsets are more meaningful than random subsets given the generalization-to-unseen goal. The rebuttal also provided two-cutoff ASCoT training results (7 vs 26 seen attacks) but these specific numbers do not appear in the final PDF."
+
+  # ============================================================
+  # O11: GPT-4.1 bias in evaluation / missing independent judge
+  # Raised by: 5oss (W1)
+  # ============================================================
+  - id: "O11"
+    text: "Skill extraction and explainability scoring rely on GPT-4.1; human-in-the-loop verification is mentioned but not quantified, raising potential model-specific bias or leakage concerns."
+    verbatim: "the extent and protocol are not quantified, raising leakage/bias concerns"
+    raised_by: ["5oss"]
+    severity: "major"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors added Claude 3.7 Sonnet as a second independent judge. Cross-model alignment shows both judges agree on relative ordering between Dfinal and Dover across all unseen attack families."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["evaluator_bias", "model_dependence", "cross_validation"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Section 2.4 (p.5) states: 'To reduce potential bias from using the same model for both skill extraction and evaluation, we repeated the scoring process with a second judge -- Claude 3.7 Sonnet (Anthropic, 2025a) -- using the same rubric and templates.' Table 1 (p.6) includes both 'Explainability Score (GPT-4.1)' and 'Explainability Score (Claude 3.7 Sonnet)' rows showing cross-model agreement."
+    note: "5oss suggested independent human ratings or a distinct non-OpenAI judge. Authors addressed with Claude as second judge but did not add human ratings."
+
+  # ============================================================
+  # O12: Missing key control experiments
+  # Raised by: 5oss (W2)
+  # ============================================================
+  - id: "O12"
+    text: "Key controls are absent: random skill training, harmful-data-only training, swapping helper generator, and removing refusal-template pairing, needed to isolate ASCoT's gains from generic data augmentation."
+    verbatim: "Without these, attribution to skill coverage and generic data augmentation is uncertain"
+    raised_by: ["5oss"]
+    severity: "major"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors added all four controls: (a) random skill subset underperforms due to redundancy; (b) Refusal Training baseline with same data budget shows weak robustness; (c) DeepSeek-V3-Chat as alternative helper shows cross-style generalization; (d) 20 diverse refusal templates eliminate rote learning."
+    ac_treatment: "resolved"
+    decisive: false
+    tags: ["ablation", "control_experiments", "attribution"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Table 2 (p.8) now includes 'Refusal Trained' as a baseline for all three model families. Appendix C (p.17) describes the 20 diverse refusal templates listed explicitly. Section 3.2 (p.7) mentions 'ASCoT (closed)' (GPT-4.1-based) and 'ASCoT (open)' (Qwen3-based) results in Table 2, demonstrating helper generator swapping. Appendix Table 7 (p.37) provides the random-skill-subset control experiment comparing base model, random 397-skill control, and ASCoT."
+    note: "AC explicitly mentions key control experiments added by Reviewer 5oss's suggestion in the outstanding concerns section. This was the most substantive empirical concern. AC also flags training dataset composition as an area 5oss wanted addressed."
+
+  # ============================================================
+  # O13: Single-turn to multi-turn gap (GALA)
+  # Raised by: 5oss (W3)
+  # ============================================================
+  - id: "O13"
+    text: "Dictionary is built from single-turn pairs yet claims extend to multi-turn (GALA); while harmfulness decreases, the mechanism is not carefully analyzed and a multi-turn extraction pipeline is needed."
+    verbatim: "claims extend to multi-turn (GALA). While GALA's harmfulness decreases, the mechanism is not carefully analyzed"
+    raised_by: ["5oss"]
+    severity: "major"
+    resolved_in_rebuttal: false
+    rebuttal_resolution: "Authors acknowledged scoping to single-turn is intentional due to multi-turn complexity (attention dilution, conversational state manipulation). GALA results are exploratory. Comprehensive multi-turn treatment left to future work."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["scope_limitation", "multi_turn", "generalization_gap"]
+    issue_type: "conceptual"
+    addressed_in_pdf: true
+    pdf_evidence: "Section 6 Conclusion (p.10) explicitly acknowledges the limitation: 'While our study focuses on single-turn language jailbreaks, future extensions to multi-turn (Russinovich et al., 2025; Chen et al., 2025) or reasoning-driven attacks (Kuo et al., 2025) may uncover deeper hierarchies of adversarial skills.' Table 2 (p.8) includes GALA (Multi-Turn) as one evaluation column, and Section 3.2 (p.8) notes ASCoT's advantages 'extend beyond its single-turn training setting: despite never seeing dialogue-style inputs, ASCoT-trained models improve robustness to the multi-turn GALA attack.' The scoping decision is acknowledged but no multi-turn extraction pipeline is added."
+    note: "Authors deliberately scoped to single-turn and framed GALA as exploratory. The concern remains as an acknowledged limitation but was not escalated by AC."
+
+  # ============================================================
+  # O14: Missing statistics / variance / confidence intervals
+  # Raised by: 5oss (Q1)
+  # ============================================================
+  - id: "O14"
+    text: "Table 3 labels 'SBAT' which appears to be ASCoT (typo); statistics (variance, CIs) and multiple-run stability are not reported, which matters for safety fine-tuning sensitivity."
+    verbatim: "statistics (variance, CIs) and multiple-run stability for fine-tuning are not reported"
+    raised_by: ["5oss"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors trained ASCoT with three random seeds and reported mean/std (0.11 +/- 0.02 on PAIR, 0.07 +/- 0.02 on AutoDAN-Turbo). Low variance demonstrates fine-tuning stability."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["statistical_rigor", "variance", "reproducibility"]
+    issue_type: "empirical"
+    addressed_in_pdf: false
+    pdf_evidence: "Table 2 (p.8) and Table 3 (p.9) report point estimates without confidence intervals or standard deviations. The three-seed stability results (0.11 +/- 0.02 on PAIR, 0.07 +/- 0.02 on AutoDAN-Turbo) provided in rebuttal do not appear in the final PDF tables. The 'SBAT' typo from Table 3 in the original submission has been corrected -- Table 3 now correctly labels 'LLaMA-3.1-8B (ASCoT open)'."
+    note: "5oss raised the SBAT typo as a question. Authors provided three-run stability results in rebuttal but these were not incorporated into the final paper tables."
+
+  # ============================================================
+  # O15: Comparison to skill-mix / instruction-tuning methods
+  # Raised by: 5oss (Q2)
+  # ============================================================
+  - id: "O15"
+    text: "Recent skill-mix efforts in instruction tuning and safety could be directly compared as alternative composition engines; paper mainly positions against adversarial-training-style methods only."
+    verbatim: "recent skill-mix efforts...could be directly compared as alternative composition engines"
+    raised_by: ["5oss"]
+    severity: "moderate"
+    resolved_in_rebuttal: false
+    rebuttal_resolution: "Authors distinguished their bottom-up skill discovery approach from top-down instruction-tuning methods (Skill-Mix, Instruct-SkillMix, etc.) conceptually. Revised Introduction to cite these works. Did not add empirical comparisons."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["positioning", "related_work", "skill_mix_methods"]
+    issue_type: "framing"
+    addressed_in_pdf: true
+    pdf_evidence: "Introduction (p.2) now cites compositional generalization works including instruction following, robustness, and red-teaming references. Appendix A.3 'Compositional Generalization' (pp.15-16) discusses Skill-Mix (Yu et al., 2023), Instruct-SkillMix (Park, 2025), and Zhao et al. (2024) and positions the paper's approach as a parallel inspired by these findings. However, no empirical comparisons against skill-mix baselines are included."
+    note: "5oss listed 7 references for skill-mix methods. Authors argued conceptual distinction (bottom-up vs top-down, temporal generalization vs static augmentation) and added citations but did not run experiments."
+
+  # ============================================================
+  # O16: D_over not defined in paper
+  # Raised by: AC_1jTh
+  # ============================================================
+  - id: "O16"
+    text: "D_over is not properly defined anywhere in the paper; Table 1 uses the term without a definition."
+    verbatim: "Please include proper definition for D_over in Table 1"
+    raised_by: ["AC_1jTh"]
+    severity: "minor"
+    resolved_in_rebuttal: null
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["notation", "definition", "clarity"]
+    issue_type: "framing"
+    addressed_in_pdf: false
+    pdf_evidence: "Table 1 (p.6) uses D^final and D^over as row labels. The text in Section 2.4 (p.5) defines D^final but D^over (the overcomplete dictionary containing all raw skills) is not given an explicit inline definition. The reader must infer from context that D^over corresponds to the pre-compression set of all 14,070 raw skills."
+    note: "AC raised this directly as a question/concern in the meta-review. Minor notation issue that persists in the camera-ready."
+
+  # ============================================================
+  # O17: CAT* and LAT* 40K samples not detailed
+  # Raised by: AC_1jTh
+  # ============================================================
+  - id: "O17"
+    text: "CAT* and LAT* 40K samples are not detailed; unclear whether they were produced with original algorithms."
+    verbatim: "Please clarify in the final revision if the 40K samples were produced with the CAT and LAT's original algorithms"
+    raised_by: ["AC_1jTh"]
+    severity: "minor"
+    resolved_in_rebuttal: null
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["baseline_detail", "reproducibility"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Appendix D 'Baseline Implementation Details' (p.18) provides detailed descriptions: CAT uses official implementation with hyperparameters from the original paper, trained for 2 epochs on HarmBench+UltraChat200k, with 50/50 split yielding ~18k samples per category. LAT uses official implementation with original hyperparameters for LLaMA3.1-8B, with reduced inner learning rate for Zephyr-7B, using all 4,948 adversarial and ~33k benign samples. Both CAT* and LAT* are explicitly described as re-implementations to match the ~40k data scale."
+    note: "AC's direct question about baseline implementation details. Appendix D in the revised PDF provides the requested clarification."
+
+  # ============================================================
+  # O18: What skills extracted from GCG
+  # Raised by: AC_1jTh
+  # ============================================================
+  - id: "O18"
+    text: "Unclear what kinds of skills were extracted from less interpretable attacks like GCG; an appendix with examples would be helpful."
+    verbatim: "I wonder what skills were extracted by less interpretable attacks like GCG"
+    raised_by: ["AC_1jTh"]
+    severity: "minor"
+    resolved_in_rebuttal: null
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["interpretability", "skill_extraction", "gcg"]
+    issue_type: "empirical"
+    addressed_in_pdf: false
+    pdf_evidence: "Section 2.2 (p.3) describes the skill extraction pipeline using GPT-4.1 on original-mutated prompt pairs. Introduction (p.2) explicitly scopes: 'this hypothesis is scoped to language-based jailbreaks, where adversaries interact with models through natural language. In contrast, attacks that exploit internal access to the model -- such as fine-tuning (Qi et al., 2023) -- may not decompose into reusable language skills.' Appendix E.2 (p.20) shows examples of extracted skills but from language-based attacks, not from GCG-style optimization attacks. No explicit discussion of what happens when GCG-style token-level attacks are processed through the extraction pipeline."
+    note: "AC curiosity question about coverage of non-language-based attacks in the dictionary. The paper explicitly scopes to language-based jailbreaks, so GCG may not be directly applicable, but the AC's question about how such attacks are handled in the 32-paper corpus remains unanswered."
+
+  # ============================================================
+  # O19: DL advantages over clustering / deduplication not shown
+  # Raised by: AC_1jTh
+  # ============================================================
+  - id: "O19"
+    text: "Paper should better demonstrate the advantages of using dictionary learning over simpler alternatives like clustering or deduplication for compressing adversarial skills."
+    verbatim: "the paper should better show the advantages of using DL over other methods, such as clustering or simple deduplication"
+    raised_by: ["AC_1jTh"]
+    severity: "moderate"
+    resolved_in_rebuttal: false
+    rebuttal_resolution: null
+    ac_treatment: "accepted_limitation"
+    decisive: false
+    tags: ["method_justification", "dictionary_learning", "alternatives"]
+    issue_type: "conceptual"
+    addressed_in_pdf: false
+    pdf_evidence: "Section 2.3 (p.3) argues conceptually that 'clustering treats skills as discrete and mutually exclusive while adversarial techniques frequently blend and overlap. Dictionary learning (DL) provides a more natural, structured solution: by representing skills as sparse combinations of shared primitives.' However, no empirical comparison of DL vs. clustering/deduplication baselines is provided in the paper. Section 5 (p.5) describes post-hoc redundancy filtering using cosine-similarity clustering as a complementary step, but does not compare DL-based compression against clustering-only compression."
+    note: "AC's main substantive concern, raised in the meta-review summary. AC finds the methodology interesting and is 'personally very partial to the idea of using DL' but explicitly flags this gap: 'I think the paper should better show the advantages of using DL over other methods.' AC also notes: 'it is clear that methodologically showing how to combine DL and language/LLMs is interesting and has applications beyond jailbreaks.' Despite this, AC recommends acceptance, treating it as a non-blocking limitation."
+
+  # ============================================================
+  # O20: Training dataset composition not justified
+  # Raised by: 5oss (via AC outstanding concerns)
+  # ============================================================
+  - id: "O20"
+    text: "The composition of the training set (mix of vanilla harmful, HEx-PHI, AdvBench, HarmBench, adversarially composed, benign, over-refusal queries) is not justified with small-scale experiments showing each component's contribution."
+    verbatim: "the authors do not address is the composition of their chosen training set...justifying the need for each of the components"
+    raised_by: ["5oss"]
+    severity: "moderate"
+    resolved_in_rebuttal: false
+    rebuttal_resolution: null
+    ac_treatment: "accepted_limitation"
+    decisive: false
+    tags: ["training_data", "ablation", "dataset_composition"]
+    issue_type: "empirical"
+    addressed_in_pdf: false
+    pdf_evidence: "Appendix C (p.17) lists the training dataset components (2,200 vanilla harmful + adversarially composed at k=1-5 + 25,643 benign + 1,875 over-refusal) but no ablation study isolates the marginal contribution of each component. Section 4.2 (p.9) ablates skill coverage and Section 4.3 (p.10) ablates composition depth, but neither ablates the non-adversarial components of the training mix."
+    note: "AC cites this under 'Reviewer 5oss (Weakness 2)' in the outstanding concerns section. 5oss wanted 'small-scale experiments justifying the need for each of the components of the dataset.' This was not addressed in rebuttal or the revised paper."
+
+  # ============================================================
+  # O21: ASR vs ALO reporting suggestion
+  # Raised by: AC_1jTh
+  # ============================================================
+  - id: "O21"
+    text: "The paper reports average ASR across attacks in Table 2, but ALO (Attack Loss Optimization or similar metric from MixAT) is also informative and could be reported alongside."
+    verbatim: "Introduces ALO (at least one) ASR measurement as a better way to combine the ASR of different attack strategies"
+    raised_by: ["AC_1jTh"]
+    severity: "minor"
+    resolved_in_rebuttal: null
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["evaluation_metric", "reporting", "asr_variants"]
+    issue_type: "empirical"
+    addressed_in_pdf: false
+    pdf_evidence: "Table 2 (p.8) reports 'Mean Harmful Scores (0-1)' as a single aggregate. No ALO (at-least-one) metric is reported. The AC's suggestion to adopt this metric from MixAT was not incorporated."
+    note: "AC suggestion from the meta-review. Non-blocking enhancement request."
+
+  # ============================================================
+  # O22: Is dictionary learning truly needed?
+  # Raised by: AC_1jTh
+  # ============================================================
+  - id: "O22"
+    text: "The AC questions whether dictionary learning is truly needed, noting that clustering with embedding distances could achieve similar compression and the technical complexity of DL recovery needs stronger justification."
+    verbatim: "finding the size of the dataset reduced through clustering/embedding distances that match the DL approach"
+    raised_by: ["AC_1jTh"]
+    severity: "moderate"
+    resolved_in_rebuttal: null
+    ac_treatment: "accepted_limitation"
+    decisive: false
+    tags: ["method_justification", "dictionary_learning", "necessity"]
+    issue_type: "conceptual"
+    addressed_in_pdf: false
+    pdf_evidence: "Section 2.3 (p.3) provides a conceptual argument for DL over clustering but no empirical ablation comparing DL-compressed dictionary against a clustering-compressed one of equal size. The post-hoc redundancy filtering step (Section 2.3, p.5) itself uses cosine-similarity clustering, suggesting clustering plays a complementary role but is not compared as a standalone alternative."
+    note: "This is closely related to O19 but more specific -- AC suggests a concrete experiment (find clustering-based compression that matches DL dataset size and compare). Grouped with O19 thematically but kept separate because AC raises it as a distinct actionable suggestion. AC explicitly accepts this as non-blocking: 'the paper's merits outweigh by a lot the missing opportunities.'"
+
+ac_decision_drivers:
+  - id: "D1"
+    polarity: "pro_accept"
+    text: "The Adversarial Deja Vu hypothesis is a novel and important observation with wide implications for the jailbreaking community. AC states: 'the DejaVu observation in itself is an important contribution of the paper that I believe will have wide implications throughout the community.'"
+    decisive: true
+    observable_stage: "pre_rebuttal"
+    tags: ["novelty", "hypothesis", "community_impact"]
+
+  - id: "D2"
+    polarity: "pro_accept"
+    text: "The paper provides a principled DL-based pipeline for decomposing attacks into reusable skill primitives, with LLM-augmented basis pursuit for explainability praised as 'smart' and 'novel.' AC is 'personally very partial to the idea of using DL for this task and find it principally justified.'"
+    decisive: true
+    observable_stage: "pre_rebuttal"
+    tags: ["methodology", "dictionary_learning", "explainability"]
+
+  - id: "D3"
+    polarity: "pro_accept"
+    text: "Reviewer Q4KG reversed from 2 to 6 post-rebuttal, explicitly stating concerns were fully resolved and the contribution is not incremental. AC predicted this reversal."
+    decisive: true
+    observable_stage: "rebuttal"
+    tags: ["reviewer_reversal", "rebuttal_effectiveness"]
+
+  - id: "D4"
+    polarity: "pro_accept"
+    text: "Three reviewers provided positive pre-rebuttal evaluations (6, 6, 8) and the fourth reversed to 6 post-rebuttal, creating consensus support. AC states scores for jXni and 5oss would have been raised to 8."
+    decisive: true
+    observable_stage: "post_discussion"
+    tags: ["reviewer_consensus", "score_trajectory"]
+
+  - id: "D5"
+    polarity: "pro_accept"
+    text: "ASCoT substantially improves robustness to unseen attacks including multi-turn jailbreaks while maintaining low over-refusal rates, validated with key control experiments added per reviewer suggestion."
+    decisive: true
+    observable_stage: "rebuttal"
+    tags: ["empirical_validation", "robustness", "control_experiments"]
+
+  - id: "D6"
+    polarity: "pro_accept"
+    text: "The paper's merits outweigh missing opportunities: AC states 'the paper's merits outweigh by a lot the missing opportunities to convince the reader of the effectiveness of the methodology.'"
+    decisive: true
+    observable_stage: "post_discussion"
+    tags: ["overall_merit", "ac_judgment"]
+
+  - id: "D7"
+    polarity: "pro_accept"
+    text: "The novelty measurement aspect is independently valuable: AC notes 'it will be a nice measurement of the novelty of new jailbreak attacks, as I think it is widely recognized in the current field that many jailbreak methods (especially the very narrow ones) have become hard to keep track of.'"
+    decisive: false
+    observable_stage: "pre_rebuttal"
+    tags: ["practical_utility", "novelty_measurement"]
+
+  - id: "D8"
+    polarity: "pro_reject"
+    text: "Paper should better show advantages of dictionary learning over simpler alternatives like clustering or deduplication."
+    decisive: false
+    observable_stage: "pre_rebuttal"
+    tags: ["method_justification", "dictionary_learning"]
+
+  - id: "D9"
+    polarity: "pro_reject"
+    text: "Paper format violated ICLR submission template width restriction, which AC flags as 'potentially a very serious breach of the rules.' AC: 'You can legitimately be desk rejected for this.'"
+    decisive: false
+    observable_stage: "pre_rebuttal"
+    tags: ["formatting", "rules_compliance"]
+
+critical_references:
+  - id: "CR1"
+    title: "AutoDAN-Turbo: A Lifelong Agent for Strategy Self-Exploration to Jailbreak LLMs"
+    short_name: "AutoDAN-Turbo"
+    cited_by: ["jXni", "Q4KG", "AC_1jTh"]
+    role: "novelty_precedent"
+    decisive: true
+    concern_ids: ["O4", "O7", "O8"]
+    verbatim: "the overall structure of using composed attack strategies for prompt generation resembles AutoDAN-Turbo"
+    note: "Central to Q4KG's initial reject (score 2). After direct comparative experiment showing ASCoT outperforms AutoDAN-Turbo-trained defense, Q4KG reversed to 6. AC mentions AutoDAN-Turbo comparison as outstanding suggestion."
+
+  - id: "CR2"
+    title: "Jailbreaking Leading Safety-Aligned LLMs with Simple Adaptive Attacks"
+    short_name: "Simple Adaptive Attack (SAA)"
+    cited_by: ["jXni"]
+    role: "missing_comparison"
+    decisive: false
+    concern_ids: ["O2"]
+    verbatim: "I suggest the authors adopt more representative attacks such as [r1, r2, r3] as unseen attacks"
+    note: "jXni referenced as [r3] Andriushchenko et al. Authors added SAA in rebuttal. ASCoT remains robust against this non-language-based attack."
+
+  - id: "CR3"
+    title: "Fast Adversarial Attacks on Language Models In One GPU Minute"
+    short_name: "BEAST"
+    cited_by: ["jXni"]
+    role: "missing_comparison"
+    decisive: false
+    concern_ids: ["O2"]
+    verbatim: "I suggest the authors adopt more representative attacks such as [r1, r2, r3]"
+    note: "jXni referenced as [r2] Sadasivan et al. Authors added BEAST in rebuttal despite no open-source implementation for [r1] Hayase et al."
+
+  - id: "CR4"
+    title: "A StrongReject for Empty Jailbreaks"
+    short_name: "StrongReject"
+    cited_by: ["jXni"]
+    role: "methodological_basis"
+    decisive: false
+    concern_ids: ["O3"]
+    verbatim: "What is 'StrongReject score'? Is it a variant of the 'Attack Success Rate'?"
+    note: "Souly et al. NeurIPS 2024. jXni requested clarification of this metric used in Table 2. Authors clarified the evaluation protocol."
+
+  - id: "CR5"
+    title: "MixAT: Mixing Adversarial Training"
+    short_name: "MixAT"
+    cited_by: ["AC_1jTh"]
+    role: "missing_comparison"
+    decisive: false
+    concern_ids: ["O21"]
+    verbatim: "I think MixAT could be introduced as a nice baseline, on top of CAT and LAT"
+    note: "AC suggested this as an additional baseline focusing on generalizability of adversarially trained models. Also introduces ALO metric suggestion."
+
+  - id: "CR6"
+    title: "WildTeaming at Scale: From In-the-Wild Jailbreaks to (Adversarially) Safer Language Models"
+    short_name: "WildTeaming"
+    cited_by: ["5oss"]
+    role: "novelty_precedent"
+    decisive: false
+    concern_ids: ["O15"]
+    verbatim: "comparing ASCoT to more recent skill-mix or composition-based methods"
+    note: "5oss listed among skill-mix methods. Authors cited in revised Introduction and distinguished conceptually but did not add empirical comparison."
+
+  - id: "CR7"
+    title: "Skill-Mix: A Flexible and Expandable Family of Evaluations for AI Models"
+    short_name: "Skill-Mix"
+    cited_by: ["5oss"]
+    role: "novelty_precedent"
+    decisive: false
+    concern_ids: ["O15"]
+    verbatim: "recent skill-mix efforts in instruction tuning and safety"
+    note: "Yu et al. arXiv 2023. Part of the broader skill-mix literature 5oss asked authors to position against."
+
+ac_decisive_negative_ids: []
+# Accepted. No decisive blockers. AC found the paper's merits -- novel hypothesis,
+# principled DL pipeline, strong rebuttal addressing Q4KG's concerns -- outweigh
+# remaining gaps (DL vs clustering justification, format issues, training dataset
+# composition). All four reviewers at 6+ post-rebuttal. AC states predicted scores
+# would be jXni: 8, Q4KG: 6, DHsL: 8 (not considered due to poor quality), 5oss: 8.

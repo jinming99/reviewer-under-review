@@ -1,0 +1,146 @@
+schema_version: "v1"
+paper: "rl_reasoning_limits"
+version: "v0.9.2"
+condition: "own_group/ai_scientist_gpt4o_run1"
+method: "baseline_ai_scientist"
+
+matches:
+  # ============================================================
+  # O12 <-> A2: Missing solutions / actionable suggestions
+  # ============================================================
+  - official_id: O12
+    agentic_id: A2
+    match_type: exact
+    issue: "Paper identifies RLVR limitations but provides limited improvement suggestions or actionable solutions"
+    judgment_alignment: aligned
+    severity_alignment: match  # O12=moderate, A2=major (within +/-1 tolerance)
+    rationale: >-
+      Both flag the same gap: the paper clearly identifies RLVR's failure to expand
+      reasoning but does not propose concrete solutions or improvement directions.
+      O12 says "identifies problems clearly but provides limited improvement
+      suggestions"; A2 says "lacks actionable solutions to overcome the identified
+      limitations." Fixing one necessarily fixes the other. Severity within tolerance
+      (moderate vs major).
+
+  # ============================================================
+  # O11 <-> A1: Generalizability to future RL paradigms / exploration of alternatives
+  # ============================================================
+  - official_id: O11
+    agentic_id: A1
+    match_type: partial
+    issue: "Scope limited to current RLVR paradigms without exploring alternative approaches"
+    judgment_alignment: aligned
+    severity_alignment: match  # O11=moderate, A1=major (within +/-1 tolerance)
+    rationale: >-
+      Both concern the absence of new RLVR paradigms from the paper's scope. O11
+      frames it as a generalizability limitation ("findings may not generalize to
+      future RL paradigms or different reward structures"), while A1 frames it as a
+      contribution gap ("limited exploration of new RLVR paradigms"). Partial because
+      O11 also covers reward structure diversity (process vs outcome rewards) which
+      A1 does not address. Fixing A1 (exploring alternatives) would partially address
+      O11 but not fully resolve the reward structure concern.
+
+  # ============================================================
+  # O17 <-> A3: Novelty / prior work overlap
+  # ============================================================
+  - official_id: O17
+    agentic_id: A3
+    match_type: partial
+    issue: "Novelty concern — similar insights about RLVR limitations observed in prior work"
+    judgment_alignment: aligned
+    severity_alignment: match  # both major
+    rationale: >-
+      Both raise novelty concerns about the paper's findings being already known.
+      O17 specifically identifies DeepSeekMath Section 5.2.2 as having "employed
+      similar phrasing about 'fundamental capabilities'" and names the concrete
+      precedent. A3 generically claims "some findings reiterate already known
+      limitations of RL." Partial because A3 does not identify any specific prior
+      work, making it a weaker and less actionable version of the same concern.
+      Both assign major severity.
+
+positive_factor_matches:
+  # ============================================================
+  # D1: Important question about pass@k and reasoning boundaries
+  # ============================================================
+  - official_factor_id: D1
+    agentic_source: mention
+    agentic_text: "Insightful discussion on the limitations of current RLVR methods."
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >-
+      M3 recognizes the paper's discussion of RLVR limitations as "insightful,"
+      partially capturing D1's recognition of the question's importance. However,
+      the review does not explicitly identify the pass@k vs pass@1 question as
+      "important" or "intriguing" — it merely acknowledges insightfulness.
+
+  # ============================================================
+  # D2: Masterful execution with comprehensive evidence
+  # ============================================================
+  - official_factor_id: D2
+    agentic_source: mention
+    agentic_text: "Comprehensive evaluation of RLVR across numerous benchmarks and tasks."
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >-
+      M1 acknowledges "comprehensive evaluation across numerous benchmarks" which
+      partially captures the "masterful execution" recognized by the AC. However,
+      the review's overall score of 3/10 and Quality score of 3/10 indicate the
+      system did not weight this comprehensiveness highly — it was a non-decisive
+      mention, not an execution endorsement.
+
+  # ============================================================
+  # D3: Unanimous reviewer consensus (post-discussion)
+  # ============================================================
+  - official_factor_id: D3
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >-
+      D3 reflects post-discussion reviewer consensus (all four reviewers raised
+      to Strong Accept). This is not observable by any external review system
+      operating on the paper alone.
+
+  # ============================================================
+  # D4: Distillation contrast — diagnostic value
+  # ============================================================
+  - official_factor_id: D4
+    agentic_source: mention
+    agentic_text: >-
+      Distillation, rather than RLVR, can introduce new reasoning patterns — a
+      useful diagnostic contrast.
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >-
+      M4 in the agentic sheet captures the distillation finding from the summary:
+      "distillation, rather than RLVR, can introduce new reasoning patterns." This
+      matches D4's emphasis on the distillation contrast providing diagnostic value.
+      Partial because the review mentions it factually in the summary without
+      treating it as a positive factor for acceptance.
+
+unmatched_official:
+  - O1   # Results limited to small models / low training data diversity
+  - O2   # Random guessing explanation not fully ruled out
+  - O3   # Overfitting as alternative explanation
+  - O4   # Table 1 should note training data
+  - O5   # Figure 6 perplexity relevance
+  - O6   # Figure 8 readability
+  - O7   # Tables 4&5 format
+  - O8   # Figure 16 temperature inconsistency
+  - O9   # Terminology misnomer
+  - O10  # No theoretical explanation for RLVR failure
+  - O13  # Base model dependency
+  - O14  # No theoretical explanation (6ryS)
+  - O15  # Experiments focus on Qwen
+  - O16  # Evaluation centered on pass@k
+  - O18  # Policy optimization parameters not reported
+  - O19  # Perplexity analysis limited to two samples
+  - O20  # Scaling to 70B+
+  - O21  # Task difficulty effect on pass@k gap
+  - O22  # Train vs test curves not distinguished
+  - O23  # Perplexity evolution during training
+  - O24  # Limitations section insufficient
+  - O25  # Contradicting paper with CoT-Pass@k
+  - O26  # SFT pre-training effect
+
+unmatched_agentic:
+  - A4   # Relationship to existing RL literature unclear

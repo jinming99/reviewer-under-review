@@ -1,0 +1,192 @@
+schema_version: "v1"
+paper: adversarial_dejavu
+version: baseline
+method: baseline
+verdict: REJECT
+score: null
+
+decision_drivers:
+  - id: R1
+    polarity: pro_reject
+    text: >-
+      Multiple technical rigor issues: orphaned statistics, unused variable in formulation,
+      misleading adversarial training framing, and confounded depth analysis collectively
+      undermine the paper's core claims.
+    evidence: "Overall Feedback paragraph: 'several issues weaken the technical rigor'"
+    linked_concern_ids: [A2, A3, A4, A6]
+  - id: R2
+    polarity: pro_reject
+    text: >-
+      Mismatch between dictionary evaluation attack set and robustness evaluation attack set
+      weakens the causal link between explainability and robustness, the paper's central thesis.
+    evidence: "Comment 9: 'This asymmetry means the paper demonstrates that the dictionary can explain these attacks but never tests whether ASCoT actually defends against them'"
+    linked_concern_ids: [A9]
+  - id: R3
+    polarity: pro_reject
+    text: >-
+      Comparison with frontier reasoning models overstates what can be concluded,
+      conflating task-specific fine-tuning with architectural capability.
+    evidence: "Overall Feedback + Comment 7: 'The comparison with frontier reasoning models also overstates what can be concluded about the source of robustness'"
+    linked_concern_ids: [A7]
+
+mentions:
+  - id: M1
+    polarity: pro_accept
+    text: >-
+      The Adversarial Deja Vu hypothesis is creative and well-motivated as a framework
+      for understanding jailbreak recurrence.
+    evidence: "Overall Feedback: 'a creative and well-motivated framework'"
+    note: "Acknowledged as a strength but not enough to outweigh technical concerns"
+  - id: M2
+    polarity: pro_accept
+    text: >-
+      The large-scale temporal analysis across 32 attack papers and dictionary learning
+      pipeline are substantial contributions.
+    evidence: "Overall Feedback: 'The large-scale temporal analysis across 32 attack papers and the dictionary learning pipeline are substantial contributions'"
+    note: "Recognized as substantial but did not offset identified technical weaknesses"
+
+concerns:
+  - id: A1
+    text: >-
+      Abstract's final sentence is truncated mid-clause, leaving a key claim incompletely
+      stated in the paper's most-read section.
+    severity:
+      level: minor
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 1 (Type: logical)"
+    decisive: false
+    tags: [presentation, clarity]
+    dimension_impact: [G]
+
+  - id: A2
+    text: >-
+      Skill counts cited in Section 4.3 (~9.7 and ~14.8 skills) are absent from the
+      referenced Table 5, creating orphaned statistics critical to the depth-complexity
+      argument with no stated source or methodology.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 2 (Type: technical)"
+    decisive: true
+    tags: [evidence_gap, evaluation]
+    dimension_impact: [D, G]
+
+  - id: A3
+    text: >-
+      Adversarial training formulation defines dataset D as query-response pairs (q_i, r_i)
+      but the loss uses r* instead of r; the sampled response r never appears in the
+      objective, and Appendix C reveals r* comes from fixed refusal templates.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 3 (Type: technical)"
+    decisive: true
+    tags: [notation, methodology]
+    dimension_impact: [G, H]
+
+  - id: A4
+    text: >-
+      ASCoT is standard supervised fine-tuning on pre-generated data with no inner
+      maximization or adversarial search during training, yet is framed within the
+      adversarial training paradigm alongside methods (CAT, LAT) that perform online
+      adversarial perturbation.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 4 (Type: logical)"
+    decisive: true
+    tags: [framing, methodology]
+    dimension_impact: [E, G]
+
+  - id: A5
+    text: >-
+      Perfect zero harmfulness scores across all novel compositions (k=2-5) are unusual
+      and raise questions about evaluation sensitivity; evaluation set size and confidence
+      intervals are not reported.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 5 (Type: logical)"
+    decisive: false
+    tags: [evaluation, statistical_rigor]
+    dimension_impact: [D, F]
+
+  - id: A6
+    text: >-
+      Training data has ~20x more examples at depths k=1-3 (3150-4098 each) than k=4-5
+      (190 each), confounding the depth analysis since the main ASCoT model is undertrained
+      at depths most relevant for complex attacks.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 6 (Type: technical)"
+    decisive: true
+    tags: [experimental_design, evaluation]
+    dimension_impact: [D, E]
+
+  - id: A7
+    text: >-
+      Claiming robustness stems from adversarial skill coverage rather than scale is not
+      supported by comparing a task-specific fine-tuned 8B model against general-purpose
+      reasoning models not optimized for this benchmark.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 7 (Type: logical)"
+    decisive: true
+    tags: [overclaiming, evaluation]
+    dimension_impact: [D, E]
+
+  - id: A8
+    text: >-
+      Sparsity parameter lambda is unspecified for the unseen attack evaluation (Equation 3),
+      despite directly controlling sparsity of reconstruction that is central evidence for
+      the Adversarial Deja Vu hypothesis.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 8 (Type: technical)"
+    decisive: false
+    tags: [reproducibility]
+    dimension_impact: [H]
+
+  - id: A9
+    text: >-
+      Dictionary evaluation uses 6 post-cutoff attacks but robustness evaluation uses a
+      different set (dropping 3, adding GALA), so the paper shows the dictionary can explain
+      attacks it never tests ASCoT's defense against, weakening the explainability-robustness
+      causal link.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 9 (Type: logical)"
+    decisive: true
+    tags: [experimental_design, evaluation]
+    dimension_impact: [D, E]
+
+method_specific:
+  system: oar
+  run: run_1
+  note: >-
+    Baseline review from OpenAI Automated Reviewer (OAR). Contains only review.md
+    with no summary.yaml, gates, scorecard, or adversarial brief. Verdict inferred
+    as REJECT from predominantly critical tone and multiple substantive technical/logical
+    concerns identified. All concerns sourced from a single review.md artifact.

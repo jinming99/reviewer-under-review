@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#10131F"/>
+      <stop offset="1" stop-color="#181C2A"/>
+    </linearGradient>
+    <linearGradient id="route" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#56B6C2"/>
+      <stop offset="1" stop-color="#C678DD"/>
+    </linearGradient>
+    <linearGradient id="lensGlow" x1="90" y1="90" x2="210" y2="210" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#F0C674" stop-opacity="0.22"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <g stroke="#2A3040" stroke-width="1" opacity="0.35">
+    <line x1="0" y1="100" x2="1200" y2="100"/>
+    <line x1="0" y1="530" x2="1200" y2="530"/>
+  </g>
+
+  <!-- Alignment-lens mark, top-left -->
+  <g transform="translate(90, 140)" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="30" cy="30" r="9" stroke="#56B6C2" stroke-width="5"/>
+    <circle cx="30" cy="90" r="9" stroke="#56B6C2" stroke-width="5"/>
+    <circle cx="30" cy="150" r="9" stroke="#56B6C2" stroke-width="5"/>
+    <circle cx="200" cy="20" r="9" stroke="#C678DD" stroke-width="5"/>
+    <circle cx="200" cy="70" r="9" stroke="#C678DD" stroke-width="5"/>
+    <circle cx="200" cy="120" r="9" stroke="#C678DD" stroke-width="5"/>
+    <circle cx="200" cy="170" r="9" stroke="#C678DD" stroke-width="5"/>
+    <path d="M42 30C70 30 85 55 100 70C112 82 120 85 128 85C137 85 144 82 155 70C170 50 185 25 200 22" stroke="url(#route)" stroke-width="5"/>
+    <path d="M42 90C70 90 95 88 115 90C118 90 120 90 123 90C133 90 144 85 155 72C170 55 185 30 200 20" stroke="url(#route)" stroke-width="5" opacity="0.85"/>
+    <path d="M42 90C70 90 95 90 115 90C125 90 135 94 155 108C170 120 185 130 200 120" stroke="url(#route)" stroke-width="5" opacity="0.85"/>
+    <path d="M42 90C70 90 95 90 115 90C125 90 135 95 150 130C165 160 185 170 200 170" stroke="url(#route)" stroke-width="5" opacity="0.7"/>
+    <path d="M42 150C70 150 85 125 100 110C112 98 120 95 128 95C137 95 144 98 155 110C170 130 185 158 200 170" stroke="url(#route)" stroke-width="5" opacity="0.85"/>
+    <circle cx="128" cy="90" r="30" fill="url(#lensGlow)"/>
+    <circle cx="128" cy="90" r="30" stroke="#F0C674" stroke-width="5"/>
+    <path d="M150 112L172 134" stroke="#F0C674" stroke-width="8"/>
+  </g>
+
+  <!-- Title block -->
+  <g font-family="Georgia, 'Times New Roman', serif" fill="#EDEEF5">
+    <text x="90" y="388" font-size="88" font-weight="400" letter-spacing="-1">Reviewer Under Review</text>
+  </g>
+
+  <g font-family="'Helvetica Neue', 'Helvetica', Arial, sans-serif" fill="#9299B0">
+    <text x="90" y="438" font-size="30" font-weight="400">Concern-level diagnostics for AI paper review systems.</text>
+  </g>
+
+  <!-- Stat chips -->
+  <g font-family="'SF Mono', 'Menlo', 'Consolas', monospace">
+    <g transform="translate(90, 478)">
+      <rect width="230" height="46" rx="6" fill="#181C2A" stroke="#2A3040" stroke-width="1.5"/>
+      <text x="22" y="31" font-size="22" fill="#F0C674" font-weight="600">48</text>
+      <text x="60" y="31" font-size="20" fill="#9299B0">papers</text>
+    </g>
+    <g transform="translate(340, 478)">
+      <rect width="290" height="46" rx="6" fill="#181C2A" stroke="#2A3040" stroke-width="1.5"/>
+      <text x="22" y="31" font-size="22" fill="#F0C674" font-weight="600">864</text>
+      <text x="72" y="31" font-size="20" fill="#9299B0">match graphs</text>
+    </g>
+    <g transform="translate(650, 478)">
+      <rect width="320" height="46" rx="6" fill="#181C2A" stroke="#2A3040" stroke-width="1.5"/>
+      <text x="22" y="31" font-size="22" fill="#F0C674" font-weight="600">79</text>
+      <text x="60" y="31" font-size="20" fill="#9299B0">decisive blockers</text>
+    </g>
+  </g>
+
+  <!-- Tagline / footer -->
+  <g font-family="'Helvetica Neue', Arial, sans-serif">
+    <text x="90" y="582" font-size="22" fill="#56B6C2" font-weight="500">Where verdict accuracy fails.</text>
+    <text x="1110" y="582" font-size="18" fill="#6C7490" text-anchor="end">Benchmark-wide totals, 48-paper calibration set.</text>
+  </g>
+</svg>

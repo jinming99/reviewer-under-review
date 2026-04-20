@@ -1,0 +1,192 @@
+schema_version: "v1"
+paper: "adversarial_dejavu"
+version: "v0.9.2"
+condition: "own_group/ai_scientist_gpt4o_run1"
+method: "baseline_ai_scientist"
+
+matches:
+  # ============================================================
+  # A1 ↔ O4: Novelty delta / AutoDAN-Turbo overlap
+  # ============================================================
+  - official_id: O4
+    agentic_id: A1
+    match_type: partial
+    issue: "Novelty of skill extraction approach given AutoDAN-Turbo precedent"
+    judgment_alignment: aligned
+    severity_alignment: match  # both major
+    rationale: >-
+      Both flag insufficient novelty. O4 specifically identifies AutoDAN-Turbo
+      (2024) as having proposed prompting-based skill extraction first, making the
+      contribution feel incremental. A1 broadly claims 'limited originality —
+      leverages existing adversarial concepts without sufficient novelty.' Same
+      issue family (novelty delta) but A1 is generic while O4 names the specific
+      precedent. Partial because fixing O4 (demonstrating delta over AutoDAN-Turbo)
+      would only partially address A1's broader claim.
+
+  # ============================================================
+  # A1 ↔ O7: Incremental contribution / AutoDAN-Turbo resemblance
+  # ============================================================
+  - official_id: O7
+    agentic_id: A1
+    match_type: partial
+    issue: "Overall contribution feels incremental given structural resemblance to AutoDAN-Turbo"
+    judgment_alignment: aligned
+    severity_alignment: match  # both major
+    rationale: >-
+      O7 argues the overall structure of using composed attack strategies for
+      prompt generation resembles AutoDAN-Turbo, requesting a direct comparative
+      experiment. A1 broadly claims 'limited originality.' Both are in the novelty
+      family but O7 is specific (structural resemblance, needs empirical comparison)
+      while A1 is a generic judgment. Partial because fixing O7 (adding a direct
+      comparison) is more targeted than what A1 demands.
+
+  # ============================================================
+  # A2 ↔ O12: Insufficient empirical grounding / missing controls
+  # ============================================================
+  - official_id: O12
+    agentic_id: A2
+    match_type: partial
+    issue: "Empirical validation of claims is inadequate"
+    judgment_alignment: aligned
+    severity_alignment: match  # both major
+    rationale: >-
+      A2 broadly claims 'insufficient empirical grounding of the theoretical
+      claims; hypothesis lacks adequate experimental validation.' O12 specifically
+      identifies four missing control experiments (random skill, harmful-data-only,
+      helper swap, refusal-template removal) needed to isolate ASCoT's gains from
+      generic data augmentation. Same issue family (experimental validation gaps)
+      but O12 is actionable and specific while A2 is a sweeping indictment. Partial
+      because O12 is one instance of the broader empirical gap A2 flags.
+
+  # ============================================================
+  # A3 ↔ O11: GPT-4.1 dependency (reproducibility vs. bias)
+  # ============================================================
+  - official_id: O11
+    agentic_id: A3
+    match_type: partial
+    issue: "Pipeline depends on GPT-4.1, raising concerns about model-specific limitations"
+    judgment_alignment: aligned
+    severity_alignment: match  # both major
+    rationale: >-
+      Both flag GPT-4.1 dependency but from different angles. A3 targets
+      reproducibility and implementation complexity: 'dependency on specific LLMs
+      (GPT-4.1) limits independent replication.' O11 targets evaluation bias:
+      'skill extraction and explainability scoring rely on GPT-4.1, raising
+      leakage/bias concerns.' The fixes differ (A3: support multiple models for
+      replication; O11: use an independent judge model). Partial per false match
+      pattern #4 (same component, different complaint) but the shared GPT-4.1
+      dependency axis justifies a partial rather than related edge.
+
+# ============================================================
+# Positive factor matches (paper was accepted)
+# ============================================================
+positive_factor_matches:
+  # D1: DejaVu hypothesis is novel and important (pre-rebuttal)
+  - official_factor_id: D1
+    agentic_source: mention
+    agentic_text: "Novel approach to using adversarial skill recombination."
+    match_type: partial
+    judgment_alignment: inverted
+    rationale: >-
+      M1 acknowledges the approach's novelty as a strength, but the agentic
+      system simultaneously gives originality 2/10 and flags 'limited originality'
+      as a major decisive concern (A1). The net agentic judgment on novelty is
+      negative, inverting the AC's view that the DejaVu hypothesis is 'an important
+      contribution that will have wide implications throughout the community.'
+
+  # D2: Principled DL pipeline, basis pursuit as smart/novel (pre-rebuttal)
+  - official_factor_id: D2
+    agentic_source: mention
+    agentic_text: "Innovative concept of Adversarial Skill Compositional Training (ASCoT)."
+    match_type: partial
+    judgment_alignment: inverted
+    rationale: >-
+      M3 acknowledges ASCoT as innovative, but the agentic system gave quality
+      and soundness both 2/10 and overall 3/10, effectively negating the positive.
+      D2 specifically praises the DL-based pipeline and LLM-augmented basis pursuit
+      as 'smart' and 'novel' — M3 captures ASCoT but misses the DL/basis pursuit
+      methodology that the AC found most compelling. The agentic system's
+      contribution score of 2/10 inverts the AC's strong endorsement.
+
+  # D3: Q4KG reversal from 2→6 post-rebuttal (rebuttal stage — not observable)
+  - official_factor_id: D3
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >-
+      D3 is a rebuttal-stage factor (Q4KG's score reversal from 2 to 6). The
+      agentic system reviews the pre-rebuttal paper and cannot observe reviewer
+      discussion dynamics. Not matchable.
+
+  # D4: Reviewer consensus (post-discussion — not observable)
+  - official_factor_id: D4
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >-
+      D4 is a post-discussion factor (three positive pre-rebuttal evaluations
+      plus Q4KG's reversal). The agentic system cannot observe reviewer consensus
+      formation. Not matchable.
+
+  # D5: ASCoT robustness validated with controls (rebuttal stage — not observable)
+  - official_factor_id: D5
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >-
+      D5 is a rebuttal-stage factor (key control experiments added per reviewer
+      suggestion). The agentic system reviews the pre-rebuttal paper only and
+      cannot observe post-rebuttal empirical additions. Not matchable.
+
+  # D6: Merits outweigh missing opportunities (post-discussion — not observable)
+  - official_factor_id: D6
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >-
+      D6 is a post-discussion AC judgment. The agentic system cannot observe the
+      AC's merit-vs-gaps weighing process. Not matchable.
+
+  # D7: Novelty measurement utility (pre-rebuttal — observable)
+  - official_factor_id: D7
+    agentic_source: mention
+    agentic_text: "Comprehensive analysis of jailbreak trends."
+    match_type: partial
+    judgment_alignment: inverted
+    rationale: >-
+      D7 highlights the dictionary's independent value as a novelty measurement
+      tool for the jailbreaking field. M2 partially captures this angle
+      ('comprehensive analysis of jailbreak trends') but the agentic system gave
+      significance 2/10, negating the practical utility that the AC explicitly
+      praised. The agentic system noticed the analytical contribution but did not
+      credit it as meaningful — inverted relative to the AC's view.
+
+# ============================================================
+# Unmatched concerns
+# ============================================================
+unmatched_official:
+  - O1   # Too few base models (model coverage)
+  - O2   # Missing representative jailbreak baselines (attack coverage)
+  - O3   # StrongReject evaluation details unclear
+  - O5   # Paper format violation (ICLR template width)
+  - O6   # Lacks concrete skill composition examples
+  - O8   # AutoDAN-Turbo as unseen attack fairness (data leakage)
+  - O9   # Stability of automated skill extraction
+  - O10  # Dictionary from subset + verification gap
+  - O13  # Single-turn to multi-turn gap (GALA)
+  - O14  # Missing statistics / variance / CIs
+  - O15  # Comparison to skill-mix / instruction-tuning methods
+  - O16  # D_over not defined in paper
+  - O17  # CAT* and LAT* 40K samples not detailed
+  - O18  # What skills extracted from GCG
+  - O19  # DL advantages over clustering / deduplication not shown
+  - O20  # Training dataset composition not justified
+  - O21  # ASR vs ALO reporting suggestion
+  - O22  # Is dictionary learning truly needed?
+
+unmatched_agentic:
+  - A4   # Lack of longitudinal studies / practical validation beyond benchmarks (phantom)
+  - A5   # Dense language diminishes clarity (phantom — no official reviewer flagged writing style)
+  - A6   # Computational scalability not addressed (phantom — no official concern)
+  - A7   # Ethical misuse risk (phantom — no official concern)
+  - A8   # Dictionary may not handle novel attack primitives (phantom — no official concern)

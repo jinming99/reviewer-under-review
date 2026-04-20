@@ -1,0 +1,152 @@
+schema_version: "v1"
+paper: adversarial_dejavu
+version: baseline
+method: baseline
+verdict: REJECT
+score: null
+
+decision_drivers:
+  - id: R1
+    polarity: pro_reject
+    text: >-
+      Core hypothesis validated via circular LLM-as-judge pipeline with no human
+      ground truth or calibration baseline, risking systematic bias.
+    evidence: "Section 3, bullet 1: 'Every stage is mediated by the same class of models, creating a risk of systematic bias'"
+    linked_concern_ids: [A1]
+
+  - id: R2
+    polarity: pro_reject
+    text: >-
+      Evaluation scope is narrow (only 6 unseen attacks, mostly single-turn) with
+      uncontrolled confound from LLM stylistic overlap between training data and
+      test attacks.
+    evidence: "Section 3, bullet 3: 'Only 6 unseen attacks... potential distribution overlap'"
+    linked_concern_ids: [A3, A4]
+
+  - id: R3
+    polarity: pro_reject
+    text: >-
+      Linearity assumption underlying the dictionary learning framework is
+      unvalidated with no comparison to nonlinear alternatives.
+    evidence: "Section 3, bullet 2: 'provides no direct validation'"
+    linked_concern_ids: [A2]
+
+mentions:
+  - id: M1
+    polarity: pro_accept
+    text: >-
+      Novel conceptual reframing of jailbreaks as sparse recombinations of a
+      finite set of adversarial skill primitives.
+    evidence: "Section 1: 'intellectually appealing and potentially impactful perspective'"
+    note: Noted as significant contribution but not weighted against methodological concerns.
+
+  - id: M2
+    polarity: pro_accept
+    text: >-
+      Strong empirical results: ASCoT achieves lowest mean harmfulness on unseen
+      attacks across three models while maintaining competitive over-refusal rates.
+    evidence: "Section 2, bullet 1: 'consistently achieves the lowest mean harmfulness scores on unseen attacks (Table 2)'"
+    note: Acknowledged as strength but insufficient to offset validation and scope concerns.
+
+  - id: M3
+    polarity: pro_accept
+    text: >-
+      Well-structured hypothesis-driven narrative with logical flow from hypothesis
+      to validation to defense method to ablations.
+    evidence: "Section 2, bullet 2: 'flows logically from hypothesis formulation -> empirical validation'"
+    note: Credited for presentation quality but not treated as decisive for acceptance.
+
+  - id: M4
+    polarity: pro_accept
+    text: >-
+      Thorough ablations (coverage dividend, compositional depth, random skill
+      control) provide evidence gains come from structured skill coverage.
+    evidence: "Section 2, bullet 3: 'collectively provide strong evidence that the gains come from structured skill coverage'"
+    note: Ablation quality noted but does not address the core validation circularity concern.
+
+  - id: M5
+    polarity: pro_accept
+    text: >-
+      Good reproducibility with open-weight model (Qwen3-235B), cross-model judge
+      validation, and extensive appendix detail.
+    evidence: "Section 2, bullet 4: 'reproduces the full pipeline with an open-weight model'"
+    note: Reproducibility acknowledged but not decisive.
+
+concerns:
+  - id: A1
+    text: >-
+      The core "Adversarial Deja Vu" hypothesis is validated through a circular
+      LLM-as-judge pipeline where LLMs judge LLM-extracted skills against
+      LLM-named dictionary primitives, with no human evaluation, no ground-truth
+      annotation, and no calibration baseline for truly novel skills.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Section 3, bullet 1 (full paragraph + two sub-bullets)"
+    decisive: true
+    tags: [methodology, circular_validation, evaluation_rigor]
+    dimension_impact: [D, E]
+
+  - id: A2
+    text: >-
+      The linearity assumption underlying dictionary learning (that adversarial
+      skills compose approximately linearly in embedding space) is strong and
+      unvalidated, with no direct reconstruction quality metrics for unseen skills
+      and no comparison to nonlinear alternatives.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Section 3, bullet 2 (full paragraph + two sub-bullets)"
+    decisive: true
+    tags: [methodology, assumptions, technical_soundness]
+    dimension_impact: [D, E]
+
+  - id: A3
+    text: >-
+      Evaluation scope is narrow and potentially favorable: only 6 unseen attacks
+      (mostly single-turn language-based), with a potential distribution overlap
+      confound between LLM-generated ASCoT training data and LLM-generated test
+      attacks that is not disentangled.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Section 3, bullet 3 (full paragraph + two sub-bullets)"
+    decisive: true
+    tags: [evaluation_scope, confounding, generalization]
+    dimension_impact: [D, F]
+
+  - id: A4
+    text: >-
+      Practical threat model and adaptive attacker analysis are underdeveloped:
+      no evaluation against adversaries aware of ASCoT's defense, no discussion of
+      in-scope threats like multi-turn escalation or fixed refusal template
+      exploitation.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Section 3, bullet 4 (full paragraph + two sub-bullets)"
+    decisive: true
+    tags: [robustness, threat_model, adaptive_attacks]
+    dimension_impact: [D, F]
+
+method_specific:
+  baseline_system: liang_etal
+  run: run_1
+  note: >-
+    Review from Liang et al. baseline system. Contains no explicit verdict;
+    REJECT inferred from the weight and detail of Section 3 concerns, the
+    framing of Section 4 as improvement suggestions, and the absence of
+    acceptance language. No numerical score provided.
+  original_structure:
+    section_1: "Significance and novelty (positive framing)"
+    section_2: "Potential reasons for acceptance (4 bullets)"
+    section_3: "Potential reasons for rejection (4 detailed bullets)"
+    section_4: "Suggestions for improvement (4 bullets)"

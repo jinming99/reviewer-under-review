@@ -1,0 +1,191 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: OfficialConcernSheet
+description: >
+  Structured extraction of official reviewer concerns from OpenReview,
+  including AC treatment and decision drivers. One per paper.
+type: object
+required:
+  - schema_version
+  - paper
+  - title
+  - venue
+  - official_verdict
+  - concerns
+  - ac_decision_drivers
+properties:
+  schema_version: { type: string, enum: ["v1"] }
+  paper: { type: string, description: "Paper slug matching ground_truth.yaml" }
+  title: { type: string }
+  venue: { type: string }
+  official_verdict: { type: string, enum: ["accepted", "rejected"] }
+  decision_type: { type: string, description: "Oral, Spotlight, Poster, or omit" }
+  reviewer_scores: { type: array, items: { type: number }, description: "Pre-rebuttal scores" }
+  reviewer_scores_post: { type: array, items: { type: number }, description: "Post-rebuttal scores (if available)" }
+
+  ac_rationale_quality:
+    type: string
+    enum: ["detailed", "adequate", "terse", "absent"]
+    description: >
+      Quality of AC's stated rationale. 'detailed' = multi-paragraph with explicit
+      decisive reasoning. 'adequate' = clear rationale in 1-2 sentences. 'terse' =
+      "I side with the majority" or equivalent. 'absent' = no meta-review available.
+      Affects weight in aggregate metrics: terse/absent papers get lower weight
+      because decisive_factor extraction requires inference.
+
+  concerns:
+    type: array
+    items:
+      type: object
+      required: [id, text, severity, ac_treatment, tags]
+      properties:
+        id:
+          type: string
+          pattern: "^O\\d+$"
+          description: "Sequential ID: O1, O2, ..."
+        text:
+          type: string
+          description: "One-sentence normalized concern statement"
+        verbatim:
+          type: string
+          description: "Near-verbatim quote from reviewer (≤25 words)"
+        raised_by:
+          type: array
+          items: { type: string }
+          description: "Reviewer IDs who raised this concern"
+        severity:
+          type: string
+          enum: ["fatal", "major", "moderate", "minor"]
+          description: "Pre-rebuttal severity"
+        resolved_in_rebuttal:
+          type: ["boolean", "null"]
+        rebuttal_resolution:
+          type: string
+          description: "How the concern was addressed in rebuttal"
+        ac_treatment:
+          type: string
+          enum:
+            - "decisive_blocker"
+            - "unresolved"
+            - "resolved"
+            - "accepted_limitation"
+            - "dismissed"
+            - "reframed_feature"
+            - "not_mentioned"
+            - "unknown"
+          description: >
+            AC's final treatment of this concern — the ground truth.
+            'accepted_limitation' = concern stands but AC explicitly accepts it
+            as non-blocking (e.g., cost-justified scope limitation).
+        decisive:
+          type: ["boolean", "null"]
+          description: "Was this concern a reason for the final decision?"
+        tags:
+          type: array
+          items: { type: string }
+          description: "Flexible tags from seed vocabulary"
+        issue_type:
+          type: string
+          enum: ["conceptual", "empirical", "framing"]
+          description: "High-level issue axis (orthogonal to tags)"
+        note:
+          type: string
+          description: "Additional context or nuance"
+
+  ac_decision_drivers:
+    type: array
+    description: "AC's stated reasons for the decision (positive or negative)"
+    items:
+      type: object
+      required: [id, polarity, text, decisive]
+      properties:
+        id:
+          type: string
+          pattern: "^D\\d+$"
+        polarity:
+          type: string
+          enum: ["pro_accept", "pro_reject"]
+        text:
+          type: string
+          description: "AC's stated reason"
+        decisive:
+          type: boolean
+        tags:
+          type: array
+          items: { type: string }
+        observable_stage:
+          type: string
+          enum: ["pre_rebuttal", "rebuttal", "post_discussion", "unknown"]
+          description: "When this factor became observable to an external reviewer"
+
+  critical_references:
+    type: array
+    description: >
+      Papers or literature that reviewers cited as critical to their assessment.
+      Used for literature recall evaluation — measuring whether the lit-search
+      pipeline finds the papers that actually mattered to reviewers.
+      Optional: not all papers will have critical references, and that is fine.
+    items:
+      type: object
+      required: [id, title, cited_by, role]
+      properties:
+        id:
+          type: string
+          pattern: "^CR\\d+$"
+          description: "Sequential ID: CR1, CR2, ..."
+        title:
+          type: string
+          description: "Full paper title as identifiable for search matching"
+        short_name:
+          type: string
+          description: "How reviewers refer to it (e.g., 'LATS', 'ToolChain*')"
+        cited_by:
+          type: array
+          items: { type: string }
+          description: "Reviewer IDs who mentioned this paper"
+        role:
+          type: string
+          enum:
+            - "missing_comparison"
+            - "novelty_precedent"
+            - "methodological_basis"
+            - "methodological_precedent"
+            - "methodology_precedent"
+            - "methodology_reference"
+            - "positive_positioning"
+            - "missing_citation"
+            - "benchmark_precedent"
+            - "unfavorable_comparison"
+            - "prior_art_undermining_novelty"
+            - "undermining_claim"
+            - "supporting_evidence"
+            - "presentation_reference"
+          description: >
+            Why this paper was cited. 'missing_comparison' = should have compared
+            against this. 'novelty_precedent' = evidence contribution is incremental.
+            'methodological_basis' / 'methodological_precedent' / 'methodology_precedent' /
+            'methodology_reference' = real foundation/prior work or method source.
+            'positive_positioning' = cited favorably to support the paper.
+            'missing_citation' = flagged as missing but not necessarily critical.
+            'benchmark_precedent' = compared to an existing benchmark/dataset.
+            'unfavorable_comparison' = cited to show the paper underperforms.
+            'prior_art_undermining_novelty' / 'undermining_claim' = prior work
+            that weakens the paper's contribution or claims.
+            'supporting_evidence' = cited to corroborate a finding.
+            'presentation_reference' = cited for presentation/framing context.
+        decisive:
+          type: boolean
+          description: "Did this reference influence the accept/reject decision?"
+        concern_ids:
+          type: array
+          items: { type: string }
+          description: "IDs of concerns that reference this paper (optional)"
+        verbatim:
+          type: string
+          description: "Near-verbatim quote from reviewer citing this paper (≤25 words)"
+        note:
+          type: string
+
+  ac_decisive_negative_ids:
+    type: array
+    items: { type: string }
+    description: "IDs of concerns that AC identified as decisive blockers (for rejects)"

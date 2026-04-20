@@ -1,0 +1,1662 @@
+{
+  "slug": "adversarial_dejavu",
+  "title": "Adversarial Deja Vu: Jailbreak Dictionary Learning for Stronger Generalization to Unseen Attacks",
+  "venue": "ICLR 2026",
+  "decision": "accepted",
+  "decision_type": "Poster",
+  "reviewer_scores": [
+    6,
+    2,
+    8,
+    6
+  ],
+  "reviewer_scores_post": [
+    6,
+    6,
+    8,
+    6
+  ],
+  "ground_truth_notes": "Own-group accepted paper. Poster. Scores: 6/2→6/8/6. Novel Deja Vu hypothesis. Rebuttal reversed Q4KG from 2 to 6. Pipeline depends on GPT-4.1 for extraction/scoring.",
+  "case_study_files": [
+    "docs/case_studies/public_slice/A1_adversarial_dejavu.md"
+  ],
+  "evidence": {
+    "paper_pdf": "data/papers/public_slice/21925_Adversarial_D_j_Vu_Jailb.pdf",
+    "openreview_pdf": "data/openreviews/public_slice/Adversarial Déjà Vu_ Jailbreak Dictionary Learning for Stronger Generalization to Unseen Attacks _ OpenReview.pdf",
+    "official_concerns": "data/official_concerns/adversarial_dejavu.yaml"
+  },
+  "official_concerns": [
+    {
+      "id": "O1",
+      "text": "ASCoT experiments are limited to only two LLM families (Llama-3.1-8B, Zephyr-7B); more model families needed to justify generality claims.",
+      "severity": "major",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "model_coverage",
+        "generalizability",
+        "evaluation_scope"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "jXni"
+      ]
+    },
+    {
+      "id": "O2",
+      "text": "Missing important representative jailbreak baselines; most attacks evaluated (except AutoDAN-Turbo) are not widely adopted for jailbreak robustness analysis.",
+      "severity": "major",
+      "decisive": false,
+      "ac_treatment": "resolved",
+      "issue_type": "empirical",
+      "tags": [
+        "missing_baselines",
+        "evaluation_scope",
+        "attack_coverage"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "jXni"
+      ]
+    },
+    {
+      "id": "O3",
+      "text": "Missing important details about StrongReject evaluation metric: definition, dataset, and calculation procedure for Table 2 are unclear.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "evaluation_detail",
+        "metric_definition",
+        "clarity"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "jXni"
+      ]
+    },
+    {
+      "id": "O4",
+      "text": "The prompting-based skill extraction and attack-via-prompting-with-skill-descriptions techniques were first proposed in AutoDAN-Turbo (2024), making the contribution feel incremental.",
+      "severity": "major",
+      "decisive": false,
+      "ac_treatment": "resolved",
+      "issue_type": "conceptual",
+      "tags": [
+        "novelty_delta",
+        "overlap_with_prior_work",
+        "autodan_turbo"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "jXni",
+        "Q4KG"
+      ]
+    },
+    {
+      "id": "O5",
+      "text": "Paper width exceeds the ICLR submission template restriction.",
+      "severity": "minor",
+      "decisive": false,
+      "ac_treatment": "accepted_limitation",
+      "issue_type": "framing",
+      "tags": [
+        "formatting",
+        "template_compliance"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "jXni"
+      ]
+    },
+    {
+      "id": "O6",
+      "text": "Paper lacks concrete before-and-after examples showing how skill primitives from the Jailbreak Dictionary transform base prompts into adversarial ones.",
+      "severity": "major",
+      "decisive": false,
+      "ac_treatment": "resolved",
+      "issue_type": "framing",
+      "tags": [
+        "examples",
+        "interpretability",
+        "skill_composition"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "Q4KG"
+      ]
+    },
+    {
+      "id": "O7",
+      "text": "The overall structure of using composed attack strategies for prompt generation resembles AutoDAN-Turbo, making the Jailbreak Dictionary contribution feel incremental; a direct comparative experiment is needed.",
+      "severity": "major",
+      "decisive": false,
+      "ac_treatment": "resolved",
+      "issue_type": "conceptual",
+      "tags": [
+        "autodan_turbo",
+        "novelty_delta",
+        "direct_comparison"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "Q4KG"
+      ]
+    },
+    {
+      "id": "O8",
+      "text": "AutoDAN-Turbo is listed as an unseen attack in evaluation but its paper is included in the curated set of 32 jailbreak papers used to construct the skill dictionary, raising fairness concerns.",
+      "severity": "major",
+      "decisive": false,
+      "ac_treatment": "resolved",
+      "issue_type": "empirical",
+      "tags": [
+        "evaluation_fairness",
+        "temporal_cutoff",
+        "data_leakage"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "Q4KG"
+      ]
+    },
+    {
+      "id": "O9",
+      "text": "Since seen attack methods use automated processes relying on prompts, this may affect the stability of extracting skills.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "robustness",
+        "extraction_stability",
+        "automation_bias"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "DHsL"
+      ]
+    },
+    {
+      "id": "O10",
+      "text": "Paper lacks extracting dictionaries from a subset of 32 research papers, forming a combination method, and experimentally verifying the gap in capabilities.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "ablation",
+        "subset_analysis",
+        "temporal_generalization"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "DHsL"
+      ]
+    },
+    {
+      "id": "O11",
+      "text": "Skill extraction and explainability scoring rely on GPT-4.1; human-in-the-loop verification is mentioned but not quantified, raising potential model-specific bias or leakage concerns.",
+      "severity": "major",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "evaluator_bias",
+        "model_dependence",
+        "cross_validation"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "5oss"
+      ]
+    },
+    {
+      "id": "O12",
+      "text": "Key controls are absent: random skill training, harmful-data-only training, swapping helper generator, and removing refusal-template pairing, needed to isolate ASCoT's gains from generic data augmentation.",
+      "severity": "major",
+      "decisive": false,
+      "ac_treatment": "resolved",
+      "issue_type": "empirical",
+      "tags": [
+        "ablation",
+        "control_experiments",
+        "attribution"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "5oss"
+      ]
+    },
+    {
+      "id": "O13",
+      "text": "Dictionary is built from single-turn pairs yet claims extend to multi-turn (GALA); while harmfulness decreases, the mechanism is not carefully analyzed and a multi-turn extraction pipeline is needed.",
+      "severity": "major",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "conceptual",
+      "tags": [
+        "scope_limitation",
+        "multi_turn",
+        "generalization_gap"
+      ],
+      "resolved_in_rebuttal": false,
+      "raised_by": [
+        "5oss"
+      ]
+    },
+    {
+      "id": "O14",
+      "text": "Table 3 labels 'SBAT' which appears to be ASCoT (typo); statistics (variance, CIs) and multiple-run stability are not reported, which matters for safety fine-tuning sensitivity.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "statistical_rigor",
+        "variance",
+        "reproducibility"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "5oss"
+      ]
+    },
+    {
+      "id": "O15",
+      "text": "Recent skill-mix efforts in instruction tuning and safety could be directly compared as alternative composition engines; paper mainly positions against adversarial-training-style methods only.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "framing",
+      "tags": [
+        "positioning",
+        "related_work",
+        "skill_mix_methods"
+      ],
+      "resolved_in_rebuttal": false,
+      "raised_by": [
+        "5oss"
+      ]
+    },
+    {
+      "id": "O16",
+      "text": "D_over is not properly defined anywhere in the paper; Table 1 uses the term without a definition.",
+      "severity": "minor",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "framing",
+      "tags": [
+        "notation",
+        "definition",
+        "clarity"
+      ],
+      "resolved_in_rebuttal": false,
+      "raised_by": [
+        "AC_1jTh"
+      ]
+    },
+    {
+      "id": "O17",
+      "text": "CAT* and LAT* 40K samples are not detailed; unclear whether they were produced with original algorithms.",
+      "severity": "minor",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "baseline_detail",
+        "reproducibility"
+      ],
+      "resolved_in_rebuttal": false,
+      "raised_by": [
+        "AC_1jTh"
+      ]
+    },
+    {
+      "id": "O18",
+      "text": "Unclear what kinds of skills were extracted from less interpretable attacks like GCG; an appendix with examples would be helpful.",
+      "severity": "minor",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "interpretability",
+        "skill_extraction",
+        "gcg"
+      ],
+      "resolved_in_rebuttal": false,
+      "raised_by": [
+        "AC_1jTh"
+      ]
+    },
+    {
+      "id": "O19",
+      "text": "Paper should better demonstrate the advantages of using dictionary learning over simpler alternatives like clustering or deduplication for compressing adversarial skills.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "accepted_limitation",
+      "issue_type": "conceptual",
+      "tags": [
+        "method_justification",
+        "dictionary_learning",
+        "alternatives"
+      ],
+      "resolved_in_rebuttal": false,
+      "raised_by": [
+        "AC_1jTh"
+      ]
+    },
+    {
+      "id": "O20",
+      "text": "The composition of the training set (mix of vanilla harmful, HEx-PHI, AdvBench, HarmBench, adversarially composed, benign, over-refusal queries) is not justified with small-scale experiments showing each component's contribution.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "accepted_limitation",
+      "issue_type": "empirical",
+      "tags": [
+        "training_data",
+        "ablation",
+        "dataset_composition"
+      ],
+      "resolved_in_rebuttal": false,
+      "raised_by": [
+        "5oss"
+      ]
+    },
+    {
+      "id": "O21",
+      "text": "The paper reports average ASR across attacks in Table 2, but ALO (Attack Loss Optimization or similar metric from MixAT) is also informative and could be reported alongside.",
+      "severity": "minor",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "evaluation_metric",
+        "reporting",
+        "asr_variants"
+      ],
+      "resolved_in_rebuttal": false,
+      "raised_by": [
+        "AC_1jTh"
+      ]
+    },
+    {
+      "id": "O22",
+      "text": "The AC questions whether dictionary learning is truly needed, noting that clustering with embedding distances could achieve similar compression and the technical complexity of DL recovery needs stronger justification.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "accepted_limitation",
+      "issue_type": "conceptual",
+      "tags": [
+        "method_justification",
+        "dictionary_learning",
+        "necessity"
+      ],
+      "resolved_in_rebuttal": false,
+      "raised_by": [
+        "AC_1jTh"
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "method": "ai_scientist_run1",
+      "verdict": "ACCEPT",
+      "score": 6,
+      "error_type": "TP",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_accept",
+          "text": "Novel and useful conceptual framework — the Adversarial Deja Vu hypothesis reframes jailbreak evolution as recombination of known adversarial skills.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "R2",
+          "polarity": "pro_accept",
+          "text": "Strong empirical results across three model families with competitive robustness against unseen attacks and favorable over-refusal rates.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "Well-conceived temporal cutoff study design with monotonically increasing explanatory power across multiple seen/unseen partitions.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "Insightful ablation studies on coverage dividend and compositional depth yielding actionable findings for practitioners.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M3",
+          "polarity": "pro_accept",
+          "text": "Both closed-source (GPT-4.1) and open-source (Qwen3) pipeline variants demonstrate transferability and support reproducibility.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M4",
+          "polarity": "pro_accept",
+          "text": "Random skill subset control (Appendix J) provides evidence that dictionary learning compression contributes meaningfully beyond diverse skill sets.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "Circularity in evaluation: GPT-4.1 performs skill extraction, interprets dictionary atoms, and serves as the primary explainability judge, with no human evaluation component.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "methodology",
+            "evaluation_validity",
+            "circular_evaluation"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "Unseen attack evaluation set is small (only 6 post-cutoff attacks), limiting generalizability of the hypothesis; these attacks may share strategies due to community conventions rather than fundamental properties.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "evaluation_scope",
+            "generalizability"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "Linear composition assumption in embedding space is strong and insufficiently validated; reconstruction MSE alone does not confirm semantic composition behaves linearly.",
+          "severity": "major",
+          "addressability": "unresolved",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "methodology",
+            "theoretical_justification"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "Hypothesis risks tautology: if extracted skills are sufficiently generic (e.g., role-playing, academic framing), most attacks trivially appear to recombine them; no analysis of granularity threshold for genuine predictiveness.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "novelty",
+            "theoretical_justification",
+            "tautology_risk"
+          ]
+        },
+        {
+          "id": "A5",
+          "text": "Missing component ablation for ASCoT training data: relative contributions of adversarial compositions, benign data, over-refusal calibration (XSTest upsampled 15x), and harmful datasets are not isolated.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "ablation",
+            "evaluation_rigor",
+            "confounding"
+          ]
+        },
+        {
+          "id": "A6",
+          "text": "Multi-turn generalization claim is supported by only one attack (GALA), which is insufficient for a strong conclusion.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "evaluation_scope",
+            "overclaiming"
+          ]
+        },
+        {
+          "id": "A7",
+          "text": "No discussion of adversarial adaptation: if attackers know the defender uses ASCoT, they could target strategies poorly represented in the dictionary; robustness under adaptive threat models is unaddressed.",
+          "severity": "moderate",
+          "addressability": "unresolved",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "robustness",
+            "threat_model",
+            "adaptive_adversary"
+          ]
+        },
+        {
+          "id": "A8",
+          "text": "Explainability plateau in Figure 3 could reflect LLM evaluation ceiling effects rather than genuine skill saturation; not tested with random or unrelated skills as a control.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "evaluation_validity",
+            "ceiling_effect"
+          ]
+        },
+        {
+          "id": "A9",
+          "text": "Defense quality is upper-bounded by frontier LLM extraction and composition capabilities, creating a dependency on external model quality.",
+          "severity": "minor",
+          "addressability": "unresolved",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "scalability",
+            "external_dependency"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O11",
+          "agentic_id": "A1",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "GPT-4.1 used for both skill extraction and evaluation creates circular bias risk",
+          "rationale": "Both identify the same specific issue: GPT-4.1 serves as skill extractor, dictionary atom interpreter, and explainability judge, creating circularity/bias. O11 frames as \"bias or leakage\"; A1 frames as \"circularity.\" Same fix (independent judge) resolves both."
+        },
+        {
+          "official_id": "O2",
+          "agentic_id": "A2",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Attack evaluation scope insufficient for generalizability claims",
+          "rationale": "Both flag weaknesses in attack evaluation coverage, but from different angles. O2 identifies missing specific representative baselines (BEAST, SAA); A2 flags that only 6 post-cutoff attacks is too small a sample and they may share strategies due to community conventions. Different fixes: O2 needs specific baselines added, A2 needs more unseen attacks overall."
+        },
+        {
+          "official_id": "O13",
+          "agentic_id": "A6",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Multi-turn generalization claim weakly supported by single GALA attack",
+          "rationale": "Both identify that multi-turn claims rest on GALA alone and are insufficient. O13 additionally wants mechanism analysis and a multi-turn extraction pipeline; A6 focuses on the single-attack sample size. Both reduce to the same core complaint: the multi-turn story is undercooked. Addressing multi-turn comprehensively fixes both."
+        },
+        {
+          "official_id": "O20",
+          "agentic_id": "A5",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Training dataset component contributions not isolated via ablation",
+          "rationale": "Both request the same thing: ablation experiments isolating the marginal contribution of each training data component (adversarial compositions, benign data, over-refusal queries, harmful datasets). O20 uses \"justifying the need for each of the components\"; A5 says \"relative contributions...are not isolated.\" Same gap, same fix."
+        },
+        {
+          "official_id": "O12",
+          "agentic_id": "A5",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Missing control experiments to attribute ASCoT's gains",
+          "rationale": "O12 requests four specific controls (random skill training, harmful-data-only, swapping helper generator, removing refusal-template pairing). A5 requests data component isolation (adversarial, benign, over-refusal, harmful). There is overlap (both want ablation disentangling ASCoT's gains), but O12 includes controls beyond data composition (e.g., helper generator swap) while A5 focuses on data mix."
+        },
+        {
+          "official_id": "O9",
+          "agentic_id": "A8",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "n/a",
+          "issue": "Skill extraction/evaluation pipeline reliability questioned",
+          "rationale": "Both question the reliability of the extraction/evaluation pipeline but target different aspects. O9 questions whether prompt-based extraction produces stable skills; A8 questions whether the explainability plateau in Figure 3 reflects LLM evaluation ceiling effects rather than genuine saturation. Different issues requiring different evidence to resolve."
+        }
+      ],
+      "metrics": {
+        "total_official": 22,
+        "total_decisive": 0,
+        "recall_strict": 0.2273,
+        "recall_loose": 0.2727,
+        "decisive_recall": null,
+        "matched_official_ids": [
+          "O11",
+          "O12",
+          "O13",
+          "O2",
+          "O20",
+          "O9"
+        ],
+        "strict_matched_ids": [
+          "O11",
+          "O12",
+          "O13",
+          "O2",
+          "O20"
+        ]
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/ai_scientist_run1/adversarial_dejavu.yaml",
+        "match_graph": "data/match_graphs/public_slice/ai_scientist_run1/adversarial_dejavu.yaml",
+        "review": "data/reviews/public_slice/ai_scientist_run1/adversarial_dejavu/"
+      }
+    },
+    {
+      "method": "ai_scientist_gpt4o_run1",
+      "verdict": "REJECT",
+      "score": 3,
+      "error_type": "FN",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_reject",
+          "text": "Insufficient empirical grounding of the theoretical claims, with all quality and soundness scores at 2/10.",
+          "linked_concern_ids": [
+            "A2"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R2",
+          "polarity": "pro_reject",
+          "text": "Limited originality — the approach leverages existing adversarial concepts without demonstrating a clear novelty delta.",
+          "linked_concern_ids": [
+            "A1"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R3",
+          "polarity": "pro_reject",
+          "text": "Overly complex implementation with unclear reproducibility, compounded by dependency on specific proprietary LLMs.",
+          "linked_concern_ids": [
+            "A3"
+          ],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "Novel approach to using adversarial skill recombination.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "Comprehensive analysis of jailbreak trends.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M3",
+          "polarity": "pro_accept",
+          "text": "Innovative concept of Adversarial Skill Compositional Training (ASCoT).",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "Limited originality — the paper leverages existing adversarial concepts without sufficient novelty over prior work.",
+          "severity": "major",
+          "addressability": "unresolved",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "novelty",
+            "prior_work"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "Insufficient empirical grounding of the theoretical claims; the Adversarial Deja Vu hypothesis lacks adequate experimental validation.",
+          "severity": "major",
+          "addressability": "unresolved",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "empirical_support",
+            "claim_evidence_mismatch"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "Overly complex implementation with unclear reproducibility, compounded by dependency on specific LLMs (GPT-4.1) that limits independent replication.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "reproducibility",
+            "complexity"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "Lack of robust longitudinal studies and practical application validation beyond academic benchmarks.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "evaluation_rigor",
+            "generalization"
+          ]
+        },
+        {
+          "id": "A5",
+          "text": "Dense language diminishes clarity and accessibility of the paper.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "clarity",
+            "writing_quality"
+          ]
+        },
+        {
+          "id": "A6",
+          "text": "Computational scalability not addressed for extremely large skill compositions in the dictionary learning process.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "scalability",
+            "missing_analysis"
+          ]
+        },
+        {
+          "id": "A7",
+          "text": "Potential ethical misuse risk from detailed understanding of adversarial skill decomposition.",
+          "severity": "minor",
+          "addressability": "unknown",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "ethics",
+            "dual_use"
+          ]
+        },
+        {
+          "id": "A8",
+          "text": "The skill dictionary may not handle genuinely novel attack primitives that deviate from historical patterns, undermining the core hypothesis.",
+          "severity": "moderate",
+          "addressability": "unresolved",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "method_limitation",
+            "generalization"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O4",
+          "agentic_id": "A1",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Novelty of skill extraction approach given AutoDAN-Turbo precedent",
+          "rationale": "Both flag insufficient novelty. O4 specifically identifies AutoDAN-Turbo (2024) as having proposed prompting-based skill extraction first, making the contribution feel incremental. A1 broadly claims 'limited originality — leverages existing adversarial concepts without sufficient novelty.' Same issue family (novelty delta) but A1 is generic while O4 names the specific precedent. Partial because fixing O4 (demonstrating delta over AutoDAN-Turbo) would only partially address A1's broader claim."
+        },
+        {
+          "official_id": "O7",
+          "agentic_id": "A1",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Overall contribution feels incremental given structural resemblance to AutoDAN-Turbo",
+          "rationale": "O7 argues the overall structure of using composed attack strategies for prompt generation resembles AutoDAN-Turbo, requesting a direct comparative experiment. A1 broadly claims 'limited originality.' Both are in the novelty family but O7 is specific (structural resemblance, needs empirical comparison) while A1 is a generic judgment. Partial because fixing O7 (adding a direct comparison) is more targeted than what A1 demands."
+        },
+        {
+          "official_id": "O12",
+          "agentic_id": "A2",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Empirical validation of claims is inadequate",
+          "rationale": "A2 broadly claims 'insufficient empirical grounding of the theoretical claims; hypothesis lacks adequate experimental validation.' O12 specifically identifies four missing control experiments (random skill, harmful-data-only, helper swap, refusal-template removal) needed to isolate ASCoT's gains from generic data augmentation. Same issue family (experimental validation gaps) but O12 is actionable and specific while A2 is a sweeping indictment. Partial because O12 is one instance of the broader empirical gap A2 flags."
+        },
+        {
+          "official_id": "O11",
+          "agentic_id": "A3",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Pipeline depends on GPT-4.1, raising concerns about model-specific limitations",
+          "rationale": "Both flag GPT-4.1 dependency but from different angles. A3 targets reproducibility and implementation complexity: 'dependency on specific LLMs (GPT-4.1) limits independent replication.' O11 targets evaluation bias: 'skill extraction and explainability scoring rely on GPT-4.1, raising leakage/bias concerns.' The fixes differ (A3: support multiple models for replication; O11: use an independent judge model). Partial per false match pattern #4 (same component, different complaint) but the shared GPT-4.1 dependency axis justifies a partial rather than related edge."
+        }
+      ],
+      "metrics": {
+        "total_official": 22,
+        "total_decisive": 0,
+        "recall_strict": 0.1818,
+        "recall_loose": 0.1818,
+        "decisive_recall": null,
+        "matched_official_ids": [
+          "O11",
+          "O12",
+          "O4",
+          "O7"
+        ],
+        "strict_matched_ids": [
+          "O11",
+          "O12",
+          "O4",
+          "O7"
+        ]
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/ai_scientist_gpt4o_run1/adversarial_dejavu.yaml",
+        "match_graph": "data/match_graphs/public_slice/ai_scientist_gpt4o_run1/adversarial_dejavu.yaml",
+        "review": "data/reviews/public_slice/ai_scientist_gpt4o_run1/adversarial_dejavu/"
+      }
+    },
+    {
+      "method": "liang_run1",
+      "verdict": "REJECT",
+      "score": null,
+      "error_type": "FN",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_reject",
+          "text": "Core hypothesis validated via circular LLM-as-judge pipeline with no human ground truth or calibration baseline, risking systematic bias.",
+          "linked_concern_ids": [
+            "A1"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R2",
+          "polarity": "pro_reject",
+          "text": "Evaluation scope is narrow (only 6 unseen attacks, mostly single-turn) with uncontrolled confound from LLM stylistic overlap between training data and test attacks.",
+          "linked_concern_ids": [
+            "A3",
+            "A4"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R3",
+          "polarity": "pro_reject",
+          "text": "Linearity assumption underlying the dictionary learning framework is unvalidated with no comparison to nonlinear alternatives.",
+          "linked_concern_ids": [
+            "A2"
+          ],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "Novel conceptual reframing of jailbreaks as sparse recombinations of a finite set of adversarial skill primitives.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "Strong empirical results: ASCoT achieves lowest mean harmfulness on unseen attacks across three models while maintaining competitive over-refusal rates.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M3",
+          "polarity": "pro_accept",
+          "text": "Well-structured hypothesis-driven narrative with logical flow from hypothesis to validation to defense method to ablations.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M4",
+          "polarity": "pro_accept",
+          "text": "Thorough ablations (coverage dividend, compositional depth, random skill control) provide evidence gains come from structured skill coverage.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M5",
+          "polarity": "pro_accept",
+          "text": "Good reproducibility with open-weight model (Qwen3-235B), cross-model judge validation, and extensive appendix detail.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "The core \"Adversarial Deja Vu\" hypothesis is validated through a circular LLM-as-judge pipeline where LLMs judge LLM-extracted skills against LLM-named dictionary primitives, with no human evaluation, no ground-truth annotation, and no calibration baseline for truly novel skills.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "methodology",
+            "circular_validation",
+            "evaluation_rigor"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "The linearity assumption underlying dictionary learning (that adversarial skills compose approximately linearly in embedding space) is strong and unvalidated, with no direct reconstruction quality metrics for unseen skills and no comparison to nonlinear alternatives.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "methodology",
+            "assumptions",
+            "technical_soundness"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "Evaluation scope is narrow and potentially favorable: only 6 unseen attacks (mostly single-turn language-based), with a potential distribution overlap confound between LLM-generated ASCoT training data and LLM-generated test attacks that is not disentangled.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "evaluation_scope",
+            "confounding",
+            "generalization"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "Practical threat model and adaptive attacker analysis are underdeveloped: no evaluation against adversaries aware of ASCoT's defense, no discussion of in-scope threats like multi-turn escalation or fixed refusal template exploitation.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "robustness",
+            "threat_model",
+            "adaptive_attacks"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O11",
+          "agentic_id": "A1",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "LLM-based evaluation pipeline lacks independent validation, risking circularity and model-specific bias",
+          "rationale": "O11 flags GPT-4.1 being used for both skill extraction and evaluation with no human verification, raising model-specific bias. A1 flags the broader circularity of the entire LLM-as-judge pipeline (LLMs judging LLM-extracted skills against LLM-named primitives with no human ground truth). Both identify LLM self-evaluation as a validity threat. Partial because A1 encompasses the full pipeline circularity while O11 focuses on the specific evaluator model; fixing O11 (adding an independent judge) would not fully address A1's broader circularity claim."
+        },
+        {
+          "official_id": "O2",
+          "agentic_id": "A3",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Evaluation attack coverage is narrow and may not adequately test generalization",
+          "rationale": "O2 flags missing representative jailbreak baselines (specifically BEAST, SAA, and other widely-adopted attacks). A3 flags narrow scope (only 6 unseen attacks, mostly single-turn language-based) plus an LLM stylistic overlap confound between LLM-generated training data and LLM-generated test attacks. Both identify evaluation narrowness on the attack dimension, but A3 adds a distribution overlap confound absent from O2, while O2 names specific missing baselines A3 does not. Partial because the concerns overlap on attack coverage but diverge on the confound aspect."
+        },
+        {
+          "official_id": "O19",
+          "agentic_id": "A2",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "n/a",
+          "issue": "Dictionary learning methodology questioned from different angles",
+          "rationale": "O19 questions whether DL provides advantages over simpler alternatives like clustering or deduplication (a necessity argument). A2 questions whether the linearity assumption underlying DL is valid and calls for reconstruction quality metrics and nonlinear comparisons (an assumption validity argument). Both target the DL methodology but the specific complaints and required fixes differ: O19 would be addressed by a DL-vs-clustering ablation, A2 by validating reconstruction quality or testing nonlinear alternatives. This is false match pattern #4 (same component, different complaint). Related only."
+        }
+      ],
+      "metrics": {
+        "total_official": 22,
+        "total_decisive": 0,
+        "recall_strict": 0.0909,
+        "recall_loose": 0.1364,
+        "decisive_recall": null,
+        "matched_official_ids": [
+          "O11",
+          "O19",
+          "O2"
+        ],
+        "strict_matched_ids": [
+          "O11",
+          "O2"
+        ]
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/liang_run1/adversarial_dejavu.yaml",
+        "match_graph": "data/match_graphs/public_slice/liang_run1/adversarial_dejavu.yaml",
+        "review": "data/reviews/public_slice/liang_run1/adversarial_dejavu/"
+      }
+    },
+    {
+      "method": "liang_gpt4o_run1",
+      "verdict": "ACCEPT",
+      "score": null,
+      "error_type": "TP",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_accept",
+          "text": "Novel Adversarial Deja Vu hypothesis reframes jailbreaks as recombinations of existing adversarial skills, offering a new perspective on AI safety defense.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "R2",
+          "polarity": "pro_accept",
+          "text": "Proposed ASCoT training paradigm demonstrates significant empirical improvements in robustness against unseen jailbreak attacks.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "Comprehensive analysis of adversarial skills across a large jailbreak dataset provides valuable insights into the nature of adversarial threats.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "Skill-composition approach to adversarial training could inspire further research beyond isolated attack instances.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M3",
+          "polarity": "pro_accept",
+          "text": "Paper is well-structured with detailed experimental evaluations, enhancing credibility and reproducibility.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "Adversarial Deja Vu hypothesis lacks clarity: insufficient examples illustrating how it applies to different jailbreak types, and the connection between hypothesis and proposed ASCoT method is not explicitly articulated.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "clarity",
+            "hypothesis_formulation"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "Limited exploration of multi-turn jailbreaks: evaluation focuses primarily on single-turn scenarios, which may limit generalizability of the robustness claims for ASCoT.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "limited_scope",
+            "generalizability"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "Evaluation relies heavily on specific datasets and models, which may not represent the diversity of real-world jailbreak scenarios; broader model and dataset coverage needed to validate general applicability.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "evaluation_breadth",
+            "generalizability"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "Insufficient discussion of limitations and ethical implications: potential failure modes are not addressed, and the risk of misuse of the jailbreak dictionary is not comprehensively considered.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "limitations",
+            "ethics"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O6",
+          "agentic_id": "A1",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Paper lacks concrete illustrative examples connecting its core ideas to practice",
+          "rationale": "O6 specifically requests before-and-after skill composition examples showing how primitives transform prompts. A1 more broadly flags that the hypothesis lacks clarity with insufficient examples of how it applies across jailbreak types, plus the hypothesis-to-ASCoT connection is underarticulated. Both want concrete walk-throughs but at different levels (mechanism illustration vs conceptual applicability). Partial because fixing O6 (adding skill composition examples) would not fully address A1's broader hypothesis clarity concern."
+        },
+        {
+          "official_id": "O13",
+          "agentic_id": "A2",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Evaluation limited to single-turn scenarios; generalizability to multi-turn jailbreaks not demonstrated",
+          "rationale": "Both identify the same gap: the dictionary and ASCoT training are built on single-turn pairs, yet robustness claims extend to multi-turn (GALA). O13 is more specific about the mechanism analysis gap and calls for a multi-turn extraction pipeline; A2 frames it as a generalizability limitation. A neutral reader would say these are the same complaint. Both treat as major weakness."
+        },
+        {
+          "official_id": "O1",
+          "agentic_id": "A3",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Insufficient model diversity in ASCoT evaluation",
+          "rationale": "O1 specifically identifies that ASCoT experiments use only two LLM families (Llama-3.1-8B, Zephyr-7B) and demands more. A3 broadly flags that evaluation relies on specific datasets and models, which may not represent real-world diversity. A3's model-coverage facet maps to O1, but A3 also covers dataset breadth (a separate dimension). Partial because A3 is broader — fixing O1 alone would not resolve A3."
+        },
+        {
+          "official_id": "O2",
+          "agentic_id": "A3",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Insufficient attack/dataset coverage in evaluation",
+          "rationale": "O2 specifically identifies missing representative jailbreak baselines (most evaluated attacks are not widely adopted). A3 broadly flags reliance on specific datasets and models that may not capture real-world diversity. A3's dataset/attack facet maps to O2, but O2 is more specific (names BEAST, SAA as needed). Partial because A3 is a broad evaluation breadth concern while O2 targets specific missing attack baselines."
+        }
+      ],
+      "metrics": {
+        "total_official": 22,
+        "total_decisive": 0,
+        "recall_strict": 0.1818,
+        "recall_loose": 0.1818,
+        "decisive_recall": null,
+        "matched_official_ids": [
+          "O1",
+          "O13",
+          "O2",
+          "O6"
+        ],
+        "strict_matched_ids": [
+          "O1",
+          "O13",
+          "O2",
+          "O6"
+        ]
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/liang_gpt4o_run1/adversarial_dejavu.yaml",
+        "match_graph": "data/match_graphs/public_slice/liang_gpt4o_run1/adversarial_dejavu.yaml",
+        "review": "data/reviews/public_slice/liang_gpt4o_run1/adversarial_dejavu/"
+      }
+    },
+    {
+      "method": "marg_gpt4o_run1",
+      "verdict": "ACCEPT",
+      "score": null,
+      "error_type": "TP",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_accept",
+          "text": "Paper presents a novel approach to improving robustness against unseen jailbreak attacks using the Adversarial Déjà Vu hypothesis and Jailbreak Dictionary, acknowledged as making significant contributions.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "R2",
+          "polarity": "pro_reject",
+          "text": "Multiple areas across the paper lack sufficient clarity and detail, particularly ASCoT training, dictionary construction, evaluation metrics, and ethics/reproducibility.",
+          "linked_concern_ids": [
+            "A1",
+            "A2",
+            "A3",
+            "A5",
+            "A9"
+          ],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "Adversarial Déjà Vu hypothesis recognized as a novel conceptual contribution to understanding jailbreak compositionality.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "Adversarial Déjà Vu hypothesis lacks supporting examples or case studies illustrating how unseen jailbreaks are recompositions of previously observed adversarial skills.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "clarity",
+            "motivation"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "Jailbreak Dictionary construction and practical application are insufficiently described; missing context on how the dictionary is built and used in practice.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "clarity",
+            "reproducibility",
+            "method_description"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "Redundancy filtering process explanation is insufficient: cosine-similarity thresholds and semantic judgment criteria are not specified.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "method_description",
+            "clarity"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "Explainability score methodology is unclear: how GPT-4.1 and Claude 3.7 Sonnet scoring rubric criteria are determined is not specified.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "evaluation_methodology",
+            "clarity"
+          ]
+        },
+        {
+          "id": "A5",
+          "text": "ASCoT training process lacks implementation details: no step-by-step explanation, no specification of training techniques or algorithms, no hyperparameter table, no comparison with existing training methods.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "reproducibility",
+            "method_description",
+            "clarity"
+          ]
+        },
+        {
+          "id": "A6",
+          "text": "Evaluation pipeline and reconstruction success metrics need elaboration: missing specific benchmarks, examples of successful reconstructions, and visual aids.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "evaluation_methodology",
+            "clarity"
+          ]
+        },
+        {
+          "id": "A7",
+          "text": "Temporal cutoff analysis lacks rationale: no justification for the chosen cutoff or specification of datasets used for replication.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "experimental_design",
+            "reproducibility"
+          ]
+        },
+        {
+          "id": "A8",
+          "text": "Model evaluation criteria (\"general capability,\" \"harmfulness,\" \"over-refusal rates\") lack detailed definitions and measurement methods.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "evaluation_methodology",
+            "clarity"
+          ]
+        },
+        {
+          "id": "A9",
+          "text": "Ethics & Reproducibility Statement needs restructuring: missing clear synthesis of ethical implications, step-by-step reproducibility guidance, and discussion of potential risks.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "ethics",
+            "reproducibility",
+            "clarity"
+          ]
+        },
+        {
+          "id": "A10",
+          "text": "Skill extraction pipeline and adversarial skill primitives need clearer definitions, better organization, and more consistent examples.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "clarity",
+            "method_description"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O6",
+          "agentic_id": "A1",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Paper lacks concrete examples illustrating how adversarial skill primitives compose to create jailbreaks",
+          "rationale": "Both concerns request concrete examples of skill composition. O6 asks for before-and-after prompt transformation examples; A1 asks for case studies showing how unseen jailbreaks are recompositions of observed skills. The same fix (Figure 4) addresses both. A neutral reader would identify these as the same complaint."
+        },
+        {
+          "official_id": "O8",
+          "agentic_id": "A7",
+          "match_type": "partial",
+          "severity_alignment": "under",
+          "judgment_alignment": "aligned",
+          "issue": "Temporal cutoff for seen/unseen attack classification needs better justification",
+          "rationale": "Both concern the temporal cutoff mechanism. O8 specifically challenges whether AutoDAN-Turbo can be called \"unseen\" when its paper is in the curated set; A7 more broadly asks for cutoff rationale and dataset specification. Same issue family but different scope: O8 targets a specific fairness violation, A7 targets general justification."
+        },
+        {
+          "official_id": "O3",
+          "agentic_id": "A8",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Evaluation metrics lack clear definitions and measurement methodology",
+          "rationale": "O3 specifically asks \"what is StrongReject score?\" with questions about definition, dataset, and calculation. A8 asks for detailed definitions of \"general capability,\" \"harmfulness,\" and \"over-refusal rates.\" Both flag evaluation metrics as underspecified, but target different specific metrics. O3 is narrower (one metric); A8 is broader (three criteria)."
+        },
+        {
+          "official_id": "O16",
+          "agentic_id": "A2",
+          "match_type": "partial",
+          "severity_alignment": "over",
+          "judgment_alignment": "aligned",
+          "issue": "Jailbreak Dictionary construction and terminology insufficiently defined",
+          "rationale": "O16 flags the specific undefined term D_over in Table 1. A2 broadly flags that dictionary construction and practical application are insufficiently described. A2 is the broad version; O16 is a narrow instance of dictionary clarity. Fixing A2 (describe construction fully) would likely resolve O16, but A2's scope far exceeds O16's. Agentic severity (major) substantially exceeds official (minor)."
+        },
+        {
+          "official_id": "O11",
+          "agentic_id": "A4",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "n/a",
+          "issue": "Explainability scoring methodology concerns",
+          "rationale": "Both concern explainability scoring but with different complaints. O11 flags GPT-4.1 evaluator bias and lack of independent verification (methodology independence). A4 flags that the scoring rubric criteria are unspecified (description clarity). Different fixes: O11 requires adding a second judge; A4 requires describing the rubric. False match pattern #4 (same component, different complaint) applies."
+        },
+        {
+          "official_id": "O9",
+          "agentic_id": "A10",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "n/a",
+          "issue": "Skill extraction pipeline concerns",
+          "rationale": "Both concern the skill extraction pipeline but target different defects. O9 questions extraction stability when relying on prompts (robustness). A10 asks for clearer definitions, better organization, and more consistent examples (clarity). Different fixes needed: O9 requires stability evidence; A10 requires rewriting for clarity. False match pattern #4 applies."
+        }
+      ],
+      "metrics": {
+        "total_official": 22,
+        "total_decisive": 0,
+        "recall_strict": 0.1818,
+        "recall_loose": 0.2727,
+        "decisive_recall": null,
+        "matched_official_ids": [
+          "O11",
+          "O16",
+          "O3",
+          "O6",
+          "O8",
+          "O9"
+        ],
+        "strict_matched_ids": [
+          "O16",
+          "O3",
+          "O6",
+          "O8"
+        ]
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/marg_gpt4o_run1/adversarial_dejavu.yaml",
+        "match_graph": "data/match_graphs/public_slice/marg_gpt4o_run1/adversarial_dejavu.yaml",
+        "review": "data/reviews/public_slice/marg_gpt4o_run1/adversarial_dejavu/"
+      }
+    },
+    {
+      "method": "oar_run1",
+      "verdict": "REJECT",
+      "score": null,
+      "error_type": "FN",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_reject",
+          "text": "Multiple technical rigor issues: orphaned statistics, unused variable in formulation, misleading adversarial training framing, and confounded depth analysis collectively undermine the paper's core claims.",
+          "linked_concern_ids": [
+            "A2",
+            "A3",
+            "A4",
+            "A6"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R2",
+          "polarity": "pro_reject",
+          "text": "Mismatch between dictionary evaluation attack set and robustness evaluation attack set weakens the causal link between explainability and robustness, the paper's central thesis.",
+          "linked_concern_ids": [
+            "A9"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R3",
+          "polarity": "pro_reject",
+          "text": "Comparison with frontier reasoning models overstates what can be concluded, conflating task-specific fine-tuning with architectural capability.",
+          "linked_concern_ids": [
+            "A7"
+          ],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "The Adversarial Deja Vu hypothesis is creative and well-motivated as a framework for understanding jailbreak recurrence.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "The large-scale temporal analysis across 32 attack papers and dictionary learning pipeline are substantial contributions.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "Abstract's final sentence is truncated mid-clause, leaving a key claim incompletely stated in the paper's most-read section.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "presentation",
+            "clarity"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "Skill counts cited in Section 4.3 (~9.7 and ~14.8 skills) are absent from the referenced Table 5, creating orphaned statistics critical to the depth-complexity argument with no stated source or methodology.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "other",
+          "tags": [
+            "evidence_gap",
+            "evaluation"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "Adversarial training formulation defines dataset D as query-response pairs (q_i, r_i) but the loss uses r* instead of r; the sampled response r never appears in the objective, and Appendix C reveals r* comes from fixed refusal templates.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "other",
+          "tags": [
+            "notation",
+            "methodology"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "ASCoT is standard supervised fine-tuning on pre-generated data with no inner maximization or adversarial search during training, yet is framed within the adversarial training paradigm alongside methods (CAT, LAT) that perform online adversarial perturbation.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "other",
+          "tags": [
+            "framing",
+            "methodology"
+          ]
+        },
+        {
+          "id": "A5",
+          "text": "Perfect zero harmfulness scores across all novel compositions (k=2-5) are unusual and raise questions about evaluation sensitivity; evaluation set size and confidence intervals are not reported.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "evaluation",
+            "statistical_rigor"
+          ]
+        },
+        {
+          "id": "A6",
+          "text": "Training data has ~20x more examples at depths k=1-3 (3150-4098 each) than k=4-5 (190 each), confounding the depth analysis since the main ASCoT model is undertrained at depths most relevant for complex attacks.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "other",
+          "tags": [
+            "experimental_design",
+            "evaluation"
+          ]
+        },
+        {
+          "id": "A7",
+          "text": "Claiming robustness stems from adversarial skill coverage rather than scale is not supported by comparing a task-specific fine-tuned 8B model against general-purpose reasoning models not optimized for this benchmark.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "other",
+          "tags": [
+            "overclaiming",
+            "evaluation"
+          ]
+        },
+        {
+          "id": "A8",
+          "text": "Sparsity parameter lambda is unspecified for the unseen attack evaluation (Equation 3), despite directly controlling sparsity of reconstruction that is central evidence for the Adversarial Deja Vu hypothesis.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "reproducibility"
+          ]
+        },
+        {
+          "id": "A9",
+          "text": "Dictionary evaluation uses 6 post-cutoff attacks but robustness evaluation uses a different set (dropping 3, adding GALA), so the paper shows the dictionary can explain attacks it never tests ASCoT's defense against, weakening the explainability-robustness causal link.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "other",
+          "tags": [
+            "experimental_design",
+            "evaluation"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O14",
+          "agentic_id": "A5",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Missing statistical rigor: variance, confidence intervals, and multi-run stability not reported",
+          "rationale": "Both flag absent statistical reporting. O14 targets training reproducibility (multi-seed variance for fine-tuning sensitivity) while A5 targets evaluation sensitivity (suspiciously perfect zero scores, missing CIs and evaluation set sizes). Same issue family (statistical rigor) but different facets requiring different fixes. Partial because fixing one does not fix the other."
+        },
+        {
+          "official_id": "O8",
+          "agentic_id": "A9",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "n/a",
+          "issue": "Integrity of attack categorization in dictionary vs robustness evaluation",
+          "rationale": "Both concern how attacks are categorized across evaluation contexts. O8 flags that AutoDAN-Turbo appears in the 32-paper dictionary source but is listed as unseen (data leakage concern). A9 flags that the dictionary evaluation and robustness evaluation use different attack sets (experimental design inconsistency). Nearby topic but different specific complaints requiring different fixes. O8 was resolved via temporal cutoff clarification; A9 would require attack set unification."
+        },
+        {
+          "official_id": "O20",
+          "agentic_id": "A6",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "n/a",
+          "issue": "Training dataset composition not adequately justified or balanced",
+          "rationale": "Both raise concerns about ASCoT training data. O20 asks whether each source component (HEx-PHI, AdvBench, HarmBench, benign, over-refusal) is justified via component-level ablations. A6 flags the ~20x imbalance between k=1-3 (3150-4098 examples each) and k=4-5 (190 each) within the adversarial portion, confounding depth analysis. Same component (training data) but different complaints (source mix justification vs depth distribution balance). False match pattern 4 applies."
+        }
+      ],
+      "metrics": {
+        "total_official": 22,
+        "total_decisive": 0,
+        "recall_strict": 0.0455,
+        "recall_loose": 0.1364,
+        "decisive_recall": null,
+        "matched_official_ids": [
+          "O14",
+          "O20",
+          "O8"
+        ],
+        "strict_matched_ids": [
+          "O14"
+        ]
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/oar_run1/adversarial_dejavu.yaml",
+        "match_graph": "data/match_graphs/public_slice/oar_run1/adversarial_dejavu.yaml",
+        "review": "data/reviews/public_slice/oar_run1/adversarial_dejavu/"
+      }
+    }
+  ]
+}

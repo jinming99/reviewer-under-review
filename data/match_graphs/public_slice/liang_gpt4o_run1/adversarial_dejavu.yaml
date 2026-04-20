@@ -1,0 +1,195 @@
+schema_version: "v1"
+paper: "adversarial_dejavu"
+version: "v0.9.2"
+condition: "own_group/liang_gpt4o_run1"
+method: "baseline_liang_etal"
+
+matches:
+  # ----------------------------------------------------------------
+  # A1 ↔ O6: Both about missing concrete examples, different facets
+  # ----------------------------------------------------------------
+  - official_id: O6
+    agentic_id: A1
+    match_type: partial
+    issue: "Paper lacks concrete illustrative examples connecting its core ideas to practice"
+    judgment_alignment: aligned
+    severity_alignment: match  # O6: major, A1: moderate — gap=1, within tolerance
+    rationale: >-
+      O6 specifically requests before-and-after skill composition examples showing how
+      primitives transform prompts. A1 more broadly flags that the hypothesis lacks clarity
+      with insufficient examples of how it applies across jailbreak types, plus the
+      hypothesis-to-ASCoT connection is underarticulated. Both want concrete walk-throughs
+      but at different levels (mechanism illustration vs conceptual applicability). Partial
+      because fixing O6 (adding skill composition examples) would not fully address A1's
+      broader hypothesis clarity concern.
+
+  # ----------------------------------------------------------------
+  # A2 ↔ O13: Same specific issue — single-turn scope limits multi-turn claims
+  # ----------------------------------------------------------------
+  - official_id: O13
+    agentic_id: A2
+    match_type: exact
+    issue: "Evaluation limited to single-turn scenarios; generalizability to multi-turn jailbreaks not demonstrated"
+    judgment_alignment: aligned
+    severity_alignment: match  # O13: major, A2: major — same level
+    rationale: >-
+      Both identify the same gap: the dictionary and ASCoT training are built on single-turn
+      pairs, yet robustness claims extend to multi-turn (GALA). O13 is more specific about
+      the mechanism analysis gap and calls for a multi-turn extraction pipeline; A2 frames
+      it as a generalizability limitation. A neutral reader would say these are the same
+      complaint. Both treat as major weakness.
+
+  # ----------------------------------------------------------------
+  # A3 ↔ O1: Model diversity aspect of A3 maps to O1's specific 2-family concern
+  # ----------------------------------------------------------------
+  - official_id: O1
+    agentic_id: A3
+    match_type: partial
+    issue: "Insufficient model diversity in ASCoT evaluation"
+    judgment_alignment: aligned
+    severity_alignment: match  # O1: major, A3: major — same level
+    rationale: >-
+      O1 specifically identifies that ASCoT experiments use only two LLM families
+      (Llama-3.1-8B, Zephyr-7B) and demands more. A3 broadly flags that evaluation
+      relies on specific datasets and models, which may not represent real-world diversity.
+      A3's model-coverage facet maps to O1, but A3 also covers dataset breadth (a separate
+      dimension). Partial because A3 is broader — fixing O1 alone would not resolve A3.
+
+  # ----------------------------------------------------------------
+  # A3 ↔ O2: Dataset/attack diversity aspect of A3 maps to O2's missing baselines
+  # ----------------------------------------------------------------
+  - official_id: O2
+    agentic_id: A3
+    match_type: partial
+    issue: "Insufficient attack/dataset coverage in evaluation"
+    judgment_alignment: aligned
+    severity_alignment: match  # O2: major, A3: major — same level
+    rationale: >-
+      O2 specifically identifies missing representative jailbreak baselines (most evaluated
+      attacks are not widely adopted). A3 broadly flags reliance on specific datasets and
+      models that may not capture real-world diversity. A3's dataset/attack facet maps to
+      O2, but O2 is more specific (names BEAST, SAA as needed). Partial because A3 is a
+      broad evaluation breadth concern while O2 targets specific missing attack baselines.
+
+positive_factor_matches:
+  # ----------------------------------------------------------------
+  # D1 ↔ R1: Both recognize the Deja Vu hypothesis as novel and important
+  # ----------------------------------------------------------------
+  - official_factor_id: D1
+    agentic_source: decision_driver
+    agentic_text: >-
+      Novel Adversarial Deja Vu hypothesis reframes jailbreaks as recombinations of
+      existing adversarial skills, offering a new perspective on AI safety defense.
+    match_type: exact
+    judgment_alignment: aligned
+    rationale: >-
+      D1 states the hypothesis is 'a novel and important observation with wide implications.'
+      R1 captures the same factor: the hypothesis reframes jailbreaks as skill recombinations,
+      offering a new perspective. Both identify this as the paper's central conceptual contribution.
+
+  # ----------------------------------------------------------------
+  # D2 ↔ M2: Methodological innovation value captured partially
+  # ----------------------------------------------------------------
+  - official_factor_id: D2
+    agentic_source: mention
+    agentic_text: >-
+      Skill-composition approach to adversarial training could inspire further research
+      beyond isolated attack instances.
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >-
+      D2 specifically praises the DL-based pipeline and LLM-augmented basis pursuit as
+      'smart' and 'novel.' M2 captures the broader methodological innovation (skill-composition
+      inspiring future work) but does not identify the specific DL/basis-pursuit contribution
+      that the AC found most compelling. The agentic system saw the methodological value but
+      missed the technical specificity.
+
+  # ----------------------------------------------------------------
+  # D3: Reviewer reversal — post-rebuttal process factor, not observable
+  # ----------------------------------------------------------------
+  - official_factor_id: D3
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >-
+      D3 is about reviewer Q4KG reversing from 2 to 6 post-rebuttal. This is a review
+      process dynamic that the agentic system cannot observe from the paper alone.
+
+  # ----------------------------------------------------------------
+  # D4: Reviewer consensus — post-discussion process factor, not observable
+  # ----------------------------------------------------------------
+  - official_factor_id: D4
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >-
+      D4 is about overall reviewer consensus (three positive pre-rebuttal plus one reversal).
+      Post-discussion reviewer dynamics are not observable from the paper.
+
+  # ----------------------------------------------------------------
+  # D5 ↔ R2: ASCoT robustness captured, but rebuttal-added controls missed
+  # ----------------------------------------------------------------
+  - official_factor_id: D5
+    agentic_source: decision_driver
+    agentic_text: >-
+      Proposed ASCoT training paradigm demonstrates significant empirical improvements
+      in robustness against unseen jailbreak attacks.
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >-
+      D5 highlights ASCoT's robustness improvements validated with key control experiments
+      added per reviewer suggestion. R2 captures the robustness improvement claim but does
+      not mention the specific control experiments (random skill, refusal training, helper
+      swap, refusal templates) that strengthened the empirical case. The controls were added
+      in rebuttal, partially explaining the gap.
+
+  # ----------------------------------------------------------------
+  # D6: Meta-judgment — post-discussion AC synthesis, not observable
+  # ----------------------------------------------------------------
+  - official_factor_id: D6
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >-
+      D6 is the AC's overall weighing that 'the paper's merits outweigh by a lot the
+      missing opportunities.' This is a post-discussion meta-judgment synthesizing all
+      reviewer input, not a specific paper attribute the agentic system could observe.
+
+  # ----------------------------------------------------------------
+  # D7 ↔ M1: Analysis value captured but not forward-looking measurement utility
+  # ----------------------------------------------------------------
+  - official_factor_id: D7
+    agentic_source: mention
+    agentic_text: >-
+      Comprehensive analysis of adversarial skills across a large jailbreak dataset
+      provides valuable insights into the nature of adversarial threats.
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >-
+      D7 highlights that the novelty measurement aspect is independently valuable as a
+      tool for measuring novelty of future attacks. M1 captures the analytical contribution
+      (comprehensive skill analysis provides insights) but frames it as retrospective
+      analysis rather than the forward-looking measurement utility the AC emphasized.
+
+unmatched_official:
+  - O3   # StrongReject evaluation details unclear
+  - O4   # Skill extraction novelty / AutoDAN-Turbo overlap
+  - O5   # Paper format violation (width exceeds template)
+  - O7   # AutoDAN-Turbo resemblance / incremental contribution
+  - O8   # AutoDAN-Turbo as unseen attack fairness (temporal cutoff)
+  - O9   # Stability of automated skill extraction
+  - O10  # Dictionary from subset + experimental verification gap
+  - O11  # GPT-4 bias in evaluation / missing independent judge
+  - O12  # Missing key control experiments (random skill, refusal, helper swap)
+  - O14  # Missing statistics / variance / confidence intervals
+  - O15  # Comparison to skill-mix / instruction-tuning methods
+  - O16  # D_over not defined in paper
+  - O17  # CAT* and LAT* 40K samples not detailed
+  - O18  # What skills extracted from GCG
+  - O19  # DL advantages over clustering / deduplication not shown
+  - O20  # Training dataset composition not justified
+  - O21  # ASR vs ALO reporting suggestion
+  - O22  # Is dictionary learning truly needed?
+
+unmatched_agentic:
+  - A4   # Insufficient discussion of limitations and ethical implications

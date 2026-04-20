@@ -1,0 +1,113 @@
+# Overall Feedback
+
+This paper presents a creative and well-motivated framework—the Adversarial Déjà Vu hypothesis—arguing that novel jailbreaks recombine a finite set of adversarial skill primitives. The large-scale temporal analysis across 32 attack papers and the dictionary learning pipeline are substantial contributions. However, several issues weaken the technical rigor: an incomplete sentence truncates the abstract's final claim, key statistics cited in the text are absent from the referenced table, the adversarial training formulation introduces an unused variable, the relationship between ASCoT (which is supervised fine-tuning on pre-generated data) and the adversarial training framework it claims to follow is not clearly delineated, and the heavily imbalanced composition-depth distribution in training data confounds the depth analysis. The comparison with frontier reasoning models also overstates what can be concluded about the source of robustness.
+
+# Detailed Comments
+
+
+## Comment 1: Abstract sentence is truncated mid-clause
+
+
+> We also demonstrate that expanding adversarial skill coverage, not
+
+
+The final sentence of the abstract is cut off after 'not', leaving a key claim of the paper incompletely stated. This is not a formatting issue but a content gap—readers cannot determine what additional finding the authors intended to highlight. Since the abstract is typically the most-read part of a paper, an incomplete sentence here is a substantive problem.
+
+
+*Type: logical*
+
+
+## Comment 2: Skill counts cited in Section 4.3 are absent from Table 5
+
+
+> As shown in Table 5, PAIR queries average ∼102 tokens (∼9.7 skills), closely matching shallow compositions, whereas AutoDAN-Turbo averages ∼335 tokens (∼14.8 skills), aligning with deeper training.
+
+
+The text directs readers to Table 5 for both token counts and skill counts, but Table 5 only contains token-per-query statistics. The values '∼9.7 skills' and '∼14.8 skills' do not appear anywhere in Table 5 or elsewhere in the paper. These are critical to the argument that attack complexity aligns with compositional depth, yet they are orphaned numbers with no stated source or methodology. Furthermore, if PAIR averages 9.7 extracted skills, this is far more than the shallow depth k=1 or k=2 that the text claims it 'closely matches,' creating an internal tension in the argument.
+
+
+*Type: technical*
+
+
+## Comment 3: Unused variable r in adversarial training formulation
+
+
+> Given a dataset D = {(qi, ri)}n i=1 of query–response pairs, AT solves: min θ E(q,r)∼D [L(fθ(q′), r∗)]
+
+
+The dataset is defined as query-response pairs (q_i, r_i) and the expectation samples (q, r) from D, but the loss function uses r* (the 'desired safe response') rather than r. The sampled response r never appears in the objective. For ASCoT specifically, Appendix C reveals that r* is drawn from a fixed set of 20 refusal templates, making r from the dataset entirely superfluous. The formulation should either define D as containing only queries, explicitly define r* as a function of r, or explain the relationship between r and r*. As written, a reader attempting to implement this from the equation would be confused about the role of the paired responses.
+
+
+*Type: technical*
+
+
+## Comment 4: ASCoT is SFT on pre-generated data, not adversarial training in the standard sense
+
+
+> ASCoT fine-tuning follows standard supervised instruction-tuning on query–response pairs as defined in Equation (4).
+
+
+Throughout Section 3, ASCoT is positioned within the adversarial training paradigm and compared against methods (CAT, LAT) that perform online adversarial perturbation during training. However, ASCoT generates all composed adversarial queries offline before training and then performs standard supervised fine-tuning. There is no inner maximization or adversarial search during the training loop. While Equation (4) is general enough to technically encompass this (since it omits an explicit inner max), the framing within the 'Adversarial Training' section and comparisons against CAT/LAT may lead readers to believe ASCoT involves a similar adversarial optimization procedure. The distinction between 'training on adversarial data' and 'adversarial training' is important and should be made explicit.
+
+
+*Type: logical*
+
+
+## Comment 5: Perfect zero harmfulness scores for all novel compositions may reflect limited evaluation
+
+
+> ASCoT achieves a harmfulness score of 0 across all cases, indicating that once primitives are learned, robustness extends seamlessly to unseen recombinations.
+
+
+Table 4 reports exactly 0.00 StrongReject harmfulness for all novel k=2,3,4,5 compositions. While impressive, perfect scores across every configuration are unusual and raise questions about the evaluation's sensitivity. The base model scores (0.59–0.69) show the compositions are non-trivial, but the evaluation details are sparse: how many novel compositions were tested per depth? Were these compositions generated by the same LLM (DeepSeek-V3) used for training data generation, potentially sharing stylistic regularities that ASCoT has memorized? The claim of 'seamless' generalization to all unseen recombinations is strong and would benefit from reporting the evaluation set size and confidence intervals.
+
+
+*Type: logical*
+
+
+## Comment 6: Severely imbalanced composition depth distribution in training data
+
+
+> This yields 3,150 queries with k=1 skills, 4,098 with k=2, 3,150 with k=3, 190 with k=4, and 190 with k=5.
+
+
+The training dataset contains roughly 20× more examples at depths k=1–3 (3,150–4,098 each) than at k=4–5 (190 each). Section 4.3 then analyzes how composition depth affects robustness and finds a crossover where deeper models (k=4,5) are needed for complex attacks like AutoDAN-Turbo. However, the main ASCoT model's heavy skew toward shallow compositions means it may be undertrained at the depths most relevant for complex attacks. This imbalance is not discussed or justified, and it potentially confounds the depth analysis: the single-depth models in Section 4.3 presumably use balanced data, but the main ASCoT model does not.
+
+
+*Type: technical*
+
+
+## Comment 7: Comparison with reasoning models overstates the conclusion about robustness source
+
+
+> Despite its 8B size, ASCoT matches Claude and outperforms o4-mini on most jailbreak families with competitive over-refusal rates (Table 3), suggesting robustness stems from adversarial skill coverage rather than scale.
+
+
+The conclusion that 'robustness stems from adversarial skill coverage rather than scale' is not well-supported by this comparison. ASCoT is a model specifically fine-tuned to refuse adversarial jailbreak queries, while o4-mini and Claude Sonnet-4-Thinking are general-purpose reasoning models that were not specifically optimized for this benchmark. The comparison conflates task-specific training with architectural capability. A fairer test of the 'coverage rather than scale' hypothesis would compare ASCoT against larger models also trained with ASCoT, or against these reasoning models after comparable safety fine-tuning.
+
+
+*Type: logical*
+
+
+## Comment 8: Sparsity parameter λ unspecified for unseen attack evaluation
+
+
+> ˆw(xnew) = arg min w∈Rkfinal 1 2 ∥xnew −Dfinalw∥2 2 + λ ∥w∥1, where λ > 0 controls sparsity.
+
+
+In Section 2.3 (Equation 2), the λ for attributing primitives to raw skills is explicitly set to 10⁻⁴. However, in Section 2.4 (Equation 3), which uses the same BPDN formulation to explain unseen attacks, the value of λ is stated only as 'λ > 0' without specifying the actual value used. Since λ directly controls the sparsity of reconstruction—and the reported sparsity levels (5–7 active atoms in Table 1) are central evidence for the Adversarial Déjà Vu hypothesis—this parameter must be stated for reproducibility.
+
+
+*Type: technical*
+
+
+## Comment 9: Mismatch between attack sets used for dictionary evaluation vs. robustness evaluation
+
+
+> including AutoDAN-Turbo (Liu et al., 2024b), DarkCite (Yang et al., 2024), Emoji (Wei et al., 2024), FlipAttack (Liu et al., 2024c), Implicit Reference (Wu et al., 2024), and SequentialBreak (Saiem et al., 2024)
+
+
+The dictionary's explanatory power (Section 2.4, Table 1) is evaluated on 6 post-cutoff attacks: AutoDAN-Turbo, DarkCite, Emoji, FlipAttack, Implicit Reference, and SequentialBreak. However, the robustness evaluation (Section 3.2, Table 2) uses a different set of unseen attacks: AutoDAN-Turbo, Implicit Reference, DarkCite, and GALA (a multi-turn attack not in Appendix B's list of 32 papers and not used for dictionary evaluation). Meanwhile, Emoji, FlipAttack, and SequentialBreak—which had high explainability scores—are absent from the robustness evaluation. This asymmetry means the paper demonstrates that the dictionary can explain these attacks but never tests whether ASCoT actually defends against them, weakening the causal link between explainability and robustness.
+
+
+*Type: logical*

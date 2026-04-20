@@ -1,0 +1,321 @@
+schema_version: "v1"
+paper: rl_backtracking_feedback
+version: baseline
+method: baseline_ai_scientist
+verdict: REJECT
+score: 4
+
+decision_drivers:
+  - id: R1
+    polarity: pro_reject
+    text: >
+      Contribution is substantially incremental over BSAFE — core backtracking
+      idea already exists and additions (simpler token format, better data
+      generation, standard RL fine-tuning) offer limited conceptual novelty.
+    evidence: "Weaknesses bullet 1: 'The contribution is substantially incremental over BSAFE (Sel et al., 2025b)'"
+    linked_concern_ids: [A1]
+  - id: R2
+    polarity: pro_reject
+    text: >
+      Missing supplementary material renders experimental claims largely
+      unverifiable and reproduction impossible, despite being referenced
+      repeatedly for critical details.
+    evidence: "Weaknesses bullet 2: 'no supplementary material is included in the submission'"
+    linked_concern_ids: [A2]
+  - id: R3
+    polarity: pro_reject
+    text: >
+      Original BSAFE and Reset approaches are never directly compared in
+      experiments, making it impossible to assess the true marginal contribution
+      over existing methods.
+    evidence: "Weaknesses bullet 3: 'The original BSAFE method is never directly compared against in experiments'"
+    linked_concern_ids: [A3]
+
+mentions:
+  - id: M1
+    polarity: pro_accept
+    text: >
+      Problem of robust LLM safety beyond shallow alignment is important and
+      well-motivated, with observation about brittle refusal supported by cited
+      prior work.
+    evidence: "Strengths bullet 1"
+    note: Noted as a strength but did not influence the reject verdict.
+  - id: M2
+    polarity: pro_accept
+    text: >
+      Backtrack-by-x-tokens mechanism is a sensible simplification over BSAFE's
+      repeat-and-edit approach, avoiding regeneration of harmful content.
+    evidence: "Strengths bullet 2"
+    note: Acknowledged as a design improvement but not sufficient to overcome weaknesses.
+  - id: M3
+    polarity: pro_accept
+    text: >
+      BSAFE+ data generation strategy is well-reasoned with in-distribution
+      continuations preserving answer quality (49.4% vs 50.6% win rate).
+    evidence: "Strengths bullet 3"
+    note: Positive data quality observation, not decisive.
+  - id: M4
+    polarity: pro_accept
+    text: >
+      RLBF shows clear advantage over BSAFE+ on standard LMSYS harmful queries
+      (1-2% ASR vs 14-17%), suggesting genuine RL stage value.
+    evidence: "Strengths bullet 4"
+    note: Empirical improvement noted but offset by evaluation concerns.
+  - id: M5
+    polarity: pro_accept
+    text: >
+      Utility preservation is strong across four benchmarks (MMLU, BBH, GSM8K,
+      MATH) with negligible degradation.
+    evidence: "Strengths bullet 5"
+    note: Positive utility result, not a verdict driver.
+  - id: M6
+    polarity: pro_accept
+    text: >
+      Ablation study in Table 5 effectively isolates backtracking mechanism
+      contribution, showing mid-generation backtracking is particularly important.
+    evidence: "Strengths bullet 6"
+    note: Supportive ablation evidence, not decisive for verdict.
+
+concerns:
+  - id: A1
+    text: >
+      Contribution is substantially incremental over BSAFE — core backtracking
+      idea already exists; the additions (simpler token format, better data
+      generation, standard RL fine-tuning) represent limited conceptual novelty.
+    severity:
+      level: major
+      addressability: unresolved
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 1"
+    decisive: true
+    tags: [novelty, incrementalism]
+    dimension_impact: [B]
+
+  - id: A2
+    text: >
+      Supplementary material referenced repeatedly for critical experimental
+      details (hyperparameters, training specifics, compute resources, data
+      generation) is not included, rendering experimental claims largely
+      unverifiable and reproduction impossible.
+    severity:
+      level: fatal
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 2 + Questions bullet 9"
+    decisive: true
+    tags: [reproducibility, missing_details, incomplete_submission]
+    dimension_impact: [H]
+
+  - id: A3
+    text: >
+      Original BSAFE method is never directly compared in experiments (only
+      authors' BSAFE+ variant appears) and Reset approaches discussed in
+      Section 3 are excluded from all experimental tables, making it impossible
+      to assess the true marginal contribution.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 3 + Questions bullet 4"
+    decisive: true
+    tags: [baseline_fairness, missing_baselines, evaluation_rigor]
+    dimension_impact: [D]
+
+  - id: A4
+    text: >
+      Table 4 attack prevention rates are all exact multiples of 0.02, strongly
+      suggesting only ~50 samples per safety category, which is too small for
+      reliable per-category conclusions.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 4 + Questions bullet 2"
+    decisive: false
+    tags: [evaluation_rigor, sample_size, statistical_power]
+    dimension_impact: [D]
+
+  - id: A5
+    text: >
+      No evaluation of the LLM safety critic — no accuracy metrics, false
+      positive/negative rates, or analysis of how critic errors propagate to the
+      trained model. The entire framework hinges on this unvalidated component,
+      creating a single point of failure.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 5 + Questions bullet 3 + Limitations bullet 2"
+    decisive: false
+    tags: [methodology, missing_evaluation, critical_component_unvalidated]
+    dimension_impact: [D, E]
+
+  - id: A6
+    text: >
+      Table 2 does not specify which model size or configuration was used for
+      GCG and Decoding Parameter attacks, making results difficult to interpret
+      or contextualize.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 6 + Questions bullet 1"
+    decisive: false
+    tags: [clarity, missing_details, experimental_setup]
+    dimension_impact: [G]
+
+  - id: A7
+    text: >
+      GRPO implementation is underspecified — Section 4.2.3 vaguely mentions
+      penalizing known violating patterns 'by adding constraints or penalty
+      terms' without concrete algorithmic details. The RL contribution, claimed
+      as the primary novelty, lacks precision needed for evaluation or
+      reproduction.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 7 + Questions bullet 8"
+    decisive: false
+    tags: [reproducibility, underspecified_method, missing_details]
+    dimension_impact: [E, H]
+
+  - id: A8
+    text: >
+      Despite claiming efficiency improvements over BSAFE, no latency
+      measurements, throughput comparisons, or computational overhead analysis
+      is provided.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 8 + Questions bullet 6"
+    decisive: false
+    tags: [overclaiming, missing_evaluation, efficiency]
+    dimension_impact: [D]
+
+  - id: A9
+    text: >
+      No statistical significance analysis or error bars reported. When BSAFE+
+      and RLBF show similar ASRs on LMSYS-MF (e.g., both 3-7%), it is unclear
+      whether differences are meaningful.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 9"
+    decisive: false
+    tags: [statistical_rigor, missing_error_bars, evaluation_rigor]
+    dimension_impact: [D]
+
+  - id: A10
+    text: >
+      No analysis of adaptive attacks where adversaries are aware of the
+      backtracking mechanism. Robustness to mechanism-aware adversaries is
+      critical for evaluating a safety method.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 10 + Questions bullet 5"
+    decisive: false
+    tags: [robustness, adaptive_adversary, threat_model]
+    dimension_impact: [F]
+
+  - id: A11
+    text: >
+      Reward function values (-1.0, +1.0, -0.5, -0.2) appear ad hoc with no
+      justification or ablation study on their sensitivity.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 11 + Questions bullet 7"
+    decisive: false
+    tags: [methodology, hyperparameter_sensitivity, missing_ablation]
+    dimension_impact: [E]
+
+  - id: A12
+    text: >
+      Limitations section is superficial, mentioning computational demands and
+      difficulty defining harmful content without quantifying either concern.
+    severity:
+      level: minor
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Limitations bullet 1"
+    decisive: false
+    tags: [clarity, limitations_underspecified]
+    dimension_impact: [G]
+
+  - id: A13
+    text: >
+      No analysis of how cascading backtracks in long-form generation could
+      degrade output quality or coherence.
+    severity:
+      level: minor
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Limitations bullet 3"
+    decisive: false
+    tags: [robustness, quality_degradation, edge_cases]
+    dimension_impact: [F]
+
+  - id: A14
+    text: >
+      No discussion of the risk that backtracking tokens could be adversarially
+      triggered to suppress legitimate content, causing over-censorship via
+      false positive backtracking.
+    severity:
+      level: moderate
+      addressability: unresolved
+      mechanism: none
+    source: other
+    source_detail: "Limitations bullet 4"
+    decisive: false
+    tags: [robustness, over_refusal, adversarial_exploitation]
+    dimension_impact: [F]
+
+  - id: A15
+    text: >
+      No analysis of potential negative societal impact from the red-teaming
+      data generation process.
+    severity:
+      level: minor
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Limitations bullet 5"
+    decisive: false
+    tags: [ethics, societal_impact]
+    dimension_impact: [A]
+
+method_specific:
+  system: "The AI Scientist (baseline AI reviewer)"
+  note: >
+    Review produced by The AI Scientist automated reviewer (run 1).
+    No gates, scorecard, adversarial brief, or summary.yaml available.
+    All concerns extracted from review.md only.
+  scores:
+    originality: 2
+    quality: 2
+    clarity: 2
+    significance: 2
+    soundness: 2
+    presentation: 2
+    contribution: 2
+    overall: 4
+    confidence: 4

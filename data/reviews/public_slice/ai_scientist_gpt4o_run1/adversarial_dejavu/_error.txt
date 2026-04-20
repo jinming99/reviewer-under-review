@@ -1,0 +1,33 @@
+Error code: 429 - {'error': {'message': 'Request too large for gpt-4o in organization org-0cSuwGv4MQ89WSctgrhoKJQ3 on tokens per min (TPM): Limit 30000, Requested 30396. The input or output tokens must be reduced in order to run successfully. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}
+
+Traceback (most recent call last):
+  File "/Users/jinming/Dropbox/CodingProjects/agentic_ai_reviewer/scripts/run_baseline_batch.py", line 190, in run_one_paper
+    result = run_ai_scientist(
+             ^^^^^^^^^^^^^^^^^
+  File "/Users/jinming/Dropbox/CodingProjects/agentic_ai_reviewer/baselines/ai_scientist_adapter.py", line 353, in run_ai_scientist
+    review = _perform_review(
+             ^^^^^^^^^^^^^^^^
+  File "/Users/jinming/Dropbox/CodingProjects/agentic_ai_reviewer/baselines/ai_scientist_adapter.py", line 225, in _perform_review
+    llm_review, msg_history = _get_response_from_llm(
+                              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jinming/Dropbox/CodingProjects/agentic_ai_reviewer/baselines/ai_scientist_adapter.py", line 80, in _get_response_from_llm
+    content = sdk_complete_chat(
+              ^^^^^^^^^^^^^^^^^^
+  File "/Users/jinming/Dropbox/CodingProjects/agentic_ai_reviewer/baselines/sdk_llm.py", line 393, in complete_chat
+    return _openai_complete(
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/jinming/Dropbox/CodingProjects/agentic_ai_reviewer/baselines/sdk_llm.py", line 265, in _openai_complete
+    resp = client.chat.completions.create(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jinming/opt/anaconda3/envs/reviewer/lib/python3.12/site-packages/openai/_utils/_utils.py", line 286, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jinming/opt/anaconda3/envs/reviewer/lib/python3.12/site-packages/openai/resources/chat/completions/completions.py", line 1211, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/Users/jinming/opt/anaconda3/envs/reviewer/lib/python3.12/site-packages/openai/_base_client.py", line 1297, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jinming/opt/anaconda3/envs/reviewer/lib/python3.12/site-packages/openai/_base_client.py", line 1070, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.RateLimitError: Error code: 429 - {'error': {'message': 'Request too large for gpt-4o in organization org-0cSuwGv4MQ89WSctgrhoKJQ3 on tokens per min (TPM): Limit 30000, Requested 30396. The input or output tokens must be reduced in order to run successfully. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}

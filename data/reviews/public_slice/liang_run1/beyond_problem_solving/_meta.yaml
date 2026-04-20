@@ -1,0 +1,18 @@
+slug: beyond_problem_solving
+baseline: liang_etal
+model: claude-opus-4-6
+timestamp: '2026-04-10T03:32:20.821488+00:00'
+git_sha: 6b601aec
+git_branch: main
+elapsed_s: 51.0
+usage:
+  input_tokens: 0
+  output_tokens: 0
+cost_usd: 0.2368
+num_sdk_calls: 1
+num_api_calls: 1
+num_chunks: null
+specialties: null
+paper_text_chars: 81111
+review_text_chars: 7140
+skip_refinement: false

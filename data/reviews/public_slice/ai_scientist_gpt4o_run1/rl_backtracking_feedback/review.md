@@ -1,0 +1,42 @@
+# Summary
+
+The paper introduces Reinforcement Learning with Backtracking Feedback (RLBF) to enhance the safety of Large Language Models (LLMs) by dynamically correcting harmful content generated during outputs. It proposes a novel backtracking mechanism and supervised fine-tuning strategy to improve initial training. Empirical evaluations indicate RLBF's success in reducing attack success rates across various benchmarks while preserving model utility.
+# Strengths
+
+- Innovative method for in-generation correction of LLM safety violations.
+- Significant reduction in diverse adversarial attack success rates.
+- Maintains model utility and performance while enhancing safety.
+
+# Weaknesses
+
+- Lack of statistical significance documentation for experimental results.
+- No open access to code and data, reducing reproducibility.
+- High computational demands may limit practical deployment.
+
+# Questions
+
+- How does the RLBF framework handle different LLM sizes in operational settings?
+- Can the authors provide more detailed discussion on the potential computational resource constraints during deployment?
+- What are the practical implications concerning the backtracking mechanism’s efficiency in real-time applications?
+- Have the authors explored the implications of varying the RL critic's feedback frequency on model performance?
+
+# Limitations
+
+- High computational burden for the proposed RLBF framework.
+- Potential challenges in defining 'harmful' content precisely.
+- The approach needs more practical validation and efficiency analysis across different settings.
+- Lack of statistical significance tests may affect the confidence in reported improvements.
+
+# Scores
+
+- **Originality**: 3
+- **Quality**: 2
+- **Clarity**: 3
+- **Significance**: 3
+- **Soundness**: 3
+- **Presentation**: 3
+- **Contribution**: 3
+- **Overall**: 4
+- **Confidence**: 4
+
+# Decision: Reject

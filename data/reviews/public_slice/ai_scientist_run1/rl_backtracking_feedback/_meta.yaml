@@ -1,0 +1,16 @@
+slug: rl_backtracking_feedback
+baseline: ai_scientist
+model: claude-opus-4-6
+timestamp: '2026-04-09T13:12:08.355647+00:00'
+git_sha: 6b601aec
+git_branch: main
+elapsed_s: 129.7
+usage: {}
+cost_usd: 0.4638
+num_sdk_calls: 2
+num_api_calls: 5
+num_chunks: null
+specialties: null
+paper_text_chars: 70657
+review_text_chars: 7039
+skip_refinement: false

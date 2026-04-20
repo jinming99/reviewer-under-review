@@ -1,0 +1,208 @@
+schema_version: "v1"
+paper: adversarial_dejavu
+version: baseline
+method: baseline
+verdict: ACCEPT
+score: null
+
+decision_drivers:
+  - id: R1
+    polarity: pro_accept
+    text: >
+      Paper presents a novel approach to improving robustness against unseen
+      jailbreak attacks using the Adversarial Déjà Vu hypothesis and Jailbreak
+      Dictionary, acknowledged as making significant contributions.
+    evidence: "Experiments Proofs section: 'The paper presents a novel approach to improving robustness against unseen jailbreak attacks on large language models (LLMs)... the paper makes significant contributions'"
+    linked_concern_ids: []
+  - id: R2
+    polarity: pro_reject
+    text: >
+      Multiple areas across the paper lack sufficient clarity and detail,
+      particularly ASCoT training, dictionary construction, evaluation metrics,
+      and ethics/reproducibility.
+    evidence: "All three sections (Experiments Proofs, Novelty Impact, Clarity Reproducibility) independently identify clarity and detail gaps"
+    linked_concern_ids: [A1, A2, A3, A5, A9]
+
+mentions:
+  - id: M1
+    polarity: pro_accept
+    text: >
+      Adversarial Déjà Vu hypothesis recognized as a novel conceptual
+      contribution to understanding jailbreak compositionality.
+    evidence: "Experiments Proofs section: 'novel approach to improving robustness against unseen jailbreak attacks'"
+    note: >
+      Acknowledged as novel but not weighted as a decisive accept reason;
+      the review focused on requesting improvements rather than evaluating
+      acceptance merit.
+
+concerns:
+  - id: A1
+    text: >
+      Adversarial Déjà Vu hypothesis lacks supporting examples or case studies
+      illustrating how unseen jailbreaks are recompositions of previously
+      observed adversarial skills.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Experiments Proofs refined comment #1 + Novelty Impact #1 + Clarity Reproducibility #1: all three sections flag insufficient examples for the core hypothesis"
+    decisive: false
+    tags: [clarity, motivation]
+    dimension_impact: [A, G]
+
+  - id: A2
+    text: >
+      Jailbreak Dictionary construction and practical application are
+      insufficiently described; missing context on how the dictionary is
+      built and used in practice.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Experiments Proofs refined comment #2: 'could be expanded to provide more context on how the dictionary is constructed and its practical applications' + Clarity Reproducibility #3"
+    decisive: true
+    tags: [clarity, reproducibility, method_description]
+    dimension_impact: [G, H]
+
+  - id: A3
+    text: >
+      Redundancy filtering process explanation is insufficient: cosine-similarity
+      thresholds and semantic judgment criteria are not specified.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Experiments Proofs refined comment #3: 'More details on how cosine-similarity and semantic judgments are made, along with examples of redundancy, would clarify this process'"
+    decisive: false
+    tags: [method_description, clarity]
+    dimension_impact: [G, H]
+
+  - id: A4
+    text: >
+      Explainability score methodology is unclear: how GPT-4.1 and Claude 3.7
+      Sonnet scoring rubric criteria are determined is not specified.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Experiments Proofs refined comment #4: 'Including more information on how these scores are determined and the specific criteria used in the rubric would strengthen this section'"
+    decisive: false
+    tags: [evaluation_methodology, clarity]
+    dimension_impact: [D, G]
+
+  - id: A5
+    text: >
+      ASCoT training process lacks implementation details: no step-by-step
+      explanation, no specification of training techniques or algorithms,
+      no hyperparameter table, no comparison with existing training methods.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Clarity Reproducibility refined comment #2: 'The paper lacks specific details on the training techniques and algorithms used in ASCoT' + Novelty Impact #1: 'ASCoT... are complex and may be challenging'"
+    decisive: true
+    tags: [reproducibility, method_description, clarity]
+    dimension_impact: [G, H]
+
+  - id: A6
+    text: >
+      Evaluation pipeline and reconstruction success metrics need elaboration:
+      missing specific benchmarks, examples of successful reconstructions,
+      and visual aids.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Clarity Reproducibility refined comment #4: 'metrics for assessing reconstruction success need more elaboration. Including specific benchmarks, examples of successful reconstructions, and visual aids'"
+    decisive: false
+    tags: [evaluation_methodology, clarity]
+    dimension_impact: [D, G]
+
+  - id: A7
+    text: >
+      Temporal cutoff analysis lacks rationale: no justification for the
+      chosen cutoff or specification of datasets used for replication.
+    severity:
+      level: minor
+      addressability: addressable
+      mechanism: none
+    source: review_minor
+    source_detail: "Clarity Reproducibility refined comment #5: 'elaborate on the temporal cutoff analysis and specify the datasets and tools used for replication'"
+    decisive: false
+    tags: [experimental_design, reproducibility]
+    dimension_impact: [D, H]
+
+  - id: A8
+    text: >
+      Model evaluation criteria ("general capability," "harmfulness,"
+      "over-refusal rates") lack detailed definitions and measurement methods.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Clarity Reproducibility refined comment #6: 'should provide detailed definitions and measurement methods for these criteria'"
+    decisive: false
+    tags: [evaluation_methodology, clarity]
+    dimension_impact: [D, G]
+
+  - id: A9
+    text: >
+      Ethics & Reproducibility Statement needs restructuring: missing clear
+      synthesis of ethical implications, step-by-step reproducibility guidance,
+      and discussion of potential risks.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Experiments Proofs refined comment #5 + Novelty Impact #2 + Clarity Reproducibility #7: all three sections independently flag ethics/reproducibility deficiencies"
+    decisive: false
+    tags: [ethics, reproducibility, clarity]
+    dimension_impact: [G, H]
+
+  - id: A10
+    text: >
+      Skill extraction pipeline and adversarial skill primitives need clearer
+      definitions, better organization, and more consistent examples.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Novelty Impact #3: 'Skill Extraction Pipeline... could be better organized and more concise' + Clarity Reproducibility #1: 'clearer definition and identification process for adversarial skill primitives'"
+    decisive: false
+    tags: [clarity, method_description]
+    dimension_impact: [G]
+
+method_specific:
+  actual_system: marg_gpt4o
+  run_id: run_1
+  verdict_inferred: true
+  verdict_inference_note: >
+    No explicit accept/reject verdict in the review. Inferred ACCEPT from
+    the review's positive framing ("novel approach," "significant contributions,"
+    "enhancements would strengthen the paper") and the nature of concerns raised
+    (all clarity/presentation improvements, no fundamental methodological flaws
+    identified). This contrasts with the non-GPT-4o MARG run which raised
+    more substantive concerns (missing ablation, baseline fairness).
+  review_format_note: >
+    MARG GPT-4o output is a process log showing agent-to-agent communication
+    and iterative comment refinement across three sections: Experiments Proofs,
+    Novelty Impact, Clarity Reproducibility. Substantive concerns were extracted
+    from the refined comment text within each section. Significant duplication
+    exists across sections (the same concerns about hypothesis clarity, ethics,
+    and dictionary construction appear in all three). No ablation, baseline
+    fairness, or claim-evidence concerns were raised — the review is almost
+    entirely about presentation clarity.
+  concern_character_note: >
+    All 10 concerns are clarity/presentation issues. No fundamental
+    methodological, experimental design, or validity concerns were raised.
+    This is notably shallow compared to the non-GPT-4o MARG run on the
+    same paper.

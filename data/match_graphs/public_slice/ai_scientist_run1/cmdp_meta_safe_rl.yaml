@@ -1,0 +1,171 @@
+schema_version: "v1"
+paper: "cmdp_meta_safe_rl"
+version: "v0.9.2"
+condition: "own_group/ai_scientist_run1"
+method: "baseline_ai_scientist"
+
+matches:
+  # ── Strict matches (exact / partial) ──────────────────────────
+
+  - official_id: O6
+    agentic_id: A7
+    match_type: exact
+    issue: "Theoretical analysis is hard to follow due to unclear presentation and heavy notation"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: moderate → gap=1 → within tolerance
+    rationale: >-
+      O6 flags that 'theoretical analysis is not always clear' with confusing notation making
+      the paper 'hard to read for those unfamiliar with CRPO.' A7 flags the paper as 'very dense
+      (49 pages) with heavy notation' making the main text 'hard to follow independently.' Both
+      identify the same core readability/clarity problem. A neutral reader would say these are
+      the same complaint. Severity within one level (major vs moderate).
+
+  - official_id: O5
+    agentic_id: A5
+    match_type: partial
+    issue: "CRPO-related limitations restrict framework generality"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: moderate → gap=1 → within tolerance
+    rationale: >-
+      O5 says the framework 'builds on a simplified version of CRPO' which 'brings some
+      restriction to the applicability.' A5 says the 'framework is restricted to CRPO as the
+      within-task algorithm' limiting 'practical generality.' Same issue family (CRPO constrains
+      the framework) but different facets: O5 is about the SIMPLIFICATION of CRPO hurting results,
+      A5 is about being LOCKED INTO CRPO as the only supported algorithm. Fixing O5 (using full
+      CRPO) would not fix A5 (extending to other algorithms).
+
+  - official_id: O2
+    agentic_id: A8
+    match_type: partial
+    issue: "Safety guarantees are incomplete — the method does not ensure safety throughout the learning process"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: moderate, agentic: moderate → gap=0
+    rationale: >-
+      O2 flags that the meta-initialization policy 'will necessarily not be safe' from the first
+      step under the full-support assumption. A8 flags that the 'method permits constraint
+      violations during learning, which may be unacceptable in safety-critical applications.'
+      Same family (safety guarantee gaps) but different scope: O2 targets initialization safety
+      specifically, A8 targets ongoing violations during learning. Both identify incomplete
+      safety guarantees from different angles.
+
+  - official_id: O17
+    agentic_id: A7
+    match_type: partial
+    issue: "Writing quality and clarity issues"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: moderate, agentic: moderate → gap=0
+    rationale: >-
+      O17 flags 'writing of the paper is somewhat unclear overall; claims and results are vague
+      or modified in an ambiguous way.' A7 flags the paper as 'very dense with heavy notation'
+      and 'hard to follow independently.' Both are clarity concerns but different facets: O17
+      targets vagueness of claims, A7 targets information density and notation burden. A7's
+      second edge (first is O6).
+
+  # ── Related matches (near-misses) ─────────────────────────────
+
+  - official_id: O13
+    agentic_id: A2
+    match_type: related
+    issue: "Theoretical bounds lack transparency or justification"
+    judgment_alignment: aligned
+    severity_alignment: n/a
+    rationale: >-
+      O13 flags that Theorem 3.3 relies on assumptions of two regret upper bounds (E_T^opt,
+      U_T^pi) 'with no explanation regarding why those assumptions are reasonable.' A2 flags
+      that Theorem 3.1 involves 'an opaque function h from the KL inequality' whose growth rate
+      is unknown, making the bound 'potentially vacuous.' Both target transparency of theoretical
+      bounds but in DIFFERENT theorems with different specific complaints. Fixing A2 (clarifying
+      h in Thm 3.1) would not fix O13 (justifying assumptions in Thm 3.3). Near-miss: the
+      agentic system noticed theoretical rigor issues but targeted a different result.
+
+  - official_id: O16
+    agentic_id: A9
+    match_type: related
+    issue: "DualDICE suitability concerns"
+    judgment_alignment: aligned
+    severity_alignment: n/a
+    rationale: >-
+      O16 asks 'why not use some offline CMDP algorithm to estimate state distributions instead
+      of DualDICE?' — questioning the algorithm CHOICE. A9 flags 'no discussion of computational
+      overhead of DualDICE estimation' — questioning SCALABILITY. Both are about DualDICE's
+      suitability but target different defects (choice justification vs cost analysis). Per false
+      match pattern 4 ('same component, different complaint'), these cannot be exact/partial.
+
+# ── Positive factor matches (accepted paper — D1, D2, D3 are pro_accept) ──
+
+positive_factor_matches:
+  - official_factor_id: D1
+    agentic_source: mention
+    agentic_text: >-
+      M2: The use of tame geometry and the Kurdyka-Lojasiewicz inequality to bound
+      suboptimal-to-optimal policy distance (Theorem 3.1) is a creative and novel technical
+      contribution of independent interest.
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >-
+      D1 recognizes 'highly innovative work introducing the CMDP-within-online framework' as a
+      strong theoretical contribution. M2 recognizes the tame geometry technique as 'creative
+      and novel.' Both acknowledge theoretical innovation, but D1 is about the framework-level
+      innovation while M2 focuses on a specific technique. The agentic system recognized the
+      novelty but did not weight it as decisive (verdict was REJECT).
+
+  - official_factor_id: D2
+    agentic_source: mention
+    agentic_text: >-
+      M1: Addresses an important and understudied problem: provable guarantees for
+      meta-learning in constrained MDPs. Appears to be the first work providing such guarantees.
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >-
+      D2 states 'safe RL is a very important problem area, and the practical framework only
+      requires inexact sub-CMDP solutions.' M1 captures the importance and first-mover status
+      ('important and understudied problem') but does not explicitly address the practical
+      inexact-solution aspect. Partial because M1 captures problem importance but not the
+      practical design advantage emphasized in D2.
+
+  - official_factor_id: D3
+    agentic_source: mention
+    agentic_text: >-
+      M3: Framework handles practical challenges: does not require globally optimal policies,
+      uses off-policy estimation (DualDICE), and supports adaptive learning rates without
+      horizon knowledge.
+    match_type: exact
+    judgment_alignment: aligned
+    rationale: >-
+      D3 states the framework 'relies only on inexact solutions, making it applicable without
+      requiring optimal policy access.' M3 states the framework 'does not require globally
+      optimal policies, uses off-policy estimation (DualDICE), and supports adaptive learning
+      rates.' Both identify the same practical advantage — no need for exact/optimal solutions.
+      The agentic system fully captured this positive factor.
+
+# ── Unmatched concerns ──────────────────────────────────────────
+
+unmatched_official:
+  # No exact/partial agentic match (related-only counts as unmatched)
+  - O1   # Sparse experiments / few environments — agentic raised different eval concerns (theory gap, baselines, validation) but not environment count
+  - O3   # Safety constraints should adapt to shifting environments — no agentic counterpart
+  - O4   # Missing comparison to safe policy improvement (Thomas et al.) — no agentic counterpart
+  - O7   # No explanation about CRPO algorithm and parameter choices — no agentic counterpart
+  - O8   # Analysis is composition of existing analysis (DualDICE+CRPO) — agentic system praised novelty instead
+  - O9   # Assumptions introduced without context, references distract — no agentic counterpart
+  - O10  # Ethics: fairness constraints discussion missing — no agentic counterpart
+  - O11  # Static regret not useful for meta-learning — no agentic counterpart
+  - O12  # Specific notation issues ($V_{M_t}$, $\pi^*$) — no agentic counterpart (A7 is broader)
+  - O13  # Theorem 3.3 regret bound assumptions not justified — related-only edge to A2 (different theorem)
+  - O14  # Limited to Frozen Lake and Acrobot (overlaps O1) — no agentic counterpart
+  - O15  # Assumption 2 (o-minimal structure) needs clarification — no agentic counterpart
+  - O16  # Why DualDICE instead of offline CMDP — related-only edge to A9 (different complaint)
+  - O18  # Novelty marginally significant, combines existing algorithms — agentic system praised novelty (M2)
+  - O19  # Citation/cluster formatting issues — no agentic counterpart
+
+unmatched_agentic:
+  # No exact/partial official match (related-only counts as unmatched)
+  # NOTE: A1-A4 are all marked decisive by the agentic system — the entire
+  # basis for its REJECT verdict consists of phantom concerns not raised by
+  # official reviewers.
+  - A1  # Theory-practice gap (tabular theory vs continuous experiments) — novel agentic concern, no reviewer flagged this specific mismatch
+  - A2  # Theorem 3.1 opaque function h, potentially vacuous bound — related-only to O13 (different theorem)
+  - A3  # Naive baselines, no meta-RL (MAML/ProMP) or modern safe RL comparison — no reviewer flagged missing specific baselines
+  - A4  # Core predictions (TAOG/TACV scaling with similarity) never quantitatively validated — no reviewer requested this controlled ablation
+  - A6  # Very limited training steps (5-10) insufficient for convergence assessment — no reviewer flagged step count
+  - A9  # DualDICE computational overhead not discussed — related-only to O16 (different complaint about DualDICE)

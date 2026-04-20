@@ -1,0 +1,77 @@
+{
+  "systems": [
+    {
+      "method": "ai_scientist_run1",
+      "papers_evaluated": 9,
+      "verdict_accuracy": 0.3333,
+      "tp": 1,
+      "tn": 2,
+      "fp": 0,
+      "fn": 6,
+      "avg_recall_strict": 0.3273,
+      "avg_recall_loose": 0.3796,
+      "avg_decisive_recall": 0.625
+    },
+    {
+      "method": "ai_scientist_gpt4o_run1",
+      "papers_evaluated": 9,
+      "verdict_accuracy": 0.2222,
+      "tp": 0,
+      "tn": 2,
+      "fp": 0,
+      "fn": 7,
+      "avg_recall_strict": 0.2015,
+      "avg_recall_loose": 0.2613,
+      "avg_decisive_recall": 0.25
+    },
+    {
+      "method": "liang_run1",
+      "papers_evaluated": 9,
+      "verdict_accuracy": 0.2222,
+      "tp": 0,
+      "tn": 2,
+      "fp": 0,
+      "fn": 7,
+      "avg_recall_strict": 0.3026,
+      "avg_recall_loose": 0.3867,
+      "avg_decisive_recall": 0.5
+    },
+    {
+      "method": "liang_gpt4o_run1",
+      "papers_evaluated": 9,
+      "verdict_accuracy": 0.7778,
+      "tp": 6,
+      "tn": 1,
+      "fp": 1,
+      "fn": 1,
+      "avg_recall_strict": 0.224,
+      "avg_recall_loose": 0.2703,
+      "avg_decisive_recall": 0.2916
+    },
+    {
+      "method": "marg_gpt4o_run1",
+      "papers_evaluated": 9,
+      "verdict_accuracy": 0.4444,
+      "tp": 3,
+      "tn": 1,
+      "fp": 1,
+      "fn": 4,
+      "avg_recall_strict": 0.33,
+      "avg_recall_loose": 0.4389,
+      "avg_decisive_recall": 0.2916
+    },
+    {
+      "method": "oar_run1",
+      "papers_evaluated": 9,
+      "verdict_accuracy": 0.4444,
+      "tp": 2,
+      "tn": 2,
+      "fp": 0,
+      "fn": 5,
+      "avg_recall_strict": 0.1322,
+      "avg_recall_loose": 0.2765,
+      "avg_decisive_recall": 0.0
+    }
+  ],
+  "paper_count": 9
+}

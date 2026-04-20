@@ -1,0 +1,1883 @@
+{
+  "slug": "cmdp_meta_safe_rl",
+  "title": "A CMDP-within-online Framework for Meta-Safe Reinforcement Learning",
+  "venue": "ICLR 2023",
+  "decision": "accepted",
+  "decision_type": "Spotlight",
+  "reviewer_scores": [
+    8,
+    6,
+    3
+  ],
+  "reviewer_scores_post": [
+    8,
+    6,
+    3
+  ],
+  "ground_truth_notes": "Own-group accepted paper. Spotlight (top 25%). Scores: 8/6/3. Sharp reviewer disagreement. AC championed theoretical contribution over weak experiments. GvYx (score-3) never responded to rebuttal.",
+  "case_study_files": [
+    "docs/case_studies/public_slice/A5_cmdp_meta_safe_rl.md"
+  ],
+  "evidence": {
+    "paper_pdf": "data/papers/public_slice/3277_a_cmdp_within_online_framework.pdf",
+    "openreview_pdf": "data/openreviews/public_slice/A CMDP-within-online framework for Meta-Safe Reinforcement Learning _ OpenReview.pdf",
+    "official_concerns": "data/official_concerns/cmdp_meta_safe_rl.yaml"
+  },
+  "official_concerns": [
+    {
+      "id": "O1",
+      "text": "Experimental evaluation is very sparse, with only a few environments tested.",
+      "severity": "major",
+      "decisive": false,
+      "ac_treatment": "accepted_limitation",
+      "issue_type": "empirical",
+      "tags": [
+        "experimental_scope",
+        "sparse_experiments",
+        "environment_coverage"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "DCQm",
+        "fmH2",
+        "GvYx"
+      ]
+    },
+    {
+      "id": "O2",
+      "text": "Meta-initialization policy may not be safe from the first step; full support over state/action space assumption may not guarantee safety.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "conceptual",
+      "tags": [
+        "safety_guarantee",
+        "initialization",
+        "assumption_validity"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "DCQm"
+      ]
+    },
+    {
+      "id": "O3",
+      "text": "Safety constraints should also be adapted to shifting environments rather than remaining static.",
+      "severity": "minor",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "conceptual",
+      "tags": [
+        "constraint_adaptation",
+        "shifting_environments",
+        "design_choice"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "DCQm"
+      ]
+    },
+    {
+      "id": "O4",
+      "text": "Comparison to safe policy improvement problem (Thomas et al.) is missing; unclear how individual tasks relate to finding a policy that safely outperforms the behavior policy.",
+      "severity": "minor",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "conceptual",
+      "tags": [
+        "related_work",
+        "positioning",
+        "safe_policy_improvement"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "DCQm"
+      ]
+    },
+    {
+      "id": "O5",
+      "text": "The framework builds on a simplified version of the existing CRPO algorithm, which restricts applicability despite claiming convenience in analysis.",
+      "severity": "major",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "conceptual",
+      "tags": [
+        "algorithm_simplification",
+        "CRPO",
+        "applicability"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "fmH2",
+        "GvYx"
+      ]
+    },
+    {
+      "id": "O6",
+      "text": "Theoretical analysis is not always clear; notation is confusing and the paper is hard to read for those unfamiliar with CRPO.",
+      "severity": "major",
+      "decisive": false,
+      "ac_treatment": "accepted_limitation",
+      "issue_type": "framing",
+      "tags": [
+        "clarity",
+        "notation",
+        "presentation",
+        "readability"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "fmH2",
+        "GvYx"
+      ]
+    },
+    {
+      "id": "O7",
+      "text": "No explanation about CRPO and no comments about the 'carefully chosen parameters'; the primal approach in Section 2.1 is confusing regarding why sub-optimality gap in (2) holds when running CRPO.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "framing",
+      "tags": [
+        "missing_explanation",
+        "CRPO",
+        "parameter_justification"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "fmH2"
+      ]
+    },
+    {
+      "id": "O8",
+      "text": "Lemma 1 relies on known result and Theorem 3.1 relies on approximation error of DualDICE; the whole algorithm/analysis seems to be a composition of existing analysis that might lack generality.",
+      "severity": "major",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "conceptual",
+      "tags": [
+        "novelty",
+        "theoretical_contribution",
+        "compositionality"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "fmH2",
+        "GvYx"
+      ]
+    },
+    {
+      "id": "O9",
+      "text": "Some assumptions and techniques (Assumption 1 and references to Kwon et al. 2021) are introduced in the middle of the paper without clear explanation of how they relate, and references are mixed into content distractingly.",
+      "severity": "minor",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "framing",
+      "tags": [
+        "paper_organization",
+        "presentation",
+        "flow"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "fmH2"
+      ]
+    },
+    {
+      "id": "O10",
+      "text": "Ethics concern: the meta-learning framework applied to problems with fairness constraints on different tasks requires discussion of pros/cons.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "conceptual",
+      "tags": [
+        "ethics",
+        "fairness",
+        "broader_impact"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "fmH2"
+      ]
+    },
+    {
+      "id": "O11",
+      "text": "Static regret is not useful for meta-learning since bounded task similarity is assumed and environments differ; otherwise, it reduces to a single-task problem.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "conceptual",
+      "tags": [
+        "static_regret",
+        "metric_appropriateness",
+        "meta_learning_formulation"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "fmH2"
+      ]
+    },
+    {
+      "id": "O12",
+      "text": "The notation is unclear (e.g., $V_{M_t}$, $\\pi^*$) making the paper harder to understand.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "framing",
+      "tags": [
+        "notation",
+        "clarity",
+        "presentation"
+      ],
+      "resolved_in_rebuttal": false,
+      "raised_by": [
+        "GvYx"
+      ]
+    },
+    {
+      "id": "O13",
+      "text": "Theorem 3.3 relies on assumptions of two regret upper bounds (E_T^{opt} and U_T^{pi}) with no explanation regarding why those assumptions are reasonable.",
+      "severity": "major",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "conceptual",
+      "tags": [
+        "assumption_justification",
+        "theoretical_rigor",
+        "regret_bounds"
+      ],
+      "resolved_in_rebuttal": false,
+      "raised_by": [
+        "GvYx"
+      ]
+    },
+    {
+      "id": "O14",
+      "text": "Only frozen lake and acrobot experiments are considered; experimental scope is extremely limited.",
+      "severity": "major",
+      "decisive": false,
+      "ac_treatment": "accepted_limitation",
+      "issue_type": "empirical",
+      "tags": [
+        "experimental_scope",
+        "environment_diversity",
+        "Mujoco"
+      ],
+      "resolved_in_rebuttal": false,
+      "raised_by": [
+        "GvYx"
+      ]
+    },
+    {
+      "id": "O15",
+      "text": "Assumption 2 ('o-minimal structure') needs clarification; it is non-standard and its necessity is unclear.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "conceptual",
+      "tags": [
+        "assumption_clarity",
+        "o-minimal_structure",
+        "mathematical_foundations"
+      ],
+      "resolved_in_rebuttal": false,
+      "raised_by": [
+        "GvYx"
+      ]
+    },
+    {
+      "id": "O16",
+      "text": "Why not use some offline CMDP algorithm to estimate state distributions instead of DualDICE, which is an existing offline RL algorithm for standard MDPs?",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "conceptual",
+      "tags": [
+        "algorithm_choice",
+        "DualDICE",
+        "offline_CMDP"
+      ],
+      "resolved_in_rebuttal": false,
+      "raised_by": [
+        "GvYx"
+      ]
+    },
+    {
+      "id": "O17",
+      "text": "Writing of the paper is somewhat unclear overall; claims and results are vague or modified in an ambiguous way.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "accepted_limitation",
+      "issue_type": "framing",
+      "tags": [
+        "writing_quality",
+        "ambiguity",
+        "clarity"
+      ],
+      "resolved_in_rebuttal": false,
+      "raised_by": [
+        "GvYx"
+      ]
+    },
+    {
+      "id": "O18",
+      "text": "The proposed meta-learning method combines existing RL algorithms for safe RL with theory building on existing results and assumptions; novelty is only marginally significant.",
+      "severity": "major",
+      "decisive": false,
+      "ac_treatment": "dismissed",
+      "issue_type": "conceptual",
+      "tags": [
+        "novelty",
+        "incremental",
+        "contribution_significance"
+      ],
+      "resolved_in_rebuttal": false,
+      "raised_by": [
+        "GvYx"
+      ]
+    },
+    {
+      "id": "O19",
+      "text": "Please check citation/cluster formats; they are not standard.",
+      "severity": "minor",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "framing",
+      "tags": [
+        "formatting",
+        "citations",
+        "presentation"
+      ],
+      "resolved_in_rebuttal": false,
+      "raised_by": [
+        "GvYx"
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "method": "ai_scientist_run1",
+      "verdict": "REJECT",
+      "score": 4,
+      "error_type": "FN",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_reject",
+          "text": "Significant theory-practice gap: all theory assumes tabular CMDPs with softmax parametrization yet experiments include continuous control tasks (Half-Cheetah 17D, Humanoid 376D) with no bridging analysis.",
+          "linked_concern_ids": [
+            "A1"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R2",
+          "polarity": "pro_reject",
+          "text": "Baselines are uniformly naive (random init, simple averaging, pre-trained single-task, FTAL); no comparison with any meta-RL method (MAML, ProMP) or modern safe RL approach.",
+          "linked_concern_ids": [
+            "A3"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R3",
+          "polarity": "pro_reject",
+          "text": "Core theoretical predictions that TAOG and TACV scale with task-similarity/relatedness are never quantitatively validated; no ablation varies similarity in a controlled way.",
+          "linked_concern_ids": [
+            "A4"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R4",
+          "polarity": "pro_reject",
+          "text": "Theorem 3.1 bound involves an opaque function h from the KL inequality whose growth rate is unknown, making the bound potentially vacuous; practical tightness is never assessed.",
+          "linked_concern_ids": [
+            "A2"
+          ],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "Addresses an important and understudied problem: provable guarantees for meta-learning in constrained MDPs. Appears to be the first work providing such guarantees.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "The use of tame geometry and the Kurdyka-Lojasiewicz inequality to bound suboptimal-to-optimal policy distance (Theorem 3.1) is a creative and novel technical contribution of independent interest.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M3",
+          "polarity": "pro_accept",
+          "text": "Framework handles practical challenges: does not require globally optimal policies, uses off-policy estimation (DualDICE), and supports adaptive learning rates without horizon knowledge.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M4",
+          "polarity": "pro_accept",
+          "text": "Comprehensive theoretical development with clear progression from idealized (Lemma 1) to practical settings (Theorem 3.2, Corollary 1), covering static and dynamic regret.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M5",
+          "polarity": "pro_accept",
+          "text": "Modular decomposition of estimation error into three sources (distribution mismatch, DualDICE error, policy suboptimality) in Equation 4 could accommodate alternative estimation methods.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "Theory-practice gap: all theoretical results assume tabular CMDPs with softmax parametrization, yet experiments use continuous control tasks (Half-Cheetah 17D state, Humanoid 376D observations) with no discussion bridging this gap.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "theory_practice_gap",
+            "experimental_design"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "Theorem 3.1 bound involves an opaque function h from the KL inequality characterized only qualitatively; without knowing its growth rate, the bound could be vacuous and practical tightness is never assessed.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "theoretical_rigor",
+            "soundness"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "Experimental baselines are uniformly naive (random init, averaging, single-task pretrain, FTAL); no comparison with any established meta-RL method (MAML, ProMP) or modern safe RL approach adapted to the multi-task setting.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "baseline_fairness",
+            "experimental_design"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "Core theoretical prediction that TAOG and TACV scale with task-similarity D* or task-relatedness V_psi is never quantitatively validated; no ablation varies similarity in a controlled way while measuring these quantities.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "claim_evidence_gap",
+            "ablation"
+          ]
+        },
+        {
+          "id": "A5",
+          "text": "Framework is restricted to CRPO as the within-task algorithm; no concrete analysis is provided for other safe RL algorithms, limiting practical generality.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "generality",
+            "scope_limitation"
+          ]
+        },
+        {
+          "id": "A6",
+          "text": "Very limited training steps (5-10 steps on test tasks) make it difficult to assess convergence properties or distinguish meta-learning benefit from simply running more within-task iterations.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "experimental_design",
+            "insufficient_evaluation"
+          ]
+        },
+        {
+          "id": "A7",
+          "text": "Paper is very dense (49 pages total) with heavy notation; many important details including proofs and algorithm specifics are deferred to appendices, making the main text hard to follow independently.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "clarity",
+            "presentation"
+          ]
+        },
+        {
+          "id": "A8",
+          "text": "Method permits constraint violations during learning, which may be unacceptable in safety-critical applications that the paper targets.",
+          "severity": "moderate",
+          "addressability": "unresolved",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "safety",
+            "scope_limitation"
+          ]
+        },
+        {
+          "id": "A9",
+          "text": "No discussion of computational overhead of DualDICE estimation after each task or how it scales with state-action space size.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "scalability",
+            "reproducibility"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O6",
+          "agentic_id": "A7",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Theoretical analysis is hard to follow due to unclear presentation and heavy notation",
+          "rationale": "O6 flags that 'theoretical analysis is not always clear' with confusing notation making the paper 'hard to read for those unfamiliar with CRPO.' A7 flags the paper as 'very dense (49 pages) with heavy notation' making the main text 'hard to follow independently.' Both identify the same core readability/clarity problem. A neutral reader would say these are the same complaint. Severity within one level (major vs moderate)."
+        },
+        {
+          "official_id": "O5",
+          "agentic_id": "A5",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "CRPO-related limitations restrict framework generality",
+          "rationale": "O5 says the framework 'builds on a simplified version of CRPO' which 'brings some restriction to the applicability.' A5 says the 'framework is restricted to CRPO as the within-task algorithm' limiting 'practical generality.' Same issue family (CRPO constrains the framework) but different facets: O5 is about the SIMPLIFICATION of CRPO hurting results, A5 is about being LOCKED INTO CRPO as the only supported algorithm. Fixing O5 (using full CRPO) would not fix A5 (extending to other algorithms)."
+        },
+        {
+          "official_id": "O2",
+          "agentic_id": "A8",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Safety guarantees are incomplete — the method does not ensure safety throughout the learning process",
+          "rationale": "O2 flags that the meta-initialization policy 'will necessarily not be safe' from the first step under the full-support assumption. A8 flags that the 'method permits constraint violations during learning, which may be unacceptable in safety-critical applications.' Same family (safety guarantee gaps) but different scope: O2 targets initialization safety specifically, A8 targets ongoing violations during learning. Both identify incomplete safety guarantees from different angles."
+        },
+        {
+          "official_id": "O17",
+          "agentic_id": "A7",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Writing quality and clarity issues",
+          "rationale": "O17 flags 'writing of the paper is somewhat unclear overall; claims and results are vague or modified in an ambiguous way.' A7 flags the paper as 'very dense with heavy notation' and 'hard to follow independently.' Both are clarity concerns but different facets: O17 targets vagueness of claims, A7 targets information density and notation burden. A7's second edge (first is O6)."
+        },
+        {
+          "official_id": "O13",
+          "agentic_id": "A2",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "aligned",
+          "issue": "Theoretical bounds lack transparency or justification",
+          "rationale": "O13 flags that Theorem 3.3 relies on assumptions of two regret upper bounds (E_T^opt, U_T^pi) 'with no explanation regarding why those assumptions are reasonable.' A2 flags that Theorem 3.1 involves 'an opaque function h from the KL inequality' whose growth rate is unknown, making the bound 'potentially vacuous.' Both target transparency of theoretical bounds but in DIFFERENT theorems with different specific complaints. Fixing A2 (clarifying h in Thm 3.1) would not fix O13 (justifying assumptions in Thm 3.3). Near-miss: the agentic system noticed theoretical rigor issues but targeted a different result."
+        },
+        {
+          "official_id": "O16",
+          "agentic_id": "A9",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "aligned",
+          "issue": "DualDICE suitability concerns",
+          "rationale": "O16 asks 'why not use some offline CMDP algorithm to estimate state distributions instead of DualDICE?' — questioning the algorithm CHOICE. A9 flags 'no discussion of computational overhead of DualDICE estimation' — questioning SCALABILITY. Both are about DualDICE's suitability but target different defects (choice justification vs cost analysis). Per false match pattern 4 ('same component, different complaint'), these cannot be exact/partial."
+        }
+      ],
+      "metrics": {
+        "total_official": 19,
+        "total_decisive": 0,
+        "recall_strict": 0.2105,
+        "recall_loose": 0.3158,
+        "decisive_recall": null,
+        "matched_official_ids": [
+          "O13",
+          "O16",
+          "O17",
+          "O2",
+          "O5",
+          "O6"
+        ],
+        "strict_matched_ids": [
+          "O17",
+          "O2",
+          "O5",
+          "O6"
+        ]
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/ai_scientist_run1/cmdp_meta_safe_rl.yaml",
+        "match_graph": "data/match_graphs/public_slice/ai_scientist_run1/cmdp_meta_safe_rl.yaml",
+        "review": "data/reviews/public_slice/ai_scientist_run1/cmdp_meta_safe_rl/"
+      }
+    },
+    {
+      "method": "ai_scientist_gpt4o_run1",
+      "verdict": "REJECT",
+      "score": 3,
+      "error_type": "FN",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_reject",
+          "text": "Theoretical claims about task similarity and convergence are abstract without thorough justification, undermining soundness.",
+          "linked_concern_ids": [
+            "A1"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R2",
+          "polarity": "pro_reject",
+          "text": "Experimental setups are complex with insufficient clarity on result implications and baseline interpretations.",
+          "linked_concern_ids": [
+            "A2"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R3",
+          "polarity": "pro_reject",
+          "text": "Interpretive clarity is lacking, making it difficult to understand the novel contributions fully.",
+          "linked_concern_ids": [
+            "A4"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R4",
+          "polarity": "pro_reject",
+          "text": "Lacks practical validation and thorough exploration of societal impact, particularly fairness.",
+          "linked_concern_ids": [
+            "A3"
+          ],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "Introduces CMDP into the meta-learning framework, targeting safer AI applications.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "Provides theoretical task-averaged regret bounds, suggesting improvement with task-similarity.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M3",
+          "polarity": "pro_accept",
+          "text": "Ambitiously integrates safe RL paradigms with meta-RL.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "Theoretical claims about task similarity and convergence are abstract and lack thorough justification.",
+          "severity": "major",
+          "addressability": "unresolved",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "theoretical_rigor",
+            "soundness"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "Experimental setups are complex with insufficient clarity on result implications and baseline interpretations.",
+          "severity": "major",
+          "addressability": "unresolved",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "evaluation",
+            "clarity"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "Lacks practical validation and thorough exploration of societal impact, particularly fairness in task adaptation.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "evaluation",
+            "impact"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "Interpretive clarity is lacking, making it difficult to understand the novel contributions fully.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "clarity",
+            "presentation"
+          ]
+        },
+        {
+          "id": "A5",
+          "text": "Narrow focus on CRPO without exploring how other single-task safe RL algorithms might adapt to the framework.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "scope",
+            "methodology"
+          ]
+        },
+        {
+          "id": "A6",
+          "text": "DualDICE estimation technique used is not broadly validated across different RL settings.",
+          "severity": "moderate",
+          "addressability": "unknown",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "methodology",
+            "soundness"
+          ]
+        },
+        {
+          "id": "A7",
+          "text": "Sensitivity of the framework to changes in task-relatedness metrics is unclear.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "robustness",
+            "theoretical_rigor"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O6",
+          "agentic_id": "A4",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Paper lacks clarity, making it hard to understand the theoretical contributions",
+          "rationale": "Both flag that the paper's presentation (notation, theoretical analysis) makes it hard to understand what is being contributed. O6: 'Theoretical analysis is not always clear; notation confusing.' A4: 'Interpretive clarity is lacking, making it difficult to understand the novel contributions fully.' Same core complaint, same scope."
+        },
+        {
+          "official_id": "O7",
+          "agentic_id": "A4",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Missing explanations of core algorithm (CRPO) hinder comprehension",
+          "rationale": "O7 specifically targets missing CRPO explanation and parameter justification; A4 is broader about interpretive clarity preventing understanding of contributions. O7 is one specific instance of the broader clarity problem A4 identifies."
+        },
+        {
+          "official_id": "O13",
+          "agentic_id": "A1",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Theoretical assumptions lack sufficient justification",
+          "rationale": "O13 specifically flags Theorem 3.3's reliance on two regret upper bound assumptions without justification. A1 broadly flags that 'theoretical claims, particularly concerning task similarity and convergence, are abstract without thorough justification.' Same issue family (unjustified theoretical claims) but O13 is narrow (one theorem) while A1 is broad."
+        },
+        {
+          "official_id": "O10",
+          "agentic_id": "A3",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Missing discussion of societal impact and fairness in task adaptation",
+          "rationale": "O10 asks for discussion of 'pros/cons when engineers apply the method to problems with fairness constraints.' A3 flags 'lacks practical validation and thorough exploration of societal impact, particularly fairness in task adaptation.' The fairness/societal-impact component matches well. A3 also bundles 'practical validation' which O10 does not address, making this partial."
+        },
+        {
+          "official_id": "O5",
+          "agentic_id": "A5",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Framework is narrowly tied to CRPO, limiting generality",
+          "rationale": "O5 says the simplified CRPO version 'brings some restriction to the applicability.' A5 asks 'why focus narrowly on CRPO, and how might other single-task algorithms adapt?' Both concern the CRPO-centric design limiting generality, but from different angles: O5 targets the simplification restricting applicability, A5 targets the lack of exploration of alternative algorithms."
+        },
+        {
+          "official_id": "O16",
+          "agentic_id": "A6",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "DualDICE may not be the appropriate or sufficiently validated estimation technique",
+          "rationale": "O16 questions DualDICE choice and suggests offline CMDP algorithms as alternatives. A6 questions whether DualDICE is 'broadly validated across different RL settings.' Both target DualDICE's appropriateness but from different angles: O16 proposes alternatives, A6 questions validation breadth."
+        },
+        {
+          "official_id": "O11",
+          "agentic_id": "A7",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Framework's handling of task-relatedness is questionable",
+          "rationale": "O11 argues 'static regret seems not very useful since bounded task similarity is assumed and environments differ.' A7 asks about 'sensitivity of the framework to changes in task-relatedness metrics.' Both question how the framework handles task heterogeneity, but O11 targets the regret formulation choice while A7 targets parameter sensitivity."
+        },
+        {
+          "official_id": "O17",
+          "agentic_id": "A2",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Results and claims are vaguely presented, making interpretation difficult",
+          "rationale": "O17 flags that 'writing is unclear; claims and results are vague or modified in an ambiguous way.' A2 flags 'experimental setups are complex, with insufficient clarity on result implications and baseline interpretations.' Both target unclear presentation of results, but O17 is about overall writing while A2 is specifically about experimental interpretation."
+        },
+        {
+          "official_id": "O1",
+          "agentic_id": "A2",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "n/a",
+          "issue": "Experimental evaluation concerns",
+          "rationale": "O1 targets experimental scope ('very sparse, few environments'). A2 targets experimental clarity ('insufficient clarity on result implications'). Both are about the experimental section being inadequate, but different fixes are required: O1 needs more experiments, A2 needs better explanation. Near-miss, not same issue."
+        }
+      ],
+      "metrics": {
+        "total_official": 19,
+        "total_decisive": 0,
+        "recall_strict": 0.4211,
+        "recall_loose": 0.4737,
+        "decisive_recall": null,
+        "matched_official_ids": [
+          "O1",
+          "O10",
+          "O11",
+          "O13",
+          "O16",
+          "O17",
+          "O5",
+          "O6",
+          "O7"
+        ],
+        "strict_matched_ids": [
+          "O10",
+          "O11",
+          "O13",
+          "O16",
+          "O17",
+          "O5",
+          "O6",
+          "O7"
+        ]
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/ai_scientist_gpt4o_run1/cmdp_meta_safe_rl.yaml",
+        "match_graph": "data/match_graphs/public_slice/ai_scientist_gpt4o_run1/cmdp_meta_safe_rl.yaml",
+        "review": "data/reviews/public_slice/ai_scientist_gpt4o_run1/cmdp_meta_safe_rl/"
+      }
+    },
+    {
+      "method": "liang_run1",
+      "verdict": "REJECT",
+      "score": null,
+      "error_type": "FN",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_reject",
+          "text": "Experimental evaluation is weak — simplistic baselines, no empirical verification of theoretical predictions, and insufficient scale to draw meaningful conclusions.",
+          "linked_concern_ids": [
+            "A1",
+            "A2",
+            "A3"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R2",
+          "polarity": "pro_reject",
+          "text": "Tabular softmax restriction fundamentally limits practical relevance, and the MuJoCo experiments are disconnected from the tabular theory with no bridge provided.",
+          "linked_concern_ids": [
+            "A4",
+            "A5"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R3",
+          "polarity": "pro_reject",
+          "text": "Theoretical bounds are opaque and potentially vacuous — desingularizing function h is uncharacterized, cumulative inexactness is hard to control, and numerous problem-dependent constants obscure practical meaning.",
+          "linked_concern_ids": [
+            "A6",
+            "A7"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R4",
+          "polarity": "pro_reject",
+          "text": "Claimed framework modularity is not demonstrated — entire theoretical development is CRPO-specific, and CRPO's own limitations and proof corrections undermine within-task guarantees.",
+          "linked_concern_ids": [
+            "A8",
+            "A9"
+          ],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "First provable guarantees for meta-safe RL, filling a genuine gap; the problem formulation (Def. 1, TAOG/TACV) is clean and well-motivated.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "Technically substantial: estimation error decomposition (Eq. 4), tame geometry argument (Theorem 3.1, Appendix F), and inexact OGD bounds may be of independent interest.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M3",
+          "polarity": "pro_accept",
+          "text": "Modular framework design with INIT/SIM decomposition and clear articulation of how task-similarity/relatedness drive bounds.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M4",
+          "polarity": "pro_accept",
+          "text": "Comprehensive theoretical development covering static regret, dynamic regret, and adaptive learning rates with improved O(1/M^{3/4}) rate.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "Baselines are simplistic (random init, simple averaging, pre-trained, FAL) with no comparison to natural competitors such as meta-RL algorithms (MAML variants) augmented with Lagrangian constraint handling or primal-dual meta-learning approaches.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "baseline_fairness",
+            "evaluation_rigor"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "Experiments do not empirically verify key theoretical predictions: no ablation showing how TAOG/TACV scale with the number of tasks T, within-task steps M, or task-similarity/relatedness measures D* and V_psi.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "claim_evidence_gap",
+            "evaluation_rigor",
+            "ablation"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "Experiments use very few training steps on test tasks (5-10 steps), variance bars are large in some figures, and MuJoCo results are relegated to the appendix, making it difficult to draw meaningful conclusions.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "evaluation_rigor",
+            "statistical_significance",
+            "experimental_scale"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "The theoretical framework is restricted to the tabular softmax setting; Assumption 1 (shrinkage simplex) requires full support over all state-action pairs, which is fundamentally incompatible with continuous control problems and large action spaces.",
+          "severity": "major",
+          "addressability": "unresolved",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "scope_limitation",
+            "assumptions",
+            "practical_relevance"
+          ]
+        },
+        {
+          "id": "A5",
+          "text": "Theory-experiment disconnect: bounds depend on |S|x|A| explicitly (e.g., ct_2 = 4c^2_max|S||A|/(1-gamma)^3), making them vacuous for large state-action spaces, yet experiments use MuJoCo environments (376-dim observation, 17-dim action) with no discussion bridging the gap.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "theory_practice_gap",
+            "scope_limitation",
+            "clarity"
+          ]
+        },
+        {
+          "id": "A6",
+          "text": "The desingularizing function h in Theorem 3.1 is problem-specific and not characterized beyond existence — the convergence rate h(1/sqrt(M)) could be arbitrarily slow depending on the geometry of the specific CMDP, making the bound uninterpretable for concrete settings.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "theoretical_clarity",
+            "bound_interpretability"
+          ]
+        },
+        {
+          "id": "A7",
+          "text": "Cumulative inexactness E_T depends on DualDICE approximation and optimization errors that are hard to control in practice, and the final bound (Corollary 1) involves numerous problem-dependent constants (C1-C5, ct_1-ct_5, path lengths) that make it impossible to assess whether guarantees are meaningful.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "theoretical_clarity",
+            "bound_interpretability",
+            "practical_guidance"
+          ]
+        },
+        {
+          "id": "A8",
+          "text": "Claimed framework modularity is not demonstrated: the entire theoretical development (Lemmas 19-21, Theorem G.1) is built on CRPO-specific derivations with no concrete instantiation using any alternative within-task algorithm, despite claiming the framework \"can be potentially adapted to most of the existing RL literature.\"",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "overclaimed_contribution",
+            "modularity",
+            "generality"
+          ]
+        },
+        {
+          "id": "A9",
+          "text": "CRPO has known limitations inherited by the meta-framework (handles only one violated constraint at a time, requires careful eta_t tuning), and the correction to the original CRPO proof via Assumption 4 raises concerns about the robustness of the within-task guarantees that the meta-level analysis builds upon.",
+          "severity": "moderate",
+          "addressability": "unresolved",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "technical_soundness",
+            "proof_correctness",
+            "inherited_limitations"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O1",
+          "agentic_id": "A3",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Experimental evaluation is insufficient in scope and methodology",
+          "rationale": "O1 flags sparse experiments with too few environments (scope). A3 flags few training steps, large variance, and MuJoCo relegated to appendix (methodology quality). Both are in the 'experimental evaluation insufficient' family but target different facets: O1 wants more environments, A3 wants more rigorous experimental design. Different author fixes needed (add environments vs increase training steps and reduce variance)."
+        },
+        {
+          "official_id": "O14",
+          "agentic_id": "A3",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Limited experimental scope — missing or underemphasized MuJoCo environments",
+          "rationale": "O14 specifically asks for MuJoCo experiments (GvYx: 'only frozen lake and acrobot'). A3 notes MuJoCo results exist but are relegated to the appendix with few training steps and large variance. Both relate to MuJoCo coverage but O14 is about absence of environments while A3 is about presentation and quality of the MuJoCo results."
+        },
+        {
+          "official_id": "O2",
+          "agentic_id": "A4",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "n/a",
+          "issue": "Assumption 1 (full support / shrinkage simplex) has problematic implications",
+          "rationale": "Both concerns target Assumption 1 (full support over state-action space) but draw completely different conclusions. O2 argues this assumption doesn't guarantee safety from the first step (a safety concern). A4 argues it restricts the framework to tabular settings, incompatible with continuous control (a scope concern). Different fixes: O2 needs a safe initialization mechanism, A4 needs theory extension beyond tabular softmax. Same component, different complaint (false match pattern 4)."
+        },
+        {
+          "official_id": "O5",
+          "agentic_id": "A8",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Framework is overly dependent on CRPO, limiting its scope",
+          "rationale": "O5 flags that using a simplified CRPO restricts applicability. A8 flags that claimed modularity is not demonstrated because the entire theoretical development is CRPO-specific. Both point to CRPO dependence limiting the framework, but O5 is about the simplification choice restricting scope while A8 is about the generality claim being unsupported. Fixing O5 (use full CRPO) would not fix A8 (demonstrate with alternative algorithms)."
+        },
+        {
+          "official_id": "O8",
+          "agentic_id": "A8",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Theoretical contribution may lack generality due to composition of existing techniques",
+          "rationale": "O8 argues the analysis is a composition of DualDICE+CRPO that may lack generality. A8 argues claimed modularity is not demonstrated because everything is CRPO-specific. Both converge on the framework being too tied to specific existing algorithms and not as general as claimed, but O8 has a novelty dimension (just composing known work) that A8 does not address directly."
+        },
+        {
+          "official_id": "O5",
+          "agentic_id": "A9",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "n/a",
+          "issue": "CRPO limitations affect the meta-framework",
+          "rationale": "O5 is about simplified CRPO restricting applicability. A9 is about inherited CRPO limitations (single constraint at a time, eta_t tuning) and proof corrections via Assumption 4. Both concern CRPO's impact on the framework but target different defects: simplification choice vs known bugs and proof robustness. Same component, different complaint (false match pattern 4)."
+        },
+        {
+          "official_id": "O13",
+          "agentic_id": "A7",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Theoretical bounds involve hard-to-control or unjustified terms",
+          "rationale": "O13 asks why the regret upper bound assumptions (E_T^opt, U_T^pi) in Theorem 3.3 are reasonable — an assumption justification concern. A7 says the cumulative inexactness E_T depends on DualDICE errors that are hard to control, and Corollary 1 has too many problem-dependent constants (C1-C5, ct_1-ct_5) to be interpretable. Both target the opacity of the theoretical bounds around Theorem 3.3/Corollary 1 but from different angles: assumption validity vs practical interpretability."
+        },
+        {
+          "official_id": "O15",
+          "agentic_id": "A6",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Tame geometry framework (Assumption 2, desingularizing function) is opaque",
+          "rationale": "O15 asks for clarification of Assumption 2 (o-minimal structure), a non-standard condition. A6 says the desingularizing function h in Theorem 3.1 — which arises from the tame geometry framework — is uncharacterized and could yield arbitrarily slow convergence. Both target the tame geometry theoretical apparatus but different facets: O15 questions the assumption, A6 questions the resulting function's behavior."
+        }
+      ],
+      "metrics": {
+        "total_official": 19,
+        "total_decisive": 0,
+        "recall_strict": 0.3158,
+        "recall_loose": 0.3684,
+        "decisive_recall": null,
+        "matched_official_ids": [
+          "O1",
+          "O13",
+          "O14",
+          "O15",
+          "O2",
+          "O5",
+          "O8"
+        ],
+        "strict_matched_ids": [
+          "O1",
+          "O13",
+          "O14",
+          "O15",
+          "O5",
+          "O8"
+        ]
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/liang_run1/cmdp_meta_safe_rl.yaml",
+        "match_graph": "data/match_graphs/public_slice/liang_run1/cmdp_meta_safe_rl.yaml",
+        "review": "data/reviews/public_slice/liang_run1/cmdp_meta_safe_rl/"
+      }
+    },
+    {
+      "method": "liang_gpt4o_run1",
+      "verdict": "ACCEPT",
+      "score": null,
+      "error_type": "TP",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_accept",
+          "text": "Novel CMDP-within-online framework provides the first provable guarantees for meta-safe reinforcement learning with rigorous task-averaged regret bounds for both reward maximization and constraint violations.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "R2",
+          "polarity": "pro_accept",
+          "text": "Framework is adaptable to various RL settings with practical applicability to real-world scenarios involving safety constraints, supported by experimental validation across different environments.",
+          "linked_concern_ids": [
+            "A4"
+          ],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "Addresses a critical gap in meta-reinforcement learning by focusing on constraint violations, which are often overlooked in existing literature.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "Comprehensive technical analysis with detailed proofs and thorough discussion of challenges, demonstrating deep understanding of the problem.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "CMDP-within-online framework may be overly complex, limiting accessibility and practical implementation by practitioners.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "complexity",
+            "accessibility"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "Reliance on advanced mathematical concepts (tame geometry, subgradient flow systems) may deter readers unfamiliar with these areas.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "accessibility",
+            "notation"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "Framework assumes access to certain distributions and parameters that may not be readily available in all practical scenarios, limiting generalizability.",
+          "severity": "major",
+          "addressability": "unresolved",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "assumptions",
+            "generalizability"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "Task-similarity and task-relatedness assumptions may not hold in diverse real-world environments, affecting the framework's robustness.",
+          "severity": "major",
+          "addressability": "unresolved",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "assumptions",
+            "robustness"
+          ]
+        },
+        {
+          "id": "A5",
+          "text": "Experiments conducted on a limited set of environments, not fully capturing the diversity and complexity of real-world tasks.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "evaluation_scope",
+            "experimental_coverage"
+          ]
+        },
+        {
+          "id": "A6",
+          "text": "Missing detailed comparison with state-of-the-art methods in terms of computational efficiency and scalability.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "missing_baselines",
+            "scalability"
+          ]
+        },
+        {
+          "id": "A7",
+          "text": "Dense mathematical notation and extensive theoretical sections hinder comprehension; paper needs clearer explanations and visual aids.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "clarity",
+            "presentation"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O1",
+          "agentic_id": "A5",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Experimental evaluation scope is limited to very few environments",
+          "rationale": "Both identify the same core concern: experiments cover too few environments to demonstrate generality. O1 says \"experimental evaluation is very sparse\"; A5 says \"limited set of environments, not fully capturing diversity.\" Same issue, same scope."
+        },
+        {
+          "official_id": "O14",
+          "agentic_id": "A5",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Experimental evaluation limited to toy environments without Mujoco",
+          "rationale": "O14 is GvYx's restatement of O1, specifically asking \"how about Mujoco?\" A5 captures the same limited-environment concern. Same underlying issue as O1↔A5 from a different reviewer."
+        },
+        {
+          "official_id": "O6",
+          "agentic_id": "A7",
+          "match_type": "exact",
+          "severity_alignment": "under",
+          "judgment_alignment": "aligned",
+          "issue": "Theoretical analysis and notation are unclear and hard to follow",
+          "rationale": "Both flag that the paper's theoretical presentation hinders comprehension. O6: \"Theoretical analysis is not always clear; notation is confusing.\" A7: \"Dense mathematical notation and extensive theoretical sections hinder comprehension.\" The agentic system rated this minor; the AC explicitly listed unclear theory as a weakness, and two reviewers flagged it as major."
+        },
+        {
+          "official_id": "O12",
+          "agentic_id": "A7",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Specific notation symbols are unclear and impede understanding",
+          "rationale": "O12 flags specific notation issues (V_{M_t}, π*); A7 flags dense notation generally. A7 captures the family of notation concerns but not O12's specific symbols. Partial because A7 is broader in scope."
+        },
+        {
+          "official_id": "O2",
+          "agentic_id": "A3",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Framework assumptions about distributions may not hold in practice",
+          "rationale": "O2 specifically questions Assumption 1 (full support over shrinkage simplex) and meta-initialization safety. A3 broadly flags \"access to certain distributions and parameters that may not be readily available.\" Same assumption-validity family but A3 is broader and O2 targets a specific assumption. Would require different author fixes."
+        },
+        {
+          "official_id": "O11",
+          "agentic_id": "A4",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Task-similarity assumptions may be invalid in diverse environments",
+          "rationale": "O11 argues static regret is inappropriate because bounded task similarity is assumed and environments differ. A4 flags that task-similarity and task-relatedness assumptions may not hold in real-world settings. Both target task-similarity validity, but O11 additionally critiques the metric choice (static regret), which A4 does not capture."
+        },
+        {
+          "official_id": "O15",
+          "agentic_id": "A2",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Non-standard mathematical foundations (o-minimal/tame geometry) insufficiently explained",
+          "rationale": "O15 asks for clarification of Assumption 2's o-minimal structure. A2 flags reliance on \"tame geometry, subgradient flow systems\" as deterring readers. Both concern the same mathematical material being insufficiently accessible, but O15 targets assumption justification while A2 targets reader accessibility. Partial because different facets of the same gap."
+        }
+      ],
+      "metrics": {
+        "total_official": 19,
+        "total_decisive": 0,
+        "recall_strict": 0.3684,
+        "recall_loose": 0.3684,
+        "decisive_recall": null,
+        "matched_official_ids": [
+          "O1",
+          "O11",
+          "O12",
+          "O14",
+          "O15",
+          "O2",
+          "O6"
+        ],
+        "strict_matched_ids": [
+          "O1",
+          "O11",
+          "O12",
+          "O14",
+          "O15",
+          "O2",
+          "O6"
+        ]
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/liang_gpt4o_run1/cmdp_meta_safe_rl.yaml",
+        "match_graph": "data/match_graphs/public_slice/liang_gpt4o_run1/cmdp_meta_safe_rl.yaml",
+        "review": "data/reviews/public_slice/liang_gpt4o_run1/cmdp_meta_safe_rl/"
+      }
+    },
+    {
+      "method": "marg_gpt4o_run1",
+      "verdict": "REJECT",
+      "score": null,
+      "error_type": "FN",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_reject",
+          "text": "Paper lacks statistical significance tests and component ablation to substantiate its empirical claims.",
+          "linked_concern_ids": [
+            "A1",
+            "A2"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R2",
+          "polarity": "pro_reject",
+          "text": "Insufficient algorithmic and experimental detail undermines reproducibility of the Meta-SRL framework.",
+          "linked_concern_ids": [
+            "A6",
+            "A8",
+            "A9"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R3",
+          "polarity": "pro_reject",
+          "text": "Theoretical assumptions (task-similarity, task-relatedness, inexactness) are neither explicitly stated nor justified.",
+          "linked_concern_ids": [
+            "A3"
+          ],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "Novel CMDP-within-online framework that effectively integrates task-similarity and task-relatedness into meta-reinforcement learning.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "Addresses the significant challenge of constraint violations in real-world applications of meta-RL.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M3",
+          "polarity": "pro_accept",
+          "text": "Theoretical guarantees including task-averaged regret bounds and dynamic regret bounds are well-justified through mathematical proofs and empirical results.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "Paper lacks statistical significance tests to validate the robustness and reliability of its empirical results across environments and baselines.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "statistical_rigor",
+            "evaluation"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "No component analysis isolating individual impact of CMDP-within-online framework, CRPO algorithm, and DualDICE on performance metrics.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "ablation",
+            "evaluation"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "Assumptions regarding task-similarity, task-relatedness, and inexactness are not explicitly stated, lack thorough justification, and do not discuss scenarios where they may not hold.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "theoretical_rigor",
+            "assumptions"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "Insufficient comparison with and differentiation from specific prior works in safe RL and meta-learning literature.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "related_work",
+            "novelty"
+          ]
+        },
+        {
+          "id": "A5",
+          "text": "Motivations for addressing constraint violations in meta-RL not clearly linked to specific real-world applications or concrete scenarios.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "motivation",
+            "clarity"
+          ]
+        },
+        {
+          "id": "A6",
+          "text": "CMDP-within-online framework lacks detail on specific algorithms for deriving inexact optimal policies and approximate state visitation distributions.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "reproducibility",
+            "algorithmic_detail"
+          ]
+        },
+        {
+          "id": "A7",
+          "text": "Criteria for meta-initialization policy and KL divergence parameters used to measure task-similarity are not clearly specified.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "clarity",
+            "reproducibility"
+          ]
+        },
+        {
+          "id": "A8",
+          "text": "CRPO algorithm implementation details insufficient: decision rule for switching between gradient ascent and descent not explained, hyperparameters, learning rates, and safety thresholds not specified.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "reproducibility",
+            "algorithmic_detail"
+          ]
+        },
+        {
+          "id": "A9",
+          "text": "Experimental setup lacks comprehensive description of task variations and evaluation metrics used for performance assessment.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "reproducibility",
+            "evaluation"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O7",
+          "agentic_id": "A8",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Missing explanation of CRPO algorithm, parameter choices, and decision rules",
+          "rationale": "O7 says \"no explanation about CRPO and no comments about the 'carefully chosen parameters'\" and the primal approach is confusing. A8 says CRPO decision rule for switching between gradient ascent/descent is not explained and hyperparameters/ learning rates/safety thresholds are unspecified. Both identify the same gap: the paper fails to explain how CRPO works and what parameters it uses. Same fix required."
+        },
+        {
+          "official_id": "O13",
+          "agentic_id": "A3",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Theoretical assumptions insufficiently justified",
+          "rationale": "Both flag assumptions as lacking justification, but target different specific assumptions. O13 concerns Theorem 3.3's two regret upper bound placeholders (E_T^opt and U_T^pi); A3 concerns task-similarity, task-relatedness, and inexactness assumptions. Same complaint family (unjustified assumptions) but different scope — fixing one does not necessarily fix the other."
+        },
+        {
+          "official_id": "O6",
+          "agentic_id": "A6",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Theoretical framework presentation lacks clarity and sufficient detail",
+          "rationale": "O6 flags that \"theoretical analysis is not always clear\" with confusing notation making the paper hard to read for non-CRPO experts. A6 says the framework \"lacks detail on specific algorithms for deriving inexact optimal policies and approximate state visitation distributions.\" Both indicate the reader cannot understand the framework, but O6 is about clarity of existing content while A6 is about missing algorithmic content. Partial because the complaints overlap in effect (reader confusion) but differ in remedy (cleaner notation vs more detail)."
+        },
+        {
+          "official_id": "O4",
+          "agentic_id": "A4",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Insufficient comparison with and positioning against prior safe RL works",
+          "rationale": "O4 asks specifically about the relation to the safe policy improvement problem (Thomas et al.) — a targeted missing comparison. A4 broadly flags \"insufficient comparison with and differentiation from specific prior works in safe RL and meta-learning.\" A4 is a broad concern; O4 is a specific instance of it. Partial because A4 subsumes O4 but is much wider in scope."
+        },
+        {
+          "official_id": "O2",
+          "agentic_id": "A7",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Meta-initialization policy specification and justification",
+          "rationale": "O2 questions whether the meta-initialization policy can guarantee safety from the first step and challenges the full-support assumption. A7 says the criteria for meta-initialization policy and KL divergence parameters are not clearly specified. Both concern meta-initialization but from different angles: O2 is a conceptual safety concern, A7 is a reproducibility/specification concern. Partial because both target the same component but identify different defects."
+        },
+        {
+          "official_id": "O1",
+          "agentic_id": "A9",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "aligned",
+          "issue": "Experimental evaluation insufficiency",
+          "rationale": "O1 (raised by all three reviewers) says experiments are \"very sparse\" with too few environments — wants more environments like Mujoco. A9 says the experimental setup \"lacks comprehensive description of task variations and evaluation metrics.\" Both are about experimental shortcomings but require different author fixes: O1 needs additional experiments; A9 needs better documentation of existing experiments. The agentic system noticed experimental weakness but diagnosed a different specific problem."
+        },
+        {
+          "official_id": "O15",
+          "agentic_id": "A3",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "aligned",
+          "issue": "Assumption clarification needed",
+          "rationale": "O15 asks for clarification of Assumption 2 (o-minimal structure) — a specific mathematical assumption. A3 flags task-similarity, task-relatedness, and inexactness assumptions as unstated and unjustified. Both are about assumption clarity but target entirely different assumptions. A3 already has a stronger partial match with O13."
+        },
+        {
+          "official_id": "O18",
+          "agentic_id": "A4",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "aligned",
+          "issue": "Novelty and contribution positioning",
+          "rationale": "O18 says \"the proposed meta learning method combines existing RL algorithms... novelty is only marginally significant.\" A4 says there is \"insufficient comparison with and differentiation from specific prior works.\" Both touch novelty/positioning but O18 is a direct novelty criticism (contribution is incremental) while A4 is a related-work discussion gap. Per false match pattern #1, misrepresenting or under-discussing prior work (A4) is distinct from the novelty judgment itself (O18)."
+        }
+      ],
+      "metrics": {
+        "total_official": 19,
+        "total_decisive": 0,
+        "recall_strict": 0.2632,
+        "recall_loose": 0.4211,
+        "decisive_recall": null,
+        "matched_official_ids": [
+          "O1",
+          "O13",
+          "O15",
+          "O18",
+          "O2",
+          "O4",
+          "O6",
+          "O7"
+        ],
+        "strict_matched_ids": [
+          "O13",
+          "O2",
+          "O4",
+          "O6",
+          "O7"
+        ]
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/marg_gpt4o_run1/cmdp_meta_safe_rl.yaml",
+        "match_graph": "data/match_graphs/public_slice/marg_gpt4o_run1/cmdp_meta_safe_rl.yaml",
+        "review": "data/reviews/public_slice/marg_gpt4o_run1/cmdp_meta_safe_rl/"
+      }
+    },
+    {
+      "method": "oar_run1",
+      "verdict": "REJECT",
+      "score": null,
+      "error_type": "FN",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_reject",
+          "text": "Factor-of-M discrepancy between per-task regret bound and meta-algorithm loss function propagates to Theorem 3.3 and Corollary 1, invalidating the claimed convergence rate.",
+          "linked_concern_ids": [
+            "A1"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R2",
+          "polarity": "pro_reject",
+          "text": "Multiple corroborating technical errors (wrong constraint bound direction, abstract/theorem mismatch, incorrect approximation) collectively undermine confidence in the theoretical claims.",
+          "linked_concern_ids": [
+            "A2",
+            "A3",
+            "A4"
+          ],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "Novel and theoretically interesting CMDP-within-online framework for meta-safe RL extending ARUBA-style meta-learning to constrained MDPs.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "Key ideas (stationary distribution corrections, tame geometry for estimation error bounds, adaptive learning rates) are creative and well-motivated.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M3",
+          "polarity": "pro_accept",
+          "text": "Underlying framework and proof strategy appear sound; errors seem correctable with careful revision.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "Equation (5) defines the meta-algorithm loss as M times the actual per-task regret bound from Lemma 21/Equation (2), causing Theorem 3.3 to be off by a factor of M and changing the claimed convergence rate in Corollary 1.",
+          "severity": "fatal",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "mathematical_error",
+            "proof_validity",
+            "convergence_rate"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "Lemma 4 item 3 bounds the constraint cost in the wrong direction, providing a lower bound on the learned policy's cost when an upper bound is needed for the constraint violation bound.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "mathematical_error",
+            "proof_validity"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "Abstract states a regret rate that does not match Theorem 3.2: the expressions inside the square root differ in two ways (E_T/sqrt(T) vs E_T/T, and missing 1/sqrt(T) term), misrepresenting the formal result.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "claim_evidence_mismatch",
+            "presentation"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "Proof of Corollary 3 uses an incorrect asymptotic approximation: sqrt(1/(M+sqrt(M))) approx 1/M^{1/4} is M^{1/4} times looser than the actual value 1/sqrt(M), affecting the claimed improvement from 1/sqrt(M) to 1/M^{3/4}.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "mathematical_error",
+            "proof_validity",
+            "convergence_rate"
+          ]
+        },
+        {
+          "id": "A5",
+          "text": "Remark 2 drops path-length terms (S_T, P_T) from the Corollary 1 bound without justification or noting conditions under which they are negligible, potentially misleading about when the adaptive improvement holds.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "missing_justification",
+            "presentation"
+          ]
+        },
+        {
+          "id": "A6",
+          "text": "Cost function arity inconsistency: c_{t,i} is defined on S x A but the value function uses c_{t,i}(s_m, a_m, s_{m+1}) with three arguments.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "notation",
+            "presentation"
+          ]
+        },
+        {
+          "id": "A7",
+          "text": "Humanoid low-similarity setting states the same goal direction range [-pi/4, pi/4] as the high-similarity setting, likely a copy-paste error.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "experimental_description",
+            "presentation"
+          ]
+        },
+        {
+          "id": "A8",
+          "text": "Proof of Corollary 3 has a missing square in the derivative: dL/d_kappa uses V_hat_psi instead of V_hat_psi^2, though the final kappa* formula is correct.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "typo",
+            "proof_validity"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O13",
+          "agentic_id": "A1",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "n/a",
+          "issue": "Validity of Theorem 3.3 and its regret bounds",
+          "rationale": "Both target Theorem 3.3 but from completely different angles: O13 questions why the two regret upper bound assumptions (E_T^{opt}, U_T^{pi}) are reasonable, while A1 identifies a factor-of-M mathematical error propagating from Equation (5) through to the theorem. One asks 'are the assumptions justified?' and the other says 'the math is wrong by a factor of M.' Different fixes required — O13 needs explanatory justification, A1 needs a proof correction."
+        },
+        {
+          "official_id": "O12",
+          "agentic_id": "A6",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "n/a",
+          "issue": "Notation issues in the paper",
+          "rationale": "Both flag notation problems but target different specific issues: O12 notes unclear symbol definitions (V_{M_t}, pi^*), while A6 identifies an arity inconsistency where c_{t,i} is defined on S x A but used with three arguments (s_m, a_m, s_{m+1}). Same concern family (notation) but different defects requiring different fixes."
+        }
+      ],
+      "metrics": {
+        "total_official": 19,
+        "total_decisive": 0,
+        "recall_strict": 0.0,
+        "recall_loose": 0.1053,
+        "decisive_recall": null,
+        "matched_official_ids": [
+          "O12",
+          "O13"
+        ],
+        "strict_matched_ids": []
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/oar_run1/cmdp_meta_safe_rl.yaml",
+        "match_graph": "data/match_graphs/public_slice/oar_run1/cmdp_meta_safe_rl.yaml",
+        "review": "data/reviews/public_slice/oar_run1/cmdp_meta_safe_rl/"
+      }
+    }
+  ]
+}

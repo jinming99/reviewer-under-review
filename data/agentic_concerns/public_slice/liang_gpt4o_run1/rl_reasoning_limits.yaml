@@ -1,0 +1,101 @@
+schema_version: "v1"
+paper: "rl_reasoning_limits"
+version: "own_group/liang_gpt4o_run1"
+method: "baseline"
+verdict: "ACCEPT"
+score: null  # Liang et al. GPT-4o baseline does not produce a numeric score
+
+decision_drivers: []
+# The Liang et al. GPT-4o review does not produce an explicit verdict or decisive reasons.
+# The review lists "potential reasons for acceptance" and "potential reasons for rejection"
+# without committing to a decision. Verdict inferred as ACCEPT based on: (1) acceptance
+# reasons stated more confidently, (2) rejection reasons hedged with "may be seen as",
+# "might overshadow", "could benefit from", (3) overall constructive tone.
+
+mentions:
+  - id: "M1"
+    polarity: "pro_accept"
+    text: "Paper presents a thorough and systematic evaluation of RLVR, using a robust experimental setup and a novel metric (pass@k) to assess reasoning boundaries."
+    evidence: "review.md section 2 'Potential reasons for acceptance' bullet 1"
+    note: "Recognized the evaluation quality but did not explicitly link it to a verdict."
+
+  - id: "M2"
+    polarity: "pro_accept"
+    text: "Paper offers significant insights into the limitations of current RLVR methods, which could guide future research and development of more effective RL paradigms."
+    evidence: "review.md section 2 'Potential reasons for acceptance' bullet 2"
+    note: "Acknowledged the practical value of the findings for the field."
+
+  - id: "M3"
+    polarity: "pro_accept"
+    text: "Findings have broad implications for the design and training of LLMs, potentially influencing both academic research and practical applications in AI."
+    evidence: "review.md section 2 'Potential reasons for acceptance' bullet 3"
+    note: "Noted broad impact but did not frame it as a decisive acceptance factor."
+
+concerns:
+  - id: "A1"
+    text: "Findings may lack novelty -- the conclusion that RLVR does not introduce fundamentally new reasoning capabilities may be seen as confirming existing suspicions rather than providing groundbreaking insights."
+    severity:
+      level: "moderate"
+      addressability: "unknown"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "review.md section 3 'Potential reasons for rejection' under 'Lack of Novelty in Findings' bullet 1"
+    decisive: false
+    tags: ["novelty", "prior_work_overlap", "contribution_scope"]
+    dimension_impact: ["B"]
+
+  - id: "A2"
+    text: "Study highlights limitations of RLVR without proposing concrete solutions, novel methodologies, or actionable future directions to overcome the identified challenges."
+    severity:
+      level: "moderate"
+      addressability: "unknown"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "review.md section 3 'Lack of Novelty in Findings' bullet 2 + section 3 'Insufficient Analysis of Underlying Causes' bullet 2 + section 4 suggestion 3"
+    decisive: false
+    tags: ["actionable_suggestions", "future_directions", "contribution_scope"]
+    dimension_impact: ["A", "B"]
+
+  - id: "A3"
+    text: "Limited exploration of alternative approaches -- only discusses distillation as an alternative to RLVR without exploring other promising methods or hybrid approaches that could enhance reasoning capabilities."
+    severity:
+      level: "moderate"
+      addressability: "unknown"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "review.md section 3 'Potential reasons for rejection' under 'Limited Exploration of Alternative Approaches'"
+    decisive: false
+    tags: ["scope_limitation", "alternative_methods", "hybrid_approaches"]
+    dimension_impact: ["A", "B"]
+
+  - id: "A4"
+    text: "Insufficient theoretical or empirical analysis of underlying causes for why RLVR fails to expand reasoning boundaries -- mentions vast action space and pretrained priors but does not develop detailed analysis."
+    severity:
+      level: "moderate"
+      addressability: "unknown"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "review.md section 3 'Potential reasons for rejection' under 'Insufficient Analysis of Underlying Causes' bullet 1"
+    decisive: false
+    tags: ["theoretical_explanation", "causal_analysis", "exploration_limitation"]
+    dimension_impact: ["E"]
+
+  - id: "A5"
+    text: "Overreliance on pass@k as primary evaluation metric -- may not fully capture qualitative aspects of reasoning improvements such as creativity or adaptability; paper would benefit from qualitative assessments or case studies."
+    severity:
+      level: "moderate"
+      addressability: "unknown"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "review.md section 3 'Potential reasons for rejection' under 'Overemphasis on Quantitative Metrics' + section 4 suggestion 4"
+    decisive: false
+    tags: ["evaluation_diversity", "pass_at_k", "metric_limitation", "qualitative_analysis"]
+    dimension_impact: ["D"]
+
+method_specific:
+  baseline_type: "liang_etal_gpt4o"
+  has_explicit_verdict: false
+  has_scorecard: false
+  has_gates: false
+  has_adversarial_brief: false
+  note: "Single-pass GPT-4o review using Liang et al. (2024) prompt format. Produces structured outline (significance, accept reasons, reject reasons, suggestions) without explicit verdict or numeric scoring. All concerns are generic/moderate with no fatal or major-severity issues identified."

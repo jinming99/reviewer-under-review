@@ -1,0 +1,16 @@
+slug: collabllm
+baseline: ai_scientist
+model: claude-opus-4-6
+timestamp: '2026-04-12T10:33:27.157108+00:00'
+git_sha: 6b601aec
+git_branch: main
+elapsed_s: 208.4
+usage: {}
+cost_usd: 0.8889
+num_sdk_calls: 3
+num_api_calls: 5
+num_chunks: null
+specialties: null
+paper_text_chars: 90824
+review_text_chars: 7481
+skip_refinement: false

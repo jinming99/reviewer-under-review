@@ -1,0 +1,57 @@
+Command failed with exit code 1 (exit code: 1)
+Error output: Check stderr output for details
+
+Traceback (most recent call last):
+  File "/Users/ming/Dropbox/CodingProjects/agentic_ai_reviewer/scripts/run_baseline_batch.py", line 181, in run_one_paper
+    result = run_openaireview(
+        paper_text=paper_text,
+    ...<2 lines>...
+        method=oar_method,
+    )
+  File "/Users/ming/Dropbox/CodingProjects/agentic_ai_reviewer/baselines/openaireview_adapter.py", line 142, in run_openaireview
+    consolidated, full = review_progressive(slug, paper_text, model=model)
+                         ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.13/site-packages/reviewer/method_progressive.py", line 276, in review_progressive
+    response, usage = chat(
+                      ~~~~^
+        messages=[{"role": "user", "content": prompt}],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        reasoning_effort=reasoning_effort,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/ming/Dropbox/CodingProjects/agentic_ai_reviewer/baselines/openaireview_adapter.py", line 96, in sdk_chat
+    text = sdk_complete_chat(
+        messages=messages, system="", model=sdk_model,
+        extract_system=True,  # OpenAIReview's system messages are true system prompts
+    )
+  File "/Users/ming/Dropbox/CodingProjects/agentic_ai_reviewer/baselines/sdk_llm.py", line 399, in complete_chat
+    return _run_sync(_async_complete(prompt, combined_system, model))
+  File "/Users/ming/Dropbox/CodingProjects/agentic_ai_reviewer/baselines/sdk_llm.py", line 234, in _run_sync
+    return asyncio.run(coro)
+           ~~~~~~~~~~~^^^^^^
+  File "/opt/anaconda3/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/anaconda3/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/anaconda3/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/ming/Dropbox/CodingProjects/agentic_ai_reviewer/baselines/sdk_llm.py", line 185, in _async_complete
+    async for message in query(
+    ...<9 lines>...
+            is_error = message.is_error
+  File "/opt/anaconda3/lib/python3.13/site-packages/claude_agent_sdk/query.py", line 123, in query
+    async for message in client.process_query(
+    ...<2 lines>...
+        yield message
+  File "/opt/anaconda3/lib/python3.13/site-packages/claude_agent_sdk/_internal/client.py", line 140, in process_query
+    async for data in query.receive_messages():
+        yield parse_message(data)
+  File "/opt/anaconda3/lib/python3.13/site-packages/claude_agent_sdk/_internal/query.py", line 611, in receive_messages
+    raise Exception(message.get("error", "Unknown error"))
+Exception: Command failed with exit code 1 (exit code: 1)
+Error output: Check stderr output for details

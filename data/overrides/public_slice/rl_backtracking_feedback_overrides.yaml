@@ -1,0 +1,526 @@
+schema_version: v1
+version: "own_group"
+generated_by: skill_5b_claude_code
+
+edge_overrides:
+  # === panel_no_ls (2 edges) ===
+  - method: panel_no_ls
+    paper: rl_backtracking_feedback
+    official_id: O2
+    agentic_id: A2
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both target the same gap: LLM safety critic quality not evaluated. O2 asks for quality metrics to separate critic vs policy gains; A2 asks for precision/recall and failure modes. Core defect identical — evaluating critic accuracy addresses both. A2's extras (identity, failure modes) are elaboration, not independent fix-actions."
+    confidence: high
+
+  - method: panel_no_ls
+    paper: rl_backtracking_feedback
+    official_id: O3
+    agentic_id: A2
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O3 specifically targets adversarial vulnerability of the single critic. A2 targets general characterization gaps including failure modes. Same issue family (critic concerns) but O3's adversarial exploitation angle is distinct from A2's missing-metrics angle. Partial is correct."
+    confidence: high
+
+  # === panel_arch_b (2 edges) ===
+  - method: panel_arch_b
+    paper: rl_backtracking_feedback
+    official_id: O4
+    agentic_id: A3
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify the same gap: all evaluated attacks are static/pre-computed, none target RLBF's backtracking signal. O4: 'robustness under truly adaptive adversaries unclear.' A3: 'no adversary specifically targeting the backtracking mechanism.' Same issue, same scope."
+    confidence: high
+
+  - method: panel_arch_b
+    paper: rl_backtracking_feedback
+    official_id: O2
+    agentic_id: A1
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O2 wants critic accuracy metrics and component attribution. A1 flags circular validation (same Gemini 2.0 for training and evaluation). Same family (critic evaluation validity) but different fixes: accuracy benchmarking vs evaluation independence. Partial correct."
+    confidence: high
+
+  # === df_no_ls (4 edges) ===
+  - method: df_no_ls
+    paper: rl_backtracking_feedback
+    official_id: O2
+    agentic_id: A6
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify the same gap: critic LLM accuracy not analyzed, no FP/FN rates, no model comparison. O2 emphasizes component attribution; A6 emphasizes FP/FN rates. Same fix (critic quality evaluation) addresses both. Severity under correct: official major vs agentic minor."
+    confidence: high
+
+  - method: df_no_ls
+    paper: rl_backtracking_feedback
+    official_id: O4
+    agentic_id: A4
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O4 specifically targets adaptive attacks exploiting the backtracking signal. A4 is broader: no categorization of successful attacks + no adaptive attacks + no critic error mode analysis. Sub-issue (b) overlaps O4 directly. Partial correct because A4's scope is wider."
+    confidence: high
+
+  - method: df_no_ls
+    paper: rl_backtracking_feedback
+    official_id: O1
+    agentic_id: A8
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "O1 targets broad reproducibility details (data splits, hyperparams, compute) deferred to supplementary. A8 targets ASR evaluation methodology being underspecified. Both concern missing details from main text but different specific details. Partial correct."
+    confidence: high
+
+  - method: df_no_ls
+    paper: rl_backtracking_feedback
+    official_id: O7
+    agentic_id: A5
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O7 questions comparison credibility (BSAFE is arXiv preprint, Circuit Breakers only in Table 2). A5 notes original BSAFE excluded — only BSAFE+ appears, creating self-comparison. Same family (baseline adequacy) but different angles: peer-review status vs self-comparison. Partial correct."
+    confidence: high
+
+  # === df_arch_c (4 edges) ===
+  - method: df_arch_c
+    paper: rl_backtracking_feedback
+    official_id: O4
+    agentic_id: A5
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both flag that all evaluated attacks are standard (GCG, decoding parameters) and none target RLBF's backtracking signal. Same scope and conclusion."
+    confidence: high
+
+  - method: df_arch_c
+    paper: rl_backtracking_feedback
+    official_id: O5
+    agentic_id: A8
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify that the paper claims efficiency but provides no latency, token count, or computational cost metrics. Same specific issue."
+    confidence: high
+
+  - method: df_arch_c
+    paper: rl_backtracking_feedback
+    official_id: O1
+    agentic_id: A9
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "O1 covers broad reproducibility details deferred to supplementary. A9 specifically targets the safety critic's identity and architecture. A9 is a narrow slice of O1's broader complaint. Partial correct."
+    confidence: high
+
+  - method: df_arch_c
+    paper: rl_backtracking_feedback
+    official_id: O2
+    agentic_id: A9
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "O2 asks for critic quality evaluation (accuracy metrics). A9 asks for critic model identity/architecture. Both want more critic information but target different facets (performance vs specification). Partial correct."
+    confidence: high
+
+  # === ai_scientist_run1 (5 edges) ===
+  - method: ai_scientist_run1
+    paper: rl_backtracking_feedback
+    official_id: O1
+    agentic_id: A2
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O1 says details deferred to supplementary. A2 says supplementary material is missing entirely. Same family (reproducibility harmed by inaccessible details) but different scope: O1 assumes supplementary exists; A2 claims it's absent. Partial correct."
+    confidence: high
+
+  - method: ai_scientist_run1
+    paper: rl_backtracking_feedback
+    official_id: O2
+    agentic_id: A5
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify the same specific gap: LLM safety critic has no reported accuracy metrics, FP/FN rates, or error propagation analysis. Same issue, same scope."
+    confidence: high
+
+  - method: ai_scientist_run1
+    paper: rl_backtracking_feedback
+    official_id: O4
+    agentic_id: A10
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both flag that evaluation includes only standard attacks with none targeting the backtracking mechanism. O4: 'does not target RLBF's specific backtracking signal.' A10: 'No analysis of adaptive attacks where adversaries are aware of the backtracking mechanism.' Same complaint."
+    confidence: high
+
+  - method: ai_scientist_run1
+    paper: rl_backtracking_feedback
+    official_id: O5
+    agentic_id: A8
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify the same contradiction: paper claims efficiency over BSAFE but reports only ASR and utility, not latency, tokens discarded, or throughput. Same issue, same scope."
+    confidence: high
+
+  - method: ai_scientist_run1
+    paper: rl_backtracking_feedback
+    official_id: O8
+    agentic_id: A11
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both flag reward function values (-1.0, +1.0, -0.5, -0.2) as ad hoc with no ablation or experimental justification. Same specific issue."
+    confidence: high
+
+  # === ai_scientist_gpt4o_run1 (1 edge) ===
+  - method: ai_scientist_gpt4o_run1
+    paper: rl_backtracking_feedback
+    official_id: O5
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O5 targets missing inference-time backtracking metrics (tokens discarded, latency). A3 targets unquantified computational demands for deployment. Same issue family (efficiency gap) but different scope: O5 needs a comparison metric, A3 needs resource quantification. Partial correct."
+    confidence: high
+
+  # === liang_run1 (4 edges) ===
+  - method: liang_run1
+    paper: rl_backtracking_feedback
+    official_id: O2
+    agentic_id: A4
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify the same core gap: the LLM safety critic lacks quality validation. O2: 'omits evaluation of critic quality.' A4: 'barely described: model identity, standalone accuracy, false positive/negative rates, and failure modes are all missing.' Same fix addresses both."
+    confidence: high
+
+  - method: liang_run1
+    paper: rl_backtracking_feedback
+    official_id: O3
+    agentic_id: A4
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O3 specifically flags adversarial vulnerability of the single critic. A4 flags general underspecification including missing failure modes. O3 targets adversarial robustness while A4 targets broad characterization gaps. Fixing A4 (full description) would not necessarily address O3 (adversarial testing). Partial correct."
+    confidence: high
+
+  - method: liang_run1
+    paper: rl_backtracking_feedback
+    official_id: O6
+    agentic_id: A8
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O6 asks for contextualization with non-backtracking methods. A8 flags Circuit Breakers comparison as incomplete and missing other strong baselines. Both want expanded comparisons beyond BSAFE/BSAFE+. Partial correct — O6 frames as contextualizing ASR, A8 frames as baseline fairness."
+    confidence: high
+
+  - method: liang_run1
+    paper: rl_backtracking_feedback
+    official_id: O8
+    agentic_id: A6
+    original_match_type: exact
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O8 targets reward function values (+1.0/-1.0/-0.5/-0.2) being subjective with no ablation. A6 bundles BOTH reward values AND lambda_SFT (Section 4.2.3) without justification. Lambda_SFT is a separate hyperparameter requiring independent sensitivity analysis. Ablating reward values would not address lambda_SFT. Per scope inflation pattern (cf. exemplar E22), the shared core + independent extra demands partial, not exact."
+    confidence: high
+
+  # === liang_gpt4o_run1 (1 edge) ===
+  - method: liang_gpt4o_run1
+    paper: rl_backtracking_feedback
+    official_id: O1
+    agentic_id: A2
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O1 covers broad reproducibility details (data splits, hyperparams, compute) deferred to supplementary. A2 covers only computational resources, framed as scalability. A2 is a narrow slice of O1. Partial correct."
+    confidence: high
+
+  # === marg_gpt4o_run1 (7 edges) ===
+  - method: marg_gpt4o_run1
+    paper: rl_backtracking_feedback
+    official_id: O1
+    agentic_id: A11
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O1 flags implementation details deferred to supplementary. A11 flags missing LMSYS-MF definitions, Middle Filling implementations, and hyperparameters. Same family (missing experimental detail for reproducibility) but different specific items. Partial correct."
+    confidence: high
+
+  - method: marg_gpt4o_run1
+    paper: rl_backtracking_feedback
+    official_id: O2
+    agentic_id: A10
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O2 flags missing critic quality evaluation (accuracy metrics, component attribution). A10 flags no method for validating feedback data accuracy. Both target unvalidated critic/feedback quality but at different levels. Partial correct."
+    confidence: high
+
+  - method: marg_gpt4o_run1
+    paper: rl_backtracking_feedback
+    official_id: O4
+    agentic_id: A1
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O4 specifically requests adaptive attacks targeting RLBF's backtracking signal. A1 broadly flags insufficient empirical evidence and comparative analysis. A1 is a broad umbrella that encompasses O4 as one instance. Partial correct (broad-narrow pattern)."
+    confidence: medium
+
+  - method: marg_gpt4o_run1
+    paper: rl_backtracking_feedback
+    official_id: O5
+    agentic_id: A4
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O5 notes efficiency claims without tokens discarded or latency metrics. A4 flags undiscussed computational demands and deployment challenges. Same issue family (efficiency/cost gap) but different scope. Partial correct."
+    confidence: high
+
+  - method: marg_gpt4o_run1
+    paper: rl_backtracking_feedback
+    official_id: O6
+    agentic_id: A1
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O6 requests contextualization with non-backtracking safety methods. A1 broadly flags insufficient comparative analysis. A1's scope subsumes O6 as one instance. Partial correct (broad-narrow pattern)."
+    confidence: medium
+
+  - method: marg_gpt4o_run1
+    paper: rl_backtracking_feedback
+    official_id: O8
+    agentic_id: A7
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O8 flags reward function values as subjective with no ablation. A7 flags unclear reward function effectiveness plus poorly explained SFT/RL integration and critic role. Both target the reward function but O8 wants ablation of numerical choices; A7 wants better explanation. Partial correct."
+    confidence: high
+
+  - method: marg_gpt4o_run1
+    paper: rl_backtracking_feedback
+    official_id: O11
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O11 asks how the backtrack count k is represented — a specific clarification. A3 broadly flags the backtracking mechanism as insufficiently explained, needing flowcharts or examples. A3 encompasses O11 as one instance. Partial correct."
+    confidence: high
+
+  # === oar_run1 (4 edges) ===
+  - method: oar_run1
+    paper: rl_backtracking_feedback
+    official_id: O4
+    agentic_id: A24
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify the same gap: evaluation includes only standard attacks (GCG, decoding parameters) without adaptive attacks targeting the backtracking signal. Same fix resolves both."
+    confidence: high
+
+  - method: oar_run1
+    paper: rl_backtracking_feedback
+    official_id: O3
+    agentic_id: A22
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O3 narrowly targets the single critic's adversarial vulnerability. A22 is broader — also includes threat model conflation (adversarial jailbreaking vs in-distribution errors). The 'critic reliability against adaptive adversaries' component overlaps O3 directly. Partial correct because A22's threat-model-conflation component is independent."
+    confidence: high
+
+  - method: oar_run1
+    paper: rl_backtracking_feedback
+    official_id: O1
+    agentic_id: A9
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O1 is broad: data splits, hyperparameters, compute deferred to supplementary. A9 is one specific instance: GRPO optimization details absent despite a section title. A9 is a sub-concern of O1. Partial correct."
+    confidence: high
+
+  - method: oar_run1
+    paper: rl_backtracking_feedback
+    official_id: O11
+    agentic_id: A7
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O11 asks how backtrack count k is represented during redaction. A7 says backtrack distance X is underspecified beyond injected violation length. Both target BACKTRACK_BY_X mechanism clarity but different facets (representation vs scope criterion). Partial correct."
+    confidence: high
+
+missed_matches: []
+
+phantom_judgments: []
+
+verification_summary:
+  total_edges_verified: 34
+  total_unmatched_verified: 178
+  error_counts:
+    false_matches: 0
+    type_errors: 1
+    severity_errors: 0
+    missed_matches: 0
+  error_rates:
+    false_match_rate: "0.0%"
+    type_error_rate: "2.9%"
+    severity_error_rate: "0.0%"
+    missed_match_rate: "0.0%"
+  skill26_health: healthy
+  papers_verified:
+    - paper: rl_backtracking_feedback
+      method: panel_no_ls
+      edges_verified: 2
+      unmatched_verified: 18
+      errors_found: 0
+    - paper: rl_backtracking_feedback
+      method: panel_arch_b
+      edges_verified: 2
+      unmatched_verified: 16
+      errors_found: 0
+    - paper: rl_backtracking_feedback
+      method: df_no_ls
+      edges_verified: 4
+      unmatched_verified: 15
+      errors_found: 0
+    - paper: rl_backtracking_feedback
+      method: df_arch_c
+      edges_verified: 4
+      unmatched_verified: 20
+      errors_found: 0
+    - paper: rl_backtracking_feedback
+      method: ai_scientist_run1
+      edges_verified: 5
+      unmatched_verified: 18
+      errors_found: 0
+    - paper: rl_backtracking_feedback
+      method: ai_scientist_gpt4o_run1
+      edges_verified: 1
+      unmatched_verified: 18
+      errors_found: 0
+    - paper: rl_backtracking_feedback
+      method: liang_run1
+      edges_verified: 4
+      unmatched_verified: 14
+      errors_found: 1
+    - paper: rl_backtracking_feedback
+      method: liang_gpt4o_run1
+      edges_verified: 1
+      unmatched_verified: 15
+      errors_found: 0
+    - paper: rl_backtracking_feedback
+      method: marg_gpt4o_run1
+      edges_verified: 7
+      unmatched_verified: 15
+      errors_found: 0
+    - paper: rl_backtracking_feedback
+      method: oar_run1
+      edges_verified: 4
+      unmatched_verified: 29
+      errors_found: 0

@@ -1,0 +1,1502 @@
+{
+  "slug": "beyond_problem_solving",
+  "title": "Beyond Problem Solving: A Three-Space Probe of LLM Critical Thinking",
+  "venue": "ACL ARR 2025 July",
+  "decision": "rejected",
+  "decision_type": null,
+  "reviewer_scores": [
+    2,
+    2,
+    3.5
+  ],
+  "reviewer_scores_post": [
+    2,
+    2,
+    3.5
+  ],
+  "ground_truth_notes": "Own-group rejected paper. Scores: 2/2/3.5. Author agrees rejection correct. Narrow operationalization of critical thinking, overclaiming, GPT-4o-as-judge circularity.",
+  "case_study_files": [
+    "docs/case_studies/public_slice/R1_beyond_problem_solving.md"
+  ],
+  "evidence": {
+    "paper_pdf": "data/papers/public_slice/1122_Beyond_Problem_Solving_A_.pdf",
+    "openreview_pdf": "data/openreviews/public_slice/Beyond Problem Solving_ A Three-Space Probe of LLM Critical Thinking _ OpenReview.pdf",
+    "official_concerns": "data/official_concerns/beyond_problem_solving.yaml"
+  },
+  "official_concerns": [
+    {
+      "id": "O1",
+      "text": "The Three-Space Theory is prominently introduced but not tightly integrated with the experimental design; the specific metrics are not matched to the three spaces, making the theoretical framing appear superficial.",
+      "severity": "major",
+      "decisive": true,
+      "ac_treatment": "decisive_blocker",
+      "issue_type": "conceptual",
+      "tags": [
+        "theory_experiment_gap",
+        "contribution_depth",
+        "framework_integration"
+      ],
+      "resolved_in_rebuttal": false,
+      "raised_by": [
+        "P5pv",
+        "hrVg",
+        "XThf"
+      ]
+    },
+    {
+      "id": "O2",
+      "text": "The study equates critical thinking solely with detecting deliberately introduced inconsistencies, overlooking broader aspects such as evaluating source credibility, identifying logical fallacies, or synthesizing conflicting information.",
+      "severity": "major",
+      "decisive": true,
+      "ac_treatment": "decisive_blocker",
+      "issue_type": "conceptual",
+      "tags": [
+        "construct_validity",
+        "narrow_definition",
+        "evaluation_scope"
+      ],
+      "resolved_in_rebuttal": false,
+      "raised_by": [
+        "P5pv",
+        "hrVg",
+        "Jz1i"
+      ]
+    },
+    {
+      "id": "O3",
+      "text": "Using GPT-4o to evaluate other models' responses risks bias, as judgments may reflect GPT-4o's internal criteria rather than an objective ground truth; human evaluation is insufficient.",
+      "severity": "major",
+      "decisive": true,
+      "ac_treatment": "decisive_blocker",
+      "issue_type": "empirical",
+      "tags": [
+        "evaluator_bias",
+        "llm_as_judge",
+        "human_evaluation"
+      ],
+      "resolved_in_rebuttal": false,
+      "raised_by": [
+        "P5pv",
+        "XThf"
+      ]
+    },
+    {
+      "id": "O4",
+      "text": "The actual metrics (Applied Critical Thinking Rate, Inherent Critical-Thinking Rate, F1 score) reduce to a conventional binary classification evaluation that does not capture the complex cognitive process the paper claims to measure.",
+      "severity": "major",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "conceptual",
+      "tags": [
+        "metric_validity",
+        "oversimplification",
+        "construct_measurement"
+      ],
+      "resolved_in_rebuttal": false,
+      "raised_by": [
+        "XThf"
+      ]
+    },
+    {
+      "id": "O5",
+      "text": "The method of generating data with insufficient information and contradictions (Appendix Prompt A) may lead LLMs to detect abnormal data patterns rather than genuinely recognize logical inconsistencies.",
+      "severity": "major",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "confound",
+        "artifact_detection",
+        "construct_validity"
+      ],
+      "resolved_in_rebuttal": false,
+      "raised_by": [
+        "XThf"
+      ]
+    },
+    {
+      "id": "O6",
+      "text": "The artificially and directly introduced contradictions differ significantly from real-world inconsistencies, which are subtly woven into context without clear signposts, limiting ecological validity.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "conceptual",
+      "tags": [
+        "ecological_validity",
+        "real_world_gap",
+        "benchmark_design"
+      ],
+      "resolved_in_rebuttal": false,
+      "raised_by": [
+        "Jz1i"
+      ]
+    },
+    {
+      "id": "O7",
+      "text": "The experiment analyzing the effect of reasoning mode is limited to the Qwen3 model only, making it difficult to generalize claims about reasoning's effect on critical thinking to other LLMs.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "generalizability",
+        "model_coverage",
+        "reasoning_mode"
+      ],
+      "resolved_in_rebuttal": false,
+      "raised_by": [
+        "XThf"
+      ]
+    },
+    {
+      "id": "O8",
+      "text": "The paper structure is scattered and the logical flow is unclear, making it difficult for readers to grasp the core content and connect sections logically.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "framing",
+      "tags": [
+        "clarity",
+        "presentation",
+        "paper_organization"
+      ],
+      "resolved_in_rebuttal": false,
+      "raised_by": [
+        "XThf"
+      ]
+    },
+    {
+      "id": "O9",
+      "text": "The modified benchmark dataset of flawed problems is not publicly released, making results irreproducible without access to the authors' data.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "reproducibility",
+        "data_release",
+        "artifact_availability"
+      ],
+      "resolved_in_rebuttal": false,
+      "raised_by": [
+        "XThf"
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "method": "ai_scientist_run1",
+      "verdict": "REJECT",
+      "score": 4,
+      "error_type": "TN",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_reject",
+          "text": "Artificial problem modifications and superficial theoretical framing limit the contribution's validity and significance.",
+          "linked_concern_ids": [
+            "A1",
+            "A2"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R2",
+          "polarity": "pro_reject",
+          "text": "Central claim that critical thinking is a distinct capability is insufficiently supported by weak statistical analysis without confound control.",
+          "linked_concern_ids": [
+            "A4"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R3",
+          "polarity": "pro_reject",
+          "text": "Potential data error in Table 4 undermines confidence in experimental results.",
+          "linked_concern_ids": [
+            "A5"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R4",
+          "polarity": "pro_reject",
+          "text": "GPT-4o used for both generation and evaluation creates unaddressed biases with low classification accuracy.",
+          "linked_concern_ids": [
+            "A3"
+          ],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "Core research question on whether LLMs can identify flawed problem setups is practically important and under-explored.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "Distinction between applied and inherent critical thinking is a thoughtful decomposition that controls for problem-solving ability.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M3",
+          "polarity": "pro_accept",
+          "text": "Broad experimental coverage across 10 datasets, multiple models, and four prompting strategies provides a comprehensive empirical picture.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M4",
+          "polarity": "pro_accept",
+          "text": "Behavior categorization framework in Appendix B provides fine-grained analysis beyond binary correct/incorrect evaluation.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M5",
+          "polarity": "pro_accept",
+          "text": "Qualitative examples in Appendix D clearly demonstrate LLM failure modes with fabricated assumptions and deference to contradictions.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "Three-Space Theory framing is superficial and adds no non-obvious hypotheses or predictions beyond what a simpler framing would yield.",
+          "severity": "major",
+          "addressability": "unresolved",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "theoretical_grounding",
+            "framing"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "Problem modifications are artificial and simple; gaslight hints test susceptibility to authoritative instructions more than genuine critical thinking, limiting generalizability to real-world inconsistencies.",
+          "severity": "major",
+          "addressability": "unresolved",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "construct_validity",
+            "generalization"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "GPT-4o used for both question generation and response classification creates potential biases; classification accuracy only 68.6% for insufficient MC questions and error propagation not analyzed.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "evaluation_methodology",
+            "bias"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "Central claim that critical thinking is a distinct capability is insufficiently supported; weak Pearson correlation (r=0.258) across heterogeneous datasets without controlling for confounds such as dataset domain, difficulty, and format.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "statistical_rigor",
+            "claim_support"
+          ]
+        },
+        {
+          "id": "A5",
+          "text": "Potential data error in Table 4 where Qwen3-8b-reasoning rows appear identical to Qwen3-32b-reasoning, suggesting copy-paste error that undermines confidence in experimental results.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "data_integrity",
+            "reproducibility"
+          ]
+        },
+        {
+          "id": "A6",
+          "text": "SSI and ID hypotheses tested only via informal observational comparisons without controlling for confounds beyond difficulty.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "statistical_rigor",
+            "experimental_design"
+          ]
+        },
+        {
+          "id": "A7",
+          "text": "Missing related work on calibration, selective prediction, abstention mechanisms, and RLHF answer-giving bias; no discussion of whether limitations are fundamental or training artifacts.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "related_work",
+            "completeness"
+          ]
+        },
+        {
+          "id": "A8",
+          "text": "No ablation where system prompt warns models that questions may contain errors, preventing distinction between detection capability and output bias.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "ablation",
+            "experimental_design"
+          ]
+        },
+        {
+          "id": "A9",
+          "text": "Writing quality is uneven with grammatical errors, informal terminology ('gaslight'), and hard-to-read figures with overlapping markers.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "clarity",
+            "presentation"
+          ]
+        },
+        {
+          "id": "A10",
+          "text": "No discussion of potential negative societal impacts such as models refusing valid queries or adversaries exploiting findings.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "impact",
+            "ethics"
+          ]
+        },
+        {
+          "id": "A11",
+          "text": "Inter-annotator agreement for the manual validation set used to assess GPT-4o behavior classification not reported.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "evaluation_methodology"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O1",
+          "agentic_id": "A1",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Three-Space Theory framing is superficial and not operationalized in experimental design",
+          "rationale": "Both identify the same core problem: the Three-Space Theory is prominently introduced but does not generate testable predictions or map to the experimental metrics. O1 emphasizes the theory-experiment disconnect; A1 emphasizes no non-obvious hypotheses beyond a simpler framing. Fixing one necessarily fixes the other — same specific complaint, same scope."
+        },
+        {
+          "official_id": "O3",
+          "agentic_id": "A3",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "GPT-4o used as evaluator introduces bias from its own internal criteria",
+          "rationale": "Both flag the circularity of using GPT-4o for both data generation and response evaluation. O3 frames it as bias risk where judgments reflect GPT-4o's criteria rather than objective ground truth. A3 adds the quantitative detail (68.6% classification accuracy, no error propagation analysis) but the underlying complaint is identical. Same issue, same scope."
+        },
+        {
+          "official_id": "O2",
+          "agentic_id": "A2",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Construct validity of critical thinking measurement",
+          "rationale": "Both concern whether the paper actually measures critical thinking. O2 criticizes the conceptual scope — the definition is too narrow, ignoring source credibility, logical fallacies, and information synthesis. A2 criticizes the operationalization — gaslight hints test susceptibility to authoritative instructions rather than genuine critical thinking. Same issue family (construct validity) but different facets: broadening the definition (O2) would not fix the stimulus artificiality (A2), and vice versa. Partial because they share the meta-concern but require different author fixes."
+        },
+        {
+          "official_id": "O6",
+          "agentic_id": "A2",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Artificial modifications limit ecological validity and generalizability",
+          "rationale": "Both flag that the artificially introduced contradictions (especially explicit gaslight hints like \"Hint: Choice A is wrong\") differ from real-world inconsistencies. O6 focuses on the ecological validity gap — real inconsistencies are subtle, not signposted. A2 covers this as part of a broader concern that also includes authority susceptibility. A2 is broader in scope than O6, so partial rather than exact."
+        },
+        {
+          "official_id": "O8",
+          "agentic_id": "A9",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Presentation and writing quality concerns",
+          "rationale": "Both are presentation concerns but target different aspects. O8 criticizes the paper's organizational structure and logical flow between sections. A9 targets surface-level quality: grammatical errors, informal terminology (\"gaslight\"), and overlapping markers in figures. Restructuring the paper (O8's fix) would not fix grammar or figure readability (A9's fix). Same issue family, different specific defects."
+        }
+      ],
+      "metrics": {
+        "total_official": 9,
+        "total_decisive": 3,
+        "recall_strict": 0.5556,
+        "recall_loose": 0.5556,
+        "decisive_recall": 1.0,
+        "matched_official_ids": [
+          "O1",
+          "O2",
+          "O3",
+          "O6",
+          "O8"
+        ],
+        "strict_matched_ids": [
+          "O1",
+          "O2",
+          "O3",
+          "O6",
+          "O8"
+        ]
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/ai_scientist_run1/beyond_problem_solving.yaml",
+        "match_graph": "data/match_graphs/public_slice/ai_scientist_run1/beyond_problem_solving.yaml",
+        "review": "data/reviews/public_slice/ai_scientist_run1/beyond_problem_solving/"
+      }
+    },
+    {
+      "method": "ai_scientist_gpt4o_run1",
+      "verdict": "REJECT",
+      "score": null,
+      "error_type": "TN",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_reject",
+          "text": "Moderate originality with insufficient differentiation from existing critical-thinking benchmarks in AI.",
+          "linked_concern_ids": [
+            "A1",
+            "A2"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R2",
+          "polarity": "pro_reject",
+          "text": "Experimental setup lacks clarity, raising reproducibility concerns.",
+          "linked_concern_ids": [
+            "A3"
+          ],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "Presents a novel framework for evaluating critical thinking in LLMs.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "Grounded in cognitive science theories (Hierarchical Three-Space Theory), offering a structured approach.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M3",
+          "polarity": "pro_accept",
+          "text": "Addresses a less-explored area of LLM performance on inconsistent problem framings.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "Originality is moderate; the topic of critical thinking in AI already has prior research benchmarks.",
+          "severity": "major",
+          "addressability": "unresolved",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "novelty",
+            "originality"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "Lack of in-depth comparisons with existing research to highlight what is novel about this framework.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "prior_work",
+            "positioning"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "Potential gaps in clarity around experimental setup details, impacting reproducibility.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "reproducibility",
+            "clarity"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "Insufficient discussion of limitations and implications of findings.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "limitations",
+            "discussion"
+          ]
+        },
+        {
+          "id": "A5",
+          "text": "Framework tested on a limited range of datasets and may not generalize across all domains where critical thinking is essential.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "scope",
+            "generalization"
+          ]
+        },
+        {
+          "id": "A6",
+          "text": "Societal implications of LLMs' inability to recognize inconsistencies are insufficiently explored.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "societal_impact"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O8",
+          "agentic_id": "A3",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Paper clarity and presentation hinder comprehension or reproducibility",
+          "rationale": "O8 flags scattered paper structure and unclear logical flow; A3 flags gaps in experimental setup clarity impacting reproducibility. Both are clarity/presentation weaknesses but target different facets: overall organization (O8) vs experimental detail sufficiency (A3). Different fixes required (restructure paper vs add method details), so partial not exact."
+        },
+        {
+          "official_id": "O9",
+          "agentic_id": "A3",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "n/a",
+          "issue": "Reproducibility barriers",
+          "rationale": "Both touch reproducibility but from entirely different angles. O9 is about the modified benchmark dataset not being publicly released (artifact availability); A3 is about clarity of experimental setup description. These require different fixes (release data vs improve writing) and share only a thematic connection through 'reproducibility.'"
+        },
+        {
+          "official_id": "O7",
+          "agentic_id": "A5",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Study scope is too narrow to support generalizability claims",
+          "rationale": "Both flag limited scope undermining generalizability, but on different axes. O7 targets model coverage (reasoning mode tested only on Qwen3); A5 targets dataset/domain coverage (framework tested on limited datasets). Same issue family (insufficient scope) but different specific gaps requiring different fixes, so partial not exact."
+        }
+      ],
+      "metrics": {
+        "total_official": 9,
+        "total_decisive": 3,
+        "recall_strict": 0.2222,
+        "recall_loose": 0.3333,
+        "decisive_recall": 0.0,
+        "matched_official_ids": [
+          "O7",
+          "O8",
+          "O9"
+        ],
+        "strict_matched_ids": [
+          "O7",
+          "O8"
+        ]
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/ai_scientist_gpt4o_run1/beyond_problem_solving.yaml",
+        "match_graph": "data/match_graphs/public_slice/ai_scientist_gpt4o_run1/beyond_problem_solving.yaml",
+        "review": "data/reviews/public_slice/ai_scientist_gpt4o_run1/beyond_problem_solving/"
+      }
+    },
+    {
+      "method": "liang_run1",
+      "verdict": "REJECT",
+      "score": null,
+      "error_type": "TN",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_reject",
+          "text": "Three-Space Theory framework adds limited explanatory or predictive power beyond intuitive description; the definition of critical thinking is essentially circular and removing the framework vocabulary would leave experiments unchanged.",
+          "linked_concern_ids": [
+            "A1"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R2",
+          "polarity": "pro_reject",
+          "text": "Benchmark construction methodology has significant validity concerns: narrow operationalization (option removal), artificial perturbations (appended gaslight hints), and low GPT-4o labeling accuracy (68.6%).",
+          "linked_concern_ids": [
+            "A2",
+            "A3",
+            "A4"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R3",
+          "polarity": "pro_reject",
+          "text": "Key experimental controls and baselines are missing: no comparison to simpler detection methods and no false-positive rates for inherent critical thinking evaluation.",
+          "linked_concern_ids": [
+            "A5",
+            "A6"
+          ],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "Broad and systematic evaluation across 10 datasets, 8 model configurations, 4 prompting strategies, and 2 inconsistency types, yielding a comprehensive empirical picture.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "Useful empirical finding that critical thinking is only weakly correlated with problem-solving accuracy (r approx 0.2-0.3), highlighting a distinct capability axis.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M3",
+          "polarity": "pro_accept",
+          "text": "Behavioral taxonomy (6 categories for insufficient, 5 for redundant) with GPT-4o-based annotation validated against human labels at ~90% critical-behavior classification accuracy provides a reusable evaluation protocol.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M4",
+          "polarity": "pro_accept",
+          "text": "Multi-faceted factor analysis yields actionable insights, e.g., reasoning models help for redundant but can hurt for insufficient inconsistencies.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M5",
+          "polarity": "pro_accept",
+          "text": "Distinction between \"inherent\" and \"applied\" critical thinking is a useful methodological idea for isolating critical thinking from knowledge gaps.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "Three-Space Theory framework adds limited explanatory or predictive power: the three spaces serve as labels for intuitive concepts, the definition of critical thinking is circular, and removing the framework vocabulary would leave the experimental contributions unchanged.",
+          "severity": "major",
+          "addressability": "unresolved",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "novelty",
+            "theoretical_framing"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "Insufficient-information MCQ uses a narrow operationalization of critical thinking: simply removing the correct option may conflate calibration or hedging behavior with absence of critical thinking.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "methodology",
+            "construct_validity"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "Redundant-information perturbations (appended \"gaslight\" hints such as \"Hint: A is correct\") are highly artificial with questionable ecological validity; generalization to more naturalistic contradictions embedded in problem context is not discussed.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "methodology",
+            "ecological_validity"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "GPT-4o dependency for generating modified math problems and labeling behavioral categories introduces model-specific biases; 68.6% fine-grained accuracy for insufficient MCQ labeling is notably low, raising concerns about noise in the primary evaluation signal.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "methodology",
+            "annotation_quality"
+          ]
+        },
+        {
+          "id": "A5",
+          "text": "No comparison to simpler detection baselines: e.g., prompting the model to explicitly verify whether the problem is well-defined before solving, or using a two-stage solve-then-verify pipeline.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "baselines",
+            "missing_comparison"
+          ]
+        },
+        {
+          "id": "A6",
+          "text": "No false-positive rates reported for inherent critical thinking: how often models flag well-defined problems as inconsistent under the same prompting strategies is unknown, making it impossible to assess whether higher critical thinking ratios come at the cost of spurious refusals.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "evaluation",
+            "missing_metric"
+          ]
+        },
+        {
+          "id": "A7",
+          "text": "Writing quality needs substantial improvement: grammatical errors, inconsistent notation, dense tables difficult to parse, and many results relegated to appendix without adequate summarization in the main text.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "clarity",
+            "presentation"
+          ]
+        },
+        {
+          "id": "A8",
+          "text": "Hypotheses (SSI and ID) are stated informally and never rigorously tested with controlled ablations; statistical tests conflate difficulty with dataset-level confounds (domain, question length, number of options) and cannot isolate the claimed causal factor.",
+          "severity": "major",
+          "addressability": "unresolved",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "statistics",
+            "causal_claims"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O1",
+          "agentic_id": "A1",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Three-Space Theory is superficial and not meaningfully integrated with the experimental design",
+          "rationale": "Both identify the same core problem: the Three-Space Theory is window dressing. O1 says theory is 'prominently introduced but not tightly integrated'; A1 says 'removing the framework vocabulary would leave the experimental contributions unchanged.' Same issue, same scope — fixing one necessarily fixes the other."
+        },
+        {
+          "official_id": "O2",
+          "agentic_id": "A2",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Critical thinking is operationalized too narrowly",
+          "rationale": "Both target narrowness of the critical thinking measurement but at different levels. O2 critiques the overall definitional scope (should include source credibility, logical fallacies, synthesis). A2 critiques one specific operationalization choice (removing correct option conflates calibration with absence of CT). Same issue family, different sub-claims: broadening the definition (O2 fix) would not necessarily fix the MCQ design flaw (A2 fix)."
+        },
+        {
+          "official_id": "O3",
+          "agentic_id": "A4",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "GPT-4o used as evaluator introduces model-specific bias into the evaluation",
+          "rationale": "Both flag the same concern: GPT-4o's own criteria contaminate the evaluation of other models. A4 adds the quantitative detail (68.6% fine-grained accuracy) but the underlying issue is identical. Fixing GPT-4o evaluation dependency would resolve both."
+        },
+        {
+          "official_id": "O5",
+          "agentic_id": "A3",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Artificial data modifications may undermine construct validity of the benchmark",
+          "rationale": "O5 targets the confound mechanism: models may detect abnormal data patterns rather than genuinely reason about logical inconsistencies. A3 targets the surface-level artificiality of gaslight hints. Same family (artificial perturbations undermine validity) but different specific sub-claims: O5 is about what models actually detect, A3 is about whether the stimuli resemble real-world inconsistencies. Both would benefit from more naturalistic perturbations but the diagnostic differs."
+        },
+        {
+          "official_id": "O6",
+          "agentic_id": "A3",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Ecological validity of artificial inconsistency perturbations",
+          "rationale": "O6 explicitly raises ecological validity: 'artificial contradictions differ significantly from real-world inconsistencies.' A3 flags the same theme for gaslight hints specifically. O6 is broader (all inconsistency types vs real world), A3 focuses on the redundant-info condition. Both would be addressed by more naturalistic perturbation design."
+        },
+        {
+          "official_id": "O8",
+          "agentic_id": "A7",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Paper presentation quality hinders readability",
+          "rationale": "O8 targets structural organization (scattered structure, unclear logical flow). A7 targets writing mechanics (grammar, notation, dense tables, appendix-heavy). Both are presentation/clarity concerns but different facets: fixing structure would not necessarily fix grammar, and vice versa."
+        }
+      ],
+      "metrics": {
+        "total_official": 9,
+        "total_decisive": 3,
+        "recall_strict": 0.6667,
+        "recall_loose": 0.6667,
+        "decisive_recall": 1.0,
+        "matched_official_ids": [
+          "O1",
+          "O2",
+          "O3",
+          "O5",
+          "O6",
+          "O8"
+        ],
+        "strict_matched_ids": [
+          "O1",
+          "O2",
+          "O3",
+          "O5",
+          "O6",
+          "O8"
+        ]
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/liang_run1/beyond_problem_solving.yaml",
+        "match_graph": "data/match_graphs/public_slice/liang_run1/beyond_problem_solving.yaml",
+        "review": "data/reviews/public_slice/liang_run1/beyond_problem_solving/"
+      }
+    },
+    {
+      "method": "liang_gpt4o_run1",
+      "verdict": "ACCEPT",
+      "score": null,
+      "error_type": "FP",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_accept",
+          "text": "Novel evaluation framework based on Hierarchical Three-Space Theory assesses critical thinking capabilities of LLMs, a relatively under-explored area in AI.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "R2",
+          "polarity": "pro_accept",
+          "text": "Comprehensive experimental setup with diverse datasets and detailed behavioral categories provides robust evidence for claims about LLM limitations and potential in critical thinking tasks.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "Paper addresses an important gap by focusing on LLMs' ability to recognize and respond to inconsistencies in problem framing, which is crucial for real-world applications with incomplete or contradictory information.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "Proposed structured approach to evaluating critical thinking could significantly advance understanding of LLM capabilities beyond traditional problem-solving metrics.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "Lack of clarity in the explanation of the Hierarchical Three-Space Theory: adaptation for LLMs is too abstract, and the connection between the theory and experimental results is not explicitly drawn.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "clarity",
+            "methodology"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "Limited exploration of real-world applications: no concrete examples or case studies demonstrating how the proposed framework could be applied in practical settings such as healthcare or legal domains.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "applicability",
+            "motivation"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "Insufficient comparison with existing benchmarks: no detailed comparative analysis of the framework's performance against existing LLM evaluation benchmarks, weakening novelty and effectiveness claims.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "baselines",
+            "evaluation_rigor"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "Over-reliance on a limited set of datasets and models: experiments may not capture the diversity of real-world problems and LLM capabilities, threatening the framework's generalizability and robustness.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "evaluation_breadth",
+            "generalizability"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O1",
+          "agentic_id": "A1",
+          "match_type": "exact",
+          "severity_alignment": "under",
+          "judgment_alignment": "aligned",
+          "issue": "Three-Space Theory not integrated with experimental design",
+          "rationale": "Both identify the theory-experiment disconnect: O1 says metrics are not matched to the three spaces making the framing superficial; A1 says the adaptation is too abstract and the connection to experimental results is not explicitly drawn. Same underlying complaint. A1 frames it as a clarity issue (dimension G) while O1 treats it as a conceptual gap, but the fix is identical: tightly map metrics to the three spaces. Severity within ±1 tolerance (major vs moderate). Notably, O1 is the AC's primary decisive blocker; the agentic system did not flag it as decisive."
+        },
+        {
+          "official_id": "O6",
+          "agentic_id": "A2",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "n/a",
+          "issue": "Gap between evaluation and real-world conditions",
+          "rationale": "O6 targets ecological validity of the test stimuli (artificial contradictions with explicit Hint markers vs subtle real-world inconsistencies). A2 targets missing practical application case studies (healthcare, legal domains). Both gesture at a real-world gap but require different author fixes: O6 needs more realistic test stimuli; A2 needs application demonstrations. Too different for partial."
+        },
+        {
+          "official_id": "O7",
+          "agentic_id": "A4",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Limited model coverage threatens generalizability",
+          "rationale": "O7 specifically targets the reasoning-mode experiment (Section 4.2) being limited to Qwen3 models only. A4 is a broader concern about overall dataset and model diversity across all experiments. A4 subsumes O7 but has wider scope (also covers datasets). Broad-to-narrow match per Skill 3 rules. Both treat as weakness (aligned). Severity within ±1 tolerance (moderate vs major)."
+        }
+      ],
+      "metrics": {
+        "total_official": 9,
+        "total_decisive": 3,
+        "recall_strict": 0.2222,
+        "recall_loose": 0.3333,
+        "decisive_recall": 0.3333,
+        "matched_official_ids": [
+          "O1",
+          "O6",
+          "O7"
+        ],
+        "strict_matched_ids": [
+          "O1",
+          "O7"
+        ]
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/liang_gpt4o_run1/beyond_problem_solving.yaml",
+        "match_graph": "data/match_graphs/public_slice/liang_gpt4o_run1/beyond_problem_solving.yaml",
+        "review": "data/reviews/public_slice/liang_gpt4o_run1/beyond_problem_solving/"
+      }
+    },
+    {
+      "method": "marg_gpt4o_run1",
+      "verdict": "REJECT",
+      "score": null,
+      "error_type": "TN",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_reject",
+          "text": "No baseline or prior-work comparisons to contextualize the framework's effectiveness against existing LLM critical-thinking benchmarks.",
+          "linked_concern_ids": [
+            "A1"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R2",
+          "polarity": "pro_reject",
+          "text": "Core framework (Hierarchical Three-Space Theory) insufficiently explained — interactions between spaces unclear, no diagrams or worked examples.",
+          "linked_concern_ids": [
+            "A4"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R3",
+          "polarity": "pro_reject",
+          "text": "Experimental design lacks reproducibility detail — question modification criteria, dataset preprocessing, and selection procedures unspecified.",
+          "linked_concern_ids": [
+            "A5"
+          ],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "Novel framework (Hierarchical Three-Space Theory) for evaluating LLM critical thinking — a new angle beyond standard problem-solving benchmarks.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "Comprehensive evaluation across multiple domains (mathematics, physics, logical inference).",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M3",
+          "polarity": "pro_accept",
+          "text": "Introduces useful new metrics (Problem-Solving Rate, Applied Critical Thinking Rate, Inherent Critical-Thinking Rate).",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M4",
+          "polarity": "pro_accept",
+          "text": "Motivations for evaluating critical thinking in LLMs are well-articulated.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "No baseline or prior-work comparisons — the proposed framework is not empirically compared with any existing LLM critical thinking benchmarks or evaluation methods.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "missing_baselines",
+            "evaluation_gap"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "No ablation studies to isolate contributions of individual components or strategies within the framework.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "missing_ablation",
+            "methodology"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "Hypotheses about strategy-space interaction and inconsistency difficulty are stated but lack detailed analysis or supporting evidence.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "insufficient_analysis",
+            "unsupported_claims"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "Hierarchical Three-Space Theory is poorly explained — the interaction between Problem Framing Space, Strategy Space, and Implementation Space is unclear with no diagrams or case studies.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "clarity",
+            "framework_underspecified"
+          ]
+        },
+        {
+          "id": "A5",
+          "text": "Experimental design lacks reproducibility detail — no criteria for question selection, no systematic modification guidelines, no preprocessing steps for datasets (GSM8K, SVAMP, etc.).",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "reproducibility",
+            "missing_details"
+          ]
+        },
+        {
+          "id": "A6",
+          "text": "Tables and figures are not reader-friendly — inconsistent labeling and ordering across tables, no summary of key insights.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "presentation",
+            "clarity"
+          ]
+        },
+        {
+          "id": "A7",
+          "text": "Evaluation metrics and behavioral categories not fully defined — terms like 'Wrong Gaslight,' 'Right Gaslight,' 'Both Gaslight' introduced without formal definitions, and metric thresholds/calculation methods unspecified.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "undefined_metrics",
+            "clarity"
+          ]
+        },
+        {
+          "id": "A8",
+          "text": "Model inference hyperparameter choices (temperature, max_tokens) are reported but not justified — no sensitivity analysis or discussion of their impact on results.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "hyperparameters",
+            "missing_justification"
+          ]
+        },
+        {
+          "id": "A9",
+          "text": "Discussion section lacks depth — insufficient exploration of implications, future research directions, and real-world applications of findings.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "shallow_discussion",
+            "limited_analysis"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O1",
+          "agentic_id": "A4",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Three-Space Theory presentation is inadequate for grounding the paper's contributions",
+          "rationale": "Both target the Three-Space Theory as a core weakness. O1 says the theory is not tightly integrated with the experimental design (superficial framing); A4 says the theory is poorly explained with unclear interactions and no diagrams. Same component but different complaints: O1 needs experiments redesigned to map to theory spaces, A4 needs clearer exposition. Partial because fixing A4 (better explanation) would not necessarily fix O1 (deeper experimental integration)."
+        },
+        {
+          "official_id": "O1",
+          "agentic_id": "A3",
+          "match_type": "partial",
+          "severity_alignment": "under",
+          "judgment_alignment": "aligned",
+          "issue": "Theory-derived hypotheses lack experimental grounding",
+          "rationale": "A3 flags that specific hypotheses about strategy-space interaction and inconsistency difficulty are stated without supporting evidence. This is a narrow sub-concern of O1's broader complaint that the Three-Space Theory is not tightly integrated with the experimental design. A3 addresses one instance of the theory-experiment disconnect rather than the full scope of O1."
+        },
+        {
+          "official_id": "O4",
+          "agentic_id": "A7",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Evaluation metrics for critical thinking are inadequately specified",
+          "rationale": "O4 argues the metrics (Applied CT Rate, Inherent CT Rate, F1) reduce critical thinking to binary classification, a conceptual validity concern. A7 says metric terms ('Wrong Gaslight,' 'Right Gaslight') lack formal definitions and thresholds are unspecified, a clarity concern. Same component (metrics system) but different defects: O4 needs process-level metrics, A7 needs formal definitions. Partial because both attack the metrics but from different angles."
+        },
+        {
+          "official_id": "O8",
+          "agentic_id": "A6",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Paper presentation hinders reader comprehension",
+          "rationale": "O8 is about the overall paper structure being scattered with unclear logical flow (raised by XThf). A6 is specifically about tables and figures having inconsistent labeling and ordering. Both are presentation concerns but O8 is broader (whole-paper structure) while A6 is narrower (visual elements only). Partial due to different scope."
+        },
+        {
+          "official_id": "O9",
+          "agentic_id": "A5",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "aligned",
+          "issue": "Reproducibility concerns",
+          "rationale": "O9 is about the modified benchmark dataset not being publicly released. A5 is about missing methodology details (question selection criteria, modification guidelines, preprocessing steps). Both relate to reproducibility but target entirely different facets: O9 requires releasing a data artifact, A5 requires documenting the experimental process. Fixing one would not fix the other. Related rather than partial because these are genuinely different specific issues within the broader reproducibility theme."
+        }
+      ],
+      "metrics": {
+        "total_official": 9,
+        "total_decisive": 3,
+        "recall_strict": 0.3333,
+        "recall_loose": 0.4444,
+        "decisive_recall": 0.3333,
+        "matched_official_ids": [
+          "O1",
+          "O4",
+          "O8",
+          "O9"
+        ],
+        "strict_matched_ids": [
+          "O1",
+          "O4",
+          "O8"
+        ]
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/marg_gpt4o_run1/beyond_problem_solving.yaml",
+        "match_graph": "data/match_graphs/public_slice/marg_gpt4o_run1/beyond_problem_solving.yaml",
+        "review": "data/reviews/public_slice/marg_gpt4o_run1/beyond_problem_solving/"
+      }
+    },
+    {
+      "method": "oar_run1",
+      "verdict": "REJECT",
+      "score": null,
+      "error_type": "TN",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_reject",
+          "text": "Multiple data integrity errors (copy-paste duplications in Tables 3 and 8, decimal typo in Table 6, swapped templates in Appendix A) undermine confidence in empirical claims, especially concerning for a benchmarking paper.",
+          "linked_concern_ids": [
+            "A1",
+            "A2",
+            "A3",
+            "A4"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R2",
+          "polarity": "pro_reject",
+          "text": "Statistical analysis is incomplete with missing test specifications and ambiguous correlation reporting, making key results non-reproducible.",
+          "linked_concern_ids": [
+            "A5",
+            "A6"
+          ],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "Interesting framework for evaluating LLM critical thinking through Three-Space Theory with controlled inconsistencies.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "Thoughtful experimental design covering multiple modification types, datasets, and models.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "Table 3 copy-paste error: all 40 values for Qwen3-8b-reasoning are identical to Qwen3-32b-reasoning, invalidating size-scaling analysis.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "data_integrity",
+            "reproducibility"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "Table 8 copy-paste error: all 16 ARC values for qwen3_8b_rF are identical to Llama3.3-70b, a column-level duplication across different architectures.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "data_integrity",
+            "reproducibility"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "Table 6 decimal typo: 0.100 should be 1.000 for qwen3_8b_rT Format on BBH Logical 3, confirmed by average column mismatch.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "data_integrity"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "Appendix A templates for 3-ICL and 3-ICL-cha appear swapped, making it impossible to reproduce experiments as described.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "reproducibility",
+            "clarity"
+          ]
+        },
+        {
+          "id": "A5",
+          "text": "Redundant modification correlation coefficients (0.175 and 0.280) reported without p-values or labels for which is applied vs. inherent critical thinking.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "statistical_rigor",
+            "incomplete_reporting"
+          ]
+        },
+        {
+          "id": "A6",
+          "text": "Statistical test for the difficulty hypothesis is unspecified (no test name, unit of analysis, or threshold justification), making results non-reproducible.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "statistical_rigor",
+            "reproducibility"
+          ]
+        },
+        {
+          "id": "A7",
+          "text": "Lower bound claim for 3-ICL-cha is internally contradictory: framed as both a lower bound on ideal performance and an aspirational target for other prompts.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "clarity",
+            "logical_consistency"
+          ]
+        },
+        {
+          "id": "A8",
+          "text": "Terminology misnomer: 'redundant information' is used throughout to describe contradictory information, potentially misleading readers about what the benchmark tests.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "clarity",
+            "terminology"
+          ]
+        },
+        {
+          "id": "A9",
+          "text": "Correlation analysis conflates model-level and dataset-level variation by pooling all (model, dataset) pairs, inflating correlation without establishing a model-level relationship.",
+          "severity": "major",
+          "addressability": "unresolved",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "methodology",
+            "statistical_rigor"
+          ]
+        },
+        {
+          "id": "A10",
+          "text": "Incomplete specification of which datasets receive which redundant modifications; several datasets absent from results without explanation.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "reproducibility",
+            "incomplete_reporting"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O8",
+          "agentic_id": "A7",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "n/a",
+          "issue": "Clarity and logical coherence of the paper",
+          "rationale": "O8 is about overall paper structure being scattered and logical flow unclear (macro-level presentation). A7 is about a specific logical inconsistency in the lower-bound claim for 3-ICL-cha (micro-level logic error). Both fall under 'clarity/logic' but target completely different granularity levels and require different fixes. Not even partial — reorganizing the paper would not fix A7, and fixing A7 would not address O8."
+        },
+        {
+          "official_id": "O8",
+          "agentic_id": "A8",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "n/a",
+          "issue": "Presentation quality and reader comprehension",
+          "rationale": "O8 targets paper organization and section-level logical flow. A8 targets a specific terminology misnomer ('redundant information' used for contradictory information). Both are presentation concerns but at different levels — structural vs. lexical. Fixing the terminology would not fix the scattered structure."
+        },
+        {
+          "official_id": "O9",
+          "agentic_id": "A10",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "n/a",
+          "issue": "Insufficient information for reproducing results",
+          "rationale": "O9 is about the modified benchmark dataset not being publicly released (data availability). A10 is about incomplete specification of which datasets receive which redundant modifications (methodological documentation gap). Both are reproducibility concerns but require different author actions — releasing the dataset vs. documenting the experimental design. Neither fix would resolve the other concern."
+        }
+      ],
+      "metrics": {
+        "total_official": 9,
+        "total_decisive": 3,
+        "recall_strict": 0.0,
+        "recall_loose": 0.2222,
+        "decisive_recall": 0.0,
+        "matched_official_ids": [
+          "O8",
+          "O9"
+        ],
+        "strict_matched_ids": []
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/oar_run1/beyond_problem_solving.yaml",
+        "match_graph": "data/match_graphs/public_slice/oar_run1/beyond_problem_solving.yaml",
+        "review": "data/reviews/public_slice/oar_run1/beyond_problem_solving/"
+      }
+    }
+  ]
+}

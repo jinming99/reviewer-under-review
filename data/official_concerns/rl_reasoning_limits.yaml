@@ -1,0 +1,579 @@
+schema_version: "v1"
+paper: "rl_reasoning_limits"
+title: "Does Reinforcement Learning Really Incentivize Reasoning Capacity in LLMs Beyond the Base Model?"
+venue: "NeurIPS 2025"
+official_verdict: "accepted"
+decision_type: "Best Paper Runner-up (Oral)"
+reviewer_scores: [5, 6, 5, 5]  # 79qN, tKuY, 6ryS, KdU6 (pre-rebuttal)
+reviewer_scores_post: [6, 6, 6, 6]  # all raised to 6 (Strong Accept) post-rebuttal
+
+ac_rationale_quality: "detailed"
+# AC (Program Chairs) provides a structured meta-review: identifies the core question
+# (pass@k vs pass@1), explains why the question is intriguing and important, praises
+# the masterful execution, notes the rebuttal addresses all concerns earning perfect
+# scores, and strongly recommends acceptance for oral presentation.
+
+# ============================================================
+# PDF version status (Skill 1b Step 0)
+# ============================================================
+pdf_is_revised: true
+revision_evidence: "OpenReview shows '3 Versions' badge (Published: 18 Sept 2025, Last Modified: 28 Oct 2025). Camera-ready includes substantial additions from rebuttal: Section 4.6 on Model Size Scaling with Magistral-Medium experiments (Figure 9, p.10), Tulu-3-70B results, and DeepSeek-R1-Zero discussion. Appendix D.4 contains perplexity evolution during training (Figure 15). Section 6 Discussion and Appendix C expanded with theoretical intuition. Tables 3-4 revised to four-category format per reviewer suggestion. Additional models (Gemma-2-2B, Mimo-7B) appear in rebuttal data. Terminology revised from 'reasoning capacity/boundary' to 'reasoning coverage/scope' per reviewer feedback."
+
+concerns:
+  # ============================================================
+  # O1: Results limited to small models and low training data diversity
+  # Raised by: 79qN (W1), KdU6 (Q1)
+  # ============================================================
+  - id: "O1"
+    text: "Results are all on relatively small models (7-32B parameters) and low training data diversity (mathematical reasoning on GSM8K + MATH, coding on LeetCode and TACO); quite far from RLVR-trained frontier systems. Both model size and training data can significantly change properties of models."
+    verbatim: "the results are all on relatively small models (7-32B parameters) and low training data diversity"
+    raised_by: ["79qN", "KdU6"]
+    severity: "major"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors added experiments on 70B+ models: Tulu-3-70B on Math500, Magistral-Medium (close to DeepSeek-R1-671B) on AIME24/25, plus Gemma-2-2B, Mimo-7B. All show same narrowing pattern at large k, supporting the conclusion holds for frontier-level models."
+    ac_treatment: "resolved"
+    decisive: false
+    tags: ["model_scale", "generalizability", "frontier_models", "training_diversity"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Section 4.6 (p.10) presents Model Size Scaling with Magistral-Medium on AIME24/25 (Figure 9) showing pass@k gap narrows at large k even for frontier-level models. Discussion of DeepSeek-R1-Zero, Tulu-3-70B, and resource constraints for larger models. Limitation explicitly acknowledged in Section 6."
+    note: "79qN's biggest concern. Post-rebuttal, 79qN updated from Accept to Strong Accept after seeing frontier model experiments. AC specifically notes the paper 'answers this important question negatively, i.e., pass@k does not increase, even for close to frontier models.' KdU6 also raised scaling as Q1."
+
+  # ============================================================
+  # O2: Random guessing explanation not fully ruled out
+  # Raised by: 79qN (W2)
+  # ============================================================
+  - id: "O2"
+    text: "The random guessing explanation needs stronger control: low percentage of problems with at least one correct CoT in 8-25 samples is a good sanity check but a low bar. Should report percentage of trajectories containing flawed CoTs and use larger samples with LLM-as-judge to bound performance attributable to random guessing."
+    verbatim: "Random guessing explanation: low % of problems with at least one correct CoT...is a good sanity check, but a pretty low bar"
+    raised_by: ["79qN"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors clarified their goal is assessing coverage (whether the model can generate at least one correct CoT), not average-case evaluation. Pointed to coding tasks (Section 3.2) where unit tests make random guessing impossible, showing the same trends hold."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["random_guessing", "evaluation_validity", "CoT_verification"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Section 2.2 (p.4) discusses random guessing under 'Random Guessing Issue' and references manual CoT checking. Section 3.2 (p.6) notes coding tasks use unit tests as verifiers making random guessing unlikely. Section D.2 (p.19) provides CoT validity analysis on filtered AIME24."
+    note: "79qN's post-rebuttal response acknowledged the point about coding tasks: 'Point taken though about tasks with unit tests!' Remained as a minor residual concern about math tasks specifically."
+
+  # ============================================================
+  # O3: Overfitting to test set as alternative explanation
+  # Raised by: 79qN (W3)
+  # ============================================================
+  - id: "O3"
+    text: "Overfitting to the test set is another alternative explanation not addressed. Distillation and train vs test results should indicate overfitting, but this connection is not made explicit."
+    verbatim: "Over-fitting to test set: it's another alternative explanation I don't see addressed in the paper"
+    raised_by: ["79qN"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors clarified RL training data is publicly documented and does not overlap with evaluation benchmarks. Deep analysis (e.g., OmniMath) uses clean train/test split. Authors committed to adding explicit discussion in revision."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["overfitting", "data_leakage", "train_test_split"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Section 4.3 (p.8) describes splitting Omni-MATH into training set (2000 samples) and in-domain test set (821 samples) with MATH500 as out-of-domain benchmark. Table 1 (p.5) lists training data and benchmarks separately. Section D.7 (p.22) shows pass@k on training vs test sets mirror each other."
+    note: "Authors addressed substantively in rebuttal. The paper's experimental design already separated train/test, but the connection to the overfitting concern was not explicit pre-rebuttal."
+
+  # ============================================================
+  # O4: Table 1 should note training data, not just test sets
+  # Raised by: 79qN (Minor)
+  # ============================================================
+  - id: "O4"
+    text: "Table 1 should show training data information, not just test sets."
+    verbatim: "In Table 1: could you also somehow note training, not just test sets?"
+    raised_by: ["79qN"]
+    severity: "minor"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors agreed to adjust Table 1 layout to make training data clearly identifiable."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["presentation", "table_clarity"]
+    issue_type: "framing"
+    addressed_in_pdf: true
+    pdf_evidence: "Table 1 (p.5) now includes columns for 'Start Model', 'RL Framework', 'RL Algorithm(s)', and 'Benchmark(s)' with training context visible."
+    note: "Minor presentation suggestion, addressed in revision."
+
+  # ============================================================
+  # O5: Figure 6 relevance of perplexity vs o1 comparison unclear
+  # Raised by: 79qN (Minor)
+  # ============================================================
+  - id: "O5"
+    text: "Figure 6 should add a sentence on the relevance of comparing perplexity to o1 responses."
+    verbatim: "Fig 6: add a sentence on the relevance of comparing to perplexity of o1 responses"
+    raised_by: ["79qN"]
+    severity: "minor"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors agreed to add clarifying sentence explaining o1 responses serve as a baseline for 'surprising' responses from other reasoning models."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["clarity", "figure_annotation"]
+    issue_type: "framing"
+    addressed_in_pdf: true
+    pdf_evidence: "Figure 6 (p.7) shows perplexity distribution with PPL comparisons. The surrounding text in Section 4.1 explains the perplexity analysis context."
+    note: "Minor clarity suggestion."
+
+  # ============================================================
+  # O6: Figure 8 readability issues
+  # Raised by: 79qN (Minor)
+  # ============================================================
+  - id: "O6"
+    text: "Figure 8 is hard to read with folded y-axis; should perhaps show only k@1 and k@256 or use delta notation."
+    verbatim: "Fig 8: hard to read, perhaps show only k@1 and k@256 or Delta_SE?"
+    raised_by: ["79qN"]
+    severity: "minor"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors acknowledged readability concern and committed to replacing with a more reader-friendly version."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["visualization", "readability"]
+    issue_type: "framing"
+    addressed_in_pdf: true
+    pdf_evidence: "Figure 8 (p.9) shows different RL algorithms with Delta_SE values clearly labeled in plot titles. Tables 3-4 (p.21) provide detailed numerical values."
+    note: "Minor visualization concern, addressed in revision."
+
+  # ============================================================
+  # O7: Tables 4 & 5 should report fraction overlap instead of raw indices
+  # Raised by: 79qN (Minor)
+  # ============================================================
+  - id: "O7"
+    text: "Tables 4 & 5 (solvable problem indices) would be more effective as percentage overlap rather than listing problem indices."
+    verbatim: "Table 4 & 5: this would be a more effective demonstration if you just reported % overlap"
+    raised_by: ["79qN"]
+    severity: "minor"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors agreed and provided four-category breakdown: both solve, only base solves, only RLVR solves, neither solves. Results show RLVR rarely solves problems base cannot (e.g., 1% on MATH500)."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["presentation", "table_format"]
+    issue_type: "framing"
+    addressed_in_pdf: true
+    pdf_evidence: "Table 2 (p.7) now shows the four-category format with percentage overlap. Table 5 (p.22) and Table 6 (p.22) in appendix retain problem indices for full transparency."
+    note: "Revision adopted the four-category table format as suggested."
+
+  # ============================================================
+  # O8: Figure 16 AIME24 temperature inconsistency
+  # Raised by: 79qN (Minor)
+  # ============================================================
+  - id: "O8"
+    text: "Figure 16 (AIME24) shows higher temperature benefits RL model at high pass@k, contradicting the stated T=0.6 choice for both models."
+    verbatim: "Fig 16, AIME24: it looks like higher temperature actually benefits the RL model at high pass@k"
+    raised_by: ["79qN"]
+    severity: "minor"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors explained T=0.6 follows DeepSeek-R1 protocol for stable performance across benchmarks. Higher T helps AIME24 but hurts AMC23. Figure 17 shows RL with higher T still lags behind base at large k on AIME24, reinforcing the main conclusion."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["temperature", "hyperparameter_sensitivity", "experimental_protocol"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Section D.8 (p.23) Figure 17 shows temperature analysis across AIME24 and MATH500 at T=0.6, 1.0, 1.2. Figure 18 (p.23) shows matched output entropy comparison. Section 4.5 (p.9) discusses entropy effects."
+    note: "Authors provided thorough temperature analysis in the appendix."
+
+  # ============================================================
+  # O9: Terminology 'reasoning capacity/boundary' is a misnomer
+  # Raised by: 79qN (Q3)
+  # ============================================================
+  - id: "O9"
+    text: "The term 'reasoning capacity/boundary' seems like a misnomer; should be 'solution-space/reasoning coverage or scope' instead."
+    verbatim: "The term 'reasoning capacity/boundary' seems like a bit of a misnomer"
+    raised_by: ["79qN"]
+    severity: "minor"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors agreed the terminology was inconsistent and potentially confusing. Committed to revising to 'reasoning coverage' or 'reasoning scope' in the revision."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["terminology", "clarity", "framing"]
+    issue_type: "framing"
+    addressed_in_pdf: true
+    pdf_evidence: "The paper title retains 'Reasoning Capacity' but the body text uses 'reasoning capability boundary' and 'reasoning capacity boundary' throughout. Section 2.2 (p.4) defines 'Metrics for LLM Reasoning Capacity Boundary' with explicit operational definitions."
+    note: "79qN's post-rebuttal comment noted: 'in the paper, please be mindful not to refer to Magistral results as indicating performance on frontier models, but indicating trend still holds closer to frontier.' Also reiterated the terminology concern."
+
+  # ============================================================
+  # O10: Limited theoretical insight for why RLVR fails to expand reasoning
+  # Raised by: tKuY (W1)
+  # ============================================================
+  - id: "O10"
+    text: "Lacks explanation for why RLVR fails to expand reasoning boundaries. Paper includes some intuitive descriptions about base models' boundaries but they remain informal."
+    verbatim: "Lacks explanation for why RLVR fails to expand reasoning boundaries"
+    raised_by: ["tKuY"]
+    severity: "major"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors provided explanation in Appendix C: RLVR methods are on-policy and rely on pretrained prior in vast action space, making exploration of out-of-prior trajectories exceedingly rare. Cited concurrent theoretical work formalizing this intuition (The Invisible Leash, 2025)."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["theoretical_explanation", "exploration_limitation", "on_policy"]
+    issue_type: "conceptual"
+    addressed_in_pdf: true
+    pdf_evidence: "Appendix C Discussion (p.17) provides two key discussions: 'Key Differences Between Traditional RL and RLVR for LLMs are Vast Action Space and Pretrained Priors' and 'Priors as a Double-Edged Sword in This Vast Action Space.' Explains on-policy sampling, vast action space (V^L ~ 150000^4096), and pretrained prior constraining exploration."
+    note: "tKuY's post-rebuttal: 'my concerns have already been addressed and I have no further questions. I will keep my positive score.' The theoretical intuition in Appendix C is substantive but remains informal rather than formal."
+
+  # ============================================================
+  # O11: Narrow scope - may not generalize to future RL paradigms or reward structures
+  # Raised by: tKuY (W2, Q2)
+  # ============================================================
+  - id: "O11"
+    text: "Findings may not generalize to future RL paradigms or different reward structures (e.g., process rewards vs. outcome rewards). Could different reward structures change the conclusions about RLVR's effectiveness?"
+    verbatim: "Findings may not generalize to future RL paradigms or different reward structures"
+    raised_by: ["tKuY"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors clarified the study focuses on current RLVR methods. Discussed process rewards as a promising direction but noted practical implementations still rely on outcome-based rewards. Framed identifying the current gap as a critical first step toward motivating better RL methods."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["scope_limitation", "reward_design", "generalizability", "future_work"]
+    issue_type: "conceptual"
+    addressed_in_pdf: true
+    pdf_evidence: "Section 6 Conclusion (p.10) explicitly scopes findings to 'current RLVR methods' and calls for 'improved RL paradigms--such as continual scaling and multi-turn agent-environment interaction.' Appendix C (p.17) discusses future directions including better exploration strategies."
+    note: "Acknowledged limitation. The paper is explicitly about the current state of RLVR, not future paradigms."
+
+  # ============================================================
+  # O12: Missing solutions - limited improvement suggestions
+  # Raised by: tKuY (W3)
+  # ============================================================
+  - id: "O12"
+    text: "Paper identifies problems clearly but provides limited improvement suggestions for how to address RLVR's limitations."
+    verbatim: "Identifies problems clearly but provides limited improvement suggestions"
+    raised_by: ["tKuY"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors provided five promising research directions: (1) finer-grained reward structures, (2) improved exploration via structured/hierarchical search, (3) better long-horizon credit assignment, (4) scaling RL compute and data, (5) multi-turn tool use and external knowledge."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["actionable_suggestions", "future_directions"]
+    issue_type: "conceptual"
+    addressed_in_pdf: true
+    pdf_evidence: "Appendix C (p.17) 'Possible Future Work' discusses developing more efficient exploration strategies and multi-turn RL agent paradigms. Section 6 (p.10) mentions 'continual scaling and multi-turn agent-environment interaction.'"
+    note: "tKuY was satisfied post-rebuttal. The paper's primary contribution is diagnostic rather than prescriptive."
+
+  # ============================================================
+  # O13: Base model dependency - conclusions may be influenced by specific models tested
+  # Raised by: tKuY (W4)
+  # ============================================================
+  - id: "O13"
+    text: "Conclusions may be influenced by the specific base models tested. Results could differ with different pretrained models."
+    verbatim: "Conclusions may be influenced by specific base models tested"
+    raised_by: ["tKuY"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors added experiments on additional model families: Gemma-2-2B, Mimo-7B, Tulu-3-70B. Results across all families are consistent, demonstrating robustness across architectures and scales."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["model_dependency", "generalizability", "robustness"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Section 3.1 (p.5) experiments span Qwen2.5-7B/14B/32B and LLaMA-3.1-8B as base models. Section 4.6 (p.10) adds Magistral-Medium. Table 1 (p.5) shows multiple model families and RL frameworks. Figures 2 (p.4) and 10 (p.18) show consistent trends across all model sizes."
+    note: "Substantially addressed by adding more model families and sizes. tKuY confirmed concerns addressed."
+
+  # ============================================================
+  # O14: No theoretical explanation, only extensive experimental results
+  # Raised by: 6ryS (W1)
+  # ============================================================
+  - id: "O14"
+    text: "There is no theoretical explanation for the findings - only extensive experimental results. The paper includes some intuitive descriptions such as references to base models' boundaries, but they remain informal."
+    verbatim: "There is no theoretical explanation--only extensive experimental results"
+    raised_by: ["6ryS"]
+    severity: "major"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors provided intuitive explanation in Appendix C about on-policy methods, vast action space, and pretrained prior constraining exploration. Cited concurrent theoretical work (The Invisible Leash, 2025) that formalizes their findings."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["theory_gap", "informal_explanation", "exploration_bottleneck"]
+    issue_type: "conceptual"
+    addressed_in_pdf: true
+    pdf_evidence: "Appendix C (p.17) provides two substantive discussion sections explaining why RLVR fails to expand reasoning. Cites concurrent theoretical work. The explanation remains intuitive rather than formal but is grounded in RL theory (vast action space, on-policy sampling, pretrained prior as double-edged sword)."
+    note: "Overlaps conceptually with O10 (tKuY W1) but 6ryS frames it as a standalone weakness. 6ryS acknowledged the rebuttal addresses concerns and updated rating to 6."
+
+  # ============================================================
+  # O15: Experiments mainly focus on Qwen model series
+  # Raised by: 6ryS (W2)
+  # ============================================================
+  - id: "O15"
+    text: "Experiments mainly focus on the Qwen model series, raising concerns about model family diversity."
+    verbatim: "The experiments mainly focus on the Qwen model series"
+    raised_by: ["6ryS"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors noted LLaMA-3.1 and DeepSeek-R1-Distill-Qwen-14B are already in the paper. Added Gemma-2-2B, Mimo-7B, and Tulu-3-70B to further demonstrate cross-family robustness."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["model_diversity", "qwen_dominance", "generalizability"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Table 1 (p.5) lists LLaMA-3.1-8B and DeepSeek-R1-Distill-Qwen-14B alongside Qwen2.5 variants. Section 4.6 (p.10) adds Magistral-Medium. Figures 2-4 show LLaMA-3.1-8B results alongside Qwen models. Qwen models still dominate numerically but multiple families are represented."
+    note: "Partially overlaps with O1 and O13 on model diversity. Addressed by adding more model families in rebuttal."
+
+  # ============================================================
+  # O16: Evaluation too centered on pass@k curves
+  # Raised by: 6ryS (W3)
+  # ============================================================
+  - id: "O16"
+    text: "The evaluation is too centered on pass@k curves. Would appreciate more analyses like the Perplexity Analysis paragraph, such as accuracy distributions, reasoning coverage, and comparisons with distilled models."
+    verbatim: "The evaluation is too centered on pass@k curves"
+    raised_by: ["6ryS"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors pointed to existing analyses beyond pass@k: accuracy distributions, reasoning coverage, perplexity analysis, comparisons with distilled models. Committed to adding perplexity dynamics throughout training in revision."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["evaluation_diversity", "pass_at_k", "analysis_depth"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Section 4.1 (p.7) presents accuracy distribution analysis (Figure 5), solvable-problem coverage analysis (Table 2), and perplexity analysis (Figure 6). Section 4.2 (p.8) compares distillation vs RLVR (Figure 7). Appendix D.4 (p.21) adds perplexity evolution during training (Figure 15). Section 4.3 (p.8) presents Sampling Efficiency Gap analysis."
+    note: "The paper actually contains substantial analysis beyond pass@k. 6ryS may have initially underestimated the depth of Section 4."
+
+  # ============================================================
+  # O17: Novelty concern - similar insights observed in prior work (DeepSeekMath)
+  # Raised by: 6ryS (post-rebuttal comment)
+  # ============================================================
+  - id: "O17"
+    text: "Similar insights about RLVR limitations have been discussed in earlier works. Section 5.2.2 of DeepSeekMath (Feb 2024) employed similar phrasing about 'fundamental capabilities.' Other works may have made similar observations even earlier."
+    verbatim: "similar insights have been discussed in earlier works. For example, Section 5.2.2 of DeepSeekMath"
+    raised_by: ["6ryS"]
+    severity: "major"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors argued DeepSeekMath's analysis was narrow (single model, two benchmarks, one RL method) and limited in scope. Their paper is the first to formally frame the question and conduct systematic, large-scale evaluation across diverse settings. Cited Dang et al. (2025) as the only concurrent relevant work."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["novelty", "prior_work_overlap", "deepseekmath"]
+    issue_type: "conceptual"
+    addressed_in_pdf: true
+    pdf_evidence: "Section 5 Related Work (p.10) and Appendix B (p.16) discuss Dang et al. [48] and the relationship to DeepSeekMath [37]. States: 'Dang et al. observed a decline in pass@k performance post-RLVR training, but their analysis was limited in scope.' DeepSeekMath [37] is cited throughout as prior work."
+    note: "6ryS's post-rebuttal comment explicitly raised this as a novelty concern. 6ryS was ultimately satisfied: 'The rebuttal addresses several of my concerns. I will update the rating to 6.' The breadth and depth of systematic analysis is the paper's key differentiation from prior observations."
+
+  # ============================================================
+  # O18: Specific policy optimization parameters not reported
+  # Raised by: 6ryS (Q1)
+  # ============================================================
+  - id: "O18"
+    text: "Specific policy optimization parameters used during RLVF are not reported (e.g., ppo_mini_batch_size and ppo_epochs in VeRL)."
+    verbatim: "What are the specific policy optimization parameters used during RLVF?"
+    raised_by: ["6ryS"]
+    severity: "minor"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors provided full hyperparameter table: rollout temperature 1.0, prompt batch size 256, rollout number 8, ppo_mini_batch_size 256, ppo_epochs 1."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["reproducibility", "hyperparameters"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Section 4.3 (p.8) reports: 'prompt batch size of 256 and generate 8 responses per prompt' with 'PPO mini-batch size of 256.' Appendix A.1 (p.16) provides implementation details for RLVR algorithms."
+    note: "Reproducibility concern addressed in revision."
+
+  # ============================================================
+  # O19: Perplexity analysis paragraph limited to only two AIME samples
+  # Raised by: 6ryS (Q2)
+  # ============================================================
+  - id: "O19"
+    text: "The Perplexity Analysis paragraph analyzes only two samples from AIME, which is a very limited sample size."
+    verbatim: "Why does the 'Perplexity Analysis' paragraph only analyze two samples from AIME?"
+    raised_by: ["6ryS"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors clarified they conducted perplexity analysis on all 30 AIME problems. The two examples were representative cases. Provided full table of all 30 problems showing base model assigns lower perplexity to RLVR responses in most cases."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["sample_size", "perplexity_analysis", "completeness"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Section 4.1 (p.7) presents perplexity analysis with Figure 6. Appendix D.4 (p.21) contains expanded perplexity evolution analysis (Figure 15) showing trends over three RLVR checkpoints."
+    note: "The full 30-problem perplexity table was provided in the rebuttal but may not appear verbatim in the final PDF. Appendix D.4 provides the training dynamics version instead."
+
+  # ============================================================
+  # O20: Scaling to larger base models (70B+) - would reasoning boundary persist?
+  # Raised by: tKuY (Q1), KdU6 (Q1)
+  # ============================================================
+  - id: "O20"
+    text: "How do the findings extend to larger base models (e.g., 70B+ parameters)? Would the reasoning boundary limitations persist? Evaluation on larger models like o1 and DeepSeek-R1-Zero would be helpful."
+    verbatim: "How do the findings extend to larger base models (e.g., 70B+ parameters)?"
+    raised_by: ["tKuY", "KdU6"]
+    severity: "major"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors found only three 70B+ models with both base and RLVR versions publicly available. Evaluated Tulu-3-70B on Math500 and Magistral-Medium on AIME24/25 via API. For DeepSeek-R1-Zero (671B), throughput was too low for full evaluation. Results support conclusions hold for frontier models."
+    ac_treatment: "resolved"
+    decisive: false
+    tags: ["model_scale", "frontier_models", "scalability"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Section 4.6 (p.10) presents the scaling analysis. Figure 9 (p.10) shows Magistral-Medium pass@k curves on AIME24/25 with the same narrowing pattern. Text discusses resource constraints for DeepSeek-R1-Zero and acknowledges 'whether this trend persists as more compute, such as pre-training scale budgets, is dedicated to RL training remains a critical question.'"
+    note: "Merged concern from tKuY Q1 and KdU6 Q1. This is closely related to O1 but focuses specifically on the question asked during Q&A rather than the weakness framing. Both tKuY and KdU6 were satisfied post-rebuttal."
+
+  # ============================================================
+  # O21: Effect of task difficulty on pass@k gap
+  # Raised by: KdU6 (Q2)
+  # ============================================================
+  - id: "O21"
+    text: "How does the gap in pass@k curves change with respect to the difficulty of evaluation tasks? More challenging tasks may reduce the gap between base and RLVR models at large k."
+    verbatim: "how is the gap in the pass@k curves changes w.r.t. the difficulty of the evaluation tasks"
+    raised_by: ["KdU6"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors analyzed MATH500 by AoPS difficulty levels 1-5. Found: at k=1, RLVR advantage increases with difficulty; at large k, the base overtake point shifts (k=2 for Level 1, k=16 for Levels 4-5). Harder tasks delay but do not prevent base model overtake."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["task_difficulty", "difficulty_stratification", "pass_at_k_gap"]
+    issue_type: "empirical"
+    addressed_in_pdf: false
+    pdf_evidence: "The difficulty-stratified analysis (Levels 1-5 on MATH500) was provided in the rebuttal but does not appear in the final PDF. The paper discusses difficulty indirectly through benchmark variety (GSM8K as easy, AIME24 as hard) but does not include the per-level breakdown."
+    note: "KdU6 found this interesting: 'I think some analysis on how task difficulty influences the results here would make this paper even more valuable.' The analysis was detailed in the rebuttal but not incorporated into the camera-ready."
+
+  # ============================================================
+  # O22: Train vs test set pass@k curves not clearly distinguished
+  # Raised by: KdU6 (Q3)
+  # ============================================================
+  - id: "O22"
+    text: "Most pass@k curves reported seem to be on test sets not used for RLVR training; should show what pass@k curves look like on training tasks to verify no overfitting."
+    verbatim: "Most pass@k curves reported in the paper are the results on some hold-out test sets"
+    raised_by: ["KdU6"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors pointed to Sections 4.3 and 4.4 with pass@k on both training and test sets (Figure 14). Also provided 100-problem subsample from training set for SimpleRLZoo-7B showing same pattern: RLVR outperforms at small k but is overtaken at large k."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["train_test_split", "overfitting_check", "evaluation_protocol"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Figure 8 (p.9) shows pass@k on Omni-MATH-Train, Omni-MATH-Test (In Domain), and MATH500 (Out of Domain) side by side. Section D.7 (p.22) provides solvable problem coverage analysis on both AIME24 and MATH500."
+    note: "KdU6 satisfied post-rebuttal: 'The new results and analysis address most of my concerns.'"
+
+  # ============================================================
+  # O23: Perplexity score evolution during RLVR training not shown
+  # Raised by: KdU6 (Q4)
+  # ============================================================
+  - id: "O23"
+    text: "Paper should show how perplexity score evolves during the RLVR training process, not just at the end. Expect PPL_RL to gradually decrease and PPL_base to show two clusters over training."
+    verbatim: "further add a figure to show how the perplexity score evolves during the RLVR training process"
+    raised_by: ["KdU6"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors evaluated three RLVR checkpoints (early, middle, final). Confirmed PPL_base(Y_RL) gradually decreases as RL progresses. PPL_RL(Y_base) shows two clusters: one decreasing (responses within RLVR's sharpened distribution) and one increasing (responses falling outside)."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["training_dynamics", "perplexity_evolution", "analysis_depth"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Appendix D.4 (p.21) presents Figure 15 'Perplexity Score Evolution during Training' showing PPL_base(Y_RL) at Base, Early, Middle, and Final checkpoints, decreasing from 1.244 to 1.159. The two-cluster analysis for PPL_RL(Y_base) was provided in rebuttal but appears simplified in the PDF."
+    note: "KdU6 specifically requested this figure. It was added to the appendix."
+
+  # ============================================================
+  # O24: Limitations section missing or insufficient
+  # Raised by: KdU6 (Limitations), 79qN (Limitations)
+  # ============================================================
+  - id: "O24"
+    text: "Discussion on limitations of the paper itself is insufficient or missing. The paper gives a good discussion of RLVR limitations but should also clearly state limitations of the study."
+    verbatim: "I don't find a clear discussion of the limitations of this paper in the text"
+    raised_by: ["KdU6", "79qN"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors committed to improving the limitations discussion in the revision, covering model scale constraints, scope limited to current RLVR methods, and resource limitations."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["limitations_discussion", "self_awareness", "transparency"]
+    issue_type: "framing"
+    addressed_in_pdf: true
+    pdf_evidence: "Section 6 Conclusion (p.10) acknowledges 'current RLVR methods' scope. Section 4.6 (p.10) discusses compute resource constraints for larger models. Appendix C (p.17) discusses future work as implicit limitations."
+    note: "79qN noted 'there is no mention of this in the Discussion section.' KdU6 similarly flagged. The camera-ready has some limitation acknowledgment but it remains distributed rather than having a dedicated limitations subsection."
+
+  # ============================================================
+  # O25: Contradicting paper with different metric (CoT-Pass@k)
+  # Raised by: KdU6 (post-rebuttal comment)
+  # ============================================================
+  - id: "O25"
+    text: "A concurrent paper using CoT-Pass@k metric draws opposite conclusions about whether RLVR incentivizes correct reasoning in base LLMs. This raises questions about metric sensitivity."
+    verbatim: "this new paper...draws an opposite conclusion as yours by using a more fine-grained evaluation metric called CoT-Pass@k"
+    raised_by: ["KdU6"]
+    severity: "moderate"
+    resolved_in_rebuttal: false
+    rebuttal_resolution: "Authors responded with four points: (1) CoT-Pass@k relies on an 8B verifier with high error rates, (2) base models already generate CoTs that lead to correct answers despite local flaws, (3) at large k with CoT-Pass@k, base models still catch up, (4) coding tasks provide verifier-free confirmation. Acknowledged more thorough check needed in future."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["metric_sensitivity", "concurrent_work", "CoT_verification"]
+    issue_type: "conceptual"
+    addressed_in_pdf: false
+    pdf_evidence: "No mention of CoT-Pass@k or the contradicting paper appears in the PDF. The concurrent paper (arXiv:2506.14245) was published after the NeurIPS submission deadline."
+    note: "KdU6 raised this post-rebuttal as a discussion point, explicitly stating it would not change their score. This represents an important open question about whether pass@k vs CoT-Pass@k captures different aspects of reasoning capability."
+
+  # ============================================================
+  # O26: SFT pre-training effect on conclusions
+  # Raised by: 79qN (Q2)
+  # ============================================================
+  - id: "O26"
+    text: "Do experiments with SFT pre-training (applying RLVR to SFT or distilled models) modify the conclusions?"
+    verbatim: "do you have any experiments with SFT pre-training, does it modify the conclusions?"
+    raised_by: ["79qN"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors pointed to existing experiments: DeepCoder-14B (RLVR on SFT model) in Section 3.2 shows same pattern. Added DeepSeek-R1-Distill-Qwen-1.5B with RLVR on SFT model, showing similar trends on AIME24."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["SFT_pretraining", "distillation", "generalizability"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Section 3.2 (p.6) shows DeepCoder-14B (trained on DeepSeek-R1-Distill-Qwen-14B, an SFT model). Figure 3 (p.6) includes DeepCoder results. Section 4.2 (p.8) discusses distillation vs RLVR comparison (Figure 7) showing distillation genuinely expands reasoning scope."
+    note: "The rebuttal additionally showed DeepSeek-R1-Distill-Qwen-1.5B results, but these may not appear in the final PDF."
+
+ac_decision_drivers:
+  - id: "D1"
+    polarity: "pro_accept"
+    text: "Paper examines an important topic -- whether math-based RL aimed at improving pass@k actually expands reasoning boundaries or merely optimizes pass@1. The question is intriguing because pass@k ensures sufficient exploration, diverse outputs, and can be linked with diversity of reasoning."
+    decisive: true
+    tags: ["important_question", "pass_at_k", "reasoning_boundary"]
+    observable_stage: "post_discussion"
+
+  - id: "D2"
+    polarity: "pro_accept"
+    text: "Paper answers the question negatively (pass@k does not increase, even for close to frontier models) with masterful execution. The rebuttal essentially addresses all reviewers' concerns, as highlighted by the perfect score."
+    decisive: true
+    tags: ["negative_result", "comprehensive_evidence", "clean_rebuttal"]
+    observable_stage: "post_discussion"
+
+  - id: "D3"
+    polarity: "pro_accept"
+    text: "All four reviewers strongly recommend acceptance with unanimous 6 (Strong Accept) scores post-rebuttal. AC endorses this consensus."
+    decisive: true
+    tags: ["reviewer_consensus", "unanimous_support"]
+    observable_stage: "post_discussion"
+
+  - id: "D4"
+    polarity: "pro_accept"
+    text: "The finding that distillation can introduce new reasoning patterns from the teacher and genuinely expand reasoning scope provides an important contrast showing the limitation is specific to RLVR, not inherent to all post-training methods."
+    decisive: false
+    tags: ["distillation_contrast", "diagnostic_value"]
+    observable_stage: "post_discussion"
+
+critical_references:
+  - id: "CR1"
+    title: "Reinforcement Learning with Verifiable Rewards Implicitly Incentivizes Correct Reasoning in Base LLMs"
+    short_name: "CoT-Pass@k paper"
+    cited_by: ["KdU6"]
+    role: "novelty_precedent"
+    decisive: false
+    verbatim: "this new paper...draws an opposite conclusion as yours by using a more fine-grained evaluation metric called CoT-Pass@k"
+
+  - id: "CR2"
+    title: "The Invisible Leash: Why RLVR May Not Escape Its Origin"
+    short_name: "Invisible Leash"
+    cited_by: ["tKuY_rebuttal"]
+    role: "methodological_basis"
+    decisive: false
+    verbatim: "formalized into a theoretical framework in a recent work...provides theoretical support for the limitation we identify"
+
+  - id: "CR3"
+    title: "Deepseekmath: Pushing the limits of mathematical reasoning in open language models"
+    short_name: "DeepSeekMath"
+    cited_by: ["6ryS"]
+    role: "novelty_precedent"
+    decisive: false
+    verbatim: "Section 5.2.2 of DeepSeekMath...also employed similar phrasing, such as 'fundamental capabilities'"
+
+  - id: "CR4"
+    title: "Assessing diversity collapse in reasoning"
+    short_name: "Dang et al. 2025"
+    cited_by: ["6ryS_rebuttal"]
+    role: "novelty_precedent"
+    decisive: false
+    verbatim: "one rare relevant paper...focuses on how RLVR struggles to recover the pass@k drop introduced by SFT"
+
+ac_decisive_negative_ids: []

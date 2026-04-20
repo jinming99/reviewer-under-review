@@ -1,0 +1,55 @@
+{
+  "overall_feedback": "This paper presents a thought-provoking empirical investigation into whether RLVR genuinely expands LLM reasoning capabilities beyond what the base model already possesses. The experimental breadth\u2014covering multiple model families, RL algorithms, and task domains\u2014is commendable, and the core finding that pass@k curves cross over is well-demonstrated. However, several issues weaken the analysis: the proposed Sampling Efficiency Gap metric has an ambiguous definition and numerical values that are inconsistent with the paper's own tables, the perplexity analysis underpinning a central claim rests on only two problems, and the paper's strongest claims about 'reasoning patterns' overreach the evidence, which primarily concerns problem solvability rather than the nature of reasoning itself.",
+  "comments": [
+    {
+      "title": "Ambiguous direction of subtraction in the Sampling Efficiency Gap definition",
+      "quote": "we propose the Sampling Efficiency Gap (\u2206SE), defined as the difference between the RL-trained model's pass@1 and the base model's pass@k (we use k = 256 in our evaluation). Lower \u2206SE is better.",
+      "explanation": "In standard English, 'the difference between A and B' most naturally reads as A \u2212 B, which here would be RL_pass@1 \u2212 base_pass@256. Since the RL model's pass@1 is consistently lower than the base model's pass@256 (the whole point of the paper), this would yield a negative value. Yet the reported \u2206SE values are all positive (e.g., 0.359, 0.410, 0.206 in Figure 8), and the paper says 'lower \u2206SE is better'\u2014which only makes sense if \u2206SE = base_pass@256 \u2212 RL_pass@1. The definition as written contradicts the sign of the reported values. This should be stated unambiguously, e.g., as \u2206SE = pass@k_base \u2212 pass@1_RL.",
+      "comment_type": "logical",
+      "paragraph_index": 7
+    },
+    {
+      "title": "Reported \u2206SE values and algorithm attribution are inconsistent with Table 3",
+      "quote": "Different RL algorithms yield slightly different \u2206SE values (i.e., ranging from GRPO's 43.9 to RLOO's best 42.6 on the in-domain test set). Furthermore, we observe that \u2206SE remains consistently above 40 points across different algorithms",
+      "explanation": "Computing \u2206SE = base_pass@256 \u2212 RL_pass@1 from Table 3 for the in-domain test set (Omni-MATH-Test, base pass@256 = 69.1): GRPO = 69.1\u221225.1 = 44.0 (text says 43.9, minor rounding); RLOO = 69.1\u221228.1 = 41.0 (text says 42.6, a discrepancy of 1.6 points). The value 42.6 actually matches DAPO (69.1\u221226.5 = 42.6), not RLOO. Moreover, the claimed range of 42.6\u201343.9 omits ReMax at 45.3 and the actual best RLOO at 41.0, understating the true variation across algorithms (41.0\u201345.3, a span of 4.3 points vs. the claimed 1.3 points). This misattribution and narrowed range make the algorithms appear more similar than the data actually show.",
+      "comment_type": "technical",
+      "paragraph_index": 8
+    },
+    {
+      "title": "Perplexity analysis supporting a central claim is based on only two problems",
+      "quote": "We randomly sample two problems from AIME24 and employ Qwen2.5-7B-Base and SimpleRL-Qwen2.5-7B-Base to generate 16 responses for each problem",
+      "explanation": "The claim that 'the reasoning paths produced by RLVR models already exist within the output distribution of the base model' is one of the paper's strongest and most cited conclusions. Yet the perplexity analysis in Figure 6 is based on just 2 randomly selected AIME24 problems with 16 responses each. This is an extremely small sample from which to draw a general conclusion about the relationship between base and RLVR model distributions. AIME24 problems vary widely in difficulty and reasoning structure, and two problems cannot represent this diversity. While the solvable-problem coverage analysis (Table 2) provides complementary evidence, the perplexity analysis is the only evidence that speaks to the distributional claim about reasoning paths, and its scope is insufficient for the generality of the conclusion.",
+      "comment_type": "technical",
+      "paragraph_index": 6
+    },
+    {
+      "title": "Claims about 'reasoning patterns' overshoot what solvability evidence supports",
+      "quote": "current training does not elicit fundamentally new reasoning patterns. We observe that while RLVR-trained models outperform their base models at smaller values of k (e.g., k=1), base models achieve higher pass@k score when k is large.",
+      "explanation": "The paper's primary evidence is that the set of problems solvable by RLVR models is approximately a subset of those solvable by the base model at large k. This is a claim about problem solvability. But the paper repeatedly extends this to 'fundamentally new reasoning patterns'\u2014a stronger claim about the nature of the model's reasoning strategies. It is logically possible for RLVR to introduce new reasoning approaches (e.g., novel proof strategies, different problem decompositions) that happen to apply only to problems already solvable by the base model through other approaches. The pass@k evidence cannot distinguish between 'RLVR finds the same reasoning paths more efficiently' and 'RLVR finds different paths to the same problems.' The perplexity analysis begins to address this distinction but, as noted, covers only two problems. The conflation weakens the paper's strongest conclusions.",
+      "comment_type": "logical",
+      "paragraph_index": 0
+    },
+    {
+      "title": "Showcased 'correct' base model CoT contains two canceling arithmetic errors",
+      "quote": "900 = 1924 \u2212 437 \u2212 2 \u00d7 234 \u2212 3 \u00d7 X\n900 = 1924 \u2212 805 \u2212 3 \u00d7 X\n900 = 1119 \u2212 3 \u00d7 X",
+      "explanation": "Figure 20 is presented as a correct CoT from Qwen2.5-7B-Base for AIME24 Question 16, described as 'manually selected from 2048 samplings for the hardest questions in AIME24.' However, the arithmetic contains two errors: the sum 195+367+562+900 = 2024, not 1924 (off by 100), and the penalty 437+2\u00d7234 = 905, not 805 (also off by 100). These errors cancel because 2024\u2212905 = 1924\u2212805 = 1119, so the final answer X=73 happens to be correct. This raises concern about the rigor of the manual CoT inspection process described in Section 3.1, where the authors report that 24/25 (GSM8K) and 5/6 (AIME24) hard problems had 'correct' CoTs. If CoTs with coincidentally canceling arithmetic errors are counted as correct, the reported validity rates may be overstated.",
+      "comment_type": "technical",
+      "paragraph_index": 25
+    },
+    {
+      "title": "Distillation comparison lacks a controlled baseline",
+      "quote": "distillation can transfer new reasoning patterns from a stronger teacher to the student. As a result, distilled models often demonstrate an expanded reasoning scope beyond that of the base model.",
+      "explanation": "The paper contrasts RLVR (bounded by the base model) with distillation (which expands beyond it), using DeepSeek-R1-Distill-Qwen-7B as the exemplar. However, this comparison is not controlled for the information provided during training. The distilled model is fine-tuned on long CoT traces from DeepSeek-R1, a vastly more capable model. That supervised fine-tuning on high-quality data from a stronger source expands the student's capabilities is expected and well-established. The more informative comparison would hold the training data source constant\u2014e.g., comparing RLVR on problems where the teacher's CoT traces are available versus distillation on those same traces\u2014to isolate the effect of the learning paradigm from the effect of injecting external knowledge. Without this control, the conclusion that 'distillation is fundamentally different from RLVR' is confounded by the additional information the distilled model receives.",
+      "comment_type": "logical",
+      "paragraph_index": 2
+    }
+  ],
+  "usage": {
+    "input_tokens": 0,
+    "output_tokens": 0
+  },
+  "num_api_calls": 1,
+  "num_comments": 6,
+  "method": "openaireview_zero_shot",
+  "model": "anthropic/claude-opus-4-6"
+}

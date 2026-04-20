@@ -1,0 +1,192 @@
+schema_version: "v1"
+paper: "cmdp_meta_safe_rl"
+version: "v0.9.2"
+condition: "own_group/marg_gpt4o_run1"
+method: "baseline_marg"
+
+matches:
+  # ── Strict matches (exact / partial) ──────────────────────────
+
+  - official_id: O7
+    agentic_id: A8
+    match_type: exact
+    issue: "Missing explanation of CRPO algorithm, parameter choices, and decision rules"
+    judgment_alignment: aligned
+    severity_alignment: match  # O7=moderate, A8=major → gap +1, within tolerance
+    rationale: >-
+      O7 says "no explanation about CRPO and no comments about the 'carefully chosen
+      parameters'" and the primal approach is confusing. A8 says CRPO decision rule for
+      switching between gradient ascent/descent is not explained and hyperparameters/
+      learning rates/safety thresholds are unspecified. Both identify the same gap: the
+      paper fails to explain how CRPO works and what parameters it uses. Same fix required.
+
+  - official_id: O13
+    agentic_id: A3
+    match_type: partial
+    issue: "Theoretical assumptions insufficiently justified"
+    judgment_alignment: aligned
+    severity_alignment: match  # O13=major, A3=major → gap 0
+    rationale: >-
+      Both flag assumptions as lacking justification, but target different specific
+      assumptions. O13 concerns Theorem 3.3's two regret upper bound placeholders
+      (E_T^opt and U_T^pi); A3 concerns task-similarity, task-relatedness, and
+      inexactness assumptions. Same complaint family (unjustified assumptions) but
+      different scope — fixing one does not necessarily fix the other.
+
+  - official_id: O6
+    agentic_id: A6
+    match_type: partial
+    issue: "Theoretical framework presentation lacks clarity and sufficient detail"
+    judgment_alignment: aligned
+    severity_alignment: match  # O6=major, A6=major → gap 0
+    rationale: >-
+      O6 flags that "theoretical analysis is not always clear" with confusing notation
+      making the paper hard to read for non-CRPO experts. A6 says the framework "lacks
+      detail on specific algorithms for deriving inexact optimal policies and approximate
+      state visitation distributions." Both indicate the reader cannot understand the
+      framework, but O6 is about clarity of existing content while A6 is about missing
+      algorithmic content. Partial because the complaints overlap in effect (reader
+      confusion) but differ in remedy (cleaner notation vs more detail).
+
+  - official_id: O4
+    agentic_id: A4
+    match_type: partial
+    issue: "Insufficient comparison with and positioning against prior safe RL works"
+    judgment_alignment: aligned
+    severity_alignment: match  # O4=minor, A4=moderate → gap +1, within tolerance
+    rationale: >-
+      O4 asks specifically about the relation to the safe policy improvement problem
+      (Thomas et al.) — a targeted missing comparison. A4 broadly flags "insufficient
+      comparison with and differentiation from specific prior works in safe RL and
+      meta-learning." A4 is a broad concern; O4 is a specific instance of it. Partial
+      because A4 subsumes O4 but is much wider in scope.
+
+  - official_id: O2
+    agentic_id: A7
+    match_type: partial
+    issue: "Meta-initialization policy specification and justification"
+    judgment_alignment: aligned
+    severity_alignment: match  # O2=moderate, A7=moderate → gap 0
+    rationale: >-
+      O2 questions whether the meta-initialization policy can guarantee safety from the
+      first step and challenges the full-support assumption. A7 says the criteria for
+      meta-initialization policy and KL divergence parameters are not clearly specified.
+      Both concern meta-initialization but from different angles: O2 is a conceptual
+      safety concern, A7 is a reproducibility/specification concern. Partial because
+      both target the same component but identify different defects.
+
+  # ── Related matches (near-misses) ─────────────────────────────
+
+  - official_id: O1
+    agentic_id: A9
+    match_type: related
+    issue: "Experimental evaluation insufficiency"
+    judgment_alignment: aligned
+    severity_alignment: n/a
+    rationale: >-
+      O1 (raised by all three reviewers) says experiments are "very sparse" with too
+      few environments — wants more environments like Mujoco. A9 says the experimental
+      setup "lacks comprehensive description of task variations and evaluation metrics."
+      Both are about experimental shortcomings but require different author fixes: O1
+      needs additional experiments; A9 needs better documentation of existing experiments.
+      The agentic system noticed experimental weakness but diagnosed a different specific
+      problem.
+
+  - official_id: O15
+    agentic_id: A3
+    match_type: related
+    issue: "Assumption clarification needed"
+    judgment_alignment: aligned
+    severity_alignment: n/a
+    rationale: >-
+      O15 asks for clarification of Assumption 2 (o-minimal structure) — a specific
+      mathematical assumption. A3 flags task-similarity, task-relatedness, and
+      inexactness assumptions as unstated and unjustified. Both are about assumption
+      clarity but target entirely different assumptions. A3 already has a stronger
+      partial match with O13.
+
+  - official_id: O18
+    agentic_id: A4
+    match_type: related
+    issue: "Novelty and contribution positioning"
+    judgment_alignment: aligned
+    severity_alignment: n/a
+    rationale: >-
+      O18 says "the proposed meta learning method combines existing RL algorithms...
+      novelty is only marginally significant." A4 says there is "insufficient comparison
+      with and differentiation from specific prior works." Both touch novelty/positioning
+      but O18 is a direct novelty criticism (contribution is incremental) while A4 is a
+      related-work discussion gap. Per false match pattern #1, misrepresenting or
+      under-discussing prior work (A4) is distinct from the novelty judgment itself (O18).
+
+positive_factor_matches:
+  # This paper was accepted as ICLR 2023 Spotlight.
+  # Official pro_accept drivers: D1, D2, D3. (D4, D5 are pro_reject.)
+
+  - official_factor_id: D1
+    agentic_source: mention
+    agentic_text: >-
+      M1: "Novel CMDP-within-online framework that effectively integrates
+      task-similarity and task-relatedness into meta-reinforcement learning."
+    match_type: exact
+    judgment_alignment: aligned
+    rationale: >-
+      D1 identifies the "highly innovative" CMDP-within-online framework as a decisive
+      pro-accept factor. M1 explicitly acknowledges the framework as a "novel" contribution.
+      Both recognize the same specific innovation. However, the agentic system listed this
+      only as a mention (not weighted against concerns) and ultimately rejected the paper.
+
+  - official_factor_id: D2
+    agentic_source: mention
+    agentic_text: >-
+      M2: "Addresses the significant challenge of constraint violations in
+      real-world applications of meta-RL."
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >-
+      D2 combines two sub-claims: safe RL is "very important" AND the framework is
+      practical (only requires inexact sub-CMDP solutions). M2 captures the problem
+      importance aspect but does not mention the practical applicability angle. Partial
+      because only the importance claim is matched.
+
+  - official_factor_id: D3
+    agentic_source: none
+    agentic_text: null
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >-
+      D3 highlights the specific practical advantage that the framework "relies only on
+      inexact solutions, making it applicable without requiring optimal policy access."
+      No agentic mention, decision driver, or above-the-line reason captures this specific
+      practical relaxation. M3 acknowledges theoretical guarantees are well-justified but
+      does not identify the inexact-solutions practical advantage. The agentic system
+      missed this key AC driver.
+
+# ── Unmatched concerns ──────────────────────────────────────────
+# Official concerns with NO strict (exact/partial) match edge.
+# Related-only matches still count as strict-unmatched.
+
+unmatched_official:
+  - O1   # Sparse experiments / too few environments (related-only with A9)
+  - O3   # Safety constraints should adapt to shifting environments
+  - O5   # Simplified CRPO restricts applicability
+  - O8   # Analysis is composition of existing techniques (DualDICE+CRPO)
+  - O9   # Assumptions/techniques introduced mid-paper without clear explanation
+  - O10  # Ethics/fairness discussion needed for meta-learning with fairness constraints
+  - O11  # Static regret inappropriate metric for meta-learning
+  - O12  # Specific notation unclear (V_{M_t}, pi*)
+  - O14  # Only frozen lake and acrobot; no Mujoco experiments
+  - O15  # Assumption 2 (o-minimal structure) needs clarification (related-only with A3)
+  - O16  # Why DualDICE and not offline CMDP algorithms
+  - O17  # Writing unclear, claims vague or ambiguous
+  - O18  # Novelty only marginally significant (related-only with A4)
+  - O19  # Citation/cluster format issues
+
+# Agentic concerns with NO strict (exact/partial) match edge.
+# These are phantom concerns (not raised by official reviewers).
+
+unmatched_agentic:
+  - A1   # Missing statistical significance tests (no official reviewer asked for this)
+  - A2   # Missing component ablation study (no official reviewer asked for ablation)
+  - A5   # Motivations not linked to real-world applications
+  - A9   # Experimental setup description insufficient (related-only with O1)

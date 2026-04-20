@@ -1,0 +1,160 @@
+schema_version: "v1"
+paper: "beyond_problem_solving"
+version: "baseline"
+method: "baseline"
+verdict: "REJECT"
+score: null
+
+decision_drivers:
+  - id: "R1"
+    polarity: "pro_reject"
+    text: "No baseline or prior-work comparisons to contextualize the framework's effectiveness against existing LLM critical-thinking benchmarks."
+    evidence: "review.md 'Experiments Proofs' refined comment #1; 'Novelty Impact' refined comment #4"
+    linked_concern_ids: ["A1"]
+  - id: "R2"
+    polarity: "pro_reject"
+    text: "Core framework (Hierarchical Three-Space Theory) insufficiently explained — interactions between spaces unclear, no diagrams or worked examples."
+    evidence: "review.md 'Novelty Impact' refined comment #1; 'Clarity Reproducibility' refined comment #1"
+    linked_concern_ids: ["A4"]
+  - id: "R3"
+    polarity: "pro_reject"
+    text: "Experimental design lacks reproducibility detail — question modification criteria, dataset preprocessing, and selection procedures unspecified."
+    evidence: "review.md 'Clarity Reproducibility' refined comments #2, #4"
+    linked_concern_ids: ["A5"]
+
+mentions:
+  - id: "M1"
+    polarity: "pro_accept"
+    text: "Novel framework (Hierarchical Three-Space Theory) for evaluating LLM critical thinking — a new angle beyond standard problem-solving benchmarks."
+    evidence: "review.md 'Experiments Proofs' refined comment preamble; 'Novelty Impact' refined comment #1"
+    note: "Novelty acknowledged but not treated as decisive — framework clarity concerns dominate."
+  - id: "M2"
+    polarity: "pro_accept"
+    text: "Comprehensive evaluation across multiple domains (mathematics, physics, logical inference)."
+    evidence: "review.md 'Experiments Proofs' step 2b summary point 2"
+    note: "Breadth of domains noted positively but does not offset missing baselines."
+  - id: "M3"
+    polarity: "pro_accept"
+    text: "Introduces useful new metrics (Problem-Solving Rate, Applied Critical Thinking Rate, Inherent Critical-Thinking Rate)."
+    evidence: "review.md 'Experiments Proofs' step 2b summary point 2; 'Experiments Proofs' refined comment preamble"
+    note: "Metric contribution acknowledged but metric definitions found insufficiently specified."
+  - id: "M4"
+    polarity: "pro_accept"
+    text: "Motivations for evaluating critical thinking in LLMs are well-articulated."
+    evidence: "review.md 'Novelty Impact' refined comment #6"
+    note: "Clear motivation but concrete examples and case studies requested."
+
+concerns:
+  - id: "A1"
+    text: "No baseline or prior-work comparisons — the proposed framework is not empirically compared with any existing LLM critical thinking benchmarks or evaluation methods."
+    severity:
+      level: "major"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "'Experiments Proofs' refined comment #1 (baseline comparisons); 'Novelty Impact' refined comment #4 (comparison with existing work)"
+    decisive: true
+    tags: ["missing_baselines", "evaluation_gap"]
+    dimension_impact: ["D"]
+
+  - id: "A2"
+    text: "No ablation studies to isolate contributions of individual components or strategies within the framework."
+    severity:
+      level: "major"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "'Experiments Proofs' refined comment #2"
+    decisive: false
+    tags: ["missing_ablation", "methodology"]
+    dimension_impact: ["E"]
+
+  - id: "A3"
+    text: "Hypotheses about strategy-space interaction and inconsistency difficulty are stated but lack detailed analysis or supporting evidence."
+    severity:
+      level: "moderate"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "'Experiments Proofs' refined comment #3; step 2b summary point 4"
+    decisive: false
+    tags: ["insufficient_analysis", "unsupported_claims"]
+    dimension_impact: ["E"]
+
+  - id: "A4"
+    text: "Hierarchical Three-Space Theory is poorly explained — the interaction between Problem Framing Space, Strategy Space, and Implementation Space is unclear with no diagrams or case studies."
+    severity:
+      level: "major"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "'Novelty Impact' refined comment #1; 'Clarity Reproducibility' refined comment #1"
+    decisive: true
+    tags: ["clarity", "framework_underspecified"]
+    dimension_impact: ["G"]
+
+  - id: "A5"
+    text: "Experimental design lacks reproducibility detail — no criteria for question selection, no systematic modification guidelines, no preprocessing steps for datasets (GSM8K, SVAMP, etc.)."
+    severity:
+      level: "major"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "'Novelty Impact' refined comment #2; 'Clarity Reproducibility' refined comments #2, #4"
+    decisive: true
+    tags: ["reproducibility", "missing_details"]
+    dimension_impact: ["H"]
+
+  - id: "A6"
+    text: "Tables and figures are not reader-friendly — inconsistent labeling and ordering across tables, no summary of key insights."
+    severity:
+      level: "minor"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_minor"
+    source_detail: "'Novelty Impact' refined comment #5"
+    decisive: false
+    tags: ["presentation", "clarity"]
+    dimension_impact: ["G"]
+
+  - id: "A7"
+    text: "Evaluation metrics and behavioral categories not fully defined — terms like 'Wrong Gaslight,' 'Right Gaslight,' 'Both Gaslight' introduced without formal definitions, and metric thresholds/calculation methods unspecified."
+    severity:
+      level: "moderate"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "'Clarity Reproducibility' refined comments #3, #5"
+    decisive: false
+    tags: ["undefined_metrics", "clarity"]
+    dimension_impact: ["D", "G"]
+
+  - id: "A8"
+    text: "Model inference hyperparameter choices (temperature, max_tokens) are reported but not justified — no sensitivity analysis or discussion of their impact on results."
+    severity:
+      level: "minor"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_minor"
+    source_detail: "'Clarity Reproducibility' refined comment #6"
+    decisive: false
+    tags: ["hyperparameters", "missing_justification"]
+    dimension_impact: ["H"]
+
+  - id: "A9"
+    text: "Discussion section lacks depth — insufficient exploration of implications, future research directions, and real-world applications of findings."
+    severity:
+      level: "minor"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_minor"
+    source_detail: "'Novelty Impact' refined comment #3; 'Experiments Proofs' refined comment #4"
+    decisive: false
+    tags: ["shallow_discussion", "limited_analysis"]
+    dimension_impact: ["A"]
+
+method_specific:
+  system: "MARG (Multi-Agent Review Generation) with GPT-4o"
+  run: "run_1"
+  note: "Baseline system output — no gates, scorecard, or adversarial brief. Verdict inferred from cumulative critique tone (no explicit accept/reject stated). Review is structured as three parallel agent sections (Experiments Proofs, Novelty Impact, Clarity Reproducibility) with significant redundancy across sections."
+  explicit_verdict_given: false

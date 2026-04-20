@@ -1,0 +1,136 @@
+schema_version: "v1"
+paper: "cmdp_meta_safe_rl"
+version: "baseline"
+method: "baseline"
+verdict: "REJECT"
+score: null
+
+decision_drivers:
+  - id: "R1"
+    polarity: "pro_reject"
+    text: "Factor-of-M discrepancy between per-task regret bound and meta-algorithm loss function propagates to Theorem 3.3 and Corollary 1, invalidating the claimed convergence rate."
+    evidence: "Overall Feedback: 'Most critically, there is a factor-of-M discrepancy between the per-task regret bound...which propagates to Theorem 3.3 and Corollary 1'; Comment 1"
+    linked_concern_ids: ["A1"]
+  - id: "R2"
+    polarity: "pro_reject"
+    text: "Multiple corroborating technical errors (wrong constraint bound direction, abstract/theorem mismatch, incorrect approximation) collectively undermine confidence in the theoretical claims."
+    evidence: "Overall Feedback: 'the paper contains several technical errors that undermine confidence in the stated results...they require careful revision before the theoretical claims can be fully trusted'"
+    linked_concern_ids: ["A2", "A3", "A4"]
+
+mentions:
+  - id: "M1"
+    polarity: "pro_accept"
+    text: "Novel and theoretically interesting CMDP-within-online framework for meta-safe RL extending ARUBA-style meta-learning to constrained MDPs."
+    evidence: "Overall Feedback: 'This paper introduces a novel and theoretically interesting CMDP-within-online framework for meta-safe reinforcement learning'"
+    note: "Acknowledged novelty but not weighted against technical errors."
+  - id: "M2"
+    polarity: "pro_accept"
+    text: "Key ideas (stationary distribution corrections, tame geometry for estimation error bounds, adaptive learning rates) are creative and well-motivated."
+    evidence: "Overall Feedback: 'The key ideas...are creative and well-motivated'"
+    note: "Positive assessment of approach, but non-compensatory against correctness issues."
+  - id: "M3"
+    polarity: "pro_accept"
+    text: "Underlying framework and proof strategy appear sound; errors seem correctable with careful revision."
+    evidence: "Overall Feedback: 'the underlying framework and proof strategy appear sound and the errors seem correctable'"
+    note: "Suggests the work has merit but needs revision, not sufficient to override rejection."
+
+concerns:
+  - id: "A1"
+    text: "Equation (5) defines the meta-algorithm loss as M times the actual per-task regret bound from Lemma 21/Equation (2), causing Theorem 3.3 to be off by a factor of M and changing the claimed convergence rate in Corollary 1."
+    severity:
+      level: "fatal"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "Comment 1; also referenced as 'most critically' in Overall Feedback"
+    decisive: true
+    tags: ["mathematical_error", "proof_validity", "convergence_rate"]
+    dimension_impact: []
+
+  - id: "A2"
+    text: "Lemma 4 item 3 bounds the constraint cost in the wrong direction, providing a lower bound on the learned policy's cost when an upper bound is needed for the constraint violation bound."
+    severity:
+      level: "major"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "Comment 2"
+    decisive: true
+    tags: ["mathematical_error", "proof_validity"]
+    dimension_impact: []
+
+  - id: "A3"
+    text: "Abstract states a regret rate that does not match Theorem 3.2: the expressions inside the square root differ in two ways (E_T/sqrt(T) vs E_T/T, and missing 1/sqrt(T) term), misrepresenting the formal result."
+    severity:
+      level: "major"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "Comment 3"
+    decisive: true
+    tags: ["claim_evidence_mismatch", "presentation"]
+    dimension_impact: []
+
+  - id: "A4"
+    text: "Proof of Corollary 3 uses an incorrect asymptotic approximation: sqrt(1/(M+sqrt(M))) approx 1/M^{1/4} is M^{1/4} times looser than the actual value 1/sqrt(M), affecting the claimed improvement from 1/sqrt(M) to 1/M^{3/4}."
+    severity:
+      level: "major"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "Comment 4; linked to Comment 1 factor-of-M issue"
+    decisive: true
+    tags: ["mathematical_error", "proof_validity", "convergence_rate"]
+    dimension_impact: []
+
+  - id: "A5"
+    text: "Remark 2 drops path-length terms (S_T, P_T) from the Corollary 1 bound without justification or noting conditions under which they are negligible, potentially misleading about when the adaptive improvement holds."
+    severity:
+      level: "moderate"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "Comment 5"
+    decisive: false
+    tags: ["missing_justification", "presentation"]
+    dimension_impact: []
+
+  - id: "A6"
+    text: "Cost function arity inconsistency: c_{t,i} is defined on S x A but the value function uses c_{t,i}(s_m, a_m, s_{m+1}) with three arguments."
+    severity:
+      level: "minor"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_minor"
+    source_detail: "Comment 6"
+    decisive: false
+    tags: ["notation", "presentation"]
+    dimension_impact: []
+
+  - id: "A7"
+    text: "Humanoid low-similarity setting states the same goal direction range [-pi/4, pi/4] as the high-similarity setting, likely a copy-paste error."
+    severity:
+      level: "minor"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_minor"
+    source_detail: "Comment 7"
+    decisive: false
+    tags: ["experimental_description", "presentation"]
+    dimension_impact: []
+
+  - id: "A8"
+    text: "Proof of Corollary 3 has a missing square in the derivative: dL/d_kappa uses V_hat_psi instead of V_hat_psi^2, though the final kappa* formula is correct."
+    severity:
+      level: "minor"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_minor"
+    source_detail: "Comment 8"
+    decisive: false
+    tags: ["typo", "proof_validity"]
+    dimension_impact: []
+
+method_specific:
+  source_system: "baseline_openaireview"
+  note: "Extracted from a single review.md with no summary.yaml, gates, scorecard, or adversarial_brief. Verdict inferred from review language ('require careful revision before the theoretical claims can be fully trusted')."

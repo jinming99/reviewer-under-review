@@ -1,0 +1,213 @@
+schema_version: "v1"
+paper: "adversarial_dejavu"
+version: "v0.9.2"
+condition: "own_group/ai_scientist_run1"
+method: "baseline_ai_scientist"
+
+# ============================================================
+# Concern Match Graph: adversarial_dejavu
+# Official (22 concerns) vs AI Scientist baseline (9 concerns)
+# ============================================================
+
+matches:
+  # ----------------------------------------------------------
+  # Match 1: GPT-4.1 circularity / evaluator bias
+  # ----------------------------------------------------------
+  - official_id: O11
+    agentic_id: A1
+    match_type: exact
+    issue: "GPT-4.1 used for both skill extraction and evaluation creates circular bias risk"
+    judgment_alignment: aligned
+    severity_alignment: match  # both major
+    rationale: >
+      Both identify the same specific issue: GPT-4.1 serves as skill extractor, dictionary atom
+      interpreter, and explainability judge, creating circularity/bias. O11 frames as "bias or
+      leakage"; A1 frames as "circularity." Same fix (independent judge) resolves both.
+
+  # ----------------------------------------------------------
+  # Match 2: Attack evaluation scope
+  # ----------------------------------------------------------
+  - official_id: O2
+    agentic_id: A2
+    match_type: partial
+    issue: "Attack evaluation scope insufficient for generalizability claims"
+    judgment_alignment: aligned
+    severity_alignment: match  # both major
+    rationale: >
+      Both flag weaknesses in attack evaluation coverage, but from different angles. O2 identifies
+      missing specific representative baselines (BEAST, SAA); A2 flags that only 6 post-cutoff
+      attacks is too small a sample and they may share strategies due to community conventions.
+      Different fixes: O2 needs specific baselines added, A2 needs more unseen attacks overall.
+
+  # ----------------------------------------------------------
+  # Match 3: Multi-turn generalization via GALA
+  # ----------------------------------------------------------
+  - official_id: O13
+    agentic_id: A6
+    match_type: exact
+    issue: "Multi-turn generalization claim weakly supported by single GALA attack"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: moderate (gap 1, within tolerance)
+    rationale: >
+      Both identify that multi-turn claims rest on GALA alone and are insufficient. O13
+      additionally wants mechanism analysis and a multi-turn extraction pipeline; A6 focuses
+      on the single-attack sample size. Both reduce to the same core complaint: the multi-turn
+      story is undercooked. Addressing multi-turn comprehensively fixes both.
+
+  # ----------------------------------------------------------
+  # Match 4: Training data component ablation
+  # ----------------------------------------------------------
+  - official_id: O20
+    agentic_id: A5
+    match_type: exact
+    issue: "Training dataset component contributions not isolated via ablation"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: moderate, agentic: major (gap 1, within tolerance)
+    rationale: >
+      Both request the same thing: ablation experiments isolating the marginal contribution of
+      each training data component (adversarial compositions, benign data, over-refusal queries,
+      harmful datasets). O20 uses "justifying the need for each of the components"; A5 says
+      "relative contributions...are not isolated." Same gap, same fix.
+
+  # ----------------------------------------------------------
+  # Match 5: Missing control experiments (broader ablation)
+  # ----------------------------------------------------------
+  - official_id: O12
+    agentic_id: A5
+    match_type: partial
+    issue: "Missing control experiments to attribute ASCoT's gains"
+    judgment_alignment: aligned
+    severity_alignment: match  # both major
+    rationale: >
+      O12 requests four specific controls (random skill training, harmful-data-only,
+      swapping helper generator, removing refusal-template pairing). A5 requests data
+      component isolation (adversarial, benign, over-refusal, harmful). There is overlap
+      (both want ablation disentangling ASCoT's gains), but O12 includes controls beyond
+      data composition (e.g., helper generator swap) while A5 focuses on data mix.
+
+  # ----------------------------------------------------------
+  # Match 6: Skill extraction pipeline reliability (related)
+  # ----------------------------------------------------------
+  - official_id: O9
+    agentic_id: A8
+    match_type: related
+    issue: "Skill extraction/evaluation pipeline reliability questioned"
+    judgment_alignment: n/a
+    severity_alignment: n/a
+    rationale: >
+      Both question the reliability of the extraction/evaluation pipeline but target
+      different aspects. O9 questions whether prompt-based extraction produces stable
+      skills; A8 questions whether the explainability plateau in Figure 3 reflects LLM
+      evaluation ceiling effects rather than genuine saturation. Different issues requiring
+      different evidence to resolve.
+
+# ============================================================
+# Positive Factor Matches (paper accepted)
+# ============================================================
+positive_factor_matches:
+  - official_factor_id: D1
+    agentic_source: decision_driver
+    agentic_text: >
+      Novel and useful conceptual framework -- the Adversarial Deja Vu hypothesis
+      reframes jailbreak evolution as recombination of known adversarial skills.
+    match_type: exact
+    judgment_alignment: aligned
+    rationale: >
+      D1 and R1 both identify the Adversarial Deja Vu hypothesis as the paper's
+      central novel contribution with broad implications for the jailbreaking community.
+
+  - official_factor_id: D2
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >
+      D2 praises the principled DL-based pipeline and LLM-augmented basis pursuit as
+      technically novel ("smart"). No agentic pro_accept factor specifically recognizes
+      the DL methodology itself; the agentic review praises the hypothesis (R1) and
+      empirical results (R2) but not the DL pipeline design.
+
+  - official_factor_id: D3
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >
+      D3 is about Q4KG's score reversal from 2 to 6 post-rebuttal. This is a review
+      process event not observable from the paper itself.
+
+  - official_factor_id: D4
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >
+      D4 is about post-discussion reviewer consensus (all at 6+). This is a review
+      process outcome not observable from the paper.
+
+  - official_factor_id: D5
+    agentic_source: decision_driver
+    agentic_text: >
+      Strong empirical results across three model families with competitive
+      robustness against unseen attacks and favorable over-refusal rates.
+    match_type: exact
+    judgment_alignment: aligned
+    rationale: >
+      D5 highlights ASCoT's robustness improvements with low over-refusal; R2
+      captures the same empirical strength. Both recognize the core empirical
+      contribution as a key merit. D5 also mentions control experiments added
+      during rebuttal, which the agentic system partially captures via M4
+      (random skill subset control).
+
+  - official_factor_id: D6
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >
+      D6 is the AC's holistic judgment that merits outweigh gaps. This is a
+      post-discussion meta-assessment, not a specific observable factor.
+
+  - official_factor_id: D7
+    agentic_source: mention
+    agentic_text: >
+      Well-conceived temporal cutoff study design with monotonically increasing
+      explanatory power across multiple seen/unseen partitions.
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >
+      D7 highlights the dictionary's independent value as a novelty measurement
+      tool for new jailbreaks. M1 recognizes the temporal study design that
+      demonstrates this capability, but frames it as methodological quality rather
+      than the broader practical utility the AC emphasizes.
+
+# ============================================================
+# Unmatched concerns
+# ============================================================
+
+# Official concerns with no strict (exact/partial) agentic match.
+# 17 of 22 official concerns are unmatched -- expected given the AI Scientist
+# reviewer produced only 9 concerns vs 22 official concerns from 4 reviewers + AC.
+unmatched_official:
+  - O1   # Too few base models (2 LLM families) -- no agentic concern about model coverage
+  - O3   # StrongReject metric definition unclear -- no agentic concern about metric details
+  - O4   # Skill extraction overlaps with AutoDAN-Turbo -- no agentic concern about prior work novelty
+  - O5   # Paper format violation (width) -- no agentic concern about formatting
+  - O6   # Lacks concrete skill composition examples -- no agentic concern
+  - O7   # AutoDAN-Turbo resemblance / incremental contribution -- no agentic concern
+  - O8   # AutoDAN-Turbo as unseen attack fairness -- no agentic concern about temporal cutoff fairness
+  - O9   # Stability of automated skill extraction -- related-only match with A8, strict-unmatched
+  - O10  # Dictionary from subset + verification gap -- no agentic concern about subset ablation
+  - O14  # Missing statistics / variance / CIs -- no agentic concern about variance reporting
+  - O15  # Comparison to skill-mix methods -- no agentic concern about positioning
+  - O16  # D_over notation undefined -- no agentic concern about notation
+  - O17  # CAT*/LAT* 40K sample details -- no agentic concern about baseline details
+  - O18  # Skills from GCG unclear -- no agentic concern about non-language attacks
+  - O19  # DL advantages over clustering not shown -- no agentic concern about DL justification
+  - O21  # ALO metric not reported -- no agentic concern about metric alternatives
+  - O22  # Is DL truly necessary vs clustering -- no agentic concern about DL necessity
+
+# Agentic concerns with no strict (exact/partial) official match.
+# 5 of 9 agentic concerns are unmatched (phantom concerns).
+unmatched_agentic:
+  - A3   # Linear composition assumption insufficiently validated -- unique to agentic
+  - A4   # Tautology risk if skills too generic -- unique to agentic
+  - A7   # Adaptive adversary targeting dictionary gaps -- unique to agentic
+  - A8   # Explainability plateau as LLM ceiling effect -- related-only to O9, strict-unmatched
+  - A9   # Defense upper-bounded by frontier LLM capabilities -- unique to agentic

@@ -1,0 +1,319 @@
+schema_version: "v1"
+paper: rl_backtracking_feedback
+version: baseline
+method: baseline
+verdict: REJECT
+score: null
+
+decision_drivers:
+  - id: R1
+    polarity: pro_reject
+    text: >
+      Insufficient empirical evidence and comparative analysis to substantiate
+      claims of RLBF's superiority in reducing attack success rates and
+      preserving model utility.
+    evidence: >
+      Experiments Proofs refined comment point 2; Novelty Impact refined
+      comment point 1; Novelty Impact updated comment point 10
+    linked_concern_ids: [A1, A13]
+
+  - id: R2
+    polarity: pro_reject
+    text: >
+      Absence of error bars or statistical significance measures limits
+      assessment of the reliability and variability of reported results.
+    evidence: >
+      Experiments Proofs refined comment point 5; Novelty Impact refined
+      comment point 1 ("error bars or measures of statistical significance")
+    linked_concern_ids: [A2]
+
+  - id: R3
+    polarity: pro_reject
+    text: >
+      Code and data not available; reproducibility cannot be independently
+      verified.
+    evidence: >
+      Experiments Proofs refined comment point 4-5; Novelty Impact refined
+      comment point 5; Clarity Reproducibility refined comment point 5
+    linked_concern_ids: [A5]
+
+mentions:
+  - id: M1
+    polarity: pro_accept
+    text: >
+      RLBF is acknowledged as a novel approach to enhancing LLM safety
+      against adversarial attacks and in-distribution errors.
+    evidence: >
+      Novelty Impact refined comment intro ("novel approach"); Clarity
+      Reproducibility refined comment intro ("significant contribution")
+    note: >
+      The review consistently frames RLBF as innovative but does not treat
+      novelty as sufficient to overcome the empirical and reproducibility
+      concerns.
+
+  - id: M2
+    polarity: pro_accept
+    text: >
+      The paper's discussion of societal impacts is described as commendable.
+    evidence: >
+      Novelty Impact updated refined comment point 6
+    note: >
+      Acknowledged positively but qualified with a request for more
+      comprehensive mitigation strategies.
+
+  - id: M3
+    polarity: pro_accept
+    text: >
+      The backtracking mechanism is recognized as a significant contribution
+      to enhancing LLM safety.
+    evidence: >
+      Clarity Reproducibility refined comment point 1
+    note: >
+      Praised conceptually but criticized for insufficient explanation of
+      operational details.
+
+concerns:
+  - id: A1
+    text: >
+      Insufficient empirical evidence and comparative analysis to support
+      claims of RLBF's superiority over existing safety methods.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: >
+      Experiments Proofs refined comment point 2; Novelty Impact refined
+      comment point 1; Novelty Impact updated comment point 10
+    decisive: true
+    tags: [empirical_gap, baseline_comparison]
+    dimension_impact: [D, F]
+
+  - id: A2
+    text: >
+      No error bars or statistical significance tests reported; reliability
+      and variability of results cannot be assessed.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: >
+      Experiments Proofs refined comment point 5; Novelty Impact refined
+      comment point 1
+    decisive: true
+    tags: [statistical_rigor]
+    dimension_impact: [D]
+
+  - id: A3
+    text: >
+      Backtracking mechanism insufficiently explained; criteria for
+      identifying safety violations and the correction process are unclear;
+      needs flowcharts or worked examples under adversarial conditions.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: >
+      Novelty Impact refined comment point 2; Clarity Reproducibility
+      refined comment point 1
+    decisive: false
+    tags: [clarity, method_description]
+    dimension_impact: [G]
+
+  - id: A4
+    text: >
+      Computational demands and deployment challenges of the RLBF
+      backtracking process are not discussed.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: >
+      Experiments Proofs refined comment point 3; Novelty Impact refined
+      comment point 2
+    decisive: false
+    tags: [scalability, practical_applicability]
+    dimension_impact: [F]
+
+  - id: A5
+    text: >
+      Code and data not available; code release promised only upon
+      acceptance, limiting independent reproducibility verification.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: >
+      Experiments Proofs refined comment points 4-5; Novelty Impact refined
+      comment point 5; Clarity Reproducibility refined comment point 5
+    decisive: true
+    tags: [reproducibility, open_access]
+    dimension_impact: [H]
+
+  - id: A6
+    text: >
+      No theoretical results or formal backing provided for the RLBF
+      approach.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: >
+      Experiments Proofs refined comment point 4
+    decisive: false
+    tags: [theoretical_gap]
+    dimension_impact: [E]
+
+  - id: A7
+    text: >
+      Integration of SFT data into the RL process and the role of the LLM
+      safety critic are not well explained; reward function effectiveness
+      unclear.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: >
+      Novelty Impact refined comment point 3; Clarity Reproducibility
+      refined comment points 2-3
+    decisive: false
+    tags: [clarity, method_description]
+    dimension_impact: [E, G]
+
+  - id: A8
+    text: >
+      Insufficient evidence for claimed generalization and scalability of
+      RLBF across different LLMs and tasks.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: >
+      Novelty Impact updated refined comment point 7
+    decisive: false
+    tags: [generalization, empirical_gap]
+    dimension_impact: [F]
+
+  - id: A9
+    text: >
+      Missing real-world prevalence data or impact statistics to justify the
+      need for RLBF over existing methods.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: >
+      Novelty Impact updated refined comment point 8
+    decisive: false
+    tags: [motivation, problem_framing]
+    dimension_impact: [A]
+
+  - id: A10
+    text: >
+      No method proposed for validating the accuracy of feedback data used
+      in the RLBF feedback loop.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: >
+      Novelty Impact updated refined comment point 9
+    decisive: false
+    tags: [method_validity]
+    dimension_impact: [D, E]
+
+  - id: A11
+    text: >
+      Experimental settings lack detail: LMSYS-MF benchmark definitions,
+      Middle Filling attack implementations, and specific hyperparameters
+      not provided.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: >
+      Clarity Reproducibility refined comment point 4
+    decisive: false
+    tags: [reproducibility, experimental_detail]
+    dimension_impact: [D, H]
+
+  - id: A12
+    text: >
+      No framework provided for defining "harmful" content, which is
+      central to the paper's safety focus.
+    severity:
+      level: minor
+      addressability: addressable
+      mechanism: none
+    source: review_minor
+    source_detail: >
+      Novelty Impact updated refined comment point 11
+    decisive: false
+    tags: [definition_gap, scope]
+    dimension_impact: [A, G]
+
+  - id: A13
+    text: >
+      Deeper mechanistic analysis needed to explain why RLBF outperforms
+      existing methods, beyond reporting performance numbers.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: >
+      Novelty Impact updated refined comment point 10
+    decisive: false
+    tags: [mechanistic_insight, causal_understanding]
+    dimension_impact: [E]
+
+  - id: A14
+    text: >
+      Ethical considerations for generating harmful content during testing
+      not explicitly addressed.
+    severity:
+      level: minor
+      addressability: addressable
+      mechanism: none
+    source: review_minor
+    source_detail: >
+      Novelty Impact refined comment point 4
+    decisive: false
+    tags: [ethics]
+    dimension_impact: [A]
+
+  - id: A15
+    text: >
+      Discussion of societal impacts lacks concrete mitigation strategies
+      for potential negative consequences.
+    severity:
+      level: minor
+      addressability: addressable
+      mechanism: none
+    source: review_minor
+    source_detail: >
+      Novelty Impact updated refined comment point 6
+    decisive: false
+    tags: [societal_impact]
+    dimension_impact: [A]
+
+method_specific:
+  system: marg_gpt4o
+  run: run_1
+  note: >
+    MARG multi-agent baseline system. Review has three sections (Experiments
+    Proofs, Novelty Impact, Clarity Reproducibility), each with iteratively
+    refined comments from agent discussions. No explicit accept/reject verdict
+    stated; inferred as REJECT from the volume and severity of unresolved
+    concerns and absence of any accept recommendation language. No numerical
+    score produced by this system.

@@ -1,0 +1,140 @@
+schema_version: "v1"
+paper: "collabllm"
+version: "own_group/liang_run1"
+method: "baseline"
+
+matches:
+  # ============================================================
+  # O9 ↔ A3: Simulated vs real user divergence
+  # ============================================================
+  - official_id: "O9"
+    agentic_id: "A3"
+    match_type: "exact"
+    issue: "User simulator fidelity and sim-to-real gap insufficiently validated"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # official=moderate, agentic=major → ±1 level = match
+    rationale: "Both identify the gap between simulated LLM users and real human users as a core concern. O9 flags bias in prompt-defined LLM users; A3 flags lack of quantitative sim-to-real gap measures and ablation over simulator quality. Same underlying issue, same normative conclusion."
+
+  # ============================================================
+  # O20 ↔ A3: Simulator model choice and quality
+  # ============================================================
+  - official_id: "O20"
+    agentic_id: "A3"
+    match_type: "partial"
+    issue: "User simulator model choice and quality validation"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # official=moderate, agentic=major → ±1 level = match
+    rationale: "O20 questions why GPT-4o is used instead of self-play and asks about feasibility without a stronger model. A3 flags missing ablation over simulator model quality. Same issue family (simulator quality) but different specific sub-questions: O20 focuses on model choice rationale and self-play, A3 on quantitative validation and overfitting risk."
+
+  # ============================================================
+  # O21 ↔ A1: Missing quantitative comparison with multi-turn RL methods
+  # ============================================================
+  - official_id: "O21"
+    agentic_id: "A1"
+    match_type: "exact"
+    issue: "Missing empirical comparison with prior multi-turn RL training methods (MTPO, ArCHer)"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # official=moderate, agentic=major → ±1 level = match
+    rationale: "Both specifically flag the absence of quantitative comparison with MTPO and ArCHer. O21 notes no empirical advantage is demonstrated; A1 lists MTPO, ArCHer, DMPO, STaR-GATE as missing baselines. Same specific complaint."
+
+  # ============================================================
+  # O15 ↔ A2: ITR metric concerns
+  # ============================================================
+  - official_id: "O15"
+    agentic_id: "A2"
+    match_type: "partial"
+    issue: "ITR interactivity metric scoring methodology is questionable"
+    judgment_alignment: "aligned"
+    severity_alignment: "over"  # official=minor, agentic=major → 2 levels apart = over
+    rationale: "Both target the ITR scoring methodology. O15 asks for clarity on how scoring is performed (LLM judge, rescaling). A2 goes further, framing the ITR metric as part of a broader LLM-judge circularity problem and calling the weighting/rescaling ad hoc. Same component but different complaint depth: O15 is a clarity request, A2 is a methodological critique."
+
+  # ============================================================
+  # O19 ↔ A1: Missing prior work comparisons (related only)
+  # ============================================================
+  - official_id: "O19"
+    agentic_id: "A1"
+    match_type: "related"
+    issue: "Missing comparison with prior work using user simulators"
+    judgment_alignment: "aligned"
+    severity_alignment: "n/a"
+    rationale: "Both flag missing comparisons with prior work, but O19 specifically asks for discussion of Hong et al. (user-simulator-based RL) while A1 asks for empirical baselines against MTPO/ArCHer/STaR-GATE. Different specific prior works and different comparison levels (discussion vs experimental). Different fixes required."
+
+  # ============================================================
+  # O7 ↔ A4: Evaluation scope limitations (related only)
+  # ============================================================
+  - official_id: "O7"
+    agentic_id: "A4"
+    match_type: "related"
+    issue: "Evaluation scope limited in breadth"
+    judgment_alignment: "aligned"
+    severity_alignment: "n/a"
+    rationale: "Both concern evaluation scope limitations but in different tracks. O7 flags simulated generalization being tested on only one additional dataset (Abg-CoQA). A4 flags the user study covering only one task type with insufficient statistical rigor. Different evaluation components, different fixes."
+
+# ============================================================
+# Positive factor matches (paper was accepted → match AC pro_accept drivers)
+# ============================================================
+positive_factor_matches:
+  - official_factor_id: "D1"
+    agentic_source: "mention"
+    agentic_text: "Well-motivated problem with clear practical relevance; gap between single-turn RLHF and real-world multiturn deployment is well-articulated with compelling examples."
+    match_type: "exact"
+    judgment_alignment: "aligned"
+    rationale: "Both identify multi-turn collaboration as an important, well-motivated problem. Agentic M1 directly mirrors the AC's recognition of the essential problem."
+
+  - official_factor_id: "D2"
+    agentic_source: "mention"
+    agentic_text: "MR formulation is clean, draws principled connection to causal effect estimation (front-door adjustment), and ablation over window sizes convincingly validates each design choice."
+    match_type: "exact"
+    judgment_alignment: "aligned"
+    rationale: "Both recognize the MR method with user simulator data generation as technically sound. Agentic M2 captures the same methodological strength the AC highlights."
+
+  - official_factor_id: "D3"
+    agentic_source: "mention"
+    agentic_text: "Comprehensive evaluation across three diverse tasks, multiple training regimes, generalization to out-of-domain Abg-CoQA, and a real-world user study with quantitative and qualitative analysis."
+    match_type: "partial"
+    judgment_alignment: "mixed"
+    rationale: "Agentic M3 acknowledges comprehensive evaluation (aligning with D3's 'strong results') but A1 explicitly contradicts D3's 'strong baselines' claim, calling them narrow and weak. The positive evaluation breadth is recognized but the baseline strength component is inverted."
+
+  - official_factor_id: "D4"
+    agentic_source: "mention"
+    agentic_text: "Practical viability demonstrated with transparent compute costs (Table 7), task-agnostic framework, and full artifact release (code, models, data)."
+    match_type: "partial"
+    judgment_alignment: "aligned"
+    rationale: "M4 captures the artifact release implicitly (code, models, data) but does not specifically highlight the three benchmarks as a distinct community contribution the way the AC does."
+
+  - official_factor_id: "D5"
+    agentic_source: "none"
+    agentic_text: ""
+    match_type: "none"
+    judgment_alignment: "n/a"
+    rationale: "D5 is a post-rebuttal factor (authors addressed all reviewer concerns). The agentic system reviews pre-rebuttal and cannot observe rebuttal quality."
+
+# ============================================================
+# Unmatched concerns
+# ============================================================
+# Official concerns with no strict (exact/partial) agentic match.
+# O7 and O19 have related-only edges → still count as strict-unmatched.
+unmatched_official:
+  - "O1"   # MR mechanism unclear — agentic praises MR instead
+  - "O2"   # Causal effect claim — agentic praises causal connection
+  - "O3"   # Dataset access — agentic praises artifact release
+  - "O4"   # Novelty / self-training resemblance — not raised
+  - "O5"   # Missing multi-turn RL references — not raised
+  - "O6"   # Computational overhead — not raised
+  - "O7"   # Generalization on single dataset — related-only match to A4
+  - "O8"   # RL framework integration — not raised
+  - "O10"  # MR hard for ambiguous tasks — not raised
+  - "O11"  # Small improvements over prompting — not raised
+  - "O12"  # Source of improvement unclear — not raised
+  - "O13"  # BLEU metric appropriateness — not raised
+  - "O14"  # ITR decrease w=2→w=3 — not raised
+  - "O16"  # Caption typo — not raised
+  - "O17"  # Helpfulness w=0 ablation — not raised
+  - "O18"  # Related work missing from main text — not raised
+  - "O19"  # Missing user-simulator prior work comparison — related-only match to A1
+  - "O22"  # LLM simulator agreeableness — not raised
+
+# Agentic concerns with no strict (exact/partial) official match.
+# A4 has only a related match to O7 → strict-unmatched.
+unmatched_agentic:
+  - "A4"   # User study scope/statistical rigor — related-only match to O7

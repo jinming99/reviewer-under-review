@@ -1,0 +1,21 @@
+slug: cmdp_meta_safe_rl
+baseline: marg
+model: gpt-4o
+timestamp: '2026-04-10T14:11:24.953401+00:00'
+git_sha: 6b601aec
+git_branch: main
+elapsed_s: 590.8
+usage:
+  input_tokens: 2865151
+  output_tokens: 73341
+cost_usd: 0.0
+num_sdk_calls: 0
+num_api_calls: null
+num_chunks: 10
+specialties:
+- experiments_proofs
+- novelty_impact
+- clarity_reproducibility
+paper_text_chars: 143611
+review_text_chars: 14834
+skip_refinement: false

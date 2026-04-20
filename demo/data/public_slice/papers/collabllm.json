@@ -1,0 +1,1786 @@
+{
+  "slug": "collabllm",
+  "title": "CollabLLM: From Passive Responders to Active Collaborators",
+  "venue": "ICML 2025",
+  "decision": "accepted",
+  "decision_type": "Outstanding Paper (Oral)",
+  "reviewer_scores": [
+    4,
+    4,
+    4,
+    4,
+    4
+  ],
+  "reviewer_scores_post": [
+    4,
+    4,
+    4,
+    4,
+    4
+  ],
+  "ground_truth_notes": "External award-winning paper. ICML 2025 Outstanding Paper (Oral). Multiturn collaboration framework with reinforcement learning from simulated user interactions. No insider commentary.",
+  "case_study_files": [
+    "docs/case_studies/public_slice/E1_collabllm.md"
+  ],
+  "evidence": {
+    "paper_pdf": "data/papers/public_slice/1940_CollabLLM_From_Passive_Re.pdf",
+    "openreview_pdf": "data/openreviews/public_slice/CollabLLM_ From Passive Responders to Active Collaborators _ OpenReview.pdf",
+    "official_concerns": "data/official_concerns/collabllm.yaml"
+  },
+  "official_concerns": [
+    {
+      "id": "O1",
+      "text": "Unclear how multiturn data collected with an LLM-prompted user simulator and the multiturn reward effectively encourages collaboration rather than merely training on simulated data.",
+      "severity": "major",
+      "decisive": false,
+      "ac_treatment": "resolved",
+      "issue_type": "conceptual",
+      "tags": [
+        "mechanism_clarity",
+        "reward_design",
+        "collaboration"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "Qxpu"
+      ]
+    },
+    {
+      "id": "O2",
+      "text": "The claim that CollabLLM's reward design aligns with causal effect estimation is only 'somewhat convincing'; the distinction from existing methods that rely on post-hoc trajectory-level data needs elaboration.",
+      "severity": "major",
+      "decisive": false,
+      "ac_treatment": "resolved",
+      "issue_type": "conceptual",
+      "tags": [
+        "causal_claims",
+        "methodology_distinction",
+        "MTPO_comparison"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "Qxpu"
+      ]
+    },
+    {
+      "id": "O3",
+      "text": "Three datasets for fine-tuning and evaluating LLMs on multiturn conversations are proposed but full datasets could not be found; only appendix samples are provided, making it hard to assess dataset quality and quantity.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "resolved",
+      "issue_type": "empirical",
+      "tags": [
+        "data_availability",
+        "reproducibility",
+        "dataset_access"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "Qxpu"
+      ]
+    },
+    {
+      "id": "O4",
+      "text": "The methodology may not be as novel as claimed; using forward-looking strategies with a user simulator is essentially generating more realistic multi-turn data with an LLM, resembling self-training tailored for multiturn conversations.",
+      "severity": "major",
+      "decisive": false,
+      "ac_treatment": "resolved",
+      "issue_type": "conceptual",
+      "tags": [
+        "novelty_delta",
+        "self_training",
+        "methodology_framing"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "Qxpu"
+      ]
+    },
+    {
+      "id": "O5",
+      "text": "Paper does not discuss certain related works on multi-turn reinforcement learning benchmarks and proactive clarification in language models; incorporating these references would provide more comprehensive context.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "resolved",
+      "issue_type": "framing",
+      "tags": [
+        "related_work",
+        "missing_references",
+        "multi_turn_RL"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "Fu3N"
+      ]
+    },
+    {
+      "id": "O6",
+      "text": "Paper could benefit from more detailed discussion of the computational overhead associated with the proposed methods, particularly regarding the scalability of Multiturn-aware Rewards and the forward sampling strategy for long conversations.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "resolved",
+      "issue_type": "empirical",
+      "tags": [
+        "computational_cost",
+        "scalability",
+        "forward_sampling"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "Fu3N",
+        "2AZE"
+      ]
+    },
+    {
+      "id": "O7",
+      "text": "Generalization tests were limited to a single additional dataset (Abg-CoQA); including multiple diverse external benchmarks could strengthen generalizability claims.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "resolved",
+      "issue_type": "empirical",
+      "tags": [
+        "generalizability",
+        "evaluation_scope",
+        "out_of_domain"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "Fu3N"
+      ]
+    },
+    {
+      "id": "O8",
+      "text": "Unclear how CollabLLM integrates with existing reinforcement learning frameworks and algorithms; complex integration requirements could pose barriers to implementation.",
+      "severity": "minor",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "integration",
+        "implementation",
+        "practical_adoption"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "Fu3N"
+      ]
+    },
+    {
+      "id": "O9",
+      "text": "Prompt-defined simulated LLM users could be substantially biased compared to real human users during training; a comparison of the potential divergence would further strengthen the work.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "resolved",
+      "issue_type": "empirical",
+      "tags": [
+        "user_simulation_bias",
+        "sim_to_real_gap",
+        "training_validity"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "2AZE",
+        "mUmH"
+      ]
+    },
+    {
+      "id": "O10",
+      "text": "Multiturn-aware reward function is intrinsically hard to define for ambiguous tasks, which limits its applicability.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "conceptual",
+      "tags": [
+        "reward_design",
+        "ambiguous_tasks",
+        "applicability"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "2AZE"
+      ]
+    },
+    {
+      "id": "O11",
+      "text": "Improvements of simulated experiments in Table 1 (35% to 36-38% BLEU, 12.5 to 15) over prompt engineering are small, raising doubts about real impact; topline with gpt-4o and same prompt engineering would clarify the performance ceiling.",
+      "severity": "major",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "effect_size",
+        "practical_significance",
+        "baseline_comparison"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "YkB9"
+      ]
+    },
+    {
+      "id": "O12",
+      "text": "Unclear whether improvements stem from the multiturn-aware reward design, the reward modification itself (replacing helpfulness with extrinsic + intrinsic), or the interaction between both factors.",
+      "severity": "major",
+      "decisive": false,
+      "ac_treatment": "resolved",
+      "issue_type": "empirical",
+      "tags": [
+        "ablation",
+        "contribution_attribution",
+        "reward_components"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "YkB9"
+      ]
+    },
+    {
+      "id": "O13",
+      "text": "MediumDocEdit-Chat uses BLEU to measure similarity between extracted document and original articles; unclear if BLEU is the right metric, and LLM judges could provide more qualitative assessment.",
+      "severity": "minor",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "metric_choice",
+        "evaluation_methodology",
+        "BLEU"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "YkB9"
+      ]
+    },
+    {
+      "id": "O14",
+      "text": "Figure 4 shows ITR performance decreasing when forward sampling window size increases from w=2 to w=3, which seems counterintuitive and unexplained.",
+      "severity": "minor",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "ablation_interpretation",
+        "window_size",
+        "sampling_variance"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "YkB9"
+      ]
+    },
+    {
+      "id": "O15",
+      "text": "Unclear how exactly the ITR (Interactivity) scoring is performed; the scoring methodology using LLM judge (Claude-3.5-Sonnet) with scores rescaled to [0,1] needs more clarity.",
+      "severity": "minor",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "metric_definition",
+        "clarity",
+        "LLM_judge"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "YkB9"
+      ]
+    },
+    {
+      "id": "O16",
+      "text": "Typo in caption of Figure 2: 'fine-tuing' should be 'fine-tuNing'.",
+      "severity": "minor",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "framing",
+      "tags": [
+        "typo",
+        "presentation"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "YkB9"
+      ]
+    },
+    {
+      "id": "O17",
+      "text": "What about optimizing helpfulness (as assessed by LLM evaluator) using w>0? This was not explored and could serve as an additional ablation baseline.",
+      "severity": "minor",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "ablation",
+        "helpfulness_reward",
+        "baseline_comparison"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "YkB9"
+      ]
+    },
+    {
+      "id": "O18",
+      "text": "Detailed discussion of the paper's contribution with broader literature is missing from the main text; Related Work is relegated to Appendix B while the main paper does not adequately address connections to prior work.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "framing",
+      "tags": [
+        "related_work",
+        "paper_organization",
+        "main_text_completeness"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "mUmH"
+      ]
+    },
+    {
+      "id": "O19",
+      "text": "Missing comparison/discussion with prior literature that uses LLMs as user simulators to improve LLMs, such as Hong et al. 'Zero-Shot Goal-Directed Dialogue via RL on Imagined Conversations' (2311.05584).",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "framing",
+      "tags": [
+        "related_work",
+        "user_simulators",
+        "positioning"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "mUmH"
+      ]
+    },
+    {
+      "id": "O20",
+      "text": "It seems strange that a different model (GPT-4o) is used as the user simulator compared to the original model (Llama-3.1-8B-Instruct); discussion of using a stronger model as user simulator and feasibility of 'self-play' without relying on a stronger model would be valuable.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "user_simulator",
+        "model_choice",
+        "self_play",
+        "limitations"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "mUmH",
+        "2AZE"
+      ]
+    },
+    {
+      "id": "O21",
+      "text": "Paper mentions existing methods primarily rely on post-hoc trajectory-level data but does not provide quantitative comparisons with these methods; it would be valuable to show empirical advantage over prior multi-turn training approaches like MTPO or ArCHer.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "missing_baselines",
+        "quantitative_comparison",
+        "multi_turn_methods"
+      ],
+      "resolved_in_rebuttal": false,
+      "raised_by": [
+        "mUmH"
+      ]
+    },
+    {
+      "id": "O22",
+      "text": "It would be helpful if the authors can provide some insight into the limitations of applying LLMs as user simulators; instruction-tuned LLMs tend to be overly agreeable and always consent to requests while real users can be harder to deal with.",
+      "severity": "minor",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "conceptual",
+      "tags": [
+        "user_simulator",
+        "limitations",
+        "sim_to_real_gap"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "mUmH"
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "method": "ai_scientist_run1",
+      "verdict": "REJECT",
+      "score": 5,
+      "error_type": "FN",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_reject",
+          "text": "Critical absence of empirical comparisons with existing multiturn training methods (MTPO, ARCHER, STaR-GATE) — only vanilla Llama-3.1-8B and prompting variant used as baselines.",
+          "linked_concern_ids": [
+            "A1"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R2",
+          "polarity": "pro_reject",
+          "text": "No ablation isolating the MR contribution from the effect of simply training on multiturn data curated by a strong model (GPT-4o).",
+          "linked_concern_ids": [
+            "A2"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R3",
+          "polarity": "pro_reject",
+          "text": "Evaluation circularity — model trained with LLM-judged interactivity reward, then evaluated by LLM-judged ITR metric, which shows the largest gains (46.3%).",
+          "linked_concern_ids": [
+            "A3"
+          ],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "Addresses an important and practical problem: training LLMs for active multiturn collaboration rather than passive single-turn response generation.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "Framework is conceptually clean and general — MR formulation naturally combines forward simulation with decomposed reward, agnostic to RL algorithm.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M3",
+          "polarity": "pro_accept",
+          "text": "Large-scale user study with 201 MTurk participants provides genuine real-world validation; longitudinal interaction ratings show sustained engagement.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M4",
+          "polarity": "pro_accept",
+          "text": "Thorough ablation study systematically varies reward components and forward window sizes.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M5",
+          "polarity": "pro_accept",
+          "text": "Clear and well-organized writing with informative figures and concrete case study analysis.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M6",
+          "polarity": "pro_accept",
+          "text": "Safety evaluation demonstrates collaborative training does not degrade base model's safety alignment.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "Critical absence of empirical comparisons with existing multiturn training methods (MTPO, STaR-GATE, ARCHER); only baselines are vanilla Llama-3.1-8B and a prompting variant, insufficient for a top venue.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "missing_baselines",
+            "quantitative_comparison",
+            "multi_turn_methods"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "No ablation isolating the MR contribution from the effect of multiturn training data — all variants trained on MR-guided data, and GPT-4o used for synthetic data generation means training data quality is partly inherited from a stronger model.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "ablation",
+            "contribution_attribution",
+            "data_quality"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "Evaluation circularity: intrinsic reward uses LLM judge during training, and primary evaluation metric ITR is also scored by LLM judge — model partially trained to produce what LLM judges reward, then evaluated by LLM judges.",
+          "severity": "major",
+          "addressability": "unresolved",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "evaluation_circularity",
+            "LLM_judge",
+            "metric_validity"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "Absolute performance levels are low (MATH-Chat 16.5%, BLEU 36.8%, BigCodeBench 13.0%), making large relative improvements (18.5% average) potentially misleading.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "effect_size",
+            "absolute_performance",
+            "reporting"
+          ]
+        },
+        {
+          "id": "A5",
+          "text": "No error bars, confidence intervals, or statistical significance tests reported for simulated experiments or user study, despite small test sets (100 for MediumDocEdit, 200 for MATH).",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "statistical_rigor",
+            "uncertainty",
+            "reproducibility"
+          ]
+        },
+        {
+          "id": "A6",
+          "text": "Causal inference framing overclaimed — Equation 5 is standard conditional expectation, not a front-door adjustment; distinction from MTPO in Appendix A.2 is overstated since both estimate expected future reward with different sampling strategies.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "causal_claims",
+            "overclaiming",
+            "theoretical_framing"
+          ]
+        },
+        {
+          "id": "A7",
+          "text": "Generalization evidence is mixed — on Abg-CoQA, non-ambiguous accuracy drops from 90.4% to 72.3% (over-asking clarification questions), and Macro F1 improvement is only 1.77 points.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "generalizability",
+            "over_asking",
+            "evaluation_scope"
+          ]
+        },
+        {
+          "id": "A8",
+          "text": "Only one model family and size (Llama-3.1-8B) evaluated; scalability and generalization to other architectures and scales is untested.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "model_diversity",
+            "scalability",
+            "generalizability"
+          ]
+        },
+        {
+          "id": "A9",
+          "text": "Dependence on high-quality proprietary user simulators (GPT-4o) for training; open-source models reportedly perform poorly, creating a practical bottleneck for reproducibility and adoption.",
+          "severity": "moderate",
+          "addressability": "unresolved",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "user_simulator",
+            "reproducibility",
+            "practical_adoption"
+          ]
+        },
+        {
+          "id": "A10",
+          "text": "Sensitivity to user simulator quality not characterized; sim-to-real gap between LLM-simulated and real human users not measured, though user study partially mitigates.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "user_simulation_bias",
+            "sim_to_real_gap",
+            "sensitivity_analysis"
+          ]
+        },
+        {
+          "id": "A11",
+          "text": "Total training compute overhead of CollabLLM (including all forward simulation costs) compared to standard DPO/PPO training not reported.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "computational_cost",
+            "training_overhead",
+            "scalability"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O21",
+          "agentic_id": "A1",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Missing quantitative/empirical comparisons with existing multiturn training methods (MTPO, ArCHer, etc.)",
+          "rationale": "Both flag the same specific gap: no empirical comparison with prior multiturn training methods despite conceptual discussion. O21 cites mUmH requesting MTPO/ArCHer comparisons; A1 calls this 'the most significant gap.' Same issue, same direction. Severity within tolerance (moderate vs major)."
+        },
+        {
+          "official_id": "O2",
+          "agentic_id": "A6",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Causal inference framing of the MR reward is overclaimed or unconvincing",
+          "rationale": "Both target the causal effect estimation claim. O2 says 'somewhat convincing' and needs elaboration on distinction from MTPO. A6 says Eq.5 is standard conditional expectation, not front-door adjustment, and MTPO distinction is overstated. Same underlying issue: the causal framing doesn't hold up."
+        },
+        {
+          "official_id": "O9",
+          "agentic_id": "A10",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Simulated LLM users may diverge substantially from real human users; sim-to-real gap not measured",
+          "rationale": "Both flag the sim-to-real gap. O9 (raised by 2AZE, mUmH) says simulated users could be substantially biased. A10 asks for simulator sensitivity analysis and sim-to-real gap measurement. Same concern about training validity."
+        },
+        {
+          "official_id": "O12",
+          "agentic_id": "A2",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Attribution of performance gains — which component drives improvement",
+          "rationale": "Both question whether improvements are properly attributed. O12 asks whether gains stem from MR design vs reward modification (component-level). A2 asks whether gains come from MR framework vs simply training on multiturn data curated by GPT-4o (framework-level). Same issue family (contribution attribution) but different decomposition axes."
+        },
+        {
+          "official_id": "O11",
+          "agentic_id": "A4",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Magnitude of performance improvements is small or potentially misleading",
+          "rationale": "Both question the practical significance of reported gains. O11 focuses on small improvements over prompt engineering in Table 1 (35% to 36-38% BLEU). A4 focuses on low absolute performance levels making relative improvements misleading. Same theme (effect size doubts) but different angle (incremental vs absolute)."
+        },
+        {
+          "official_id": "O7",
+          "agentic_id": "A7",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Generalization evidence is limited or mixed",
+          "rationale": "Both flag generalization weaknesses. O7 notes testing on only one additional dataset (Abg-CoQA). A7 notes that on Abg-CoQA, non-ambiguous accuracy drops from 90.4% to 72.3% (over-asking). O7 is about scope; A7 is about mixed results. Complementary facets of the same generalization concern."
+        },
+        {
+          "official_id": "O20",
+          "agentic_id": "A9",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "User simulator model choice and its implications",
+          "rationale": "Both concern the user simulator dependency. O20 asks why GPT-4o is used instead of the target model and whether self-play is feasible. A9 flags the practical reproducibility bottleneck of relying on proprietary simulators. O20 is more about scientific understanding of the choice; A9 is about practical consequences."
+        },
+        {
+          "official_id": "O6",
+          "agentic_id": "A11",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Computational overhead of the forward simulation approach",
+          "rationale": "Both raise computational cost concerns. O6 (Fu3N, 2AZE) requests more detailed discussion of computational overhead and scalability. A11 asks for total training compute comparison with standard DPO/PPO. O6 is broader (scalability of long conversations); A11 is narrower (training cost comparison)."
+        },
+        {
+          "official_id": "O4",
+          "agentic_id": "A2",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "n/a",
+          "issue": "Whether the contribution goes beyond training on simulated multiturn data",
+          "rationale": "O4 questions novelty (methodology resembles self-training tailored for multiturn conversations). A2 questions whether gains come from MR vs data quality. Both touch on 'is the MR framework doing something beyond data curation?' but target different aspects — O4 is about novelty framing, A2 is about empirical attribution. Different fixes needed."
+        },
+        {
+          "official_id": "O19",
+          "agentic_id": "A1",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "n/a",
+          "issue": "Missing comparisons with prior work using user simulators",
+          "rationale": "O19 requests discussion/comparison with user-simulator-based prior work (Hong et al.). A1 requests empirical comparisons with multiturn training methods (MTPO, ARCHER, STaR-GATE). Both about 'missing prior work comparison' but different specific literatures and different scopes (discussion vs empirical)."
+        }
+      ],
+      "metrics": {
+        "total_official": 22,
+        "total_decisive": 0,
+        "recall_strict": 0.3636,
+        "recall_loose": 0.4545,
+        "decisive_recall": null,
+        "matched_official_ids": [
+          "O11",
+          "O12",
+          "O19",
+          "O2",
+          "O20",
+          "O21",
+          "O4",
+          "O6",
+          "O7",
+          "O9"
+        ],
+        "strict_matched_ids": [
+          "O11",
+          "O12",
+          "O2",
+          "O20",
+          "O21",
+          "O6",
+          "O7",
+          "O9"
+        ]
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/ai_scientist_run1/collabllm.yaml",
+        "match_graph": "data/match_graphs/public_slice/ai_scientist_run1/collabllm.yaml",
+        "review": "data/reviews/public_slice/ai_scientist_run1/collabllm/"
+      }
+    },
+    {
+      "method": "ai_scientist_gpt4o_run1",
+      "verdict": "REJECT",
+      "score": 3,
+      "error_type": "FN",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_reject",
+          "text": "Novelty of the Multiturn-aware Reward approach is not clearly distinguished from existing methods.",
+          "linked_concern_ids": [
+            "A1"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R2",
+          "polarity": "pro_reject",
+          "text": "Methodology lacks strong theoretical underpinnings, potentially undermining claimed improvements.",
+          "linked_concern_ids": [
+            "A2"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R3",
+          "polarity": "pro_reject",
+          "text": "Evaluation primarily in simulated settings limits the significance of real-world applicability claims.",
+          "linked_concern_ids": [
+            "A4"
+          ],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "Paper presents a structured training approach for LLMs targeting multiturn interactions.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "Extensive experimental analysis shows improvements over existing baselines in simulated environments.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "Novelty of the Multiturn-aware Reward approach is not clearly distinguished from existing multiturn dialogue methods.",
+          "severity": "major",
+          "addressability": "unresolved",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "novelty_delta",
+            "methodology_distinction"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "Methodology lacks strong theoretical underpinnings, potentially undermining the claimed improvements.",
+          "severity": "major",
+          "addressability": "unresolved",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "theoretical_rigor",
+            "methodology"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "Paper's clarity suffers from overwhelming experimental details that overshadow key contributions.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "clarity",
+            "presentation"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "Evaluation primarily in simulated settings limits the significance of real-world applicability claims; transference to real-world usage is unconvincing without concrete validation.",
+          "severity": "major",
+          "addressability": "unresolved",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "evaluation_scope",
+            "real_world_validation",
+            "sim_to_real_gap"
+          ]
+        },
+        {
+          "id": "A5",
+          "text": "Heavy reliance on user simulators that may not account for the unpredictable nature of real human interactions.",
+          "severity": "major",
+          "addressability": "unresolved",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "user_simulation_bias",
+            "sim_to_real_gap"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O4",
+          "agentic_id": "A1",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Novelty of the multiturn-aware reward approach questioned",
+          "rationale": "Both question the novelty of the MR approach. O4 specifically identifies resemblance to self-training ('using forward-looking strategies with a user simulator is essentially generating more realistic multi-turn data with an LLM'); A1 generically states novelty 'is not clearly distinguished from existing methods' without identifying the specific comparison point (self-training). Partial because A1 lacks the diagnostic specificity of O4."
+        },
+        {
+          "official_id": "O2",
+          "agentic_id": "A2",
+          "match_type": "related",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Theoretical/conceptual foundations of the reward design questioned",
+          "rationale": "Both question the theoretical basis of the MR approach. O2 specifically targets the causal effect estimation claim as 'somewhat convincing' and asks for elaboration on how it differs from existing trajectory-level methods. A2 is a blanket criticism ('methodology lacks strong theoretical underpinnings') with no specific target. Related only — O2 identifies a precise claim to challenge, A2 is too vague to constitute the same issue."
+        },
+        {
+          "official_id": "O9",
+          "agentic_id": "A5",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "User simulator may not faithfully represent real human behavior",
+          "rationale": "Both concern user simulator fidelity to real users. O9 flags 'prompt-defined simulated LLM users could be substantially biased compared to real human users'; A5 flags 'may not account for the unpredictable nature of human interactions.' Same issue family — both say the simulator may not represent real users — with different emphasis (systematic bias vs behavioral unpredictability)."
+        },
+        {
+          "official_id": "O22",
+          "agentic_id": "A5",
+          "match_type": "related",
+          "severity_alignment": "over",
+          "judgment_alignment": "aligned",
+          "issue": "Limitations of LLM-based user simulators",
+          "rationale": "Both address user simulator limitations but at different specificity. O22 identifies a particular failure mode ('instruction-tuned LLMs tend to be overly agreeable and always consent to requests'). A5 broadly states simulators 'may not account for the unpredictable nature of human interactions.' Related only — O22 pinpoints agreeableness bias while A5 is generic."
+        },
+        {
+          "official_id": "O9",
+          "agentic_id": "A4",
+          "match_type": "related",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Simulated evaluation setting limits real-world validity",
+          "rationale": "Both touch the sim-to-real theme but at different scope. O9 specifically flags user simulator bias during training; A4 broadly dismisses the entire simulated evaluation as insufficient for real-world claims. Different issues per false match pattern test: A4 questions evaluation methodology (simulated vs real settings), O9 targets a specific artifact (simulator bias). Related only."
+        }
+      ],
+      "metrics": {
+        "total_official": 22,
+        "total_decisive": 0,
+        "recall_strict": 0.0909,
+        "recall_loose": 0.1818,
+        "decisive_recall": null,
+        "matched_official_ids": [
+          "O2",
+          "O22",
+          "O4",
+          "O9"
+        ],
+        "strict_matched_ids": [
+          "O4",
+          "O9"
+        ]
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/ai_scientist_gpt4o_run1/collabllm.yaml",
+        "match_graph": "data/match_graphs/public_slice/ai_scientist_gpt4o_run1/collabllm.yaml",
+        "review": "data/reviews/public_slice/ai_scientist_gpt4o_run1/collabllm/"
+      }
+    },
+    {
+      "method": "liang_run1",
+      "verdict": "REJECT",
+      "score": null,
+      "error_type": "FN",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_reject",
+          "text": "Narrow baselines (vanilla Llama-3.1-8B and proactive prompt only) make gains difficult to interpret; no comparison with existing multi-turn RL methods.",
+          "linked_concern_ids": [
+            "A1"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R2",
+          "polarity": "pro_reject",
+          "text": "Heavy reliance on LLM-based evaluation introduces circularity and fragility: model trained to optimize LLM-judge preferences and evaluated by LLM judges.",
+          "linked_concern_ids": [
+            "A2"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R3",
+          "polarity": "pro_reject",
+          "text": "User simulator fidelity is insufficiently validated despite being the linchpin of the entire framework.",
+          "linked_concern_ids": [
+            "A3"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R4",
+          "polarity": "pro_reject",
+          "text": "Limited scale and scope of the user study relative to the claims made.",
+          "linked_concern_ids": [
+            "A4"
+          ],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "Well-motivated problem with clear practical relevance; gap between single-turn RLHF and real-world multiturn deployment is well-articulated with compelling examples.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "MR formulation is clean, draws principled connection to causal effect estimation (front-door adjustment), and ablation over window sizes convincingly validates each design choice.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M3",
+          "polarity": "pro_accept",
+          "text": "Comprehensive evaluation across three diverse tasks, multiple training regimes, generalization to out-of-domain Abg-CoQA, and a real-world user study with quantitative and qualitative analysis.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M4",
+          "polarity": "pro_accept",
+          "text": "Practical viability demonstrated with transparent compute costs (Table 7), task-agnostic framework, and full artifact release (code, models, data).",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "Baselines limited to vanilla Llama-3.1-8B and a prompting-only intervention; no comparison against existing multi-turn RL methods (MTPO, ArCHer, DMPO) or clarification-question training methods (STaR-GATE) despite extensive related work discussion.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "missing_baselines",
+            "evaluation_scope",
+            "multi_turn_methods"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "LLM-based evaluation circularity: ITR scored by LLM judge (Claude-3.5-Sonnet), intrinsic and extrinsic training rewards use LLM judges, creating reward hacking and circular validation risks; ITR scoring rubric weighting (A=3, B=2, C=1) and rescaling (S'=2*(S-2.5)) appear ad hoc with no sensitivity analysis.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "LLM_judge",
+            "circular_validation",
+            "metric_robustness"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "User simulator fidelity insufficiently validated: significant sim-to-real divergence acknowledged (real users shorter, less predictable, more emotional) but no quantitative distributional gap measure provided, no ablation over simulator model quality, and risk that MR computed entirely via simulator may overfit to simulator behaviors.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "user_simulation_bias",
+            "sim_to_real_gap",
+            "training_validity"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "User study covers only one task type (document creation in three genres) with N~67 per condition; no significance tests, confidence intervals, or effect sizes reported for any user-study metric; does not validate coding or math task claims with human participants.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "statistical_rigor",
+            "user_study",
+            "evaluation_scope"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O9",
+          "agentic_id": "A3",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "User simulator fidelity and sim-to-real gap insufficiently validated",
+          "rationale": "Both identify the gap between simulated LLM users and real human users as a core concern. O9 flags bias in prompt-defined LLM users; A3 flags lack of quantitative sim-to-real gap measures and ablation over simulator quality. Same underlying issue, same normative conclusion."
+        },
+        {
+          "official_id": "O20",
+          "agentic_id": "A3",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "User simulator model choice and quality validation",
+          "rationale": "O20 questions why GPT-4o is used instead of self-play and asks about feasibility without a stronger model. A3 flags missing ablation over simulator model quality. Same issue family (simulator quality) but different specific sub-questions: O20 focuses on model choice rationale and self-play, A3 on quantitative validation and overfitting risk."
+        },
+        {
+          "official_id": "O21",
+          "agentic_id": "A1",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Missing empirical comparison with prior multi-turn RL training methods (MTPO, ArCHer)",
+          "rationale": "Both specifically flag the absence of quantitative comparison with MTPO and ArCHer. O21 notes no empirical advantage is demonstrated; A1 lists MTPO, ArCHer, DMPO, STaR-GATE as missing baselines. Same specific complaint."
+        },
+        {
+          "official_id": "O15",
+          "agentic_id": "A2",
+          "match_type": "partial",
+          "severity_alignment": "over",
+          "judgment_alignment": "aligned",
+          "issue": "ITR interactivity metric scoring methodology is questionable",
+          "rationale": "Both target the ITR scoring methodology. O15 asks for clarity on how scoring is performed (LLM judge, rescaling). A2 goes further, framing the ITR metric as part of a broader LLM-judge circularity problem and calling the weighting/rescaling ad hoc. Same component but different complaint depth: O15 is a clarity request, A2 is a methodological critique."
+        },
+        {
+          "official_id": "O19",
+          "agentic_id": "A1",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "aligned",
+          "issue": "Missing comparison with prior work using user simulators",
+          "rationale": "Both flag missing comparisons with prior work, but O19 specifically asks for discussion of Hong et al. (user-simulator-based RL) while A1 asks for empirical baselines against MTPO/ArCHer/STaR-GATE. Different specific prior works and different comparison levels (discussion vs experimental). Different fixes required."
+        },
+        {
+          "official_id": "O7",
+          "agentic_id": "A4",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "aligned",
+          "issue": "Evaluation scope limited in breadth",
+          "rationale": "Both concern evaluation scope limitations but in different tracks. O7 flags simulated generalization being tested on only one additional dataset (Abg-CoQA). A4 flags the user study covering only one task type with insufficient statistical rigor. Different evaluation components, different fixes."
+        }
+      ],
+      "metrics": {
+        "total_official": 22,
+        "total_decisive": 0,
+        "recall_strict": 0.1818,
+        "recall_loose": 0.2727,
+        "decisive_recall": null,
+        "matched_official_ids": [
+          "O15",
+          "O19",
+          "O20",
+          "O21",
+          "O7",
+          "O9"
+        ],
+        "strict_matched_ids": [
+          "O15",
+          "O20",
+          "O21",
+          "O9"
+        ]
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/liang_run1/collabllm.yaml",
+        "match_graph": "data/match_graphs/public_slice/liang_run1/collabllm.yaml",
+        "review": "data/reviews/public_slice/liang_run1/collabllm/"
+      }
+    },
+    {
+      "method": "liang_gpt4o_run1",
+      "verdict": "ACCEPT",
+      "score": null,
+      "error_type": "TP",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_accept",
+          "text": "Novel CollabLLM framework addresses a critical limitation in LLMs' passive multiturn behavior, with Multiturn-aware Rewards enabling optimization for long-term interaction outcomes — theoretically grounded and practically applicable.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "R2",
+          "polarity": "pro_accept",
+          "text": "Compelling experimental results showing significant improvements in task performance, interactivity, and user satisfaction compared to baseline models.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "Comprehensive user study with 201 MTurk participants provides real-world validation of the approach and demonstrates effectiveness in enhancing user experience.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "Work is highly relevant to current trends in AI research, particularly improving human-LLM interactions and making AI systems more collaborative.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M3",
+          "polarity": "pro_accept",
+          "text": "Development of a multiturn interaction benchmark highlights the potential impact of this work on the field of conversational AI.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "Multiturn-aware Reward mechanism description lacks clarity regarding how it is computed and integrated into the training process; collaborative simulation module insufficiently explained for estimating long-term impacts.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "clarity",
+            "mechanism_description",
+            "methodology"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "Evaluation scope limited to three tasks; generalizability to other domains and tasks not thoroughly explored. User study limited to a specific task set and may not fully capture the diversity of real-world interactions.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "evaluation_breadth",
+            "generalizability",
+            "limited_scope"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "Over-reliance on simulated user environments for training raises realism and diversity concerns; model performance may not translate to settings where user behavior deviates significantly from simulated patterns.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "user_simulation_bias",
+            "sim_to_real_gap",
+            "training_validity"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "Insufficient comparison with other state-of-the-art models addressing similar multiturn interaction challenges; discussion of how CollabLLM differs from or improves upon existing methods is lacking.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "missing_baselines",
+            "related_work",
+            "positioning"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O1",
+          "agentic_id": "A1",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Multiturn-aware Reward mechanism description lacks clarity",
+          "rationale": "O1 specifically asks how MR and multiturn data effectively encourage collaboration rather than merely training on simulated data — a conceptual clarity question about the mechanism's purpose. A1 more broadly flags that the MR description lacks detail on computation and integration into training, plus the simulation module is insufficiently explained. Both target MR clarity but O1 is about the conceptual mechanism (why does MR encourage collaboration?) while A1 is about exposition (how is MR computed?). Fixing A1 would not necessarily address O1's deeper question."
+        },
+        {
+          "official_id": "O7",
+          "agentic_id": "A2",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Generalizability of evaluation not sufficiently demonstrated",
+          "rationale": "O7 specifically flags that generalization tests are limited to a single additional dataset (Abg-CoQA) and requests multiple diverse external benchmarks. A2 broadly flags evaluation scope limited to three tasks with generalizability not explored, plus user study scope concerns. A2 subsumes O7's specific concern as one facet of a broader evaluation breadth critique. Partial because O7 targets a specific gap (out-of-domain generalization testing) while A2 is broader."
+        },
+        {
+          "official_id": "O9",
+          "agentic_id": "A3",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Simulated LLM users may diverge substantially from real human users, undermining training validity",
+          "rationale": "O9 flags that prompt-defined simulated LLM users could be substantially biased compared to real users and requests a comparison of potential divergence. A3 flags over-reliance on simulated environments with realism/diversity concerns and that performance may not transfer when user behavior deviates from simulated patterns. Both identify the same fundamental problem: the sim-to-real gap in user simulation threatens the validity of the training approach. A neutral reader would say these are the same complaint."
+        },
+        {
+          "official_id": "O22",
+          "agentic_id": "A3",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "LLM user simulators have systematic limitations affecting training quality",
+          "rationale": "O22 specifically identifies that instruction-tuned LLMs tend to be overly agreeable and always consent to requests, unlike real users. A3 more broadly flags realism and diversity concerns with simulated environments. O22's specific agreeableness issue is one instance of A3's broader sim-to-real concern. Partial because A3 does not identify the specific agreeableness failure mode."
+        },
+        {
+          "official_id": "O21",
+          "agentic_id": "A4",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Missing quantitative comparison with prior multi-turn training methods like MTPO or ArCHer",
+          "rationale": "O21 explicitly requests quantitative comparisons with prior methods (MTPO, ArCHer) rather than just conceptual distinctions. A4 flags insufficient comparison with state-of-the-art models addressing similar multiturn challenges. Both identify the same gap: the paper lacks empirical comparisons with existing multi-turn interaction methods. A4 does not name specific methods but targets the same deficiency."
+        },
+        {
+          "official_id": "O19",
+          "agentic_id": "A4",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Missing comparison with prior work using LLMs as user simulators",
+          "rationale": "O19 specifically identifies missing comparison/discussion with Hong et al. and other works using LLMs as user simulators to improve LLMs. A4 broadly flags insufficient discussion of how CollabLLM differs from or improves upon existing methods. A4's positioning facet maps to O19's specific missing comparison, but O19 targets a specific method family (user-simulator-based RL) while A4 is broader."
+        }
+      ],
+      "metrics": {
+        "total_official": 22,
+        "total_decisive": 0,
+        "recall_strict": 0.2727,
+        "recall_loose": 0.2727,
+        "decisive_recall": null,
+        "matched_official_ids": [
+          "O1",
+          "O19",
+          "O21",
+          "O22",
+          "O7",
+          "O9"
+        ],
+        "strict_matched_ids": [
+          "O1",
+          "O19",
+          "O21",
+          "O22",
+          "O7",
+          "O9"
+        ]
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/liang_gpt4o_run1/collabllm.yaml",
+        "match_graph": "data/match_graphs/public_slice/liang_gpt4o_run1/collabllm.yaml",
+        "review": "data/reviews/public_slice/liang_gpt4o_run1/collabllm/"
+      }
+    },
+    {
+      "method": "marg_gpt4o_run1",
+      "verdict": "ACCEPT",
+      "score": null,
+      "error_type": "TP",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_accept",
+          "text": "CollabLLM framework enhances multiturn human-LLM collaboration using Multiturn-aware Rewards and reinforcement fine-tuning, showing improvements in user satisfaction and efficiency compared to non-collaborative LLMs.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "R2",
+          "polarity": "pro_reject",
+          "text": "Multiple areas across the paper lack sufficient detail: statistical analysis, MR calculation specifics, user study methodology, synthetic dataset validation, and user simulator limitations.",
+          "linked_concern_ids": [
+            "A1",
+            "A4",
+            "A6",
+            "A8",
+            "A9"
+          ],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "Framework evaluated through a multiturn interaction benchmark and large user study (201 MTurk participants), demonstrating practical impact.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "Forward sampling strategy for estimating long-term impact of responses recognized as a meaningful methodological contribution.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "Statistical analysis for task performance claims lacks depth; no significance tests (t-tests, ANOVA) provided to quantify the significance of reported improvements.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "statistical_rigor",
+            "evaluation_methodology"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "Qualitative analysis of user interactions is missing; analyzing interaction logs and identifying patterns in user behavior would offer deeper insight into interactivity improvements.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "evaluation_methodology",
+            "user_study"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "Thematic analysis of qualitative user feedback comments is missing; such analysis could highlight specific strengths and areas for improvement.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "user_study",
+            "evaluation_methodology"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "Ablation study analysis is not thorough enough; a regression analysis to quantify the contribution of individual reward components to performance improvements is needed.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "ablation",
+            "contribution_attribution"
+          ]
+        },
+        {
+          "id": "A5",
+          "text": "No longitudinal study to assess long-term interaction improvements; such a study would demonstrate sustainability of benefits in real-world applications.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "evaluation_scope",
+            "longitudinal"
+          ]
+        },
+        {
+          "id": "A6",
+          "text": "MR function calculation details insufficient; specific metrics or criteria used to calculate the Multiturn-aware Reward function are not adequately described.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "clarity",
+            "method_description",
+            "reward_design"
+          ]
+        },
+        {
+          "id": "A7",
+          "text": "Forward sampling window size hyperparameter determination and its effect on performance need more detailed explanation; examples or case studies would enhance understanding.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "clarity",
+            "experimental_design",
+            "hyperparameters"
+          ]
+        },
+        {
+          "id": "A8",
+          "text": "User study experimental setup lacks detail on participant selection criteria and methodology for collecting and analyzing feedback.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "user_study",
+            "reproducibility",
+            "experimental_design"
+          ]
+        },
+        {
+          "id": "A9",
+          "text": "Validation techniques or metrics for ensuring synthetic datasets accurately represent real-world interactions are not discussed.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "data_quality",
+            "validation",
+            "sim_to_real_gap"
+          ]
+        },
+        {
+          "id": "A10",
+          "text": "User simulator limitations not comprehensively discussed; challenges and potential impact on study findings need more exploration.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "user_simulator",
+            "limitations",
+            "sim_to_real_gap"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O22",
+          "agentic_id": "A10",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "LLM user simulator limitations need comprehensive discussion",
+          "rationale": "Both directly request more discussion of user simulator limitations. O22 specifically mentions instruction-tuned LLMs being overly agreeable; A10 asks generally for challenges and potential impact on findings. Same underlying ask — elaborate on simulator shortcomings."
+        },
+        {
+          "official_id": "O1",
+          "agentic_id": "A6",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Multiturn-aware Reward mechanism clarity",
+          "rationale": "Both target MR clarity but from different angles. O1 asks how MR mechanistically encourages collaboration (why does it work?). A6 asks for specific metrics/criteria in the MR calculation (how is it computed?). Same issue family — MR explanation gaps — but different facets."
+        },
+        {
+          "official_id": "O12",
+          "agentic_id": "A4",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Ablation study does not isolate individual component contributions",
+          "rationale": "Both want better disentangling of what drives the improvements. O12 specifically asks whether gains stem from MR framework vs reward modification (replacing helpfulness with extrinsic+intrinsic). A4 generically requests regression analysis to quantify individual reward components. Same issue family but A4 is less specific."
+        },
+        {
+          "official_id": "O9",
+          "agentic_id": "A9",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Gap between simulated/synthetic training data and real-world interactions",
+          "rationale": "Both concern the sim-to-real gap but at different levels. O9 specifically flags that LLM-prompted user simulators could be substantially biased vs real human users during training. A9 asks about validation techniques for synthetic datasets generally. O9 would require a bias comparison study; A9 would require dataset validation metrics — different fixes."
+        },
+        {
+          "official_id": "O14",
+          "agentic_id": "A7",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Forward sampling window size effects need explanation",
+          "rationale": "Both relate to the window size hyperparameter. O14 flags a specific counterintuitive observation (ITR decreasing from w=2 to w=3). A7 generically asks for more explanation of how window size is determined and its effect on performance. A7 is broader but less specific than O14."
+        },
+        {
+          "official_id": "O11",
+          "agentic_id": "A1",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "aligned",
+          "issue": "Evidence quality for claimed performance improvements",
+          "rationale": "Both are about whether the improvements are convincingly demonstrated, but the complaints are different. O11 argues the improvements are *small* (35% to 36-38% BLEU) and questions real impact. A1 asks for *statistical significance tests* (t-tests/ANOVA). O11 is an effect-size concern; A1 is a statistical-rigor concern. Different author fixes needed."
+        }
+      ],
+      "metrics": {
+        "total_official": 22,
+        "total_decisive": 0,
+        "recall_strict": 0.2273,
+        "recall_loose": 0.2727,
+        "decisive_recall": null,
+        "matched_official_ids": [
+          "O1",
+          "O11",
+          "O12",
+          "O14",
+          "O22",
+          "O9"
+        ],
+        "strict_matched_ids": [
+          "O1",
+          "O12",
+          "O14",
+          "O22",
+          "O9"
+        ]
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/marg_gpt4o_run1/collabllm.yaml",
+        "match_graph": "data/match_graphs/public_slice/marg_gpt4o_run1/collabllm.yaml",
+        "review": "data/reviews/public_slice/marg_gpt4o_run1/collabllm/"
+      }
+    },
+    {
+      "method": "oar_run1",
+      "verdict": "ACCEPT",
+      "score": null,
+      "error_type": "TP",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_accept",
+          "text": "Core idea of using forward simulation to estimate long-term reward of individual responses is sound, and the experimental design is thorough.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "Well-motivated framework for training LLMs to be more collaborative in multiturn interactions.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "Supporting experiments include a large user study.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M3",
+          "polarity": "pro_accept",
+          "text": "Clear formulation of Multiturn-aware Rewards.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "MATH-Chat ITR relative improvement in Table 1 is computed against Base (44.0) instead of Proactive Base (46.0) as stated in the caption, inflating the reported 36.4% to what should be 30.4% and propagating to the abstract's headline \"46.3% improved interactivity\" claim.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "numerical_error",
+            "overclaiming",
+            "evaluation_reporting"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "Figure 2 labels identical token counts (1.39k tokens) as both \"Low Efficiency\" and \"High Efficiency,\" contradicting the paper's own efficiency metric (Eq. 4) which penalizes token count.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "presentation",
+            "logical_consistency"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "Equation 5 (Appendix A.1) claiming front-door adjustment has three errors: (1) model response mj does not appear in the expression, (2) the first algebraic equality is incorrect unless P(th_j)=1, (3) the equation is a simple conditional expectation with no resemblance to the front-door adjustment formula.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "mathematical_error",
+            "causal_claims",
+            "theoretical_contribution"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "Table 2 generalization result is overclaimed: \"maintaining high accuracy\" on non-ambiguous questions despite a 20% relative drop (72.32% vs 90.40% for the base model), obscuring a meaningful accuracy-proactivity tradeoff.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "overclaiming",
+            "evaluation_interpretation",
+            "tradeoff_disclosure"
+          ]
+        },
+        {
+          "id": "A5",
+          "text": "The distinction from trajectory-level methods (MTPO) is overstated: forward simulation sampling from P(t_{j+1:K}|t_{1:j}) is still a Monte Carlo conditional expectation, not a true intervention in the do-calculus sense. The practical advantage is finer-grained reward attribution, not causal vs. observational.",
+          "severity": "moderate",
+          "addressability": "unresolved",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "overclaiming",
+            "causal_claims",
+            "novelty_delta"
+          ]
+        },
+        {
+          "id": "A6",
+          "text": "Intrinsic reward token penalty saturates for typical MATH-Chat conversations: with lambda=5e-4 and ~2.4k-3.4k tokens, the clamp at 1 is always reached, providing zero gradient signal for efficiency differences and making the token penalty ineffective for most training examples.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "reward_design",
+            "technical_detail",
+            "ablation_interpretation"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O2",
+          "agentic_id": "A3",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Causal inference derivation in appendix is inadequate/incorrect",
+          "rationale": "O2 says the causal effect estimation claim is \"somewhat convincing\" and the distinction from trajectory-level methods needs elaboration. A3 identifies three specific mathematical errors in Equation 5 (Appendix A.1) that explain why the derivation fails. Both target the paper's causal inference claims, but O2 is broader (includes unconvincing positioning) while A3 is narrower (specific math errors). Partial because O2 also encompasses the MTPO distinction which is addressed separately by A5."
+        },
+        {
+          "official_id": "O2",
+          "agentic_id": "A5",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Causal vs observational positioning relative to trajectory-level methods is unconvincing",
+          "rationale": "O2 states the \"distinction from existing methods that rely on post-hoc trajectory-level data needs elaboration.\" A5 directly addresses this sub-claim, arguing the observational-vs-interventional distinction is overstated since forward simulation is still a conditional expectation. Partial because O2 is broader (covers both the derivation and the positioning), while A5 targets only the MTPO comparison framing."
+        },
+        {
+          "official_id": "O4",
+          "agentic_id": "A5",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "aligned",
+          "issue": "Novelty of contribution is weaker than claimed",
+          "rationale": "O4 questions whether the methodology is truly novel or \"essentially resembles self-training.\" A5 argues the causal framing overstates the theoretical novelty. Both concern novelty overclaiming but from different angles: O4 targets resemblance to self-training paradigms, A5 targets the causal-vs-observational theoretical framing. Different author fixes would be needed."
+        },
+        {
+          "official_id": "O11",
+          "agentic_id": "A1",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "aligned",
+          "issue": "Table 1 improvement reporting issues",
+          "rationale": "O11 notes the improvements in Table 1 are small (BLEU 35→36-38), raising doubts about real impact. A1 finds a specific numerical error where the MATH-Chat ITR improvement was calculated against the wrong baseline, inflating the result by ~6 percentage points. Both concern Table 1 reporting but target different problems: magnitude vs accuracy of the reported numbers."
+        },
+        {
+          "official_id": "O7",
+          "agentic_id": "A4",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "aligned",
+          "issue": "Generalization evaluation weaknesses",
+          "rationale": "O7 wants broader generalization testing beyond a single dataset (Abg-CoQA). A4 identifies overclaiming within the existing generalization results (Table 2): claiming \"maintaining high accuracy\" despite a 20% relative drop. Both concern generalization evaluation, but O7 is about scope (more datasets needed) while A4 is about framing (existing results are overclaimed). Different fixes required."
+        },
+        {
+          "official_id": "O12",
+          "agentic_id": "A6",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "aligned",
+          "issue": "Understanding what drives the improvements",
+          "rationale": "O12 asks whether improvements come from MR design, reward modification, or their interaction. A6 identifies a specific mechanism: the token penalty saturates for most MATH-Chat examples, suggesting efficiency gains come from extrinsic rewards rather than the intrinsic token penalty. A6 partially answers one sub-question of O12 but the concerns operate at different levels of specificity."
+        }
+      ],
+      "metrics": {
+        "total_official": 22,
+        "total_decisive": 0,
+        "recall_strict": 0.0455,
+        "recall_loose": 0.2273,
+        "decisive_recall": null,
+        "matched_official_ids": [
+          "O11",
+          "O12",
+          "O2",
+          "O4",
+          "O7"
+        ],
+        "strict_matched_ids": [
+          "O2"
+        ]
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/oar_run1/collabllm.yaml",
+        "match_graph": "data/match_graphs/public_slice/oar_run1/collabllm.yaml",
+        "review": "data/reviews/public_slice/oar_run1/collabllm/"
+      }
+    }
+  ]
+}

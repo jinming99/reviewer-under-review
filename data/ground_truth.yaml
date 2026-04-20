@@ -1,0 +1,1334 @@
+papers:
+- slug: beyond_problem_solving
+  filename: 1122_Beyond_Problem_Solving_A_.pdf
+  title: 'Beyond Problem Solving: A Three-Space Probe of LLM Critical Thinking'
+  venue: ACL ARR 2025
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 1
+  notes: No human baseline, overclaiming, narrow operationalization of critical thinking.
+- slug: human_feedback
+  filename: 16138_What_s_In_My_Human_Feedb.pdf
+  title: What's In My Human Feedback? Learning Interpretable Descriptions of Preference Data
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  calibration_set: 1
+  notes: 'Oral presentation. Scores: 4/6/8/8. Praised as rare practical application of mechanistic interpretability. Extensive
+    experiments across 7 datasets. Community tool value. Key concerns (SAE sensitivity, closed-source deps) addressed in rebuttal.'
+- slug: adversarial_dejavu
+  filename: 21925_Adversarial_D_j_Vu_Jailb (1).pdf
+  title: 'Adversarial Deja Vu: Jailbreak Dictionary Learning for Stronger Generalization to Unseen Attacks'
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  calibration_set: 1
+  notes: 'Poster. Scores: 6/6/8/6. AC praised Deja Vu hypothesis as having ''wide implications throughout the community.''
+    Rebuttal added 3rd model, BEAST attack, Claude judge. Q4KG raised from 2 to 6.'
+- slug: any_depth_alignment
+  filename: 22863_Any_Depth_Alignment_Unlo.pdf
+  title: 'Any-Depth Alignment: Unlocking Innate Safety Alignment of LLMs to Any-Depth'
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  calibration_set: 1
+  notes: 'Poster. Scores: 6/8/6/4. Novel Safety Token concept. Training-free, constant-time defense. 9 models, 12+ benchmarks.
+    ydC8 raised from 6 to 8 after rebuttal addressed leakage concerns.'
+- slug: stylebench
+  filename: 6363_StyleBench_Evaluating_thi.pdf
+  title: 'StyleBench: Evaluating Thinking Styles in Large Language Models'
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 1
+  notes: Unfair baseline comparisons (prompt design confounds). No statistical analysis across configurations.
+- slug: spell_self_play
+  filename: 7546_SPELL_Self_Play_Reinforce.pdf
+  title: 'SPELL: Self-Play Reinforcement Learning for Evolving Long-Context Language Models'
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: camera_ready
+  calibration_set: 1
+  notes: 'Poster. Scores: 8/6/6/8 (post-rebuttal). Elegant three-role self-play framework. 12 models x 6 benchmarks. Opens
+    self-play RL to non-verifiable tasks. Rebuttal added SoLoPo/LongPO/QwenLong-L1 comparisons. HDua 4->6, Zsjp 6->8.'
+- slug: ifdecorator
+  filename: 18895_IFDECORATOR_Wrapping_Ins.pdf
+  title: 'IFDecorator: Instruction Following with Better Instruction Decorating'
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  our_verdict: ACCEPT
+  our_score: 75.0
+  calibration_set: 2
+  notes: 'FALSE POSITIVE. AC consensus: ''engineering synthesis rather than a significant break from the state-of-the-art.''
+    Each component (cooperative data generation ≈ AutoIF, intent verification ≈ constraint checking, Trip Wires ≈ probe tasks)
+    has close named precedent. Despite strong rebuttal adding ComplexBench, MultiIF, cross-family validation — novelty remained
+    the deciding factor. Reviewer WDg6 scored 2.'
+- slug: teaching_llms_plan
+  filename: 20208_Teaching_LLMs_to_Plan_Lo.pdf
+  title: 'Teaching LLMs to Plan: A Teacher-Student Framework with Selective Reinforcement'
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  our_verdict: REJECT
+  our_score: null
+  calibration_set: 2
+  notes: 'TRUE REJECT. Correctly caught by G2 (baseline fairness). No external baselines — only compared against own teacher.
+    AC meta-review: ''the main weakness of this paper... no other strong planning methods are compared.'' Also: PDDL-only
+    evaluation, limited domain generalization.'
+- slug: propensitybench
+  filename: 21696_PropensityBench_Evaluati.pdf
+  title: 'PropensityBench: Benchmarking LLM Propensities Toward Lexical and Conceptual Choices'
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  our_verdict: ACCEPT
+  our_score: 76.25
+  calibration_set: 2
+  notes: 'TRUE ACCEPT. Poster. Genuine belief updates: r~0.10 correlation between self-reports and behavior, 4x naming sensitivity,
+    vocabulary frequency effects. AC: ''concerns were well addressed.'' Our review aligned well with AC assessment.'
+- slug: collabllm
+  filename: 2502.00640v3.pdf
+  title: 'CollabLLM: From Passive Responders to Active Collaborators'
+  venue: ICML 2025
+  decision: accepted
+  pdf_version: camera_ready
+  our_verdict: ACCEPT
+  our_score: 75.0
+  calibration_set: 2
+  notes: TRUE ACCEPT but underscored. Oral at ICML 2025. Three unanimous Accept reviews. 200+ participant user study. Our
+    overweighted concerns (missing MTPO comparison, single base model) were not raised by any ICML reviewer.
+- slug: rl_reasoning_limits
+  filename: 2504.13837v5.pdf
+  title: Does Reinforcement Learning Really Incentivize Reasoning Capacity in LLMs Beyond the Base Model?
+  venue: NeurIPS 2025
+  decision: accepted
+  pdf_version: camera_ready
+  our_verdict: ACCEPT
+  our_score: 85.0
+  calibration_set: 2
+  notes: 'TRUE ACCEPT. Best calibrated paper. Oral at NeurIPS 2025. Both reviewers Strong Accept (6). AC: ''masterfully executed.''
+    4 model families, 11+ benchmarks, 6 RL algorithms. Our 85.0 correctly places in strong accept tier.'
+- slug: shallow_safety_alignment
+  filename: 2406.05946v1.pdf
+  title: Safety Alignment Should Be Made More Than Just a Few Tokens Deep
+  venue: ICLR 2025
+  decision: accepted
+  pdf_version: camera_ready
+  our_verdict: ACCEPT
+  our_score: 76.25
+  calibration_set: 2
+  notes: TRUE ACCEPT but significantly underscored. Oral at ICLR 2025 with 10/10 reviewer scores. F=2 was overcalibrated —
+    'only 7B' not raised by any reviewer. Primary contribution is conceptual framework (shallow alignment), not a method.
+    Unifying insight consolidates multiple attack types.
+- slug: adversarial_rl
+  filename: 10650_Adversarial_Reinforcemen.pdf
+  title: Adversarial Reinforcement Learning for Large Language Model Agent Safety
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  our_verdict: REJECT
+  our_score: null
+  calibration_set: 3
+  notes: TRUE REJECT. Scored on scorecard but below threshold.
+- slug: advancing_llm_safe_alignment
+  filename: 11713_Advancing_LLM_Safe_Align.pdf
+  title: Advancing LLM Safe Alignment with Safety Representation Ranking
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  our_verdict: REJECT
+  our_score: null
+  calibration_set: 3
+  notes: TRUE REJECT. Gate-failed on G2 (baseline fairness).
+- slug: medsentry
+  filename: 12106_MedSentry_Understanding_.pdf
+  title: 'MedSentry: Understanding and Mitigating Safety Risks in Medical LLM Multi-Agent Systems'
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  our_verdict: ACCEPT
+  our_score: 76.25
+  calibration_set: 3
+  notes: 'FALSE POSITIVE. All-3s profile (76.25). Reviewers found evaluation insufficient despite systematic topology comparison.
+    AC: insufficient experimental evidence.'
+  openreview_id: RZIfy4Qzxa
+- slug: mamba3
+  filename: 13549_Mamba_3_Improved_Sequenc.pdf
+  title: 'Mamba-3: Improved Sequence Modeling using State Space Principles'
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  decision_type: Oral
+  our_verdict: ACCEPT
+  our_score: null
+  calibration_set: 3
+  notes: TRUE ACCEPT. Oral paper correctly accepted.
+  openreview_id: HwCvaJOiCj
+- slug: efficiency_safety
+  filename: 15240_On_the_Efficiency_Safety.pdf
+  title: On the Efficiency-Safety Dilemma in Large Reasoning Models
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  our_verdict: REJECT
+  our_score: null
+  calibration_set: 3
+  notes: TRUE REJECT. Gate-failed on G4 (construct validity) and G5 (informativeness).
+- slug: injecmem
+  filename: 18062_InjecMEM_Memory_Injectio.pdf
+  title: 'InjecMEM: Memory Injection Attack on LLM Agent Memory Systems'
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  our_verdict: ACCEPT
+  our_score: 75.0
+  calibration_set: 3
+  notes: 'FALSE POSITIVE. All-3s profile (75.0). AC: not novel enough. Gradient-based attack method well-established; memory-specific
+    adaptation seen as incremental.'
+- slug: agent_planning
+  filename: 18567_Optimizing_Agent_Plannin.pdf
+  title: Optimizing Agent Planning for Security and Autonomy
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  decision_type: Poster
+  our_verdict: REJECT
+  our_score: 72.5
+  calibration_set: 3
+  notes: FALSE NEGATIVE. E=2 (missing ablations) drove score below 75. Poster paper. Our system was too demanding on component-level
+    ablations.
+- slug: trap
+  filename: 22043_It_s_a_TRAP_Task_Redirec.pdf
+  title: It's a TRAP! Task-Redirecting Agent Persuasion Benchmark for Web Agents
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  our_verdict: REJECT
+  our_score: null
+  calibration_set: 3
+  notes: TRUE REJECT. Scored on scorecard but below threshold.
+- slug: safedpo
+  filename: 23790_SafeDPO_A_Simple_Approac.pdf
+  title: 'SafeDPO: A Simple Approach to Direct Preference Optimization with Enhanced Safety'
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  decision_type: Oral
+  our_verdict: REJECT
+  our_score: 62.5
+  calibration_set: 3
+  notes: FALSE NEGATIVE. Severely underscored. Oral paper scored 62.50 — B=2, D=2, F=2. Reviewers valued theoretical grounding
+    (closed-form solution) that our system penalized as 'incremental'. Single-dataset (D=2) and no adversarial eval (F=2)
+    were overcritical for a theory-driven safety paper.
+  openreview_id: PJdw4VBsXD
+- slug: task_tokens
+  filename: 25607_Task_Tokens_A_Flexible_A.pdf
+  title: 'Task Tokens: A Flexible Approach to Adapting Behavior Foundation Models'
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: camera_ready
+  decision_type: Poster
+  our_verdict: ACCEPT
+  our_score: null
+  calibration_set: 3
+  notes: TRUE ACCEPT. Poster. Reviewer scores 8/8/6/6.
+- slug: agentalign
+  filename: 5011_AgentAlign_Navigating_Saf.pdf
+  title: 'AgentAlign: Navigating Safety Alignment in the Shift from Informative to Agentic Large Language Models'
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  our_verdict: REJECT
+  our_score: null
+  calibration_set: 3
+  notes: TRUE REJECT. Gate-failed on G2 (baseline fairness).
+- slug: invisible_safety_threat
+  filename: 5161_Invisible_Safety_Threat_M.pdf
+  title: 'Invisible Safety Threat: Malicious Finetuning for LLM via Steganography'
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  decision_type: Oral
+  our_verdict: REJECT
+  our_score: 72.5
+  calibration_set: 3
+  notes: 'FALSE NEGATIVE. Oral paper scored 72.50 — E=2 (limited ablation). Pattern: our system penalizes conceptual/demonstration
+    papers for missing ablations that reviewers don''t demand. Same error as ''shallow safety alignment'' in cal set 2.'
+  openreview_id: 6cEPDGaShH
+- slug: self_tooling_agent
+  filename: 5420_Self_Tooling_Agent_Dynami.pdf
+  title: 'Self-Tooling Agent: Dynamically Extending Agent Capabilities through Scientific Tool Synthesis and Invocation'
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  our_verdict: REJECT
+  our_score: null
+  calibration_set: 3
+  notes: TRUE REJECT.
+- slug: safesearch
+  filename: 5869_SafeSearch_Automated_Red_.pdf
+  title: 'SafeSearch: Automated Red-Teaming for the Safety of LLM-Based Search Agents'
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  our_verdict: ACCEPT
+  our_score: 76.25
+  calibration_set: 3
+  notes: FALSE POSITIVE. All-3s profile (76.25). Despite thorough evaluation (17 LLMs, 3 scaffolds), reviewers found novelty
+    insufficient — red-teaming framework is straightforward, findings confirmatory. AC sided with reject.
+  openreview_id: f2ZiFnZEQA
+- slug: radar
+  filename: 8399_RADAR_A_Risk_Aware_Dynami.pdf
+  title: 'RADAR: A Risk-Aware Dynamic Multi-Agent Framework for LLM Safety Evaluation'
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  our_verdict: REJECT
+  our_score: null
+  calibration_set: 3
+  notes: TRUE REJECT. Gate-failed on G2 and G7.
+  openreview_id: kQdVNX7UlO
+- slug: self_evolving_agent
+  filename: 8420_Towards_Self_Evolving_Age.pdf
+  title: 'Towards Self-Evolving Agent Benchmarks: Validatable Agent Trajectory via Test-Time Exploration'
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  decision_type: Poster
+  our_verdict: REJECT
+  our_score: null
+  calibration_set: 3
+  notes: FALSE NEGATIVE. Gate-failed on G4 (construct validity). Our system flagged Pass@1 degradation conflating difficulty
+    with surface complexity; reviewers found the approach acceptable.
+  openreview_id: 2H03gm4Rq6
+- slug: strata_sword
+  filename: 16665_Strata_Sword_A_Hierarchi.pdf
+  title: 'Strata-Sword: A Hierarchical Representation for Knowledge-Grounded Reasoning'
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 5
+  openreview_id: SmCK8uAzge
+- slug: tilelang
+  filename: 18158_TileLang_Bridge_Programm.pdf
+  title: 'TileLang: Bridge Programming Languages to Accelerate Deep Learning'
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  decision_type: Oral
+  calibration_set: 5
+  openreview_id: Jb1WkNSfUB
+- slug: redtopic
+  filename: 19625_RedTopic_Toward_Topic_Di.pdf
+  title: 'RedTopic: Toward Topic Discovery with Red Teaming'
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 5
+  openreview_id: terdVfnoc5
+- slug: first_try_matters
+  filename: 19651_First_Try_Matters_Revisi.pdf
+  title: 'First Try Matters: Revisiting Feedback Selection for Scalable RLHF'
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 5
+  openreview_id: g6xbW1FFXf
+- slug: softmax_transformers
+  filename: 20531_Softmax_Transformers_are.pdf
+  title: Softmax Transformers are Expressive Estimators in Online Reinforcement Learning
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  decision_type: Oral
+  calibration_set: 5
+  openreview_id: FdkPOHlChS
+- slug: scaling_laws_uncertainty
+  filename: 25158_Scaling_Laws_for_Uncerta.pdf
+  title: Scaling Laws for Uncertainty-Aware Planning
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 5
+  openreview_id: 57QAQhrwOn
+- slug: concrete_to_abstract
+  filename: 25181_Concrete_to_Abstract_Goa.pdf
+  title: 'Concrete to Abstract: Goal Evolution via Attention-based Hierarchical Abstraction'
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 5
+  openreview_id: ITeWz351rW
+- slug: supra_tuning
+  filename: 25479_Supra_Tuning_Combining_O.pdf
+  title: 'Supra-Tuning: Combining Offline Learning and Fine-Tuning'
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 5
+  openreview_id: FFIn2TH7aU
+- slug: exploratory_diffusion
+  filename: 11858_Exploratory_Diffusion_Mo.pdf
+  title: Exploratory Diffusion Model for Unsupervised Reinforcement Learning
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  decision_type: Oral
+  calibration_set: 5
+  openreview_id: k0Kb1ynFbt
+- slug: disa
+  filename: 15112_DiSA_Diffusion_Step_Anne.pdf
+  title: 'DiSA: Diffusion Step Annealing'
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 5
+  openreview_id: ZWwNVIr0PV
+- slug: communication_efficient
+  filename: 16127_Communication_Efficient_.pdf
+  title: Communication-Efficient Distributed Learning
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 5
+  openreview_id: rpblsD3eXG
+- slug: convergence_minibatch
+  filename: 17618_Convergence_Analysis_of_.pdf
+  title: Convergence Analysis of Gradient Descent with Time-Varying Mini-Batch Sizes
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 5
+  openreview_id: 6StVFwcHwF
+- slug: finetuning_free_alignment
+  filename: 22717_Finetuning_free_Alignmen.pdf
+  title: Finetuning-free Alignment of Diffusion Models via Preference Learning
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 5
+  openreview_id: tephmbQcQG
+- slug: approximate_symmetry
+  filename: 23546_Achieving_Approximate_Sy.pdf
+  title: Achieving Approximate Symmetry-Awareness in Neural Networks
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  decision_type: Poster
+  calibration_set: 5
+  openreview_id: ncOJYFcleS
+- slug: auto_rt
+  filename: 23650_Auto_RT_Automatic_Jailbr.pdf
+  title: 'Auto-RT: Automatic Jailbreak Strategy Exploration for Red-Teaming LLMs'
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  decision_type: Poster
+  calibration_set: 5
+  openreview_id: Pa6ak2B9jJ
+- slug: beyond_binary_preference
+  filename: 23744_Beyond_Binary_Preference.pdf
+  title: 'Beyond Binary Preferences: A Principled Framework for Reward Modeling with Ordinal Feedback'
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  decision_type: Poster
+  calibration_set: 5
+  openreview_id: mteZOi0xyu
+- slug: why_dpo_misspecified
+  filename: 24413_Why_DPO_is_a_Misspecifie.pdf
+  title: Why DPO is a Misspecified Approach to Preference Optimization
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  decision_type: Oral
+  calibration_set: 5
+  openreview_id: btEiAfnLsX
+- slug: practical_diffusion_planners
+  filename: 24685_Practical_Diffusion_Plan.pdf
+  title: Practical Diffusion Planners with Calibrated Return Estimates
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 5
+  openreview_id: LOvutpJlgL
+- slug: proxyattn
+  filename: 24686_ProxyAttn_Guided_Sparse_.pdf
+  title: 'ProxyAttn: Guided Sparse Attention for Efficient Long-Context Inference'
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  decision_type: Poster
+  calibration_set: 5
+  openreview_id: z0HTKZ6X96
+- slug: meta_rl_exploration
+  filename: 24714_Meta_RL_Induces_Explorat.pdf
+  title: Meta-RL Induces Exploration-Exploitation Trade-Off via Implicit Priors
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  decision_type: Poster
+  calibration_set: 5
+  openreview_id: 4GiBscHW1k
+- slug: particles_dont_care
+  filename: 24751_Particles_Don_t_Care_Abo.pdf
+  title: Particles Don't Care About Your Posterior
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 5
+  openreview_id: CaqVssw7rN
+- slug: survival_any_cost
+  filename: 25078_Survival_at_Any_Cost_LLM.pdf
+  title: 'Survival at Any Cost: LLM-Guided Goal Switching'
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 5
+  openreview_id: zilyretTjq
+- slug: theoretical_benefits_diversity
+  filename: 25117_The_Theoretical_Benefits.pdf
+  title: The Theoretical Benefits of Diversity in Multi-Agent RL
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 5
+  openreview_id: q7Nhu2Fw11
+- slug: scalable_gans
+  filename: 25155_Scalable_GANs_with_Trans.pdf
+  title: Scalable GANs with Transformers
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 5
+  openreview_id: g9FDTZJEdJ
+- slug: streaming_thinker
+  filename: 25190_StreamingThinker_Large_L.pdf
+  title: 'StreamingThinker: Large Language Models Can Think While Reading'
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  decision_type: Poster
+  calibration_set: 5
+  openreview_id: 10Iiew095e
+- slug: spilling_beans
+  filename: 25344_Spilling_the_Beans_Teach.pdf
+  title: 'Spilling the Beans: Teaching LLMs to Plan by Learning from Rich Demonstrations'
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  decision_type: Poster
+  calibration_set: 5
+  openreview_id: sWs0cCuM8I
+- slug: gpt4o_comics
+  filename: 25423_How_Well_Does_GPT_4o_Und.pdf
+  title: How Well Does GPT-4o Understand Characters in Comic Panels?
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  decision_type: Poster
+  calibration_set: 5
+  openreview_id: Oq3yRhFp0t
+- slug: position_aware_modeling
+  filename: 25482_Position_Aware_Modeling_.pdf
+  title: Position-Aware Modeling with Length-Induced Attention Refusal in LLMs
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 5
+  openreview_id: 60Vj3aBnjw
+- slug: high_probability_bounds
+  filename: 25501_High_Probability_Bounds_.pdf
+  title: High-Probability Bounds for Stochastic Optimization under Heavy-Tailed Noise
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  decision_type: Poster
+  calibration_set: 5
+  openreview_id: KirKWFPYJA
+- slug: fracture_gs
+  filename: 25504_Fracture_GS_Dynamic_Frac.pdf
+  title: 'Fracture-GS: Dynamic Fracture Simulation using 3D Gaussian Splatting'
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  decision_type: Poster
+  calibration_set: 5
+  openreview_id: zcAwK50ft0
+- slug: staq
+  filename: 25527_StaQ_a_Finite_Memory_App.pdf
+  title: 'StaQ: a Finite-Memory Approach to Quantization-Aware Training'
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 5
+  openreview_id: FgDmszDBKb
+- slug: timber
+  filename: 25541_Timber_Training_free_Ins.pdf
+  title: 'Timber: Training-free Instance-aware Model-Based Exploration'
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 5
+  openreview_id: C35E46tK6T
+- slug: scaling_laws_generalist
+  filename: 25601_Scaling_Laws_for_Generat.pdf
+  title: Scaling Laws for Generalist Embodied Agents in 3D Virtual Environments
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 5
+  openreview_id: VYLwMvhdXI
+- slug: motionddm
+  filename: 3034_MotionDDM_Motion_Generati.pdf
+  title: 'MotionDDM: Motion Generation from Arbitrary Representations with Discrete Diffusion Models'
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 5
+  openreview_id: oZ9f1pwXEM
+- slug: depth_anything_3
+  filename: 4157_Depth_Anything_3_Recoveri.pdf
+  title: 'Depth Anything 3: Recovering the Visual Space from Any Views'
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  decision_type: Oral
+  calibration_set: 5
+  openreview_id: yirunib8l8
+- slug: redteamcua
+  filename: 22261_RedTeamCUA_Realistic_Adv.pdf
+  title: 'RedTeamCUA: Realistic Adversarial Testing of Computer-Use Agents in Hybrid Web-OS Environments'
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  decision_type: Oral
+  calibration_set: 4
+  openreview_id: yWwrgcBoK3
+- slug: eigenbench
+  filename: 21269_EigenBench_A_Comparative.pdf
+  title: 'EigenBench: A Comparative Behavioral Measure of Value Alignment'
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  decision_type: Oral
+  calibration_set: 4
+  openreview_id: fm79KXJIUQ
+- slug: reward_hacking
+  filename: 13536_Is_it_Thinking_or_Cheati.pdf
+  title: Is it Thinking or Cheating? Detecting Implicit Reward Hacking by Measuring Reasoning Effort
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  decision_type: Oral
+  calibration_set: 4
+  openreview_id: Gk7gLAtVDO
+- slug: agent_data_protocol
+  filename: 20845_Agent_Data_Protocol.pdf
+  title: Agent Data Protocol
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  decision_type: Oral
+  calibration_set: 4
+  openreview_id: tG6301ORHd
+- slug: openapps
+  filename: 20769_OpenApps_Simulating_Envi.pdf
+  title: 'OpenApps: Simulating Environment Variations to Measure UI Agent Reliability'
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  decision_type: Oral
+  calibration_set: 4
+  openreview_id: cj1MAx7lKs
+- slug: agentgym_rl
+  filename: 20092_AgentGym_RL_An_Open_Sour.pdf
+  title: 'AgentGym-RL: An Open-Source Framework to Train LLM Agents for Long-Horizon Decision Making via Multi-Turn RL'
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  decision_type: Oral
+  calibration_set: 4
+  openreview_id: ZgCCDwcGwn
+- slug: gaia2
+  filename: 17177_Gaia2_Benchmarking_LLM_A.pdf
+  title: 'Gaia2: Benchmarking LLM Agents on Dynamic and Asynchronous Environments'
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: camera_ready
+  decision_type: Oral
+  calibration_set: 4
+  openreview_id: 9gw03JpKK4
+- slug: computer_agent_arena
+  filename: 24792_Computer_Agent_Arena_Tow.pdf
+  title: 'Computer Agent Arena: Toward Human-Centric Evaluation and Analysis of Computer-Use Agents'
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  decision_type: Poster
+  calibration_set: 4
+  openreview_id: 3x4SDbXbgl
+- slug: align_misalign
+  filename: 23381_Align_to_Misalign_Automa.pdf
+  title: 'Align to Misalign: Automatic LLM Jailbreak with Meta-Optimized LLM Judges'
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  decision_type: Poster
+  calibration_set: 4
+  openreview_id: gGjwMNAYAr
+- slug: honesty_alignment
+  filename: 23676_Annotation_Efficient_Hon.pdf
+  title: Annotation-Efficient Honesty Alignment via Confidence Elicitation and Calibration
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  decision_type: Poster
+  calibration_set: 4
+  openreview_id: cW6oDsPobl
+- slug: hot_mess_misalign
+  filename: 24103_The_Hot_Mess_of_AI_How_D.pdf
+  title: 'The Hot Mess of AI: How Does Misalignment Scale With Model Intelligence and Task Complexity?'
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  decision_type: Poster
+  calibration_set: 4
+  openreview_id: sIBwirjYlY
+- slug: tool_tree
+  filename: 23995_ToolTree_Efficient_LLM_T.pdf
+  title: 'ToolTree: Efficient LLM Tool Planning via Dual-Feedback Monte Carlo Tree Search and Bidirectional Pruning'
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: submission
+  decision_type: Poster
+  calibration_set: 4
+  openreview_id: Ef5O9gNNLE
+- slug: collaborative_gym
+  filename: 6029_Collaborative_Gym_A_Frame.pdf
+  title: 'Collaborative Gym: A Framework for Enabling and Evaluating Human-Agent Collaboration'
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: camera_ready
+  decision_type: Poster
+  calibration_set: 4
+  openreview_id: GDYueXtKXT
+- slug: eval_faking
+  filename: 24414_Evaluation_Faking_Unveil.pdf
+  title: 'Evaluation Faking: Unveiling Observer Effects in Safety Evaluation of Frontier AI Systems'
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 4
+  openreview_id: mPaHEZFLi2
+- slug: rl_obfuscation
+  filename: 24933_RL_Obfuscation_Can_Langu.pdf
+  title: 'RL-Obfuscation: Can Language Models Learn to Evade Latent-Space Monitors?'
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 4
+  openreview_id: CPajDOuA3h
+- slug: graf_jailbreak
+  filename: 24820_GRAF_Multi_turn_Jailbrea.pdf
+  title: 'GRAF: Multi-turn Jailbreaking via Global Refinement and Active Fabrication'
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 4
+  openreview_id: f9BuANYtJf
+- slug: marble_benchmark
+  filename: 24409_MARBLE_A_Hard_Benchmark_.pdf
+  title: 'MARBLE: A Hard Benchmark for Multimodal Spatial Reasoning and Planning'
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 4
+  openreview_id: ovJBVWMEwi
+- slug: beyond_benchmarks
+  filename: 25136_Beyond_Benchmarks_Toward.pdf
+  title: 'Beyond Benchmarks: Toward Causally Faithful Evaluation of Large Language Models'
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 4
+  openreview_id: UJvub9fNws
+- slug: weak_links_agents
+  filename: 25240_Exposing_Weak_Links_in_M.pdf
+  title: Exposing Weak Links in Multi-Agent Systems under Adversarial Prompting
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 4
+  openreview_id: WHVk2qoCIY
+- slug: bias_hallucination
+  filename: 24733_When_Bias_Pretends_to_Be.pdf
+  title: 'When Bias Pretends to Be Truth: How Spurious Correlations Undermine Hallucination Detection in LLMs'
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 4
+  openreview_id: UXWhVL3iPF
+- slug: expert_failures_agent
+  filename: 23892_Exploring_Expert_Failure.pdf
+  title: Exploring Expert Failures Improves LLM Agent Tuning
+  venue: ICLR 2026
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 4
+  openreview_id: 4fh0Z9nwjx
+- slug: backtracking_safety
+  filename: backtracking_safety.pdf
+  title: Backtracking Improves Generation Safety
+  venue: ICLR 2025
+  decision: accepted
+  pdf_version: camera_ready
+  decision_type: Oral
+  calibration_set: 5
+  openreview_id: Bo62NeU6VF
+  notes: 'Oral at ICLR 2025. Scores: 8/8/8/8 (unanimous). Introduces [RESET] token for mid-generation safety recovery. Backtracking
+    Llama-3-8B 4x safer (6.1%→1.5%) without helpfulness regression. Protection against 4 adversarial attacks including adaptive.
+    AC: ''significant and effective contribution to AI safety.'' Meta: ''I would recommend strong acceptance.'''
+- slug: safety_layers
+  filename: safety_layers.pdf
+  title: 'Safety Layers in Aligned Large Language Models: The Key to LLM Security'
+  venue: ICLR 2025
+  decision: accepted
+  pdf_version: camera_ready
+  decision_type: Poster
+  calibration_set: heldout
+  openreview_id: kUH1yPMAn7
+  notes: 'Poster at ICLR 2025. Scores: 6/6/6/6. All scores right at acceptance threshold.'
+- slug: emergent_misalignment
+  filename: emergent_misalignment.pdf
+  title: 'Emergent Misalignment: Narrow Finetuning Can Produce Broadly Misaligned LLMs'
+  venue: ICML 2025
+  decision: accepted
+  pdf_version: camera_ready
+  decision_type: Oral
+  calibration_set: heldout
+  openreview_id: aOIJ2gVRWW
+  notes: 'Oral at ICML 2025. Scores: 4/4/4/5 (ICML 1-5 scale). Also published in Nature. Clear strong accept.'
+- slug: shieldagent
+  filename: shieldagent.pdf
+  title: 'ShieldAgent: Shielding Agents via Verifiable Safety Policy Reasoning'
+  venue: ICML 2025
+  decision: accepted
+  pdf_version: camera_ready
+  decision_type: Poster
+  calibration_set: heldout
+  openreview_id: DkRYImuQA9
+  notes: 'Poster at ICML 2025. Scores: 2/3/4/4 (avg 3.25). Accepted despite one weak reject. Borderline.'
+- slug: principled_data_selection
+  filename: principled_data_selection.pdf
+  title: 'Principled Data Selection for Alignment: The Hidden Risks of Difficult Examples'
+  venue: ICML 2025
+  decision: accepted
+  pdf_version: camera_ready
+  decision_type: Poster
+  calibration_set: heldout
+  openreview_id: qut63YypaD
+  notes: 'Poster at ICML 2025. Scores: 2/3/3/4 (avg 3.0). Persistent weak reject overridden by AC. Very borderline.'
+- slug: guardagent
+  filename: guardagent.pdf
+  title: 'GuardAgent: Safeguard LLM Agents via Knowledge-Enabled Reasoning'
+  venue: ICML 2025
+  decision: accepted
+  pdf_version: camera_ready
+  decision_type: Poster
+  calibration_set: heldout
+  openreview_id: 2nBcjCZrrP
+  notes: 'Poster at ICML 2025. Scores: 3/3/3/4 (avg 3.25). Rejected at ICLR 2025 first (scores 5/5/6/8). Borderline.'
+- slug: safety_neurons
+  filename: safety_neurons.pdf
+  title: 'Towards Understanding Safety Alignment: A Mechanistic Perspective from Safety Neurons'
+  venue: NeurIPS 2025
+  decision: accepted
+  pdf_version: camera_ready
+  decision_type: Poster
+  calibration_set: heldout
+  openreview_id: AAXMcAyNF6
+  notes: 'Poster at NeurIPS 2025. Scores: 3/4/5/5 (avg 4.25). Rejected at ICLR 2025 first (scores 3/5/6). Moderately borderline.'
+- slug: infinity_beyond_tool-use_unlocks_length
+  filename: 18237_To_Infinity_and_Beyond_T.pdf
+  title: 'To Infinity and Beyond: Tool-Use Unlocks Length Generalization in State Space Models'
+  venue: ICLR 2026 Conference
+  decision: accepted
+  pdf_version: camera_ready
+  calibration_set: 6
+  openreview_id: sSfep4udCb
+- slug: watch_your_steps_dormant_adversarial
+  filename: 19711_Watch_your_steps_Dormant.pdf
+  title: 'Watch your steps: Dormant Adversarial Behaviors that Activate upon LLM Finetuning'
+  venue: ICLR 2026 Conference
+  decision: accepted
+  pdf_version: camera_ready
+  calibration_set: 6
+  openreview_id: yfM2e8Icsw
+- slug: reliable_weak-to-strong_monitoring_llm_agents
+  filename: 6444_Reliable_Weak_to_Strong_M.pdf
+  title: Reliable Weak-to-Strong Monitoring of LLM Agents
+  venue: ICLR 2026 Conference
+  decision: accepted
+  pdf_version: camera_ready
+  calibration_set: 6
+  openreview_id: WV7xIboTDK
+- slug: huxley-godel_machine_human-level_coding_agent
+  filename: 17184_Huxley_G_odel_Machine_Hu.pdf
+  title: 'Huxley-G\"odel Machine: Human-Level Coding Agent Development by an Approximation of the Optimal Self-Improving Machine'
+  venue: ICLR 2026 Conference
+  decision: accepted
+  pdf_version: camera_ready
+  calibration_set: 6
+  openreview_id: T0EiEuhOOL
+- slug: ctrl-alt-deceit_sabotage_evaluations_automated_ai
+  filename: 23095_CTRL_ALT_DECEIT_Sabotage.pdf
+  title: CTRL-ALT-DECEIT Sabotage Evaluations for Automated AI R&D
+  venue: NeurIPS 2025 Conference
+  decision: accepted
+  pdf_version: camera_ready
+  calibration_set: 6
+  openreview_id: XBMjXb6f4w
+- slug: whose_view_safety_deep_dive
+  filename: 1459_Whose_View_of_Safety_A_De.pdf
+  title: Whose View of Safety? A Deep DIVE Dataset for Pluralistic Alignment of Text-to-Image Models
+  venue: NeurIPS 2025 Datasets and Benchmarks Track
+  decision: accepted
+  pdf_version: camera_ready
+  calibration_set: 6
+  openreview_id: 2TxdMkJ6Yw
+- slug: aria_training_language_agents_intention-driven
+  filename: 22066_ARIA_Training_Language_A.pdf
+  title: 'ARIA: Training Language Agents with Intention-driven Reward Aggregation'
+  venue: NeurIPS 2025 Conference
+  decision: accepted
+  pdf_version: camera_ready
+  calibration_set: 6
+  openreview_id: eumRwpgdMU
+- slug: reverse_engineering_human_preferences_reinforcement
+  filename: 23360_Reverse_Engineering_Huma.pdf
+  title: Reverse Engineering Human Preferences with Reinforcement Learning
+  venue: NeurIPS 2025 Conference
+  decision: accepted
+  pdf_version: camera_ready
+  calibration_set: 6
+  openreview_id: heY0zzGvYm
+- slug: predictive_preference_learning_human_interventions
+  filename: 11101_Predictive_Preference_Le.pdf
+  title: Predictive Preference Learning from Human Interventions
+  venue: NeurIPS 2025 Conference
+  decision: accepted
+  pdf_version: camera_ready
+  calibration_set: 6
+  openreview_id: ErEaq1UNaQ
+- slug: re-bench_evaluating_frontier_ai_rd
+  filename: 12503_RE_Bench_Evaluating_Fron.pdf
+  title: 'RE-Bench: Evaluating Frontier AI R&D Capabilities of Language Model Agents against Human Experts'
+  venue: ICML 2025 Conference
+  decision: accepted
+  pdf_version: camera_ready
+  calibration_set: 6
+  openreview_id: 3rB0bVU6z6
+- slug: learning_safety_constraints_large_language
+  filename: 5114_Learning_Safety_Constrain.pdf
+  title: Learning Safety Constraints for Large Language Models
+  venue: ICML 2025 Conference
+  decision: accepted
+  pdf_version: camera_ready
+  calibration_set: 6
+  openreview_id: Ffpc7vx6qq
+- slug: breaking_safety_alignment_large_vision-language
+  filename: 8424_Breaking_Safety_Alignment.pdf
+  title: Breaking Safety Alignment in Large Vision-Language Models via Benign-to-Harmful Optimization
+  venue: ICLR 2026 Conference
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 6
+  openreview_id: OMOjEkE5rd
+- slug: learning_tractable_distributions_language_model
+  filename: 24105_Learning_Tractable_Distr.pdf
+  title: Learning Tractable Distributions of Language Model Continuations
+  venue: ICLR 2026 Conference
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 6
+  pdf_broken_pages:
+  - 0
+  - 3
+  - 4
+  - 5
+  openreview_id: BQUeUjahfI
+- slug: sophiavl-r1_reinforcing_mllms_reasoning_thinking
+  filename: 12015_SophiaVL_R1_Reinforcing_.pdf
+  title: 'SophiaVL-R1: Reinforcing MLLMs Reasoning with Thinking Reward'
+  venue: NeurIPS 2025 Conference
+  decision: rejected
+  pdf_version: last_revision
+  calibration_set: 6
+- slug: beyond_reward_hacking_causal_rewards
+  filename: 20565_Beyond_Reward_Hacking_Ca.pdf
+  title: 'Beyond Reward Hacking: Causal Rewards for Large Language Model Alignment'
+  venue: ICLR 2026 Conference
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 6
+- slug: dabstep_data_agent_benchmark_multi-step
+  filename: 60_DABstep_Data_Agent_Benchmar.pdf
+  title: 'DABstep: Data Agent Benchmark for Multi-step Reasoning'
+  venue: NeurIPS 2025 Datasets and Benchmarks Track
+  decision: rejected
+  pdf_version: last_revision
+  calibration_set: 6
+- slug: decoupling_safety_into_orthogonal_subspace
+  filename: 11097_Decoupling_Safety_into_O.pdf
+  title: 'Decoupling Safety into Orthogonal Subspace: Cost-Efficient and Performance-Preserving Alignment for Large Language
+    Models'
+  venue: ICLR 2026 Conference
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 6
+- slug: astprompter_weakly_supervised_automated_language
+  filename: 8869_ASTPrompter_Weakly_Superv.pdf
+  title: 'ASTPrompter: Weakly Supervised Automated Language Model Red-Teaming to Identify Low-Perplexity Toxic Prompts'
+  venue: ICML 2025 Conference
+  decision: rejected
+  pdf_version: last_revision
+  calibration_set: 6
+- slug: humanagencybench_scalable_evaluation_human_agency
+  filename: 13339_HumanAgencyBench_Scalabl.pdf
+  title: 'HumanAgencyBench: Scalable Evaluation of Human Agency Support in AI Assistants'
+  venue: ICLR 2026 Conference
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 6
+- slug: static_benchmarks_dynamic_protocol_agent-centric
+  filename: 1400_From_Static_Benchmarks_to.pdf
+  title: 'From Static Benchmarks to Dynamic Protocol: Agent-Centric Text Anomaly Detection for Evaluating LLM Reasoning'
+  venue: NeurIPS 2025 Datasets and Benchmarks Track
+  decision: rejected
+  pdf_version: last_revision
+  calibration_set: 6
+- slug: subspace_inference_enables_active_preference
+  filename: 20714_Subspace_Inference_Enabl.pdf
+  title: Subspace Inference Enables Active Preference based Learning of Neural Network Reward Models
+  venue: ICLR 2026 Conference
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 6
+  pdf_broken_pages:
+  - 0
+  - 1
+  openreview_id: IdnhAdEeMK
+- slug: curate_benchmarking_personalised_alignment_conversational
+  filename: 475_CURATe_Benchmarking_Person.pdf
+  title: 'CURATe: Benchmarking Personalised Alignment of Conversational AI Assistants'
+  venue: NeurIPS 2025 Datasets and Benchmarks Track
+  decision: rejected
+  pdf_version: last_revision
+  calibration_set: 6
+- slug: bypassing_prompt_guards_production_controlled-release
+  filename: 20802_Bypassing_Prompt_Guards_.pdf
+  title: Bypassing Prompt Guards in Production with Controlled-Release Prompting
+  venue: ICLR 2026 Conference
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 6
+  pdf_broken_pages:
+  - 0
+  - 1
+  - 2
+  openreview_id: d1fVTnq3c8
+- slug: st-webagentbench_benchmark_evaluating_safety_trustworthiness
+  filename: 13776_ST_WebAgentBench_A_Bench.pdf
+  title: 'ST-WebAgentBench: A Benchmark for Evaluating Safety and Trustworthiness in Web Agents'
+  venue: ICLR 2026 Conference
+  decision: accepted
+  pdf_version: camera_ready
+  calibration_set: 6
+  openreview_id: fAmhr96SUw
+- slug: safearena_evaluating_safety_autonomous_web
+  filename: 8631_SafeArena_Evaluating_the_.pdf
+  title: 'SafeArena: Evaluating the Safety of Autonomous Web Agents'
+  venue: ICML 2025 Conference
+  decision: accepted
+  pdf_version: camera_ready
+  calibration_set: 6
+  openreview_id: 7TrOBcxSvy
+- slug: benchmarking_robustness_agentic_systems_adversarially-induced
+  filename: 13947_Benchmarking_the_Robustn.pdf
+  title: Benchmarking the Robustness of Agentic Systems to Adversarially-Induced Harms
+  venue: ICLR 2026 Conference
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 6
+- slug: safesearch_automated_red-teaming_safety_llm-based
+  filename: 5869_SafeSearch_Automated_Red_.pdf
+  title: 'SafeSearch: Automated Red-Teaming for the Safety of LLM-Based Search Agents'
+  venue: ICLR 2026 Conference
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 6
+  openreview_id: f2ZiFnZEQA
+- slug: vpi-bench_visual_prompt_injection_attacks
+  filename: 19136_VPI_Bench_Visual_Prompt_.pdf
+  title: 'VPI-Bench: Visual Prompt Injection Attacks for Computer-Use Agents'
+  venue: ICLR 2026 Conference
+  decision: accepted
+  pdf_version: camera_ready
+  calibration_set: 6
+  openreview_id: R7WAZGtCvi
+- slug: os-harm_benchmark_measuring_safety_computer
+  filename: 1303_OS_Harm_A_Benchmark_for_M.pdf
+  title: 'OS-Harm: A Benchmark for Measuring Safety of Computer Use Agents'
+  venue: NeurIPS 2025 Datasets and Benchmarks Track
+  decision: accepted
+  pdf_version: camera_ready
+  calibration_set: 6
+  openreview_id: kNHA0QCSQa
+- slug: deep-cover_agents_long-horizon_prompt_injections
+  filename: 24651_Deep_Cover_Agents_Long_H.pdf
+  title: 'Deep-Cover Agents: Long-Horizon Prompt Injections on Production LLM Systems'
+  venue: ICLR 2026 Conference
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 6
+- slug: log-to-leak_prompt_injection_attacks_tool-using
+  filename: 19255_Log_To_Leak_Prompt_Injec.pdf
+  title: 'Log-To-Leak: Prompt Injection Attacks on Tool-Using LLM Agents via Model Context Protocol'
+  venue: ICLR 2026 Conference
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 6
+  openreview_id: UVgbFuXPaO
+- slug: drift_dynamic_rule-based_defense_injection
+  filename: 21857_DRIFT_Dynamic_Rule_Based.pdf
+  title: 'DRIFT: Dynamic Rule-Based Defense with Injection Isolation for Securing LLM Agents'
+  venue: NeurIPS 2025 Conference
+  decision: accepted
+  pdf_version: camera_ready
+  calibration_set: 6
+  openreview_id: oY1Xnt83oJ
+- slug: shieldagent_shielding_agents_verifiable_safety
+  filename: 16287_ShieldAgent_Shielding_Ag.pdf
+  title: 'ShieldAgent: Shielding Agents via Verifiable Safety Policy Reasoning'
+  venue: ICML 2025 Conference
+  decision: accepted
+  pdf_version: camera_ready
+  calibration_set: 6
+  openreview_id: wnO6P1DLSM
+- slug: promptarmor_essential_baseline_prompt_injection
+  filename: 4931_PromptArmor_An_Essential_.pdf
+  title: 'PromptArmor: An Essential Baseline for Prompt Injection Defenses'
+  venue: ICLR 2026 Conference
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 6
+  pdf_broken_pages:
+  - 0
+  - 1
+  - 5
+  openreview_id: IeNXtofK6T
+- slug: commandsans_securing_ai_agents_surgical
+  filename: 20568_CommandSans_Securing_AI_.pdf
+  title: 'CommandSans: Securing AI Agents with Surgical Precision Prompt Sanitization'
+  venue: ICLR 2026 Conference
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 6
+  pdf_broken_pages:
+  - 0
+  - 2
+  - 4
+  openreview_id: 3cK8gUZWBD
+- slug: lifelong_safety_alignment_language_models
+  filename: 11402_Lifelong_Safety_Alignmen.pdf
+  title: Lifelong Safety Alignment for Language Models
+  venue: NeurIPS 2025 Conference
+  decision: accepted
+  pdf_version: camera_ready
+  calibration_set: 6
+  openreview_id: 9YkEcAqiIK
+- slug: safevla_towards_safety_alignment_vision-language-action
+  filename: 19550_SafeVLA_Towards_Safety_A.pdf
+  title: 'SafeVLA: Towards Safety Alignment of Vision-Language-Action Model via Constrained Learning'
+  venue: NeurIPS 2025 Conference
+  decision: accepted
+  pdf_version: camera_ready
+  calibration_set: 6
+  openreview_id: dt940loCBT
+- slug: aegisllm_scaling_agentic_systems_self-reflective
+  filename: 22988_AegisLLM_Scaling_Agentic.pdf
+  title: 'AegisLLM: Scaling Agentic Systems for Self-Reflective Defense in LLM Security'
+  venue: ICLR 2026 Conference
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 6
+- slug: spard_defending_harmful_fine-tuning_attack
+  filename: 12966_SPARD_Defending_Harmful_.pdf
+  title: 'SPARD: Defending Harmful Fine-Tuning Attack via Safety Projection with Relevance–Diversity Data Selection'
+  venue: ICLR 2026 Conference
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 6
+  openreview_id: 81mxnkcW43
+- slug: among_us_sandbox_measuring_detecting
+  filename: 21265_Among_Us_A_Sandbox_for_M.pdf
+  title: 'Among Us: A Sandbox for Measuring and Detecting Agentic Deception'
+  venue: NeurIPS 2025 Conference
+  decision: accepted
+  pdf_version: camera_ready
+  calibration_set: 6
+  openreview_id: XP3v1THxsq
+- slug: managerbench_evaluating_safety-pragmatism_trade-off_autonomous
+  filename: 7961_ManagerBench_Evaluating_t.pdf
+  title: 'ManagerBench: Evaluating the Safety-Pragmatism Trade-off in Autonomous LLMs'
+  venue: ICLR 2026 Conference
+  decision: accepted
+  pdf_version: camera_ready
+  calibration_set: 6
+  openreview_id: Cb8Mq1AnJJ
+- slug: evaluating_frontier_models_stealth_situational
+  filename: 12951_Evaluating_Frontier_Mode.pdf
+  title: Evaluating Frontier Models for Stealth and Situational Awareness
+  venue: NeurIPS 2025 Conference
+  decision: rejected
+  pdf_version: last_revision
+  calibration_set: 6
+- slug: advagent_controllable_blackbox_red-teaming_web
+  filename: 15419_AdvAgent_Controllable_Bl.pdf
+  title: 'AdvAgent: Controllable Blackbox Red-teaming on Web Agents'
+  venue: ICML 2025 Conference
+  decision: accepted
+  pdf_version: camera_ready
+  calibration_set: 6
+  openreview_id: bwidSkOyWF
+- slug: building_foundational_guardrail_general_agentic
+  filename: 9629_Building_a_Foundational_G.pdf
+  title: Building a Foundational Guardrail for General Agentic Systems via Synthetic Data
+  venue: ICLR 2026 Conference
+  decision: accepted
+  pdf_version: camera_ready
+  calibration_set: 6
+  openreview_id: 0gcNPFkqAw
+- slug: radar_risk-aware_dynamic_multi-agent_framework
+  filename: 8399_RADAR_A_Risk_Aware_Dynami.pdf
+  title: 'RADAR: A Risk-Aware Dynamic Multi-Agent Framework for LLM Safety Evaluation via Role-Specialized Collaboration'
+  venue: ICLR 2026 Conference
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 6
+  openreview_id: kQdVNX7UlO
+- slug: alignment_tipping_process_how_self-evolution
+  filename: 9971_Alignment_Tipping_Process.pdf
+  title: 'Alignment Tipping Process: How Self-Evolution Pushes LLM Agents Off the Rails'
+  venue: ICLR 2026 Conference
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 6
+- slug: autoadvexbench_benchmarking_autonomous_exploitation
+  filename: 7217_AutoAdvExBench_Benchmarki.pdf
+  title: 'AutoAdvExBench: Benchmarking Autonomous Exploitation of Adversarial Example Defenses'
+  venue: ICML 2025 Conference
+  decision: accepted
+  pdf_version: camera_ready
+  calibration_set: 6
+  openreview_id: FJKnru1xUF
+- slug: agentmisalignment_measuring_propensity_misaligned
+  filename: 20186_AgentMisalignment_Measur.pdf
+  title: 'AgentMisalignment: Measuring the Propensity for Misaligned Behaviour in LLM-Based Agents'
+  venue: ICLR 2026 Conference
+  decision: rejected
+  pdf_version: submission
+  calibration_set: 6
+  pdf_broken_pages:
+  - 0
+  - 1
+  - 2
+  openreview_id: R1SxYK1LCs
+# === Own-Group Papers ===
+- slug: beyond_problem_solving
+  filename: 1122_Beyond_Problem_Solving_A_.pdf
+  title: 'Beyond Problem Solving: A Three-Space Probe of LLM Critical Thinking'
+  venue: ACL ARR 2025
+  decision: rejected
+  pdf_version: submission
+  calibration_set: own_group
+  notes: 'Own-group rejected paper. Scores: 2/2/3.5. Author agrees rejection correct. Narrow
+    operationalization of critical thinking, overclaiming, GPT-4o-as-judge circularity.'
+- slug: adversarial_dejavu
+  filename: 21925_Adversarial_D_j_Vu_Jailb.pdf
+  title: 'Adversarial Deja Vu: Jailbreak Dictionary Learning for Stronger Generalization to Unseen Attacks'
+  venue: ICLR 2026
+  decision: accepted
+  pdf_version: camera_ready
+  calibration_set: own_group
+  notes: 'Own-group accepted paper. Poster. Scores: 6/2→6/8/6. Novel Deja Vu hypothesis.
+    Rebuttal reversed Q4KG from 2 to 6. Pipeline depends on GPT-4.1 for extraction/scoring.'
+- slug: rl_backtracking_feedback
+  filename: 28718_Reinforcement_Learning_w.pdf
+  title: Reinforcement Learning with Backtracking Feedback
+  venue: NeurIPS 2025
+  decision: accepted
+  pdf_version: camera_ready
+  calibration_set: own_group
+  notes: 'Own-group accepted paper. Poster. Scores: 5/4/4/5. Surgical backtracking vs full-reset.
+    Marginal RL improvement over SFT-only stage. No error bars.'
+- slug: from_capabilities_pentest
+  filename: 4801_From_Capabilities_to_Perf.pdf
+  title: 'From Capabilities to Performance: Evaluating Key Functional Properties of LLM Architectures in Penetration Testing'
+  venue: ACL ARR May 2025
+  decision: accepted
+  pdf_version: submission
+  calibration_set: own_group
+  notes: 'Own-group accepted paper (borderline). Scores: 3.5/3.5/3.5. Revised version of R2 (6973).
+    Added 5 augmentations, expanded related work. Reject-then-accept pair with from_assistant_pentest.'
+- slug: from_assistant_pentest
+  filename: 6973_From_Assistant_to_Attacke.pdf
+  title: 'From Assistant to Attacker: A Role-Based and Empirical Study of LLMs in Penetration Testing and Modular Architecture'
+  venue: ACL ARR Feb 2025
+  decision: rejected
+  pdf_version: submission
+  calibration_set: own_group
+  notes: 'Own-group rejected paper. Scores: 2.5/2.5/1.5. Initial submission later revised as A4 (4801).
+    Too broad scope, missing MAS related work, shallow failure analysis. Reject-then-accept pair with from_capabilities_pentest.'
+- slug: cmdp_meta_safe_rl
+  filename: 3277_a_cmdp_within_online_framework.pdf
+  title: A CMDP-within-online Framework for Meta-Safe Reinforcement Learning
+  venue: ICLR 2023
+  decision: accepted
+  pdf_version: camera_ready
+  calibration_set: own_group
+  notes: 'Own-group accepted paper. Spotlight (top 25%). Scores: 8/6/3. Sharp reviewer disagreement.
+    AC championed theoretical contribution over weak experiments. GvYx (score-3) never responded to rebuttal.'
+
+# === Own-Group External: Outstanding Papers ===
+- slug: collabllm
+  filename: external/1940_CollabLLM_From_Passive_Re.pdf
+  title: "CollabLLM: From Passive Responders to Active Collaborators"
+  venue: ICML 2025
+  decision: accepted
+  pdf_version: camera_ready
+  calibration_set: own_group
+  notes: 'External award-winning paper. ICML 2025 Outstanding Paper (Oral). Multiturn collaboration
+    framework with reinforcement learning from simulated user interactions. No insider commentary.'
+
+- slug: artificial_hivemind
+  filename: external/2331_Artificial_Hivemind_The_O.pdf
+  title: "Artificial Hivemind: The Open-Ended Homogeneity of Language Models (and Beyond)"
+  venue: NeurIPS 2025
+  decision: accepted
+  pdf_version: camera_ready
+  calibration_set: own_group
+  notes: 'External award-winning paper. NeurIPS 2025 Best Paper (Datasets and Benchmarks track).
+    Large-scale study of LM output diversity with INFINITY-CHAT benchmark. No insider commentary.'
+
+- slug: rl_reasoning_limits
+  filename: external/6514_Does_Reinforcement_Learni.pdf
+  title: "Does Reinforcement Learning Really Incentivize Reasoning Capacity in LLMs Beyond the Base Model?"
+  venue: NeurIPS 2025
+  decision: accepted
+  pdf_version: camera_ready
+  calibration_set: own_group
+  notes: 'External award-winning paper. NeurIPS 2025 Best Paper Runner-up (Oral). Finds that RLVR
+    does not elicit fundamentally new reasoning — base model bounds the reasoning capacity. No insider commentary.'

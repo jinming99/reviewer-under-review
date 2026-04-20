@@ -1,0 +1,715 @@
+schema_version: v1
+version: "own_group"
+generated_by: skill_5b_claude_code
+
+edge_overrides:
+  # ============================================================
+  # panel_no_ls — 8 strict edges (7 confirmed, 1 reclassified)
+  # ============================================================
+  - method: panel_no_ls
+    paper: artificial_hivemind
+    official_id: O1
+    agentic_id: A7
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify English-only dataset from WildChat as limiting cross-cultural/linguistic generalizability. Same specific defect, same scope."
+    confidence: high
+
+  - method: panel_no_ls
+    paper: artificial_hivemind
+    official_id: O3
+    agentic_id: A9
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "Both say the paper diagnoses homogeneity but doesn't explain WHY (shared data, RLHF, architecture). Same core defect."
+    confidence: high
+
+  - method: panel_no_ls
+    paper: artificial_hivemind
+    official_id: O4
+    agentic_id: A5
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "Both challenge that the finding direction is expected/unsurprising. O4 argues from statistical first principles; A5 from prior literature. Same core novelty challenge."
+    confidence: high
+
+  - method: panel_no_ls
+    paper: artificial_hivemind
+    official_id: O6
+    agentic_id: A10
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both want finer-grained query-level analysis. O6 asks about entropy/difficulty impact; A10 asks for per-category diversity breakdown. Same family, different facets."
+    confidence: high
+
+  - method: panel_no_ls
+    paper: artificial_hivemind
+    official_id: O9
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both question dataset construct validity. O9 flags missing human validation of open-endedness; A3 flags GPT-4o taxonomy circularity. Same root issue, different mechanisms."
+    confidence: high
+
+  - method: panel_no_ls
+    paper: artificial_hivemind
+    official_id: O10
+    agentic_id: A1
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both target metric trustworthiness. O10 wants reference baseline for interpretation; A1 wants human validation and alternative metrics. Same family, different specific asks."
+    confidence: high
+
+  - method: panel_no_ls
+    paper: artificial_hivemind
+    official_id: O15
+    agentic_id: A9
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both about mechanism understanding. O15 wants foundation model experiments; A9 wants broader causal analysis. O15 is one specific experiment within A9's broader concern."
+    confidence: high
+
+  - method: panel_no_ls
+    paper: artificial_hivemind
+    official_id: O18
+    agentic_id: A6
+    original_match_type: partial
+    override_match_type: related
+    override_judgment_alignment: n/a
+    override_severity_alignment: n/a
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O18 asks for deeper interpretation of results (analytical substance). A6 says Section 3-4 connection is too loose narratively (structural coherence). Different defects requiring different fixes: adding interpretation depth vs restructuring paper narrative."
+    confidence: high
+
+  # ============================================================
+  # panel_arch_b — 4 strict edges (3 confirmed, 1 reclassified)
+  # ============================================================
+  - method: panel_arch_b
+    paper: artificial_hivemind
+    official_id: O1
+    agentic_id: A6
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify English-only dataset as limiting cross-cultural/linguistic generalizability. Same defect, same scope."
+    confidence: high
+
+  - method: panel_arch_b
+    paper: artificial_hivemind
+    official_id: O3
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O3 broadly asks for causal decomposition across multiple factors. A3 zeroes in on training data overlap confound. A3 is a proper subset of O3's scope."
+    confidence: high
+
+  - method: panel_arch_b
+    paper: artificial_hivemind
+    official_id: O10
+    agentic_id: A8
+    original_match_type: partial
+    override_match_type: related
+    override_judgment_alignment: n/a
+    override_severity_alignment: n/a
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O10 asks for a reference baseline to interpret 0.7-0.8 cosine similarity values (what does random look like?). A8 asks for human-perceptual calibration of the 0.8 threshold (what similarity level humans perceive as homogeneous?). Same broad topic (contextualizing the metric) but different specific defects: random baseline vs human perception study."
+    confidence: medium
+
+  - method: panel_arch_b
+    paper: artificial_hivemind
+    official_id: O11
+    agentic_id: A4
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O11 broadly critiques Section 4 methodology (subset selection, entropy, averaging). A4 captures one specific facet: restriction-of-range from subsetting similar-quality responses."
+    confidence: high
+
+  # ============================================================
+  # df_no_ls — 7 strict edges (all 7 confirmed)
+  # ============================================================
+  - method: df_no_ls
+    paper: artificial_hivemind
+    official_id: O1
+    agentic_id: A8
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify English-only dataset from WildChat as limiting generalizability. Same defect, same scope."
+    confidence: high
+
+  - method: df_no_ls
+    paper: artificial_hivemind
+    official_id: O3
+    agentic_id: A7
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify the same gap: paper diagnoses homogeneity but defers causal analysis. O3 says 'does not mechanistically disentangle causes'; A7 says 'defers causal analysis of WHY'. Same complaint, same scope."
+    confidence: high
+
+  - method: df_no_ls
+    paper: artificial_hivemind
+    official_id: O6
+    agentic_id: A6
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O6 asks about query entropy/difficulty moderating the Hivemind effect. A6 flags that 18.73% of queries have fewer than 3 alternatives, which could inflate homogeneity. Same family (query open-endedness impact) but different facets."
+    confidence: high
+
+  - method: df_no_ls
+    paper: artificial_hivemind
+    official_id: O9
+    agentic_id: A6
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "O9 flags missing human verification of query open-endedness. A6 flags that validation revealed 18.73% with fewer than 3 alternatives. Same issue family (query validity) but different facets: process gap vs specific finding."
+    confidence: high
+
+  - method: df_no_ls
+    paper: artificial_hivemind
+    official_id: O10
+    agentic_id: A2
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O10 asks for any reference baseline to contextualize scores. A2 specifically asks for a human diversity baseline. Same root issue (uninterpretable scores) but different specific baselines requested."
+    confidence: high
+
+  - method: df_no_ls
+    paper: artificial_hivemind
+    official_id: O11
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O11 broadly critiques Section 4 methodology. A3 identifies one specific facet: range restriction as a confound in similar-quality filtering. A3 captures one sub-problem of O11's broader critique."
+    confidence: high
+
+  - method: df_no_ls
+    paper: artificial_hivemind
+    official_id: O15
+    agentic_id: A7
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O15 asks for foundation model experiments to isolate pre- vs post-training effects. A7 asks broadly for causal analysis. O15 is one specific experiment within A7's broader call for mechanistic investigation."
+    confidence: high
+
+  # ============================================================
+  # df_arch_c — 4 strict edges (all 4 confirmed)
+  # ============================================================
+  - method: df_arch_c
+    paper: artificial_hivemind
+    official_id: O1
+    agentic_id: A7
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify English-only dataset as limiting generalizability. Same defect, same scope."
+    confidence: high
+
+  - method: df_arch_c
+    paper: artificial_hivemind
+    official_id: O3
+    agentic_id: A6
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify the same gap: paper does not mechanistically disentangle causes of homogenization. Same complaint, same scope."
+    confidence: high
+
+  - method: df_arch_c
+    paper: artificial_hivemind
+    official_id: O10
+    agentic_id: A2
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O10 asks for any reference baseline. A2 asks for a human diversity baseline. Same family (metric interpretability) but different specific baselines."
+    confidence: high
+
+  - method: df_arch_c
+    paper: artificial_hivemind
+    official_id: O11
+    agentic_id: A8
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "O11 broadly critiques Section 4 methodology. A8 captures one facet: tautological nature of subsetting by quality similarity."
+    confidence: high
+
+  # ============================================================
+  # ai_scientist_run1 — 3 strict edges (all 3 confirmed)
+  # ============================================================
+  - method: ai_scientist_run1
+    paper: artificial_hivemind
+    official_id: O3
+    agentic_id: A5
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify the same gap: no causal/mechanistic analysis of why homogeneity occurs. Both list shared training data, alignment, and decoding as potential unmeasured factors. Same scope."
+    confidence: high
+
+  - method: ai_scientist_run1
+    paper: artificial_hivemind
+    official_id: O10
+    agentic_id: A2
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both flag missing baselines for interpreting cosine similarity. O10 requests random/expected baseline; A2 requests human diversity baseline. Same family, different specific baselines."
+    confidence: high
+
+  - method: ai_scientist_run1
+    paper: artificial_hivemind
+    official_id: O11
+    agentic_id: A4
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both target Section 4 methodology. O11 is broader (subset selection, entropy, averaging); A4 specifically flags restricted-range effects as statistical artifact. A4 is one facet of O11's broader concern."
+    confidence: high
+
+  # ============================================================
+  # ai_scientist_gpt4o_run1 — 3 strict edges (2 confirmed, 1 reclassified)
+  # ============================================================
+  - method: ai_scientist_gpt4o_run1
+    paper: artificial_hivemind
+    official_id: O1
+    agentic_id: A1
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify English-only dataset as limiting generalizability. Same defect, same scope, same severity."
+    confidence: high
+
+  - method: ai_scientist_gpt4o_run1
+    paper: artificial_hivemind
+    official_id: O2
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: related
+    override_judgment_alignment: n/a
+    override_severity_alignment: n/a
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O2 asks for actionable guidance on using the Hivemind metric in practice. A3 asks for empirical validation of proposed mitigative strategies. Different defects: metric usage guidance vs mitigation validation. Adding practical metric guidance would not validate mitigations, and vice versa."
+    confidence: high
+
+  - method: ai_scientist_gpt4o_run1
+    paper: artificial_hivemind
+    official_id: O2
+    agentic_id: A4
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O2 asks for actionable metric usage guidance. A4 asks how human annotation insights inform mitigation. Both target the diagnosis-to-action gap. A4 is one specific facet (annotation→mitigation link) of O2's broader actionability concern."
+    confidence: high
+
+  # ============================================================
+  # liang_run1 — 7 strict edges (5 confirmed, 2 reclassified)
+  # ============================================================
+  - method: liang_run1
+    paper: artificial_hivemind
+    official_id: O10
+    agentic_id: A1
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O10 asks for reference baseline to interpret similarity scores. A1 broadly questions metric validity (sole embedding model, no human validation). A1 encompasses O10's concern but goes further. Partial because fixing O10 (adding baseline) would not fully fix A1 (metric validation)."
+    confidence: high
+
+  - method: liang_run1
+    paper: artificial_hivemind
+    official_id: O3
+    agentic_id: A2
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify the same core gap: no causal/mechanistic analysis of homogenization. O3 says 'does not mechanistically disentangle causes'; A2 says 'causal analysis is entirely absent'. Same complaint, same scope."
+    confidence: high
+
+  - method: liang_run1
+    paper: artificial_hivemind
+    official_id: O15
+    agentic_id: A2
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O15 specifically asks for foundation model experiments (base vs instruction-tuned). A2 broadly calls for causal analysis including this specific comparison. O15 is one experiment within A2's broader demand."
+    confidence: high
+
+  - method: liang_run1
+    paper: artificial_hivemind
+    official_id: O11
+    agentic_id: A3
+    original_match_type: exact
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O11 targets Section 4 methodology (subset selection, entropy, averaging). A3 bundles these methodology concerns PLUS Section 3-4 narrative disconnect PLUS small sample size (50 queries). Scope inflation: A3 includes O11's complaints plus independent additional demands. Fixing O11's methodology issues alone would not address A3's narrative coherence or sample size concerns."
+    confidence: high
+
+  - method: liang_run1
+    paper: artificial_hivemind
+    official_id: O19
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O19 questions averaging human ratings rather than preserving annotator disagreement. A3's broader Section 4 critique encompasses this as one sub-issue. Partial because O19 is one specific methodological question within A3's broader complaint."
+    confidence: high
+
+  - method: liang_run1
+    paper: artificial_hivemind
+    official_id: O9
+    agentic_id: A4
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O9 targets lack of human verification that queries are open-ended. A4 broadly questions GPT-4o reliance (taxonomy labeling, query classification, open-endedness validation). O9 is one sub-point within A4's broader automation-reliance critique."
+    confidence: high
+
+  - method: liang_run1
+    paper: artificial_hivemind
+    official_id: O4
+    agentic_id: A5
+    original_match_type: partial
+    override_match_type: related
+    override_judgment_alignment: n/a
+    override_severity_alignment: n/a
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O4 argues the Hivemind effect is statistically expected from first principles (law of large numbers, autoregressive LMs approximate average behavior). A5 argues novelty is incremental because LM diversity loss is well-documented in prior work. Different specific arguments: O4 is a theoretical/statistical challenge, A5 is an empirical precedent challenge. Demonstrating the effect exceeds statistical expectation would not address the incremental-novelty charge, and vice versa."
+    confidence: high
+
+  # ============================================================
+  # liang_gpt4o_run1 — 5 strict edges (all 5 confirmed)
+  # ============================================================
+  - method: liang_gpt4o_run1
+    paper: artificial_hivemind
+    official_id: O1
+    agentic_id: A2
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify English-only dataset as limiting cross-linguistic generalizability. Same defect, same scope, same severity."
+    confidence: high
+
+  - method: liang_gpt4o_run1
+    paper: artificial_hivemind
+    official_id: O3
+    agentic_id: A4
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify the same gap: paper does not mechanistically explain WHY homogenization occurs. O3 names shared training data, alignment, decoding; A4 names training data and model architecture. Same core complaint."
+    confidence: high
+
+  - method: liang_gpt4o_run1
+    paper: artificial_hivemind
+    official_id: O11
+    agentic_id: A5
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "O11 identifies specific technical flaws in Section 4 (subset selection, entropy, averaging). A5 vaguely suggests human annotation analysis 'could be expanded to explore more nuanced aspects.' Same area but very different specificity."
+    confidence: high
+
+  - method: liang_gpt4o_run1
+    paper: artificial_hivemind
+    official_id: O15
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O15 asks for foundation model experiments to disentangle pre/post-training. A3 broadly notes model selection limits applicability. O15 is one specific experiment; A3 is a general scope concern."
+    confidence: high
+
+  - method: liang_gpt4o_run1
+    paper: artificial_hivemind
+    official_id: O14
+    agentic_id: A7
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O14 reports broken dataset link. A7 requests better access instructions for INFINITY-CHAT. Both about data accessibility but different facets: infrastructure failure vs documentation quality."
+    confidence: high
+
+  # ============================================================
+  # marg_gpt4o_run1 — 5 strict edges (4 confirmed, 1 reclassified)
+  # ============================================================
+  - method: marg_gpt4o_run1
+    paper: artificial_hivemind
+    official_id: O1
+    agentic_id: A8
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify English-only dataset as limiting generalizability. Same defect, same scope."
+    confidence: high
+
+  - method: marg_gpt4o_run1
+    paper: artificial_hivemind
+    official_id: O3
+    agentic_id: A1
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "O3 demands mechanistic causal decomposition across multiple factors. A1 requests systematic comparison of decoding parameter settings. A1 is one specific investigation within one factor of O3's broader call."
+    confidence: medium
+
+  - method: marg_gpt4o_run1
+    paper: artificial_hivemind
+    official_id: O3
+    agentic_id: A2
+    original_match_type: partial
+    override_match_type: related
+    override_judgment_alignment: n/a
+    override_severity_alignment: n/a
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O3 asks for mechanistic causal analysis of why models homogenize (inter-model similarity). A2 asks for ablation studies on how model architecture and training data influence alignment with human preferences. Different outcome variables: O3 targets homogenization drivers, A2 targets human preference alignment drivers. Different experiments needed."
+    confidence: medium
+
+  - method: marg_gpt4o_run1
+    paper: artificial_hivemind
+    official_id: O15
+    agentic_id: A2
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O15 asks for foundation model experiments to disentangle pre/post-training effects. A2 asks for ablation studies on model architecture and training data variations. O15 is one specific experimental design within A2's broader call for model-variation experiments."
+    confidence: medium
+
+  - method: marg_gpt4o_run1
+    paper: artificial_hivemind
+    official_id: O14
+    agentic_id: A9
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O14 flags a broken dataset link. A9 raises broader reproducibility concerns including data access barriers. Both in the data-accessibility family but at different specificity levels."
+    confidence: high
+
+  # ============================================================
+  # oar_run1 — 1 strict edge (1 confirmed)
+  # ============================================================
+  - method: oar_run1
+    paper: artificial_hivemind
+    official_id: O11
+    agentic_id: A2
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O11 broadly critiques Section 4 methodology (subset selection, entropy, averaging). A2 identifies one specific flaw: P_disagree formula treating unanimous ties as 50% disagreement. A2 is a proper subset of O11's broader critique."
+    confidence: high
+
+missed_matches: []
+
+phantom_judgments: []
+
+verification_summary:
+  total_edges_verified: 47
+  total_unmatched_verified: 176
+  error_counts:
+    false_matches: 0
+    type_errors: 6
+    severity_errors: 0
+    missed_matches: 0
+  error_rates:
+    false_match_rate: "0.0%"
+    type_error_rate: "12.8%"
+    severity_error_rate: "0.0%"
+    missed_match_rate: "0.0%"
+  skill26_health: healthy
+  papers_verified:
+    - paper: artificial_hivemind
+      method: panel_no_ls
+      edges_verified: 8
+      unmatched_verified: 13
+      errors_found: 1
+    - paper: artificial_hivemind
+      method: panel_arch_b
+      edges_verified: 4
+      unmatched_verified: 20
+      errors_found: 1
+    - paper: artificial_hivemind
+      method: df_no_ls
+      edges_verified: 7
+      unmatched_verified: 16
+      errors_found: 0
+    - paper: artificial_hivemind
+      method: df_arch_c
+      edges_verified: 4
+      unmatched_verified: 19
+      errors_found: 0
+    - paper: artificial_hivemind
+      method: ai_scientist_run1
+      edges_verified: 3
+      unmatched_verified: 20
+      errors_found: 0
+    - paper: artificial_hivemind
+      method: ai_scientist_gpt4o_run1
+      edges_verified: 3
+      unmatched_verified: 18
+      errors_found: 1
+    - paper: artificial_hivemind
+      method: liang_run1
+      edges_verified: 7
+      unmatched_verified: 12
+      errors_found: 2
+    - paper: artificial_hivemind
+      method: liang_gpt4o_run1
+      edges_verified: 5
+      unmatched_verified: 16
+      errors_found: 0
+    - paper: artificial_hivemind
+      method: marg_gpt4o_run1
+      edges_verified: 5
+      unmatched_verified: 20
+      errors_found: 1
+    - paper: artificial_hivemind
+      method: oar_run1
+      edges_verified: 1
+      unmatched_verified: 22
+      errors_found: 0

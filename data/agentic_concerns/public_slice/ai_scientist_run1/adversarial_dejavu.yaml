@@ -1,0 +1,204 @@
+schema_version: "v1"
+paper: adversarial_dejavu
+version: baseline
+method: baseline_ai_scientist
+verdict: ACCEPT
+score: 6
+
+decision_drivers:
+  - id: R1
+    polarity: pro_accept
+    text: >
+      Novel and useful conceptual framework — the Adversarial Deja Vu hypothesis
+      reframes jailbreak evolution as recombination of known adversarial skills.
+    evidence: "Strengths bullet 1: 'genuinely useful perspective that could inform future defense research'"
+    linked_concern_ids: []
+  - id: R2
+    polarity: pro_accept
+    text: >
+      Strong empirical results across three model families with competitive
+      robustness against unseen attacks and favorable over-refusal rates.
+    evidence: "Strengths bullet 3: 'outperforming baselines including CAT, LAT, WildJailbreak, and attack-specific training'"
+    linked_concern_ids: []
+
+mentions:
+  - id: M1
+    polarity: pro_accept
+    text: >
+      Well-conceived temporal cutoff study design with monotonically increasing
+      explanatory power across multiple seen/unseen partitions.
+    evidence: "Strengths bullet 2"
+    note: Noted as a strength but not listed as a decisive factor for the accept verdict.
+  - id: M2
+    polarity: pro_accept
+    text: >
+      Insightful ablation studies on coverage dividend and compositional depth
+      yielding actionable findings for practitioners.
+    evidence: "Strengths bullet 4"
+    note: Supporting evidence for quality but not a primary verdict driver.
+  - id: M3
+    polarity: pro_accept
+    text: >
+      Both closed-source (GPT-4.1) and open-source (Qwen3) pipeline variants
+      demonstrate transferability and support reproducibility.
+    evidence: "Strengths bullet 5"
+    note: Reproducibility positive noted but not decisive.
+  - id: M4
+    polarity: pro_accept
+    text: >
+      Random skill subset control (Appendix J) provides evidence that dictionary
+      learning compression contributes meaningfully beyond diverse skill sets.
+    evidence: "Strengths bullet 6"
+    note: Supporting methodological detail, not a primary verdict driver.
+
+concerns:
+  - id: A1
+    text: >
+      Circularity in evaluation: GPT-4.1 performs skill extraction, interprets
+      dictionary atoms, and serves as the primary explainability judge, with no
+      human evaluation component.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 1 + Questions bullet 1"
+    decisive: false
+    tags: [methodology, evaluation_validity, circular_evaluation]
+    dimension_impact: [D]
+
+  - id: A2
+    text: >
+      Unseen attack evaluation set is small (only 6 post-cutoff attacks),
+      limiting generalizability of the hypothesis; these attacks may share
+      strategies due to community conventions rather than fundamental properties.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 2"
+    decisive: false
+    tags: [evaluation_scope, generalizability]
+    dimension_impact: [D, F]
+
+  - id: A3
+    text: >
+      Linear composition assumption in embedding space is strong and
+      insufficiently validated; reconstruction MSE alone does not confirm
+      semantic composition behaves linearly.
+    severity:
+      level: major
+      addressability: unresolved
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 3 + Limitations bullet 2"
+    decisive: false
+    tags: [methodology, theoretical_justification]
+    dimension_impact: [E]
+
+  - id: A4
+    text: >
+      Hypothesis risks tautology: if extracted skills are sufficiently generic
+      (e.g., role-playing, academic framing), most attacks trivially appear to
+      recombine them; no analysis of granularity threshold for genuine
+      predictiveness.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 4 + Questions bullet 3"
+    decisive: false
+    tags: [novelty, theoretical_justification, tautology_risk]
+    dimension_impact: [B, E]
+
+  - id: A5
+    text: >
+      Missing component ablation for ASCoT training data: relative contributions
+      of adversarial compositions, benign data, over-refusal calibration (XSTest
+      upsampled 15x), and harmful datasets are not isolated.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 5 + Questions bullet 2"
+    decisive: false
+    tags: [ablation, evaluation_rigor, confounding]
+    dimension_impact: [D, E]
+
+  - id: A6
+    text: >
+      Multi-turn generalization claim is supported by only one attack (GALA),
+      which is insufficient for a strong conclusion.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 6 + Limitations bullet 1"
+    decisive: false
+    tags: [evaluation_scope, overclaiming]
+    dimension_impact: [D, F]
+
+  - id: A7
+    text: >
+      No discussion of adversarial adaptation: if attackers know the defender
+      uses ASCoT, they could target strategies poorly represented in the
+      dictionary; robustness under adaptive threat models is unaddressed.
+    severity:
+      level: moderate
+      addressability: unresolved
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 7 + Questions bullet 5 + Limitations bullet 3"
+    decisive: false
+    tags: [robustness, threat_model, adaptive_adversary]
+    dimension_impact: [F]
+
+  - id: A8
+    text: >
+      Explainability plateau in Figure 3 could reflect LLM evaluation ceiling
+      effects rather than genuine skill saturation; not tested with random or
+      unrelated skills as a control.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Questions bullet 4"
+    decisive: false
+    tags: [evaluation_validity, ceiling_effect]
+    dimension_impact: [D]
+
+  - id: A9
+    text: >
+      Defense quality is upper-bounded by frontier LLM extraction and
+      composition capabilities, creating a dependency on external model quality.
+    severity:
+      level: minor
+      addressability: unresolved
+      mechanism: none
+    source: other
+    source_detail: "Limitations bullet 4"
+    decisive: false
+    tags: [scalability, external_dependency]
+    dimension_impact: [F]
+
+method_specific:
+  system: "The AI Scientist (baseline AI reviewer)"
+  note: >
+    Review produced by The AI Scientist automated reviewer (run 1).
+    No gates, scorecard, adversarial brief, or summary.yaml available.
+    All concerns extracted from review.md only.
+  scores:
+    originality: 3
+    quality: 3
+    clarity: 3
+    significance: 3
+    soundness: 3
+    presentation: 3
+    contribution: 3
+    overall: 6
+    confidence: 4

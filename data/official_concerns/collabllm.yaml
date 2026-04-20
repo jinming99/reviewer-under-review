@@ -1,0 +1,484 @@
+schema_version: "v1"
+paper: "collabllm"
+title: "CollabLLM: From Passive Responders to Active Collaborators"
+venue: "ICML 2025"
+official_verdict: "accepted"
+decision_type: "Outstanding Paper (Oral)"
+reviewer_scores: [4, 4, 4, 4, 4]  # Fu3N, Qxpu, 2AZE, YkB9, mUmH (pre-rebuttal, all recommend Accept)
+reviewer_scores_post: [4, 4, 4, 4, 4]  # No score changes observed
+
+ac_rationale_quality: "adequate"
+# AC (Program Chairs) provides a brief meta-review: identifies essential problem,
+# key strengths (method for data generation, multi-turn reward), strong results,
+# strong baselines, and notes authors addressed all reviewer concerns.
+# Three sentences of rationale. Decision: Accept (oral).
+
+# ============================================================
+# PDF version status (Skill 1b Step 0)
+# ============================================================
+pdf_is_revised: true
+revision_evidence: "OpenReview shows '2 Versions' badge (Published: 01 May 2025, Last Modified: 23 Jul 2025). The camera-ready PDF includes content added in response to reviews: Appendix C.3 on computational cost during training (Table 7), expanded Related Work section with new references (Abdulhai et al., Shani et al.), discussion of simulated vs real user divergence in Appendix F, and added discussion of MR applicability to ambiguous tasks. Authors reference adding content at specific line numbers (e.g., Line 631, Line 682, Line 915) in their rebuttals."
+
+concerns:
+  # ============================================================
+  # O1: Unclear how multiturn reward encourages collaboration
+  # Raised by: Qxpu (C1)
+  # ============================================================
+  - id: "O1"
+    text: "Unclear how multiturn data collected with an LLM-prompted user simulator and the multiturn reward effectively encourages collaboration rather than merely training on simulated data."
+    verbatim: "unclear how the multiturn reward obtained with multiturn data effectively encourages collaboration"
+    raised_by: ["Qxpu"]
+    severity: "major"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors explained at three levels: methodology (MR accounts for long-term effect via future interactions), data (supervised training on MR-selected data encourages collaborative behavior), and experiment (simulated and real-world user studies show best collaboration)."
+    ac_treatment: "resolved"
+    decisive: false
+    tags: ["mechanism_clarity", "reward_design", "collaboration"]
+    issue_type: "conceptual"
+    addressed_in_pdf: true
+    pdf_evidence: "Section 3.1 (p.3) defines Multiturn-aware Reward with Eq.1 showing how MR estimates long-term contribution by sampling future conversations. Section 3.1.1 (p.3-4) details the conversation-level reward function combining extrinsic (task success) and intrinsic (efficiency/engagement) components. Section 5 (p.5-6) shows empirical evidence that CollabLLM improves task performance, efficiency, and interactivity."
+
+  # ============================================================
+  # O2: Causal effect estimation claim unconvincing
+  # Raised by: Qxpu (C2)
+  # ============================================================
+  - id: "O2"
+    text: "The claim that CollabLLM's reward design aligns with causal effect estimation is only 'somewhat convincing'; the distinction from existing methods that rely on post-hoc trajectory-level data needs elaboration."
+    verbatim: "The reward design of CollabLLM aligns with causal effect estimation -> somewhat convincing"
+    raised_by: ["Qxpu"]
+    severity: "major"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors provided detailed clarification distinguishing MR's interventional mechanism (turn-level signals via forward sampling) from MTPO's observational approach (trajectory-level preference rewards). Borrowed terminology from causality literature: interventional vs observational. Added content to Related Work."
+    ac_treatment: "resolved"
+    decisive: false
+    tags: ["causal_claims", "methodology_distinction", "MTPO_comparison"]
+    issue_type: "conceptual"
+    addressed_in_pdf: true
+    pdf_evidence: "Appendix A.1 (p.14) provides detailed 'Connection Between Multiturn-aware Reward and Causal Inference' discussion using front-door adjustment (Pearl, 2009). Appendix A.2 (p.14) explicitly distinguishes from MTPO and other trajectory-based frameworks: 'our MR framework intervenes on individual model responses and uses forward simulation to generate alternative future trajectories...capturing statistical associations between responses and final outcomes, without disentangling how individual responses causally influence future turns.'"
+
+  # ============================================================
+  # O3: Dataset access / reproducibility
+  # Raised by: Qxpu (C3)
+  # ============================================================
+  - id: "O3"
+    text: "Three datasets for fine-tuning and evaluating LLMs on multiturn conversations are proposed but full datasets could not be found; only appendix samples are provided, making it hard to assess dataset quality and quantity."
+    verbatim: "I could not find supplementary materials or anonymized links to these datasets"
+    raised_by: ["Qxpu"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors provided an anonymous link to data-loading notebook showing full datasets accessible from data/ directory. The notebook loads and displays random samples."
+    ac_treatment: "resolved"
+    decisive: false
+    tags: ["data_availability", "reproducibility", "dataset_access"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "The paper includes a 'Link To Code' on page 1 pointing to https://github.com/Wuyxin/collabllm. The impact statement (p.10) states 'we release all the code, models, data, benchmarks, and user simulators described in this work.'"
+
+  # ============================================================
+  # O4: Novelty concern — resemblance to self-training
+  # Raised by: Qxpu
+  # ============================================================
+  - id: "O4"
+    text: "The methodology may not be as novel as claimed; using forward-looking strategies with a user simulator is essentially generating more realistic multi-turn data with an LLM, resembling self-training tailored for multiturn conversations."
+    verbatim: "the methodology...may not necessarily be as novel as the authors claim them to be"
+    raised_by: ["Qxpu"]
+    severity: "major"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors acknowledged self-training connection but distinguished their key intuition: making the model aware of future outcomes and prioritizing responses with higher long-term impact. They emphasized MR computation for user-centric long-term effects, and online training — not merely training on synthetic data."
+    ac_treatment: "resolved"
+    decisive: false
+    tags: ["novelty_delta", "self_training", "methodology_framing"]
+    issue_type: "conceptual"
+    addressed_in_pdf: true
+    pdf_evidence: "Section 7 Related Work (p.8-9) includes an expanded discussion positioning CollabLLM relative to self-training and synthetic data methods. Appendix A.2 (p.14) distinguishes the interventional MR mechanism from observational approaches. The paper frames the key contribution as computing long-term effects via forward sampling (Section 3.1, p.3), not just synthetic data generation."
+    note: "Qxpu raised this in Other Comments/Suggestions. After rebuttal addressing clarity and data accessibility, Qxpu's score remained at 4 (Accept). The reviewer stated willingness to raise score if novelty distinction was better conveyed."
+
+  # ============================================================
+  # O5: Missing related references on multi-turn RL benchmarks
+  # Raised by: Fu3N
+  # ============================================================
+  - id: "O5"
+    text: "Paper does not discuss certain related works on multi-turn reinforcement learning benchmarks and proactive clarification in language models; incorporating these references would provide more comprehensive context."
+    verbatim: "it does not discuss certain related works that have explored similar themes"
+    raised_by: ["Fu3N"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors added both cited references: Abdulhai et al. (LMRL Gym) added to Related Work at Line 682, and Shani et al. (MTPO) discussed in Appendix A and Table 4."
+    ac_treatment: "resolved"
+    decisive: false
+    tags: ["related_work", "missing_references", "multi_turn_RL"]
+    issue_type: "framing"
+    addressed_in_pdf: true
+    pdf_evidence: "Section 7 Related Work (p.8-9) includes 'Recent benchmarks (LMRL, MTEval) evaluate LLMs' performance in multiturn settings, measuring the goal orientation and planning capabilities of models across interactions.' Table 4 (p.9) compares CollabLLM with selected works including MTPO (Shani et al., 2024). References section (p.10-12) lists both Abdulhai et al. and Shani et al."
+
+  # ============================================================
+  # O6: Computational overhead of MR / scalability
+  # Raised by: Fu3N, 2AZE
+  # ============================================================
+  - id: "O6"
+    text: "Paper could benefit from more detailed discussion of the computational overhead associated with the proposed methods, particularly regarding the scalability of Multiturn-aware Rewards and the forward sampling strategy for long conversations."
+    verbatim: "a more detailed discussion of the computational overhead associated with the proposed methods"
+    raised_by: ["Fu3N", "2AZE"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors explained: (1) computational overhead is fairly low due to vLLM integration for policy model inference, (2) GPT-4o-mini used as user simulator with concise outputs, (3) provided cost table averaging over 100 future conversations for w=1,2,3 on MediumDocEdit-Chat. Added Appendix C.3 with clear details."
+    ac_treatment: "resolved"
+    decisive: false
+    tags: ["computational_cost", "scalability", "forward_sampling"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Appendix C.3 (referenced in rebuttal as newly added) provides computational cost during training. Table 7 (p.15) shows per-forward-sample compute for policy model and user simulator across window sizes w=1,2,3, including input/output tokens, time, and dollar cost. The table demonstrates that even at w=3, costs remain practical (e.g., $0.00685 per forward sample for user simulator)."
+
+  # ============================================================
+  # O7: Generalization tested on single additional dataset only
+  # Raised by: Fu3N
+  # ============================================================
+  - id: "O7"
+    text: "Generalization tests were limited to a single additional dataset (Abg-CoQA); including multiple diverse external benchmarks could strengthen generalizability claims."
+    verbatim: "Generalization tests were limited to a single additional dataset"
+    raised_by: ["Fu3N"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors argued that generalization is also validated in the real-world user study where the deployed model (trained on MediumDocEdit-Chat with medium blogs) is used for personal statements and creative writing — different document types."
+    ac_treatment: "resolved"
+    decisive: false
+    tags: ["generalizability", "evaluation_scope", "out_of_domain"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Table 2 (p.7) presents zero-shot generalization results on Abg-CoQA. Section 6 (p.7-8) describes the user study where participants write blog posts, creative writing, or personal statements — tasks that differ from training domain. The combination of Abg-CoQA (QA domain) and the user study (creative writing) provides two distinct generalization tests."
+
+  # ============================================================
+  # O8: Integration with existing RL frameworks
+  # Raised by: Fu3N
+  # ============================================================
+  - id: "O8"
+    text: "Unclear how CollabLLM integrates with existing reinforcement learning frameworks and algorithms; complex integration requirements could pose barriers to implementation."
+    verbatim: "How does CollabLLM integrate with existing reinforcement learning frameworks"
+    raised_by: ["Fu3N"]
+    severity: "minor"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors explained CollabLLM is plug-and-play with two user-defined modifications: (1) optional user simulator prompt, (2) metrics definition. Compatible with fast inference infrastructure like vLLM and RL training libraries like TRL."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["integration", "implementation", "practical_adoption"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Section 3.2 (p.4) describes optimization using standard RL algorithms (PPO) and SFT/DPO as training variants. Section 4.2 (p.5) describes using LoRA fine-tuning on Llama-3.1-8B. Appendix B.2 (p.15) provides full hyperparameter tables (Table 6) for LoRA configuration and fine-tuning, showing standard settings compatible with existing frameworks."
+
+  # ============================================================
+  # O9: Simulated vs real user divergence / bias
+  # Raised by: 2AZE, mUmH
+  # ============================================================
+  - id: "O9"
+    text: "Prompt-defined simulated LLM users could be substantially biased compared to real human users during training; a comparison of the potential divergence would further strengthen the work."
+    verbatim: "prompt-defined simulated LLM users could be substantially biased"
+    raised_by: ["2AZE", "mUmH"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors provided feature-level comparison of simulated vs real user interactions: differences (shorter sentences, grammatical errors, emotional reactions, casual language in real users) and similarities (iterative content development, accessibility requests, style preferences). Added insights to Appendix F and Section 6."
+    ac_treatment: "resolved"
+    decisive: false
+    tags: ["user_simulation_bias", "sim_to_real_gap", "training_validity"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Section 6 (p.7-8) discusses the real-world user study with 201 MTurk participants as a test of generalization from simulated to real users. The paper acknowledges this as a key gap in the conclusion area. Appendix F (referenced in rebuttal as newly added) provides detailed comparison of simulated vs real user behavior differences and similarities."
+
+  # ============================================================
+  # O10: MR function hard to define for ambiguous tasks
+  # Raised by: 2AZE
+  # ============================================================
+  - id: "O10"
+    text: "Multiturn-aware reward function is intrinsically hard to define for ambiguous tasks, which limits its applicability."
+    verbatim: "Multiturn-aware reward function is intrinsically hard to define for ambiguous tasks"
+    raised_by: ["2AZE"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors acknowledged the challenge and proposed using LLM judges whose inputs contain task definitions as a mitigation. Argued that intrinsic rewards (interactivity and efficiency) should be applicable to most applications, while extrinsic metrics can be task-specific."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["reward_design", "ambiguous_tasks", "applicability"]
+    issue_type: "conceptual"
+    addressed_in_pdf: true
+    pdf_evidence: "Section 3.1.1 (p.3-4) defines the reward function with separate extrinsic and intrinsic components. The intrinsic reward R_int (Eq.4, p.4) penalizes excessive tokens and uses an LLM-based interactivity score, designed to be task-agnostic. The paper states the design is general and applicable to 'arbitrary tasks with defined task-specific metric' (p.4). The discussion of applicability to ambiguous tasks was added to the main paper per rebuttal."
+
+  # ============================================================
+  # O11: Small improvements over prompt engineering in Table 1
+  # Raised by: YkB9
+  # ============================================================
+  - id: "O11"
+    text: "Improvements of simulated experiments in Table 1 (35% to 36-38% BLEU, 12.5 to 15) over prompt engineering are small, raising doubts about real impact; topline with gpt-4o and same prompt engineering would clarify the performance ceiling."
+    verbatim: "The improvements...on simulated experiments of tab 1 are small...raising doubts about real impact"
+    raised_by: ["YkB9"]
+    severity: "major"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors argued: (1) no upper bound constraint since CollabLLM improves collaboration strategies not task knowledge, (2) MediumDocEdit-Chat has large generation space making BLEU hard to improve, (3) comparing with gpt-4o may not be fair due to different base models. Provided gpt-4o reference results post-rebuttal showing gpt-4o generates 28.9% more content than Proactive Base."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["effect_size", "practical_significance", "baseline_comparison"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Table 1 (p.6) shows Online DPO achieving 36.8 BLEU vs 35.0 for Proactive Base (5.14% relative improvement) and ITR improving from 62.0 to 92.0 (48.3% relative improvement). The 'Rel. Improv.' row explicitly quantifies improvements. The larger ITR and token efficiency gains are more substantial than BLEU alone suggests. Section 5 (p.5-6) highlights the ITR improvement as a key result."
+    note: "YkB9 acknowledged positive feedback post-rebuttal: 'Thank authors for having addressed my questions and concerns. I have nothing to add and overall this confirms my positive feedback on the paper.' Still suggested gpt-4o topline comparison."
+
+  # ============================================================
+  # O12: Source of improvement unclear — reward design vs MR framework
+  # Raised by: YkB9
+  # ============================================================
+  - id: "O12"
+    text: "Unclear whether improvements stem from the multiturn-aware reward design, the reward modification itself (replacing helpfulness with extrinsic + intrinsic), or the interaction between both factors."
+    verbatim: "Where do the improvements stem from? Multiturn-aware reward design, or reward modification"
+    raised_by: ["YkB9"]
+    severity: "major"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors extended the ablation by training with helpfulness, intrinsic, and extrinsic metrics individually across w=1,2,3. Results show the MR framework (forward sampling) is the key driver — the design of extrinsic/intrinsic rewards is independent of and complementary to the MR formulation. Updated Figure 4 with more comprehensive ablation."
+    ac_treatment: "resolved"
+    decisive: false
+    tags: ["ablation", "contribution_attribution", "reward_components"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Figure 4 (p.6) and Figure 9 (p.16, Appendix B.3) show a full ablation study with isolated reward types (Helpfulness, Extrinsic Only, Intrinsic Only) across window sizes w=0,1,2,3 on BLEU, Token count, and ITR. Section 5.1 (p.6) discusses three key observations from the ablation. The text explicitly states: 'Note that the choice of reward type (intrinsic or extrinsic) is independent of the multiturn-aware reward design' (Appendix B.3, p.16)."
+
+  # ============================================================
+  # O13: BLEU metric appropriateness for document editing
+  # Raised by: YkB9
+  # ============================================================
+  - id: "O13"
+    text: "MediumDocEdit-Chat uses BLEU to measure similarity between extracted document and original articles; unclear if BLEU is the right metric, and LLM judges could provide more qualitative assessment."
+    verbatim: "Is BLEU the right metric for this task? Why not also use LLM judges"
+    raised_by: ["YkB9"]
+    severity: "minor"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors agreed LLM judges could work but noted they already have human evaluation on document quality in the user study, which they consider more convincing for assessing document quality."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["metric_choice", "evaluation_methodology", "BLEU"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Section 4.1 (p.4-5) defines BLEU as the task-specific metric for MediumDocEdit-Chat, measuring similarity between extracted document and original articles. Section 6 (p.7-8) provides human evaluation results (Figure 7) including document quality ratings from 201 participants on a 1-10 scale, complementing the automated BLEU metric."
+
+  # ============================================================
+  # O14: ITR performance decrease from w=2 to w=3
+  # Raised by: YkB9
+  # ============================================================
+  - id: "O14"
+    text: "Figure 4 shows ITR performance decreasing when forward sampling window size increases from w=2 to w=3, which seems counterintuitive and unexplained."
+    verbatim: "why does ITR performance decrease when the forward sampling window size increases from w=2 to w=3"
+    raised_by: ["YkB9"]
+    severity: "minor"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors explained: with increasing w, each response's effect estimation should be more accurate and ITR should improve. However, for scalability, Monte Carlo sampling uses fixed sample size 3 (Appendix C.2), inevitably introducing estimation errors at larger w. Added this interpretation to the ablation section."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["ablation_interpretation", "window_size", "sampling_variance"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Figure 4 (p.6) shows ITR results across w values. Appendix C.2 describes the Monte Carlo sampling approximation with fixed sample size. The explanation about estimation variance at larger w is consistent with the observed pattern. Section 5.1 (p.6) discusses the MR w=2 configuration as balancing gains and costs."
+
+  # ============================================================
+  # O15: ITR metric scoring clarity
+  # Raised by: YkB9
+  # ============================================================
+  - id: "O15"
+    text: "Unclear how exactly the ITR (Interactivity) scoring is performed; the scoring methodology using LLM judge (Claude-3.5-Sonnet) with scores rescaled to [0,1] needs more clarity."
+    verbatim: "How exactly is this scoring performed? The methodology needs more clarity"
+    raised_by: ["YkB9"]
+    severity: "minor"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors directed reviewer to Appendix D.4 starting from Line 915 which provides the full prompt for ITR scoring."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["metric_definition", "clarity", "LLM_judge"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Appendix D.4 (p.20) provides the full 'Interactivity Metric by LLM Judge' prompt template with weights A=3, B=2, C=1 and rescaling formula S'=2*(S-2.5). The scoring criteria and prompt are fully specified."
+
+  # ============================================================
+  # O16: Caption typo in Figure 2
+  # Raised by: YkB9
+  # ============================================================
+  - id: "O16"
+    text: "Typo in caption of Figure 2: 'fine-tuing' should be 'fine-tuNing'."
+    verbatim: "caption of fig 2: Figure 2: Real examples from COLLABLLM and non-collaborative LLM fine-tuing"
+    raised_by: ["YkB9"]
+    severity: "minor"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors fixed the typo."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["typo", "presentation"]
+    issue_type: "framing"
+    addressed_in_pdf: true
+    pdf_evidence: "Figure 2 caption (p.2) in the camera-ready reads 'non-collaborative LLM fine-tuning' — typo is corrected."
+
+  # ============================================================
+  # O17: Helpfulness as w=0 reward not optimized
+  # Raised by: YkB9
+  # ============================================================
+  - id: "O17"
+    text: "What about optimizing helpfulness (as assessed by LLM evaluator) using w>0? This was not explored and could serve as an additional ablation baseline."
+    verbatim: "What about optimizing helpfulness...using w>0? Is it feasible?"
+    raised_by: ["YkB9"]
+    severity: "minor"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors extended the ablation to include helpfulness, intrinsic, and extrinsic metrics across w=1,2,3 in model training. Found helpfulness alone does not work well on all metrics — it encourages verbosity. Provided visualized results."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["ablation", "helpfulness_reward", "baseline_comparison"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Figure 9 (p.16, Appendix B.3) shows full ablation results for Helpfulness reward across w=0,1,2,3. Section 5.1 (p.6) and Appendix B.3 (p.16) state: 'Helpfulness alone leads to marginal improvements in BLEU and ITR, but significantly increases token usage, especially at larger window sizes, suggesting verbosity rather than improved efficiency or interactivity.'"
+
+  # ============================================================
+  # O18: Broader literature missing from main text
+  # Raised by: mUmH
+  # ============================================================
+  - id: "O18"
+    text: "Detailed discussion of the paper's contribution with broader literature is missing from the main text; Related Work is relegated to Appendix B while the main paper does not adequately address connections to prior work."
+    verbatim: "a detailed discussion of the paper's contribution with the broader literature missing from the main text"
+    raised_by: ["mUmH"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors agreed and stated they would have space in the final version to accommodate the Related Work section in the main text."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["related_work", "paper_organization", "main_text_completeness"]
+    issue_type: "framing"
+    addressed_in_pdf: true
+    pdf_evidence: "Section 7 'Related Work' (p.8-9) appears in the main text of the camera-ready version, covering non-collaborative LLM training, prompting techniques for multiturn interaction, learning-based methods for multiturn interaction, and user simulators. Table 4 (p.9) compares CollabLLM with selected works across four dimensions."
+
+  # ============================================================
+  # O19: Missing comparison with user-simulator-based prior work
+  # Raised by: mUmH
+  # ============================================================
+  - id: "O19"
+    text: "Missing comparison/discussion with prior literature that uses LLMs as user simulators to improve LLMs, such as Hong et al. 'Zero-Shot Goal-Directed Dialogue via RL on Imagined Conversations' (2311.05584)."
+    verbatim: "compare with...works that use user simulators to improve LLMs"
+    raised_by: ["mUmH"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors added expanded discussion in Related Work distinguishing CollabLLM from works using user simulators (Hong et al., Tseng et al., and others). Highlighted that CollabLLM differs in leveraging user simulators in forward sampling to account for long-term effect in both offline and online training."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["related_work", "user_simulators", "positioning"]
+    issue_type: "framing"
+    addressed_in_pdf: true
+    pdf_evidence: "Section 7 (p.9) includes a 'User simulators for enhancing AI systems' paragraph discussing Park et al., Wang et al., Tseng et al., and Hong et al. as related approaches using user simulators. The text explicitly distinguishes CollabLLM: 'CollabLLM differs in leveraging user simulators in forward sampling to account for long-term effect in both offline and online training.' Hong et al. (2023) is cited in the references (p.11)."
+
+  # ============================================================
+  # O20: Discussion of user simulator model choice (GPT-4o)
+  # Raised by: mUmH, 2AZE
+  # ============================================================
+  - id: "O20"
+    text: "It seems strange that a different model (GPT-4o) is used as the user simulator compared to the original model (Llama-3.1-8B-Instruct); discussion of using a stronger model as user simulator and feasibility of 'self-play' without relying on a stronger model would be valuable."
+    verbatim: "why a different model GPT4-o is used as the user simulator...would be curious to see if it is possible for the model to improve with 'self-play'"
+    raised_by: ["mUmH", "2AZE"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors explained: user simulator needs to role-play as human user with realistic traits and follow instructions effectively. They tried Llama-3.1-8B as user simulator but it performed poorly — getting 'confused' and solving problems as an assistant. Same for Llama-3.1-70B. Self-play is difficult without better user models that learn from real-world behavior. Added discussion in future work."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["user_simulator", "model_choice", "self_play", "limitations"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Appendix C.3 (p.15) discusses using GPT-4o-mini as user simulator. The paper acknowledges in the training cost analysis that 'open-source models often getting confused and starting to solve problems as an assistant rather than acting as a user.' Section 6 and Appendix F discuss simulated vs real user comparison. The limitation of current open-source models for user simulation is acknowledged."
+    note: "mUmH asked about self-play and 2AZE asked about simulated/real user divergence. Authors provided a thoughtful response explaining why self-play is difficult and noting this as an interesting future direction."
+
+  # ============================================================
+  # O21: Quantitative comparison with prior multi-turn training methods
+  # Raised by: mUmH
+  # ============================================================
+  - id: "O21"
+    text: "Paper mentions existing methods primarily rely on post-hoc trajectory-level data but does not provide quantitative comparisons with these methods; it would be valuable to show empirical advantage over prior multi-turn training approaches like MTPO or ArCHer."
+    verbatim: "it would be valuable if the authors can provide some quantitative comparisons with the methods used in the prior literature"
+    raised_by: ["mUmH"]
+    severity: "moderate"
+    resolved_in_rebuttal: false
+    rebuttal_resolution: "Authors investigated MTPO (Shani et al. 2024) and ArCHer (Zhou et al. 2024) but could not find existing implementations. ArCHer requires three LLMs and a Q-model making comparison complex. Authors provided conceptual distinction in Table 4 instead."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["missing_baselines", "quantitative_comparison", "multi_turn_methods"]
+    issue_type: "empirical"
+    addressed_in_pdf: false
+    pdf_evidence: "Table 4 (p.9) provides a qualitative comparison of CollabLLM with ClarifyGPT, STAR-GATE, MTPO, and other methods across four dimensions (Task-Agnostic, Versatile Interaction, User-Centric, Causal & Objective-Aligned Reward). However, no empirical/quantitative comparison with MTPO or ArCHer is included. The baselines in Table 1 (p.6) are Base, Proactive Base, SFT, PPO, Offline DPO, and Online DPO — not other multi-turn training methods."
+    note: "This was mUmH's most substantive remaining concern. Authors acknowledged they could not find implementations of MTPO or ArCHer to compare against. AC meta-review did not flag this."
+
+  # ============================================================
+  # O22: Limitations of LLM as user simulator
+  # Raised by: mUmH
+  # ============================================================
+  - id: "O22"
+    text: "It would be helpful if the authors can provide some insight into the limitations of applying LLMs as user simulators; instruction-tuned LLMs tend to be overly agreeable and always consent to requests while real users can be harder to deal with."
+    verbatim: "instruction-tuned LLM as user simulators tend to be overly agreeable and always consent to the requests"
+    raised_by: ["mUmH"]
+    severity: "minor"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors discussed LLM user simulator limitations in response to Reviewer 2AZE's comment, pointing to differences between simulated and real users. Added discussion in the paper."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["user_simulator", "limitations", "sim_to_real_gap"]
+    issue_type: "conceptual"
+    addressed_in_pdf: true
+    pdf_evidence: "Appendix C.3 (p.15) acknowledges: 'open-source models generally perform poorly, often getting confused and starting to solve problems as an assistant rather than acting as a user.' The discussion of simulated vs real user differences in Appendix F addresses behavioral gaps. Appendix D.1 (p.17-18) shows the full user simulator prompt with specific guidelines to make the LLM behave more like a real user (e.g., 'Minimize Effort', 'Occasionally Make Mistakes', 'Mention Personal Preferences')."
+
+ac_decision_drivers:
+  - id: "D1"
+    polarity: "pro_accept"
+    text: "Paper addresses an essential problem: improving the LLMs' multi-turn conversational capability."
+    decisive: true
+    tags: ["problem_importance", "motivation"]
+    observable_stage: "meta_review"
+
+  - id: "D2"
+    polarity: "pro_accept"
+    text: "Key strengths include a method for generating data with a user simulator and multi-turn reward that is important and technically sound."
+    decisive: true
+    tags: ["methodology", "technical_soundness"]
+    observable_stage: "meta_review"
+
+  - id: "D3"
+    polarity: "pro_accept"
+    text: "Results are strong, and the authors compare the proposed method against strong baselines."
+    decisive: true
+    tags: ["experimental_results", "baselines"]
+    observable_stage: "meta_review"
+
+  - id: "D4"
+    polarity: "pro_accept"
+    text: "The paper additionally introduces three public benchmarks for multi-turn conversation research."
+    decisive: false
+    tags: ["benchmark_contribution", "community_resource"]
+    observable_stage: "meta_review"
+
+  - id: "D5"
+    polarity: "pro_accept"
+    text: "The authors did substantial work to address all reviewer concerns."
+    decisive: true
+    tags: ["rebuttal_quality", "responsiveness"]
+    observable_stage: "meta_review"
+
+critical_references:
+  - id: "CR1"
+    title: "LMRL Gym: Benchmarks for multi-turn reinforcement learning with language models"
+    short_name: "Abdulhai et al. 2023"
+    cited_by: ["Fu3N"]
+    role: "missing_comparison"
+    decisive: false
+    verbatim: "Abdulhai, Marwa, et al. 'Lmrl gym: Benchmarks for multi-turn reinforcement learning'"
+
+  - id: "CR2"
+    title: "Multi-turn reinforcement learning from preference human feedback"
+    short_name: "Shani et al. 2024 (MTPO)"
+    cited_by: ["Fu3N", "mUmH"]
+    role: "missing_comparison"
+    decisive: false
+    verbatim: "Shani, Lior, et al. 'Multi-turn reinforcement learning from preference human feedback'"
+
+  - id: "CR3"
+    title: "Zero-Shot Goal-Directed Dialogue via RL on Imagined Conversations"
+    short_name: "Hong et al. 2023"
+    cited_by: ["mUmH"]
+    role: "missing_comparison"
+    decisive: false
+    verbatim: "compare with...works that use user simulators to improve LLMs, such as Zero-Shot Goal-Directed Dialogue via RL"
+
+ac_decisive_negative_ids: []

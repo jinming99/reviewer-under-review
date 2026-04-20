@@ -1,0 +1,123 @@
+{
+  "release": "public_slice",
+  "paper_count": 9,
+  "papers": [
+    {
+      "slug": "adversarial_dejavu",
+      "title": "Adversarial Deja Vu: Jailbreak Dictionary Learning for Stronger Generalization to Unseen Attacks",
+      "venue": "ICLR 2026",
+      "decision": "accepted",
+      "decision_type": "Poster",
+      "official_concern_count": 22,
+      "case_study_files": [
+        "docs/case_studies/public_slice/A1_adversarial_dejavu.md"
+      ],
+      "paper_pdf": "data/papers/public_slice/21925_Adversarial_D_j_Vu_Jailb.pdf",
+      "openreview_pdf": "data/openreviews/public_slice/Adversarial Déjà Vu_ Jailbreak Dictionary Learning for Stronger Generalization to Unseen Attacks _ OpenReview.pdf"
+    },
+    {
+      "slug": "artificial_hivemind",
+      "title": "Artificial Hivemind: The Open-Ended Homogeneity of Language Models (and Beyond)",
+      "venue": "NeurIPS 2025",
+      "decision": "accepted",
+      "decision_type": "Best Paper (DB track)",
+      "official_concern_count": 19,
+      "case_study_files": [
+        "docs/case_studies/public_slice/E2_artificial_hivemind.md"
+      ],
+      "paper_pdf": "data/papers/public_slice/2331_Artificial_Hivemind_The_O.pdf",
+      "openreview_pdf": "data/openreviews/public_slice/Artificial Hivemind_ The Open-Ended Homogeneity of Language Models (and Beyond) _ OpenReview.pdf"
+    },
+    {
+      "slug": "beyond_problem_solving",
+      "title": "Beyond Problem Solving: A Three-Space Probe of LLM Critical Thinking",
+      "venue": "ACL ARR 2025 July",
+      "decision": "rejected",
+      "decision_type": null,
+      "official_concern_count": 9,
+      "case_study_files": [
+        "docs/case_studies/public_slice/R1_beyond_problem_solving.md"
+      ],
+      "paper_pdf": "data/papers/public_slice/1122_Beyond_Problem_Solving_A_.pdf",
+      "openreview_pdf": "data/openreviews/public_slice/Beyond Problem Solving_ A Three-Space Probe of LLM Critical Thinking _ OpenReview.pdf"
+    },
+    {
+      "slug": "cmdp_meta_safe_rl",
+      "title": "A CMDP-within-online Framework for Meta-Safe Reinforcement Learning",
+      "venue": "ICLR 2023",
+      "decision": "accepted",
+      "decision_type": "Spotlight",
+      "official_concern_count": 19,
+      "case_study_files": [
+        "docs/case_studies/public_slice/A5_cmdp_meta_safe_rl.md"
+      ],
+      "paper_pdf": "data/papers/public_slice/3277_a_cmdp_within_online_framework.pdf",
+      "openreview_pdf": "data/openreviews/public_slice/A CMDP-within-online framework for Meta-Safe Reinforcement Learning _ OpenReview.pdf"
+    },
+    {
+      "slug": "collabllm",
+      "title": "CollabLLM: From Passive Responders to Active Collaborators",
+      "venue": "ICML 2025",
+      "decision": "accepted",
+      "decision_type": "Outstanding Paper (Oral)",
+      "official_concern_count": 22,
+      "case_study_files": [
+        "docs/case_studies/public_slice/E1_collabllm.md"
+      ],
+      "paper_pdf": "data/papers/public_slice/1940_CollabLLM_From_Passive_Re.pdf",
+      "openreview_pdf": "data/openreviews/public_slice/CollabLLM_ From Passive Responders to Active Collaborators _ OpenReview.pdf"
+    },
+    {
+      "slug": "from_assistant_pentest",
+      "title": "From Assistant to Attacker: A Role-Based and Empirical Study of LLMs in Penetration Testing and Modular Architecture",
+      "venue": "ACL ARR Feb 2025",
+      "decision": "rejected",
+      "decision_type": null,
+      "official_concern_count": 10,
+      "case_study_files": [
+        "docs/case_studies/public_slice/R2_A4_pentest_pair.md"
+      ],
+      "paper_pdf": "data/papers/public_slice/6973_From_Assistant_to_Attacke.pdf",
+      "openreview_pdf": "data/openreviews/public_slice/From Assistant to Attacker_ A Role-Based and Empirical Study of LLMs in Penetration Testing and Modular Architecture _ OpenReview.pdf"
+    },
+    {
+      "slug": "from_capabilities_pentest",
+      "title": "From Capabilities to Performance: Evaluating Key Functional Properties of LLM Architectures in Penetration Testing",
+      "venue": "ACL ARR May 2025",
+      "decision": "accepted",
+      "decision_type": "Borderline Conference",
+      "official_concern_count": 10,
+      "case_study_files": [
+        "docs/case_studies/public_slice/R2_A4_pentest_pair.md"
+      ],
+      "paper_pdf": "data/papers/public_slice/4801_From_Capabilities_to_Perf.pdf",
+      "openreview_pdf": "data/openreviews/public_slice/From Capabilities to Performance_ Evaluating Key Functional Properties of LLM Architectures in Penetration Testing _ OpenReview.pdf"
+    },
+    {
+      "slug": "rl_backtracking_feedback",
+      "title": "Reinforcement Learning with Backtracking Feedback",
+      "venue": "NeurIPS 2025",
+      "decision": "accepted",
+      "decision_type": "Poster",
+      "official_concern_count": 13,
+      "case_study_files": [
+        "docs/case_studies/public_slice/A2_rl_backtracking.md"
+      ],
+      "paper_pdf": "data/papers/public_slice/28718_Reinforcement_Learning_w.pdf",
+      "openreview_pdf": "data/openreviews/public_slice/Reinforcement Learning with Backtracking Feedback _ OpenReview.pdf"
+    },
+    {
+      "slug": "rl_reasoning_limits",
+      "title": "Does Reinforcement Learning Really Incentivize Reasoning Capacity in LLMs Beyond the Base Model?",
+      "venue": "NeurIPS 2025",
+      "decision": "accepted",
+      "decision_type": "Best Paper Runner-up (Oral)",
+      "official_concern_count": 26,
+      "case_study_files": [
+        "docs/case_studies/public_slice/E3_rl_reasoning_limits.md"
+      ],
+      "paper_pdf": "data/papers/public_slice/6514_Does_Reinforcement_Learni.pdf",
+      "openreview_pdf": "data/openreviews/public_slice/Does Reinforcement Learning Really Incentivize Reasoning Capacity in LLMs Beyond the Base Model_ _ OpenReview.pdf"
+    }
+  ]
+}

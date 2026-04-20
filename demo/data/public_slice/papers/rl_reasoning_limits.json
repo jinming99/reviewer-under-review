@@ -1,0 +1,1822 @@
+{
+  "slug": "rl_reasoning_limits",
+  "title": "Does Reinforcement Learning Really Incentivize Reasoning Capacity in LLMs Beyond the Base Model?",
+  "venue": "NeurIPS 2025",
+  "decision": "accepted",
+  "decision_type": "Best Paper Runner-up (Oral)",
+  "reviewer_scores": [
+    5,
+    6,
+    5,
+    5
+  ],
+  "reviewer_scores_post": [
+    6,
+    6,
+    6,
+    6
+  ],
+  "ground_truth_notes": "External award-winning paper. NeurIPS 2025 Best Paper Runner-up (Oral). Finds that RLVR does not elicit fundamentally new reasoning — base model bounds the reasoning capacity. No insider commentary.",
+  "case_study_files": [
+    "docs/case_studies/public_slice/E3_rl_reasoning_limits.md"
+  ],
+  "evidence": {
+    "paper_pdf": "data/papers/public_slice/6514_Does_Reinforcement_Learni.pdf",
+    "openreview_pdf": "data/openreviews/public_slice/Does Reinforcement Learning Really Incentivize Reasoning Capacity in LLMs Beyond the Base Model_ _ OpenReview.pdf",
+    "official_concerns": "data/official_concerns/rl_reasoning_limits.yaml"
+  },
+  "official_concerns": [
+    {
+      "id": "O1",
+      "text": "Results are all on relatively small models (7-32B parameters) and low training data diversity (mathematical reasoning on GSM8K + MATH, coding on LeetCode and TACO); quite far from RLVR-trained frontier systems. Both model size and training data can significantly change properties of models.",
+      "severity": "major",
+      "decisive": false,
+      "ac_treatment": "resolved",
+      "issue_type": "empirical",
+      "tags": [
+        "model_scale",
+        "generalizability",
+        "frontier_models",
+        "training_diversity"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "79qN",
+        "KdU6"
+      ]
+    },
+    {
+      "id": "O2",
+      "text": "The random guessing explanation needs stronger control: low percentage of problems with at least one correct CoT in 8-25 samples is a good sanity check but a low bar. Should report percentage of trajectories containing flawed CoTs and use larger samples with LLM-as-judge to bound performance attributable to random guessing.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "random_guessing",
+        "evaluation_validity",
+        "CoT_verification"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "79qN"
+      ]
+    },
+    {
+      "id": "O3",
+      "text": "Overfitting to the test set is another alternative explanation not addressed. Distillation and train vs test results should indicate overfitting, but this connection is not made explicit.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "overfitting",
+        "data_leakage",
+        "train_test_split"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "79qN"
+      ]
+    },
+    {
+      "id": "O4",
+      "text": "Table 1 should show training data information, not just test sets.",
+      "severity": "minor",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "framing",
+      "tags": [
+        "presentation",
+        "table_clarity"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "79qN"
+      ]
+    },
+    {
+      "id": "O5",
+      "text": "Figure 6 should add a sentence on the relevance of comparing perplexity to o1 responses.",
+      "severity": "minor",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "framing",
+      "tags": [
+        "clarity",
+        "figure_annotation"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "79qN"
+      ]
+    },
+    {
+      "id": "O6",
+      "text": "Figure 8 is hard to read with folded y-axis; should perhaps show only k@1 and k@256 or use delta notation.",
+      "severity": "minor",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "framing",
+      "tags": [
+        "visualization",
+        "readability"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "79qN"
+      ]
+    },
+    {
+      "id": "O7",
+      "text": "Tables 4 & 5 (solvable problem indices) would be more effective as percentage overlap rather than listing problem indices.",
+      "severity": "minor",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "framing",
+      "tags": [
+        "presentation",
+        "table_format"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "79qN"
+      ]
+    },
+    {
+      "id": "O8",
+      "text": "Figure 16 (AIME24) shows higher temperature benefits RL model at high pass@k, contradicting the stated T=0.6 choice for both models.",
+      "severity": "minor",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "temperature",
+        "hyperparameter_sensitivity",
+        "experimental_protocol"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "79qN"
+      ]
+    },
+    {
+      "id": "O9",
+      "text": "The term 'reasoning capacity/boundary' seems like a misnomer; should be 'solution-space/reasoning coverage or scope' instead.",
+      "severity": "minor",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "framing",
+      "tags": [
+        "terminology",
+        "clarity",
+        "framing"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "79qN"
+      ]
+    },
+    {
+      "id": "O10",
+      "text": "Lacks explanation for why RLVR fails to expand reasoning boundaries. Paper includes some intuitive descriptions about base models' boundaries but they remain informal.",
+      "severity": "major",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "conceptual",
+      "tags": [
+        "theoretical_explanation",
+        "exploration_limitation",
+        "on_policy"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "tKuY"
+      ]
+    },
+    {
+      "id": "O11",
+      "text": "Findings may not generalize to future RL paradigms or different reward structures (e.g., process rewards vs. outcome rewards). Could different reward structures change the conclusions about RLVR's effectiveness?",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "conceptual",
+      "tags": [
+        "scope_limitation",
+        "reward_design",
+        "generalizability",
+        "future_work"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "tKuY"
+      ]
+    },
+    {
+      "id": "O12",
+      "text": "Paper identifies problems clearly but provides limited improvement suggestions for how to address RLVR's limitations.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "conceptual",
+      "tags": [
+        "actionable_suggestions",
+        "future_directions"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "tKuY"
+      ]
+    },
+    {
+      "id": "O13",
+      "text": "Conclusions may be influenced by the specific base models tested. Results could differ with different pretrained models.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "model_dependency",
+        "generalizability",
+        "robustness"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "tKuY"
+      ]
+    },
+    {
+      "id": "O14",
+      "text": "There is no theoretical explanation for the findings - only extensive experimental results. The paper includes some intuitive descriptions such as references to base models' boundaries, but they remain informal.",
+      "severity": "major",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "conceptual",
+      "tags": [
+        "theory_gap",
+        "informal_explanation",
+        "exploration_bottleneck"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "6ryS"
+      ]
+    },
+    {
+      "id": "O15",
+      "text": "Experiments mainly focus on the Qwen model series, raising concerns about model family diversity.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "model_diversity",
+        "qwen_dominance",
+        "generalizability"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "6ryS"
+      ]
+    },
+    {
+      "id": "O16",
+      "text": "The evaluation is too centered on pass@k curves. Would appreciate more analyses like the Perplexity Analysis paragraph, such as accuracy distributions, reasoning coverage, and comparisons with distilled models.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "evaluation_diversity",
+        "pass_at_k",
+        "analysis_depth"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "6ryS"
+      ]
+    },
+    {
+      "id": "O17",
+      "text": "Similar insights about RLVR limitations have been discussed in earlier works. Section 5.2.2 of DeepSeekMath (Feb 2024) employed similar phrasing about 'fundamental capabilities.' Other works may have made similar observations even earlier.",
+      "severity": "major",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "conceptual",
+      "tags": [
+        "novelty",
+        "prior_work_overlap",
+        "deepseekmath"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "6ryS"
+      ]
+    },
+    {
+      "id": "O18",
+      "text": "Specific policy optimization parameters used during RLVF are not reported (e.g., ppo_mini_batch_size and ppo_epochs in VeRL).",
+      "severity": "minor",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "reproducibility",
+        "hyperparameters"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "6ryS"
+      ]
+    },
+    {
+      "id": "O19",
+      "text": "The Perplexity Analysis paragraph analyzes only two samples from AIME, which is a very limited sample size.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "sample_size",
+        "perplexity_analysis",
+        "completeness"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "6ryS"
+      ]
+    },
+    {
+      "id": "O20",
+      "text": "How do the findings extend to larger base models (e.g., 70B+ parameters)? Would the reasoning boundary limitations persist? Evaluation on larger models like o1 and DeepSeek-R1-Zero would be helpful.",
+      "severity": "major",
+      "decisive": false,
+      "ac_treatment": "resolved",
+      "issue_type": "empirical",
+      "tags": [
+        "model_scale",
+        "frontier_models",
+        "scalability"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "tKuY",
+        "KdU6"
+      ]
+    },
+    {
+      "id": "O21",
+      "text": "How does the gap in pass@k curves change with respect to the difficulty of evaluation tasks? More challenging tasks may reduce the gap between base and RLVR models at large k.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "task_difficulty",
+        "difficulty_stratification",
+        "pass_at_k_gap"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "KdU6"
+      ]
+    },
+    {
+      "id": "O22",
+      "text": "Most pass@k curves reported seem to be on test sets not used for RLVR training; should show what pass@k curves look like on training tasks to verify no overfitting.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "train_test_split",
+        "overfitting_check",
+        "evaluation_protocol"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "KdU6"
+      ]
+    },
+    {
+      "id": "O23",
+      "text": "Paper should show how perplexity score evolves during the RLVR training process, not just at the end. Expect PPL_RL to gradually decrease and PPL_base to show two clusters over training.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "training_dynamics",
+        "perplexity_evolution",
+        "analysis_depth"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "KdU6"
+      ]
+    },
+    {
+      "id": "O24",
+      "text": "Discussion on limitations of the paper itself is insufficient or missing. The paper gives a good discussion of RLVR limitations but should also clearly state limitations of the study.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "framing",
+      "tags": [
+        "limitations_discussion",
+        "self_awareness",
+        "transparency"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "KdU6",
+        "79qN"
+      ]
+    },
+    {
+      "id": "O25",
+      "text": "A concurrent paper using CoT-Pass@k metric draws opposite conclusions about whether RLVR incentivizes correct reasoning in base LLMs. This raises questions about metric sensitivity.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "conceptual",
+      "tags": [
+        "metric_sensitivity",
+        "concurrent_work",
+        "CoT_verification"
+      ],
+      "resolved_in_rebuttal": false,
+      "raised_by": [
+        "KdU6"
+      ]
+    },
+    {
+      "id": "O26",
+      "text": "Do experiments with SFT pre-training (applying RLVR to SFT or distilled models) modify the conclusions?",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "SFT_pretraining",
+        "distillation",
+        "generalizability"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "79qN"
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "method": "ai_scientist_run1",
+      "verdict": "REJECT",
+      "score": 5,
+      "error_type": "FN",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_reject",
+          "text": "Limited novelty — Dang et al., DeepSeekMath, and Liu et al. have previously noted similar pass@k deterioration or base-model origin of reflective behaviors after RLVR. The contribution is primarily systematization, which is useful but not conceptually new.",
+          "linked_concern_ids": [
+            "A1"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R2",
+          "polarity": "pro_reject",
+          "text": "Weak evidence for central claim — the perplexity analysis supporting 'all reasoning paths already exist in the base model's distribution' is conducted on only 2 AIME24 problems with 16 responses each, far too small for the claim's scope.",
+          "linked_concern_ids": [
+            "A2"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R3",
+          "polarity": "pro_reject",
+          "text": "Finding is a predictable consequence of policy gradient theory — on-policy methods without explicit exploration mechanisms naturally stay within the base model's distribution, reducing the significance of the result.",
+          "linked_concern_ids": [
+            "A3"
+          ],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "Addresses a fundamental and timely question about what RLVR actually achieves for LLM reasoning capabilities.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "Exceptionally comprehensive experimental coverage across model families (Qwen, LLaMA), sizes (7B-32B+), three task domains, six benchmarks, and six RL algorithms.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M3",
+          "polarity": "pro_accept",
+          "text": "Multiple complementary analyses (pass@k curves, accuracy distributions, solvable-problem coverage, perplexity analysis, entropy-matching) provide converging evidence.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M4",
+          "polarity": "pro_accept",
+          "text": "Paper addresses potential confounds carefully — CoT validity is manually verified and the random guessing issue is explicitly discussed.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M5",
+          "polarity": "pro_accept",
+          "text": "The Sampling Efficiency Gap (delta_SE) metric provides a useful quantitative framework for comparing RL algorithms.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M6",
+          "polarity": "pro_accept",
+          "text": "Well-organized paper with clear figures, especially Figure 1 which effectively communicates the core finding.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "Limited novelty: Dang et al. and DeepSeekMath previously noted similar pass@k deterioration after RLVR; Liu et al. observed that reflective behaviors originate from base models. Contribution is primarily systematization across more settings, not a conceptually new finding.",
+          "severity": "major",
+          "addressability": "unresolved",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "novelty",
+            "prior_work_overlap"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "The perplexity analysis (Section 4.1, Figure 6) is conducted on only 2 randomly selected AIME24 problems with 16 responses each — far too small to support the strong claim that all RLVR reasoning paths already exist in the base model's distribution.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "sample_size",
+            "evidence_quality"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "The finding is theoretically unsurprising: policy gradient methods optimize within the support of the current policy, and without explicit exploration mechanisms, staying within the base model's distribution is the expected outcome. The paper does not explain why the finding should be considered surprising given standard RL theory.",
+          "severity": "major",
+          "addressability": "unresolved",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "theoretical_depth",
+            "significance"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "The entropy-matching experiment (Section 4.5) uses only crude temperature scaling, which adjusts sharpness but not shape of the distribution. This is insufficient to fully disentangle reduced entropy/diversity from genuine loss of reasoning capability.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "methodology",
+            "entropy"
+          ]
+        },
+        {
+          "id": "A5",
+          "text": "The Magistral experiment (Section 4.6) shows the gap narrowing at large k but the base model does not clearly surpass the RLVR model on AIME25, partially undermining the universality of the main claim. The paper does not adequately discuss this discrepancy.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "generalizability",
+            "frontier_models"
+          ]
+        },
+        {
+          "id": "A6",
+          "text": "No characterization of what types of problems RLVR loses coverage on. Understanding whether these are harder problems, specific mathematical domains, or problems requiring particular reasoning strategies would provide crucial mechanistic insight.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "mechanistic_insight",
+            "analysis_depth"
+          ]
+        },
+        {
+          "id": "A7",
+          "text": "The distillation comparison (Section 4.2) is somewhat unfair: distillation uses data from DeepSeek-R1, a vastly stronger model, so naturally it expands boundaries. This illuminates the benefit of external knowledge but does not deeply inform about RLVR's intrinsic limitations.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "baseline_fairness",
+            "confound"
+          ]
+        },
+        {
+          "id": "A8",
+          "text": "Most experiments use relatively modest RLVR training scales (e.g., SimpleRLZoo, 450 steps max). Whether conclusions hold under significantly larger training compute budgets — the regime most relevant to frontier labs — remains an open question.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "generalizability",
+            "training_scale"
+          ]
+        },
+        {
+          "id": "A9",
+          "text": "Pass@k as a measure of 'reasoning boundary' conflates output diversity with reasoning capability — higher entropy models naturally achieve higher pass@k regardless of reasoning depth.",
+          "severity": "moderate",
+          "addressability": "unresolved",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "metric_validity",
+            "evaluation_design"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O17",
+          "agentic_id": "A1",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Similar insights about RLVR limitations already observed in prior work (DeepSeekMath, Dang et al.)",
+          "rationale": "Both flag the same novelty concern: prior work (DeepSeekMath Section 5.2.2, Dang et al.) already noted pass@k deterioration and base-model origin of reasoning patterns. O17 cites DeepSeekMath specifically; A1 cites Dang et al., DeepSeekMath, and Liu et al. Same underlying issue, same severity."
+        },
+        {
+          "official_id": "O19",
+          "agentic_id": "A2",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Perplexity analysis limited to too few samples to support distribution claim",
+          "rationale": "Both identify the same flaw: the perplexity analysis in Section 4.1 / Figure 6 uses only two AIME problems, which is insufficient evidence for the claim that all RLVR reasoning paths exist in the base model distribution. O19 severity moderate, A2 severity major — within ±1 tolerance."
+        },
+        {
+          "official_id": "O10",
+          "agentic_id": "A3",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Relationship between the findings and RL theory",
+          "rationale": "O10 requests a theoretical explanation for why RLVR fails to expand reasoning boundaries. A3 argues the finding is theoretically unsurprising given standard RL theory (policy gradient stays within support). Both are about the theory gap but from different angles: O10 wants theory added to enrich the paper; A3 argues existing theory already predicts the finding, reducing its significance. Same issue family (theory dimension), different normative framing. Both treat as weakness. Partial because they target different aspects of the theory-paper relationship."
+        },
+        {
+          "official_id": "O14",
+          "agentic_id": "A3",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "No theoretical explanation for the empirical findings",
+          "rationale": "O14 (6ryS) makes the same point as O10 (tKuY) — the paper has only extensive experimental results and no theoretical explanation. A3 addresses this from the opposite direction (the theory already exists and predicts the finding). Same severity, aligned judgment. Partial for the same reason as O10-A3: requesting theory vs. claiming theory makes the finding trivial are related but differently scoped complaints."
+        },
+        {
+          "official_id": "O8",
+          "agentic_id": "A4",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Temperature/entropy experiment has methodological limitations",
+          "rationale": "O8 flags a specific empirical inconsistency in Figure 16 (higher temperature benefits RL model at high pass@k on AIME24). A4 argues temperature scaling is too crude to disentangle entropy from capability loss. Both question the entropy-matching experiment's adequacy but target different facets: O8 is a specific data point, A4 is a methodological critique. Partial — same experiment, different level of complaint."
+        },
+        {
+          "official_id": "O1",
+          "agentic_id": "A8",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Conclusions may not hold at larger scales",
+          "rationale": "O1 flags small model sizes (7-32B) and low training data diversity. A8 flags modest RLVR training compute (SimpleRLZoo, 450 steps). Both are about generalizability to larger scales but target different dimensions: model parameter count and data diversity (O1) vs. RL training compute budget (A8). Partial because a fix to one would not necessarily fix the other."
+        },
+        {
+          "official_id": "O20",
+          "agentic_id": "A8",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Scaling to larger (70B+) models",
+          "rationale": "O20 specifically asks about 70B+ models and frontier-level evaluation. A8 addresses the training compute regime relevant to frontier labs. Both are about whether conclusions generalize to frontier scale. Partial because O20 focuses on model size while A8 focuses on training compute, but the underlying question is the same: do results hold at scale?"
+        },
+        {
+          "official_id": "O21",
+          "agentic_id": "A6",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Understanding which types of problems are affected by RLVR",
+          "rationale": "O21 asks how the pass@k gap changes with task difficulty. A6 asks what types of problems RLVR loses coverage on. Both seek characterization of affected problems. O21 is specifically about difficulty stratification; A6 is broader (difficulty, domains, reasoning strategies). Partial because A6 subsumes O21's specific question within a wider scope."
+        },
+        {
+          "official_id": "O16",
+          "agentic_id": "A9",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Adequacy of pass@k-centric evaluation",
+          "rationale": "O16 wants more analyses beyond pass@k curves (accuracy distributions, reasoning coverage, distillation comparisons). A9 argues pass@k conflates output diversity with reasoning capability. Both question the pass@k-centric evaluation but from different angles: O16 wants complementary analyses alongside pass@k; A9 questions the metric's fundamental validity. Partial — same concern family, different scope."
+        }
+      ],
+      "metrics": {
+        "total_official": 26,
+        "total_decisive": 0,
+        "recall_strict": 0.3462,
+        "recall_loose": 0.3462,
+        "decisive_recall": null,
+        "matched_official_ids": [
+          "O1",
+          "O10",
+          "O14",
+          "O16",
+          "O17",
+          "O19",
+          "O20",
+          "O21",
+          "O8"
+        ],
+        "strict_matched_ids": [
+          "O1",
+          "O10",
+          "O14",
+          "O16",
+          "O17",
+          "O19",
+          "O20",
+          "O21",
+          "O8"
+        ]
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/ai_scientist_run1/rl_reasoning_limits.yaml",
+        "match_graph": "data/match_graphs/public_slice/ai_scientist_run1/rl_reasoning_limits.yaml",
+        "review": "data/reviews/public_slice/ai_scientist_run1/rl_reasoning_limits/"
+      }
+    },
+    {
+      "method": "ai_scientist_gpt4o_run1",
+      "verdict": "REJECT",
+      "score": 3,
+      "error_type": "FN",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_reject",
+          "text": "Findings reiterate already known RL limitations without proposing significant advancements — low originality and contribution.",
+          "linked_concern_ids": [
+            "A3"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R2",
+          "polarity": "pro_reject",
+          "text": "Paper identifies problems but lacks actionable solutions or exploration of new optimization strategies.",
+          "linked_concern_ids": [
+            "A1",
+            "A2"
+          ],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "Comprehensive evaluation of RLVR across numerous benchmarks and tasks.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "Thorough comparison between RLVR and base models.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M3",
+          "polarity": "pro_accept",
+          "text": "Insightful discussion on the limitations of current RLVR methods.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M4",
+          "polarity": "pro_accept",
+          "text": "Distillation, rather than RLVR, can introduce new reasoning patterns — a useful diagnostic contrast.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "Limited exploration of new RLVR paradigms or optimization strategies — the paper diagnoses the problem but does not investigate alternatives.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "scope_limitation",
+            "future_directions"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "Lacks actionable solutions to overcome the identified limitations of RLVR.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "actionable_suggestions",
+            "prescriptive_gap"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "Some findings reiterate already known limitations of RL without proposing significant advancements beyond prior observations.",
+          "severity": "major",
+          "addressability": "unresolved",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "novelty",
+            "prior_work_overlap"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "Relationship to existing literature on RL limitations in LLMs is not clearly established.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "prior_work",
+            "contextualization"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O12",
+          "agentic_id": "A2",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Paper identifies RLVR limitations but provides limited improvement suggestions or actionable solutions",
+          "rationale": "Both flag the same gap: the paper clearly identifies RLVR's failure to expand reasoning but does not propose concrete solutions or improvement directions. O12 says \"identifies problems clearly but provides limited improvement suggestions\"; A2 says \"lacks actionable solutions to overcome the identified limitations.\" Fixing one necessarily fixes the other. Severity within tolerance (moderate vs major)."
+        },
+        {
+          "official_id": "O11",
+          "agentic_id": "A1",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Scope limited to current RLVR paradigms without exploring alternative approaches",
+          "rationale": "Both concern the absence of new RLVR paradigms from the paper's scope. O11 frames it as a generalizability limitation (\"findings may not generalize to future RL paradigms or different reward structures\"), while A1 frames it as a contribution gap (\"limited exploration of new RLVR paradigms\"). Partial because O11 also covers reward structure diversity (process vs outcome rewards) which A1 does not address. Fixing A1 (exploring alternatives) would partially address O11 but not fully resolve the reward structure concern."
+        },
+        {
+          "official_id": "O17",
+          "agentic_id": "A3",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Novelty concern — similar insights about RLVR limitations observed in prior work",
+          "rationale": "Both raise novelty concerns about the paper's findings being already known. O17 specifically identifies DeepSeekMath Section 5.2.2 as having \"employed similar phrasing about 'fundamental capabilities'\" and names the concrete precedent. A3 generically claims \"some findings reiterate already known limitations of RL.\" Partial because A3 does not identify any specific prior work, making it a weaker and less actionable version of the same concern. Both assign major severity."
+        }
+      ],
+      "metrics": {
+        "total_official": 26,
+        "total_decisive": 0,
+        "recall_strict": 0.1154,
+        "recall_loose": 0.1154,
+        "decisive_recall": null,
+        "matched_official_ids": [
+          "O11",
+          "O12",
+          "O17"
+        ],
+        "strict_matched_ids": [
+          "O11",
+          "O12",
+          "O17"
+        ]
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/ai_scientist_gpt4o_run1/rl_reasoning_limits.yaml",
+        "match_graph": "data/match_graphs/public_slice/ai_scientist_gpt4o_run1/rl_reasoning_limits.yaml",
+        "review": "data/reviews/public_slice/ai_scientist_gpt4o_run1/rl_reasoning_limits/"
+      }
+    },
+    {
+      "method": "liang_run1",
+      "verdict": "REJECT",
+      "score": null,
+      "error_type": "FN",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_reject",
+          "text": "Central claim ('RLVR does not elicit new reasoning') may be overstated given inherent limitations of pass@k as a finite-sample probe and the conflation of entropy reduction with reasoning scope reduction.",
+          "linked_concern_ids": [
+            "A1",
+            "A2",
+            "A5"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R2",
+          "polarity": "pro_reject",
+          "text": "Scaling and training compute investigation is insufficient — controlled experiments are extremely small-scale relative to frontier RLVR recipes, undermining generality of conclusions.",
+          "linked_concern_ids": [
+            "A3",
+            "A4"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R3",
+          "polarity": "pro_reject",
+          "text": "Perplexity analysis is too limited in sample size and granularity to support the general claim that RLVR paths are a strict subset of base model paths.",
+          "linked_concern_ids": [
+            "A7",
+            "A8"
+          ],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "Comprehensive empirical coverage spanning 4+ model families, 3 task domains (math, code, vision), 6 RL algorithms, and multiple scales.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "Pass@k methodology offers a principled and interpretable lens for reasoning boundary assessment with manual CoT correctness validation.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M3",
+          "polarity": "pro_accept",
+          "text": "Distillation vs RLVR contrast (Section 4.2) is a clean and insightful comparison that sharpens the narrative and offers actionable implications.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M4",
+          "polarity": "pro_accept",
+          "text": "Sampling Efficiency Gap (Delta_SE) metric is a useful conceptual contribution for benchmarking RL algorithms against the base model upper bound.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M5",
+          "polarity": "pro_accept",
+          "text": "Clear writing and well-structured presentation with extensive supplementary material, prompt templates, and reproducibility details.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M6",
+          "polarity": "pro_accept",
+          "text": "Paper addresses a timely and important question — whether RLVR genuinely elicits new reasoning capabilities or merely reshapes the sampling distribution — which is provocative and practically consequential for the field's research prioritization.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "Pass@k at realistic k values (128-1024) is a finite-sample approximation; the base model's apparent coverage advantage at large k may partly reflect its higher entropy and broader but lower-quality distribution rather than genuinely superior reasoning capacity.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "overclaiming",
+            "evaluation_validity",
+            "entropy_confound",
+            "pass_at_k"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "Equating 'the base model can produce a correct answer in 1 out of 1024 samples' with 'possessing reasoning capability' is philosophically and practically debatable — probability ~0.1% may not reflect robust or reliable reasoning.",
+          "severity": "major",
+          "addressability": "unresolved",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "framing",
+            "capability_definition",
+            "philosophical"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "Controlled RL experiments train for only 150-450 steps on 2,000 problems, extremely small-scale relative to frontier RLVR recipes (DeepSeek-R1 trains for orders of magnitude more). The conclusion that 'RLVR does not expand reasoning' may be an artifact of under-training.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "training_compute",
+            "model_scale",
+            "generalizability",
+            "under_training"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "Magistral-Medium experiment accessed via API with undisclosed training details, model sizes, and potential confounds (multi-stage training, data contamination). The pass@k curves do not clearly cross for this model, undermining the universality claim.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "frontier_models",
+            "reproducibility",
+            "confounds",
+            "API_opacity"
+          ]
+        },
+        {
+          "id": "A5",
+          "text": "RLVR training reduces output entropy, which mechanically reduces pass@k at large k. Temperature scaling is a crude proxy for the distributional shift; more rigorous controls (rejection sampling, importance-weighted estimates) are needed to disentangle entropy from genuine reasoning scope loss.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "entropy_confound",
+            "evaluation_methodology",
+            "disentanglement",
+            "controls"
+          ]
+        },
+        {
+          "id": "A6",
+          "text": "Base model evaluated with the same zero-shot prompt as the RL model but was never trained with this prompt format. Performance differences could partly reflect prompt sensitivity. Base models often produce 'unformatted or non-sensical responses,' raising questions about effective sample size.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "prompt_sensitivity",
+            "experimental_protocol",
+            "confounds"
+          ]
+        },
+        {
+          "id": "A7",
+          "text": "Perplexity analysis conducted on only 2 randomly sampled AIME24 problems with 16 responses each — far too small a sample to support a general claim about RLVR paths being a subset of base model paths.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "sample_size",
+            "perplexity_analysis",
+            "insufficient_evidence"
+          ]
+        },
+        {
+          "id": "A8",
+          "text": "Low perplexity of RLVR outputs under the base model does not rule out that RLVR produces novel combinations or orderings of reasoning steps that, while individually plausible, would never be sampled as complete sequences. Analysis needed at reasoning-strategy level, not just token-level likelihood.",
+          "severity": "moderate",
+          "addressability": "unresolved",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "analysis_granularity",
+            "reasoning_strategies",
+            "perplexity_analysis"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O19",
+          "agentic_id": "A7",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Perplexity analysis limited to only two AIME samples, insufficient to support general claims",
+          "rationale": "Both identify the same specific concern: the perplexity analysis in Section 4.1 uses only 2 AIME24 problems, which is too small a sample for general conclusions. O19 frames as question ('Why only two?'), A7 frames as critique ('far too small'). Same issue, same direction."
+        },
+        {
+          "official_id": "O1",
+          "agentic_id": "A3",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Limited experimental scale undermines generality of conclusions",
+          "rationale": "Both concern limited experimental scale but target different facets. O1 focuses on model size (7-32B) and training data diversity. A3 focuses on training compute (150-450 steps, 2000 problems) being too small versus frontier recipes. Same issue family — experiments not at frontier scale — but would require different fixes."
+        },
+        {
+          "official_id": "O20",
+          "agentic_id": "A4",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Frontier-scale model evidence is insufficient or unconvincing",
+          "rationale": "O20 asks whether findings extend to 70B+ models. A4 critiques the Magistral-Medium experiment as unconvincing due to API opacity and non-crossing curves. Both are about frontier model evidence but from different angles: O20 asks for it, A4 says what was provided is inadequate."
+        },
+        {
+          "official_id": "O2",
+          "agentic_id": "A1",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Pass@k evaluation validity questioned — alternative explanations not fully ruled out",
+          "rationale": "Both question whether pass@k results truly reflect reasoning capacity vs artifacts. O2 targets the random guessing confound (correct final answers from incorrect CoTs). A1 targets the entropy confound (higher entropy gives broader coverage regardless of reasoning quality). Same issue family (evaluation validity) but different specific mechanisms requiring different fixes."
+        },
+        {
+          "official_id": "O9",
+          "agentic_id": "A2",
+          "match_type": "partial",
+          "severity_alignment": "over",
+          "judgment_alignment": "aligned",
+          "issue": "Conceptual framing of 'reasoning capability' via pass@k is problematic",
+          "rationale": "Both question the paper's conceptual framing of reasoning capacity. O9 is a terminology concern ('reasoning capacity/boundary' is a misnomer, should be 'coverage/scope'). A2 is a deeper philosophical concern (probability ~0.1% may not constitute a genuine 'capability'). Same concept — what does pass@k actually measure? — but A2 elevates this from minor terminology to a major conceptual challenge."
+        },
+        {
+          "official_id": "O8",
+          "agentic_id": "A5",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "n/a",
+          "issue": "Temperature/entropy effects on pass@k evaluation",
+          "rationale": "Both involve the temperature/entropy dimension but at very different scales. O8 flags a specific empirical anomaly in Figure 16 (higher temperature benefits RL model on AIME24, contradicting T=0.6 choice). A5 makes the much broader methodological argument that temperature scaling is a crude proxy for distributional shift and importance-weighted estimates are needed. Same topic area but different scope and specificity."
+        }
+      ],
+      "metrics": {
+        "total_official": 26,
+        "total_decisive": 0,
+        "recall_strict": 0.1923,
+        "recall_loose": 0.2308,
+        "decisive_recall": null,
+        "matched_official_ids": [
+          "O1",
+          "O19",
+          "O2",
+          "O20",
+          "O8",
+          "O9"
+        ],
+        "strict_matched_ids": [
+          "O1",
+          "O19",
+          "O2",
+          "O20",
+          "O9"
+        ]
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/liang_run1/rl_reasoning_limits.yaml",
+        "match_graph": "data/match_graphs/public_slice/liang_run1/rl_reasoning_limits.yaml",
+        "review": "data/reviews/public_slice/liang_run1/rl_reasoning_limits/"
+      }
+    },
+    {
+      "method": "liang_gpt4o_run1",
+      "verdict": "ACCEPT",
+      "score": null,
+      "error_type": "TP",
+      "decision_drivers": [],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "Paper presents a thorough and systematic evaluation of RLVR, using a robust experimental setup and a novel metric (pass@k) to assess reasoning boundaries.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "Paper offers significant insights into the limitations of current RLVR methods, which could guide future research and development of more effective RL paradigms.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M3",
+          "polarity": "pro_accept",
+          "text": "Findings have broad implications for the design and training of LLMs, potentially influencing both academic research and practical applications in AI.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "Findings may lack novelty -- the conclusion that RLVR does not introduce fundamentally new reasoning capabilities may be seen as confirming existing suspicions rather than providing groundbreaking insights.",
+          "severity": "moderate",
+          "addressability": "unknown",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "novelty",
+            "prior_work_overlap",
+            "contribution_scope"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "Study highlights limitations of RLVR without proposing concrete solutions, novel methodologies, or actionable future directions to overcome the identified challenges.",
+          "severity": "moderate",
+          "addressability": "unknown",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "actionable_suggestions",
+            "future_directions",
+            "contribution_scope"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "Limited exploration of alternative approaches -- only discusses distillation as an alternative to RLVR without exploring other promising methods or hybrid approaches that could enhance reasoning capabilities.",
+          "severity": "moderate",
+          "addressability": "unknown",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "scope_limitation",
+            "alternative_methods",
+            "hybrid_approaches"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "Insufficient theoretical or empirical analysis of underlying causes for why RLVR fails to expand reasoning boundaries -- mentions vast action space and pretrained priors but does not develop detailed analysis.",
+          "severity": "moderate",
+          "addressability": "unknown",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "theoretical_explanation",
+            "causal_analysis",
+            "exploration_limitation"
+          ]
+        },
+        {
+          "id": "A5",
+          "text": "Overreliance on pass@k as primary evaluation metric -- may not fully capture qualitative aspects of reasoning improvements such as creativity or adaptability; paper would benefit from qualitative assessments or case studies.",
+          "severity": "moderate",
+          "addressability": "unknown",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "evaluation_diversity",
+            "pass_at_k",
+            "metric_limitation",
+            "qualitative_analysis"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O17",
+          "agentic_id": "A1",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Paper's novelty is limited because similar insights about RLVR limitations were observed in prior work",
+          "rationale": "Both concern novelty of the paper's findings. O17 specifically cites DeepSeekMath Section 5.2.2 as having similar phrasing about 'fundamental capabilities.' A1 makes the same point generically ('confirming existing suspicions') without naming prior work. Partial because A1 lacks the specific prior work reference that makes O17 concrete."
+        },
+        {
+          "official_id": "O12",
+          "agentic_id": "A2",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Paper identifies RLVR limitations clearly but provides limited improvement suggestions or solutions",
+          "rationale": "Both flag the same gap: the paper is diagnostic rather than prescriptive. O12 says 'identifies problems clearly but provides limited improvement suggestions.' A2 says 'highlights limitations without proposing concrete solutions or novel methodologies.' Fixing one necessarily fixes the other."
+        },
+        {
+          "official_id": "O11",
+          "agentic_id": "A3",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Paper's scope is limited to current RLVR without exploring alternative methods or future paradigms",
+          "rationale": "Both concern the paper's scope beyond current RLVR. O11 questions whether findings generalize to 'future RL paradigms or different reward structures.' A3 criticizes not exploring 'other promising methods or hybrid approaches.' Partial because O11 frames this as generalizability and A3 frames it as missing exploration, requiring different author fixes."
+        },
+        {
+          "official_id": "O10",
+          "agentic_id": "A4",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Lacks theoretical or mechanistic explanation for why RLVR fails to expand reasoning boundaries",
+          "rationale": "Both identify the same specific gap. O10: 'Lacks explanation for why RLVR fails to expand reasoning boundaries.' A4: 'Insufficient theoretical or empirical analysis of underlying causes.' A4 even mentions the same mechanisms (vast action space, pretrained priors) that O10's rebuttal resolution discusses. The underlying complaint is identical."
+        },
+        {
+          "official_id": "O14",
+          "agentic_id": "A4",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Lacks theoretical explanation for why RLVR fails to expand reasoning boundaries",
+          "rationale": "O14 is the same theory gap concern as O10 but raised by reviewer 6ryS: 'There is no theoretical explanation--only extensive experimental results.' A4 captures this directly. Second match edge for A4 since O10 and O14 are the same underlying issue from different reviewers."
+        },
+        {
+          "official_id": "O16",
+          "agentic_id": "A5",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Evaluation is too centered on pass@k curves without sufficient complementary analyses",
+          "rationale": "Both identify the same specific metric concern. O16: 'The evaluation is too centered on pass@k curves. Would appreciate more analyses like the Perplexity Analysis paragraph.' A5: 'Overreliance on pass@k as primary evaluation metric...would benefit from qualitative assessments or case studies.' Both want diverse evaluation beyond pass@k."
+        }
+      ],
+      "metrics": {
+        "total_official": 26,
+        "total_decisive": 0,
+        "recall_strict": 0.2308,
+        "recall_loose": 0.2308,
+        "decisive_recall": null,
+        "matched_official_ids": [
+          "O10",
+          "O11",
+          "O12",
+          "O14",
+          "O16",
+          "O17"
+        ],
+        "strict_matched_ids": [
+          "O10",
+          "O11",
+          "O12",
+          "O14",
+          "O16",
+          "O17"
+        ]
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/liang_gpt4o_run1/rl_reasoning_limits.yaml",
+        "match_graph": "data/match_graphs/public_slice/liang_gpt4o_run1/rl_reasoning_limits.yaml",
+        "review": "data/reviews/public_slice/liang_gpt4o_run1/rl_reasoning_limits/"
+      }
+    },
+    {
+      "method": "marg_gpt4o_run1",
+      "verdict": "REJECT",
+      "score": null,
+      "error_type": "FN",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_reject",
+          "text": "Missing detailed algorithmic description and pseudocode for RLVR optimization process, limiting reproducibility assessment.",
+          "linked_concern_ids": [
+            "A5"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R2",
+          "polarity": "pro_reject",
+          "text": "Insufficient metrics beyond pass@k for evaluating sampling efficiency and reasoning boundaries; additional analyses like reasoning path diversity needed.",
+          "linked_concern_ids": [
+            "A1"
+          ],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "Pass@k metric is acknowledged as effective for evaluating sampling efficiency and reasoning boundaries.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "The comparison with distillation methods is described as insightful for highlighting RLVR's limitations in introducing new reasoning patterns.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M3",
+          "polarity": "pro_accept",
+          "text": "Ablation studies are recognized as offering valuable insights into parameter effects on model performance.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M4",
+          "polarity": "pro_accept",
+          "text": "The proposed improvements to RL paradigms are described as promising.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "Need additional metrics and analyses beyond pass@k for evaluating sampling efficiency and reasoning boundaries, such as reasoning path diversity.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "evaluation_diversity",
+            "additional_metrics",
+            "reasoning_diversity"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "Insufficient quantitative comparison between distillation and RLVR to determine the extent to which distillation expands reasoning scope relative to RLVR.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "distillation_comparison",
+            "quantitative_analysis"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "Ablation studies lack detailed analysis of parameter interplay (e.g., KL Loss and Rollout Number combined effects on reasoning boundaries).",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "ablation_depth",
+            "parameter_interplay"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "Perplexity analysis should further explore correlation between perplexity and reasoning diversity.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "perplexity_analysis",
+            "analysis_depth"
+          ]
+        },
+        {
+          "id": "A5",
+          "text": "Missing detailed algorithm or pseudocode for RLVR optimization process, limiting reproducibility.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "reproducibility",
+            "algorithmic_detail",
+            "pseudocode"
+          ]
+        },
+        {
+          "id": "A6",
+          "text": "Missing justifications for temperature and top-p sampling parameter choices.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "hyperparameter_justification",
+            "sampling_parameters"
+          ]
+        },
+        {
+          "id": "A7",
+          "text": "Missing configuration and fine-tuning details of baseline models used in experiments.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "reproducibility",
+            "baseline_details"
+          ]
+        },
+        {
+          "id": "A8",
+          "text": "Missing concrete examples illustrating limitations imposed by pretrained priors on RLVR models.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "clarity",
+            "pretrained_prior_examples"
+          ]
+        },
+        {
+          "id": "A9",
+          "text": "Missing implementation details for proposed RL paradigm improvements beyond RLVR.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "future_work_detail",
+            "implementation"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O16",
+          "agentic_id": "A1",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Evaluation too centered on pass@k; additional analysis metrics needed",
+          "rationale": "O16 (6ryS) says \"evaluation is too centered on pass@k curves\" and wants more diverse analyses. A1 similarly requests \"additional metrics and analyses beyond pass@k.\" Both target the same issue family (metric diversity) but differ in specifics: O16 cites perplexity analysis and distillation comparison as exemplars, while A1 focuses on reasoning path diversity. Partial because scope differs."
+        },
+        {
+          "official_id": "O18",
+          "agentic_id": "A5",
+          "match_type": "partial",
+          "severity_alignment": "over",
+          "judgment_alignment": "aligned",
+          "issue": "RLVR implementation details insufficient for reproducibility",
+          "rationale": "O18 asks for specific policy optimization parameters (ppo_mini_batch_size, ppo_epochs). A5 asks for a detailed algorithm or pseudocode for the RLVR process. Both target RLVR reproducibility but require different author fixes — parameter reporting vs. algorithmic description. Agentic system over-rates severity: officials treated parameter gaps as minor (a question, not a weakness), while the agentic system elevates it to major and makes it decisive."
+        },
+        {
+          "official_id": "O12",
+          "agentic_id": "A9",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Improvement suggestions for RL paradigms are insufficiently developed",
+          "rationale": "O12 says the paper \"provides limited improvement suggestions\" for addressing RLVR limitations. A9 says \"proposed improvements to RL paradigms\" need more implementation details. Both target the paper's future-direction discussion as underdeveloped, though O12 focuses on breadth (not enough suggestions) while A9 focuses on depth (existing suggestions lack implementation detail)."
+        },
+        {
+          "official_id": "O19",
+          "agentic_id": "A4",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "aligned",
+          "issue": "Perplexity analysis limitations",
+          "rationale": "O19 criticizes the perplexity analysis for using only two AIME samples (sample size concern). A4 wants perplexity analysis to explore correlation with reasoning diversity (analytical direction concern). Both target perplexity analysis quality but with different specific complaints: sample size vs. analytical scope. Different fixes required."
+        },
+        {
+          "official_id": "O8",
+          "agentic_id": "A6",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "aligned",
+          "issue": "Temperature parameter choices",
+          "rationale": "O8 notes that higher temperature actually benefits the RL model at high pass@k in Figure 16, questioning the T=0.6 choice. A6 asks for general justification of temperature and top-p choices. Both involve temperature parameter decisions but O8 is an empirical observation about a specific figure while A6 is a generic reproducibility/justification request. Different underlying complaints despite same component."
+        },
+        {
+          "official_id": "O10",
+          "agentic_id": "A8",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "aligned",
+          "issue": "Explanation of pretrained prior limitations on RLVR",
+          "rationale": "O10 wants a theoretical explanation for why RLVR fails to expand reasoning boundaries (formal/informal theory). A8 wants concrete examples illustrating limitations imposed by pretrained priors. Both target the explanatory gap around pretrained prior constraints, but O10 seeks theory while A8 seeks illustrative examples. Different levels of abstraction and different author responses needed."
+        }
+      ],
+      "metrics": {
+        "total_official": 26,
+        "total_decisive": 0,
+        "recall_strict": 0.1154,
+        "recall_loose": 0.2308,
+        "decisive_recall": null,
+        "matched_official_ids": [
+          "O10",
+          "O12",
+          "O16",
+          "O18",
+          "O19",
+          "O8"
+        ],
+        "strict_matched_ids": [
+          "O12",
+          "O16",
+          "O18"
+        ]
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/marg_gpt4o_run1/rl_reasoning_limits.yaml",
+        "match_graph": "data/match_graphs/public_slice/marg_gpt4o_run1/rl_reasoning_limits.yaml",
+        "review": "data/reviews/public_slice/marg_gpt4o_run1/rl_reasoning_limits/"
+      }
+    },
+    {
+      "method": "oar_run1",
+      "verdict": "REJECT",
+      "score": null,
+      "error_type": "FN",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_reject",
+          "text": "Sampling Efficiency Gap (∆SE) metric has ambiguous definition and reported numerical values inconsistent with the paper's own tables, undermining the proposed quantitative framework for comparing RL algorithms.",
+          "linked_concern_ids": [
+            "A1",
+            "A2"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R2",
+          "polarity": "pro_reject",
+          "text": "Central distributional claim that reasoning paths exist in the base model's distribution rests on a perplexity analysis of only two randomly selected AIME24 problems.",
+          "linked_concern_ids": [
+            "A3"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R3",
+          "polarity": "pro_reject",
+          "text": "Paper's strongest claims about 'reasoning patterns' overreach the solvability evidence, which cannot distinguish whether RLVR finds the same paths more efficiently vs. different paths to the same problems.",
+          "linked_concern_ids": [
+            "A4"
+          ],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "Paper presents a thought-provoking empirical investigation into whether RLVR genuinely expands LLM reasoning capabilities beyond the base model.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "Experimental breadth covering multiple model families, RL algorithms, and task domains is commendable.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M3",
+          "polarity": "pro_accept",
+          "text": "Core finding that pass@k curves cross over is well-demonstrated.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "Sampling Efficiency Gap (∆SE) definition is ambiguous — 'the difference between A and B' implies A − B (yielding negative values), but all reported values are positive, indicating the actual computation is B − A without being stated explicitly.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "other",
+          "tags": [
+            "metric_definition",
+            "notation_ambiguity"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "Reported ∆SE values and algorithm attribution are inconsistent with Table 3 — the value 42.6 attributed to RLOO actually matches DAPO, and the claimed range (42.6-43.9) understates the true variation across algorithms (41.0-45.3).",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "other",
+          "tags": [
+            "numerical_accuracy",
+            "internal_consistency",
+            "data_reporting"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "Perplexity analysis supporting the central claim that RLVR reasoning paths exist within the base model's distribution is based on only two randomly selected AIME24 problems with 16 responses each — insufficient sample size for the generality of the conclusion.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "other",
+          "tags": [
+            "sample_size",
+            "evidence_strength",
+            "perplexity_analysis"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "Claims about 'fundamentally new reasoning patterns' overshoot what the solvability evidence supports — pass@k evidence shows problem coverage but cannot distinguish whether RLVR finds the same reasoning paths more efficiently vs. different paths to the same problems.",
+          "severity": "major",
+          "addressability": "unresolved",
+          "decisive": true,
+          "source": "other",
+          "tags": [
+            "overclaiming",
+            "logical_gap",
+            "reasoning_patterns"
+          ]
+        },
+        {
+          "id": "A5",
+          "text": "Showcased 'correct' base model CoT in Figure 20 contains two canceling arithmetic errors (2024 not 1924; 905 not 805), raising concerns about the rigor of the manual CoT inspection process used to validate that 24/25 GSM8K and 5/6 AIME24 hard problems had correct CoTs.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "data_quality",
+            "manual_inspection",
+            "CoT_verification"
+          ]
+        },
+        {
+          "id": "A6",
+          "text": "Distillation comparison lacks a controlled baseline — the distilled model receives long CoT traces from a vastly more capable teacher (DeepSeek-R1), confounding the learning paradigm effect with the additional information injected. A controlled comparison holding training data source constant is needed.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "experimental_design",
+            "confound",
+            "controlled_comparison",
+            "distillation"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O19",
+          "agentic_id": "A3",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Perplexity analysis supporting a central distributional claim is based on only two AIME problems",
+          "rationale": "Both identify the same specific gap: the perplexity analysis in Section 4.1/Figure 6 uses only two randomly selected AIME24 problems, which is insufficient for the generality of the distributional claim. 6ryS asked \"Why does the Perplexity Analysis paragraph only analyze two samples?\" and the agentic review says \"extremely small sample from which to draw a general conclusion.\" Same issue, same direction. Agentic rates major vs official moderate — one level apart, within tolerance."
+        },
+        {
+          "official_id": "O9",
+          "agentic_id": "A4",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "n/a",
+          "issue": "Gap between solvability evidence and reasoning pattern/capacity claims",
+          "rationale": "Both identify a mismatch between the paper's evidence (problem solvability via pass@k) and its framing (reasoning patterns/capacity). O9 flags the terminology as a misnomer — should be 'reasoning coverage/scope' not 'reasoning capacity.' A4 flags the logical gap more broadly — pass@k cannot distinguish 'same paths found more efficiently' from 'different paths to the same problems.' Same underlying observation but different levels: O9 is a minor terminology fix; A4 is a major logical gap in the argument. Different author fixes required (rename vs. weaken claims or add evidence), so related only."
+        }
+      ],
+      "metrics": {
+        "total_official": 26,
+        "total_decisive": 0,
+        "recall_strict": 0.0385,
+        "recall_loose": 0.0769,
+        "decisive_recall": null,
+        "matched_official_ids": [
+          "O19",
+          "O9"
+        ],
+        "strict_matched_ids": [
+          "O19"
+        ]
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/oar_run1/rl_reasoning_limits.yaml",
+        "match_graph": "data/match_graphs/public_slice/oar_run1/rl_reasoning_limits.yaml",
+        "review": "data/reviews/public_slice/oar_run1/rl_reasoning_limits/"
+      }
+    }
+  ]
+}

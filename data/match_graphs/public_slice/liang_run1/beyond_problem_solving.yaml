@@ -1,0 +1,94 @@
+schema_version: "v1"
+paper: "beyond_problem_solving"
+version: "v0.9.2"
+condition: "own_group/liang_run1"
+method: "baseline_liang_etal"
+
+matches:
+  - official_id: O1
+    agentic_id: A1
+    match_type: exact
+    issue: "Three-Space Theory is superficial and not meaningfully integrated with the experimental design"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: major
+    rationale: >-
+      Both identify the same core problem: the Three-Space Theory is window dressing.
+      O1 says theory is 'prominently introduced but not tightly integrated'; A1 says
+      'removing the framework vocabulary would leave the experimental contributions
+      unchanged.' Same issue, same scope — fixing one necessarily fixes the other.
+
+  - official_id: O2
+    agentic_id: A2
+    match_type: partial
+    issue: "Critical thinking is operationalized too narrowly"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: major
+    rationale: >-
+      Both target narrowness of the critical thinking measurement but at different
+      levels. O2 critiques the overall definitional scope (should include source
+      credibility, logical fallacies, synthesis). A2 critiques one specific
+      operationalization choice (removing correct option conflates calibration with
+      absence of CT). Same issue family, different sub-claims: broadening the
+      definition (O2 fix) would not necessarily fix the MCQ design flaw (A2 fix).
+
+  - official_id: O3
+    agentic_id: A4
+    match_type: exact
+    issue: "GPT-4o used as evaluator introduces model-specific bias into the evaluation"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: major
+    rationale: >-
+      Both flag the same concern: GPT-4o's own criteria contaminate the evaluation
+      of other models. A4 adds the quantitative detail (68.6% fine-grained accuracy)
+      but the underlying issue is identical. Fixing GPT-4o evaluation dependency
+      would resolve both.
+
+  - official_id: O5
+    agentic_id: A3
+    match_type: partial
+    issue: "Artificial data modifications may undermine construct validity of the benchmark"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: major
+    rationale: >-
+      O5 targets the confound mechanism: models may detect abnormal data patterns
+      rather than genuinely reason about logical inconsistencies. A3 targets the
+      surface-level artificiality of gaslight hints. Same family (artificial
+      perturbations undermine validity) but different specific sub-claims: O5 is
+      about what models actually detect, A3 is about whether the stimuli resemble
+      real-world inconsistencies. Both would benefit from more naturalistic
+      perturbations but the diagnostic differs.
+
+  - official_id: O6
+    agentic_id: A3
+    match_type: partial
+    issue: "Ecological validity of artificial inconsistency perturbations"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: moderate, agentic: major (gap +1, within tolerance)
+    rationale: >-
+      O6 explicitly raises ecological validity: 'artificial contradictions differ
+      significantly from real-world inconsistencies.' A3 flags the same theme for
+      gaslight hints specifically. O6 is broader (all inconsistency types vs real
+      world), A3 focuses on the redundant-info condition. Both would be addressed
+      by more naturalistic perturbation design.
+
+  - official_id: O8
+    agentic_id: A7
+    match_type: partial
+    issue: "Paper presentation quality hinders readability"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: moderate, agentic: moderate
+    rationale: >-
+      O8 targets structural organization (scattered structure, unclear logical flow).
+      A7 targets writing mechanics (grammar, notation, dense tables, appendix-heavy).
+      Both are presentation/clarity concerns but different facets: fixing structure
+      would not necessarily fix grammar, and vice versa.
+
+unmatched_official:
+  - O4  # Metrics reduce to binary F1 — no agentic concern targets metric design specifically
+  - O7  # Reasoning mode limited to Qwen3 — no agentic concern addresses model coverage for reasoning
+  - O9  # Dataset not publicly released — no agentic concern about artifact availability
+
+unmatched_agentic:
+  - A5  # Missing simpler detection baselines — no official concern about baseline comparisons
+  - A6  # Missing false-positive rates for inherent CT — no official concern about this specific metric gap
+  - A8  # Hypotheses informal, statistical confounds — no official concern about statistical methodology

@@ -1,0 +1,220 @@
+schema_version: "v1"
+paper: collabllm
+version: baseline
+method: baseline
+verdict: ACCEPT
+score: null
+
+decision_drivers:
+  - id: R1
+    polarity: pro_accept
+    text: >
+      CollabLLM framework enhances multiturn human-LLM collaboration using
+      Multiturn-aware Rewards and reinforcement fine-tuning, showing improvements
+      in user satisfaction and efficiency compared to non-collaborative LLMs.
+    evidence: "Clarity Reproducibility section: 'The paper presents the COLLABLLM framework... showing improvements in user satisfaction and efficiency compared to non-collaborative LLMs'"
+    linked_concern_ids: []
+  - id: R2
+    polarity: pro_reject
+    text: >
+      Multiple areas across the paper lack sufficient detail: statistical
+      analysis, MR calculation specifics, user study methodology, synthetic
+      dataset validation, and user simulator limitations.
+    evidence: "All three sections independently identify clarity and detail gaps; Experiments Proofs raises 5 concerns, Clarity Reproducibility raises 5 concerns"
+    linked_concern_ids: [A1, A4, A6, A8, A9]
+
+mentions:
+  - id: M1
+    polarity: pro_accept
+    text: >
+      Framework evaluated through a multiturn interaction benchmark and large
+      user study (201 MTurk participants), demonstrating practical impact.
+    evidence: "Clarity Reproducibility section: 'evaluated through a multiturn interaction benchmark and a large user study'"
+    note: >
+      Acknowledged as positive evidence but not treated as a decisive accept
+      reason; the review focused on requesting improvements.
+  - id: M2
+    polarity: pro_accept
+    text: >
+      Forward sampling strategy for estimating long-term impact of responses
+      recognized as a meaningful methodological contribution.
+    evidence: "Clarity Reproducibility section: 'the use of forward sampling to estimate the long-term impact of responses'"
+    note: >
+      Noted as a feature of the framework but the review pivoted to requesting
+      more explanation rather than crediting the contribution.
+
+concerns:
+  - id: A1
+    text: >
+      Statistical analysis for task performance claims lacks depth; no
+      significance tests (t-tests, ANOVA) provided to quantify the
+      significance of reported improvements.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Experiments Proofs refined comment #1: 'the statistical analysis lacks depth. Including statistical tests such as t-tests or ANOVA would provide stronger evidence'"
+    decisive: false
+    tags: [statistical_rigor, evaluation_methodology]
+    dimension_impact: [D]
+
+  - id: A2
+    text: >
+      Qualitative analysis of user interactions is missing; analyzing
+      interaction logs and identifying patterns in user behavior would offer
+      deeper insight into interactivity improvements.
+    severity:
+      level: minor
+      addressability: addressable
+      mechanism: none
+    source: review_minor
+    source_detail: "Experiments Proofs refined comment #2: 'a more detailed qualitative analysis of user interactions is needed. Analyzing interaction logs and identifying patterns in user behavior'"
+    decisive: false
+    tags: [evaluation_methodology, user_study]
+    dimension_impact: [D]
+
+  - id: A3
+    text: >
+      Thematic analysis of qualitative user feedback comments is missing;
+      such analysis could highlight specific strengths and areas for improvement.
+    severity:
+      level: minor
+      addressability: addressable
+      mechanism: none
+    source: review_minor
+    source_detail: "Experiments Proofs refined comment #3: 'a thematic analysis of qualitative comments is missing'"
+    decisive: false
+    tags: [user_study, evaluation_methodology]
+    dimension_impact: [D]
+
+  - id: A4
+    text: >
+      Ablation study analysis is not thorough enough; a regression analysis
+      to quantify the contribution of individual reward components to
+      performance improvements is needed.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Experiments Proofs refined comment #4: 'the analysis is not thorough. A detailed regression analysis could quantify the contribution of individual reward components'"
+    decisive: false
+    tags: [ablation, contribution_attribution]
+    dimension_impact: [D, E]
+
+  - id: A5
+    text: >
+      No longitudinal study to assess long-term interaction improvements;
+      such a study would demonstrate sustainability of benefits in real-world
+      applications.
+    severity:
+      level: minor
+      addressability: addressable
+      mechanism: none
+    source: review_minor
+    source_detail: "Experiments Proofs refined comment #5: 'The paper does not include a longitudinal study to assess long-term interaction improvements'"
+    decisive: false
+    tags: [evaluation_scope, longitudinal]
+    dimension_impact: [D, F]
+
+  - id: A6
+    text: >
+      MR function calculation details insufficient; specific metrics or
+      criteria used to calculate the Multiturn-aware Reward function are
+      not adequately described.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Clarity Reproducibility refined comment #1: 'provide more detailed information on how the MR function is calculated, including specific metrics or criteria used'"
+    decisive: false
+    tags: [clarity, method_description, reward_design]
+    dimension_impact: [G, H]
+
+  - id: A7
+    text: >
+      Forward sampling window size hyperparameter determination and its
+      effect on performance need more detailed explanation; examples or case
+      studies would enhance understanding.
+    severity:
+      level: minor
+      addressability: addressable
+      mechanism: none
+    source: review_minor
+    source_detail: "Clarity Reproducibility refined comment #2: 'more detailed explanation of how the window size hyperparameter is determined and its effect on performance'"
+    decisive: false
+    tags: [clarity, experimental_design, hyperparameters]
+    dimension_impact: [G]
+
+  - id: A8
+    text: >
+      User study experimental setup lacks detail on participant selection
+      criteria and methodology for collecting and analyzing feedback.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Clarity Reproducibility refined comment #3: 'include more information on the selection criteria for participants in the real-world user study and the methodology for collecting and analyzing feedback'"
+    decisive: false
+    tags: [user_study, reproducibility, experimental_design]
+    dimension_impact: [D, H]
+
+  - id: A9
+    text: >
+      Validation techniques or metrics for ensuring synthetic datasets
+      accurately represent real-world interactions are not discussed.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Clarity Reproducibility refined comment #4: 'discuss the validation techniques or metrics used to ensure that synthetic datasets accurately represent real-world interactions'"
+    decisive: false
+    tags: [data_quality, validation, sim_to_real_gap]
+    dimension_impact: [D, H]
+
+  - id: A10
+    text: >
+      User simulator limitations not comprehensively discussed; challenges
+      and potential impact on study findings need more exploration.
+    severity:
+      level: minor
+      addressability: addressable
+      mechanism: none
+    source: review_minor
+    source_detail: "Clarity Reproducibility refined comment #5: 'provide a more comprehensive discussion of the limitations and challenges associated with using user simulators'"
+    decisive: false
+    tags: [user_simulator, limitations, sim_to_real_gap]
+    dimension_impact: [G]
+
+method_specific:
+  actual_system: marg_gpt4o
+  run_id: run_1
+  verdict_inferred: true
+  verdict_inference_note: >
+    No explicit accept/reject verdict in the review. Inferred ACCEPT from
+    the review's positive framing ("shows improvements in user satisfaction
+    and efficiency compared to non-collaborative LLMs") and the nature of
+    concerns raised (all clarity/presentation improvements requesting more
+    detail, no fundamental methodological flaws identified). The Novelty
+    Impact section failed entirely ("misunderstanding in the task execution").
+  review_format_note: >
+    MARG GPT-4o output is a process log showing agent-to-agent communication
+    and iterative comment refinement across three sections: Experiments Proofs,
+    Novelty Impact, Clarity Reproducibility. The Novelty Impact section
+    produced no substantive output. Substantive concerns were extracted from
+    the refined comment text within each section. Significant duplication
+    exists between sections (both Experiments Proofs and Clarity Reproducibility
+    raise similar concerns about user study detail and method clarity).
+  concern_character_note: >
+    All 10 concerns are clarity/detail requests. No fundamental methodological,
+    novelty, baseline fairness, or validity concerns were raised. The review
+    does not engage with the paper's core novelty claims (causal effect
+    estimation, MR vs prior multi-turn methods), experimental design (fair
+    baselines, effect size), or limitations (simulated vs real user gap as
+    a validity threat). This is notably shallow — the review asks for more
+    statistical tests and qualitative analyses rather than evaluating the
+    substantive claims.

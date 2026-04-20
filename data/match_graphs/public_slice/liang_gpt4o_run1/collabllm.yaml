@@ -1,0 +1,207 @@
+schema_version: "v1"
+paper: "collabllm"
+version: "v0.9.2"
+condition: "own_group/liang_gpt4o_run1"
+method: "baseline_liang_etal"
+
+matches:
+  # ----------------------------------------------------------------
+  # A1 ↔ O1: Both about MR mechanism clarity, different facets
+  # ----------------------------------------------------------------
+  - official_id: O1
+    agentic_id: A1
+    match_type: partial
+    issue: "Multiturn-aware Reward mechanism description lacks clarity"
+    judgment_alignment: aligned
+    severity_alignment: match  # O1: major, A1: moderate — gap=1, within tolerance
+    rationale: >-
+      O1 specifically asks how MR and multiturn data effectively encourage collaboration
+      rather than merely training on simulated data — a conceptual clarity question about
+      the mechanism's purpose. A1 more broadly flags that the MR description lacks detail
+      on computation and integration into training, plus the simulation module is
+      insufficiently explained. Both target MR clarity but O1 is about the conceptual
+      mechanism (why does MR encourage collaboration?) while A1 is about exposition
+      (how is MR computed?). Fixing A1 would not necessarily address O1's deeper question.
+
+  # ----------------------------------------------------------------
+  # A2 ↔ O7: Both about limited generalization testing
+  # ----------------------------------------------------------------
+  - official_id: O7
+    agentic_id: A2
+    match_type: partial
+    issue: "Generalizability of evaluation not sufficiently demonstrated"
+    judgment_alignment: aligned
+    severity_alignment: match  # O7: moderate, A2: moderate — same level
+    rationale: >-
+      O7 specifically flags that generalization tests are limited to a single additional
+      dataset (Abg-CoQA) and requests multiple diverse external benchmarks. A2 broadly
+      flags evaluation scope limited to three tasks with generalizability not explored,
+      plus user study scope concerns. A2 subsumes O7's specific concern as one facet of
+      a broader evaluation breadth critique. Partial because O7 targets a specific gap
+      (out-of-domain generalization testing) while A2 is broader.
+
+  # ----------------------------------------------------------------
+  # A3 ↔ O9: Same core issue — sim-to-real gap in user simulation
+  # ----------------------------------------------------------------
+  - official_id: O9
+    agentic_id: A3
+    match_type: exact
+    issue: "Simulated LLM users may diverge substantially from real human users, undermining training validity"
+    judgment_alignment: aligned
+    severity_alignment: match  # O9: moderate, A3: moderate — same level
+    rationale: >-
+      O9 flags that prompt-defined simulated LLM users could be substantially biased
+      compared to real users and requests a comparison of potential divergence. A3 flags
+      over-reliance on simulated environments with realism/diversity concerns and that
+      performance may not transfer when user behavior deviates from simulated patterns.
+      Both identify the same fundamental problem: the sim-to-real gap in user simulation
+      threatens the validity of the training approach. A neutral reader would say these
+      are the same complaint.
+
+  # ----------------------------------------------------------------
+  # A3 ↔ O22: Both about user simulator limitations, different specificity
+  # ----------------------------------------------------------------
+  - official_id: O22
+    agentic_id: A3
+    match_type: partial
+    issue: "LLM user simulators have systematic limitations affecting training quality"
+    judgment_alignment: aligned
+    severity_alignment: match  # O22: minor, A3: moderate — gap=1, within tolerance
+    rationale: >-
+      O22 specifically identifies that instruction-tuned LLMs tend to be overly agreeable
+      and always consent to requests, unlike real users. A3 more broadly flags realism and
+      diversity concerns with simulated environments. O22's specific agreeableness issue is
+      one instance of A3's broader sim-to-real concern. Partial because A3 does not
+      identify the specific agreeableness failure mode.
+
+  # ----------------------------------------------------------------
+  # A4 ↔ O21: Same issue — missing quantitative comparison with prior methods
+  # ----------------------------------------------------------------
+  - official_id: O21
+    agentic_id: A4
+    match_type: exact
+    issue: "Missing quantitative comparison with prior multi-turn training methods like MTPO or ArCHer"
+    judgment_alignment: aligned
+    severity_alignment: match  # O21: moderate, A4: moderate — same level
+    rationale: >-
+      O21 explicitly requests quantitative comparisons with prior methods (MTPO, ArCHer)
+      rather than just conceptual distinctions. A4 flags insufficient comparison with
+      state-of-the-art models addressing similar multiturn challenges. Both identify the
+      same gap: the paper lacks empirical comparisons with existing multi-turn interaction
+      methods. A4 does not name specific methods but targets the same deficiency.
+
+  # ----------------------------------------------------------------
+  # A4 ↔ O19: Both about missing comparison with user-simulator-based work
+  # ----------------------------------------------------------------
+  - official_id: O19
+    agentic_id: A4
+    match_type: partial
+    issue: "Missing comparison with prior work using LLMs as user simulators"
+    judgment_alignment: aligned
+    severity_alignment: match  # O19: moderate, A4: moderate — same level
+    rationale: >-
+      O19 specifically identifies missing comparison/discussion with Hong et al. and
+      other works using LLMs as user simulators to improve LLMs. A4 broadly flags
+      insufficient discussion of how CollabLLM differs from or improves upon existing
+      methods. A4's positioning facet maps to O19's specific missing comparison, but O19
+      targets a specific method family (user-simulator-based RL) while A4 is broader.
+
+positive_factor_matches:
+  # ----------------------------------------------------------------
+  # D1 ↔ R1: Problem importance captured
+  # ----------------------------------------------------------------
+  - official_factor_id: D1
+    agentic_source: decision_driver
+    agentic_text: >-
+      Novel CollabLLM framework addresses a critical limitation in LLMs' passive
+      multiturn behavior, with Multiturn-aware Rewards enabling optimization for
+      long-term interaction outcomes.
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >-
+      D1 highlights the essential problem (improving LLMs' multi-turn capability).
+      R1 captures this ("addresses a critical limitation in LLMs' passive multiturn
+      behavior") but bundles it with the solution novelty (MR framework). D1 is purely
+      about problem importance; R1 merges problem and solution into one driver.
+
+  # ----------------------------------------------------------------
+  # D2 ↔ R1: Technical soundness partially captured
+  # ----------------------------------------------------------------
+  - official_factor_id: D2
+    agentic_source: decision_driver
+    agentic_text: >-
+      Novel CollabLLM framework addresses a critical limitation in LLMs' passive
+      multiturn behavior, with Multiturn-aware Rewards enabling optimization for
+      long-term interaction outcomes — theoretically grounded and practically applicable.
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >-
+      D2 highlights the method (data generation with user simulator + multi-turn reward)
+      as "important and technically sound." R1 mentions the MR framework as "theoretically
+      grounded and practically applicable" — capturing the technical credibility but not
+      specifically highlighting the user simulator data generation component that the AC
+      emphasized.
+
+  # ----------------------------------------------------------------
+  # D3 ↔ R2: Strong results captured
+  # ----------------------------------------------------------------
+  - official_factor_id: D3
+    agentic_source: decision_driver
+    agentic_text: >-
+      Compelling experimental results showing significant improvements in task
+      performance, interactivity, and user satisfaction compared to baseline models.
+    match_type: exact
+    judgment_alignment: aligned
+    rationale: >-
+      D3 states "results are strong" with "strong baselines." R2 identifies "compelling
+      experimental results showing significant improvements." Both recognize the same
+      positive factor: strong empirical performance against meaningful baselines.
+
+  # ----------------------------------------------------------------
+  # D4 ↔ M3: Benchmark contribution captured as mention
+  # ----------------------------------------------------------------
+  - official_factor_id: D4
+    agentic_source: mention
+    agentic_text: >-
+      Development of a multiturn interaction benchmark highlights the potential
+      impact of this work on the field of conversational AI.
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >-
+      D4 specifically notes "three public benchmarks for multi-turn conversation
+      research." M3 captures the benchmark contribution but refers to it in singular
+      ("a multiturn interaction benchmark") and does not specify the count or that
+      they are publicly released. The value is recognized but at lower specificity.
+
+  # ----------------------------------------------------------------
+  # D5: Rebuttal quality — review process dynamic, not observable
+  # ----------------------------------------------------------------
+  - official_factor_id: D5
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >-
+      D5 is about authors doing "substantial work to address all reviewer concerns"
+      during the rebuttal period. This is a review process dynamic that the agentic
+      system cannot observe from the paper alone.
+
+unmatched_official:
+  - O2   # Causal effect estimation claim unconvincing
+  - O3   # Dataset access / reproducibility
+  - O4   # Novelty concern — resemblance to self-training
+  - O5   # Missing related references on multi-turn RL benchmarks
+  - O6   # Computational overhead of MR / scalability
+  - O8   # Integration with existing RL frameworks
+  - O10  # MR function hard to define for ambiguous tasks
+  - O11  # Small improvements over prompt engineering in Table 1
+  - O12  # Source of improvement unclear — reward design vs MR framework
+  - O13  # BLEU metric appropriateness for document editing
+  - O14  # ITR performance decrease from w=2 to w=3
+  - O15  # ITR metric scoring clarity
+  - O16  # Caption typo in Figure 2
+  - O17  # Helpfulness as w=0 reward not optimized
+  - O18  # Broader literature missing from main text
+  - O20  # User simulator model choice (GPT-4o vs self-play)
+
+unmatched_agentic: []
+  # All agentic concerns (A1-A4) have at least one strict (exact/partial) match

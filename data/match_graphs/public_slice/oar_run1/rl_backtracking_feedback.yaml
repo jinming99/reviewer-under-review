@@ -1,0 +1,208 @@
+schema_version: "v1"
+paper: "rl_backtracking_feedback"
+version: "v0.9.2"
+condition: "own_group/oar_run1"
+method: "baseline_openaireview"
+
+matches:
+  # ── Exact matches ──────────────────────────────────────────────
+
+  - official_id: O4
+    agentic_id: A24
+    match_type: exact
+    issue: "Evaluation lacks adaptive attacks targeting RLBF's specific backtracking mechanism"
+    judgment_alignment: aligned
+    severity_alignment: match  # both major
+    rationale: >-
+      O4: 'evaluation set does not target RLBF's specific backtracking signal.'
+      A24: 'adaptive attacks that target the critic or the backtracking mechanism itself.'
+      Both identify the same gap: the paper evaluates only standard attacks (GCG, decoding
+      parameters) without adaptive attacks designed to exploit the backtracking signal.
+      Same fix resolves both.
+
+  # ── Partial matches ────────────────────────────────────────────
+
+  - official_id: O3
+    agentic_id: A22
+    match_type: partial
+    issue: "Single LLM safety critic may be unreliable under adversarial conditions"
+    judgment_alignment: aligned
+    severity_alignment: match  # both major
+    rationale: >-
+      O3 focuses narrowly on the single critic's adversarial vulnerability.
+      A22 is broader — also includes threat model conflation (adversarial jailbreaking vs.
+      in-distribution errors treated as one). The 'critic reliability against adaptive
+      adversaries is unexamined' component of A22 directly overlaps O3. Partial because
+      A22's threat-model-conflation component has no counterpart in O3.
+
+  - official_id: O1
+    agentic_id: A9
+    match_type: partial
+    issue: "Key implementation details missing from main text, hindering reproducibility"
+    judgment_alignment: aligned
+    severity_alignment: match  # official major, agentic moderate → gap=1, within tolerance
+    rationale: >-
+      O1 is broad: data splits, prompt sampling, training hyperparameters, and compute
+      budget deferred to supplementary. A9 is one specific instance: GRPO optimization
+      details (group size, clipping, KL penalty) absent despite a section title promising
+      them. A9 is a sub-concern of O1. Fixing O1 (moving details to main text) would
+      likely address A9; fixing A9 alone would not fully address O1.
+
+  - official_id: O11
+    agentic_id: A7
+    match_type: partial
+    issue: "BACKTRACK_BY_X mechanism specification is unclear"
+    judgment_alignment: aligned
+    severity_alignment: match  # official minor, agentic moderate → gap=1, within tolerance
+    rationale: >-
+      O11 asks how the backtrack count k is represented during redaction. A7 says the
+      backtrack distance X is underspecified beyond the injected violation length — no
+      criterion for how much preceding safe context gets reclassified. Both target the
+      BACKTRACK_BY_X mechanism's clarity but from different angles: representation (O11)
+      vs. scope criterion (A7). Same mechanism, different facets.
+
+  # ── Related matches (near-misses) ──────────────────────────────
+
+  - official_id: O2
+    agentic_id: A16
+    match_type: related
+    issue: "Safety critic component is insufficiently validated or specified"
+    judgment_alignment: n/a
+    severity_alignment: n/a
+    rationale: >-
+      O2 wants critic quality evaluation (accuracy metrics, disentangling critic quality
+      from policy learning). A16 says the critic prompt in Appendix A.2 is insufficient
+      to implement the RL reward function. Both identify critic-related gaps but require
+      different fixes: O2 needs accuracy experiments, A16 needs prompt implementation
+      details. Same component, different complaints (false match pattern #4).
+
+  - official_id: O5
+    agentic_id: A14
+    match_type: related
+    issue: "Efficiency claims about the backtracking mechanism are unsupported"
+    judgment_alignment: n/a
+    severity_alignment: n/a
+    rationale: >-
+      O5 requests missing efficiency metrics (tokens discarded, latency) despite
+      efficiency being a core claim. A14 flags that the limitations section calls
+      backtracking 'computationally demanding,' contradicting the core efficiency
+      narrative. Both concern the paper's efficiency claims but identify different
+      defects: missing data (O5) vs. internal contradiction (A14). Different fixes.
+
+  - official_id: O8
+    agentic_id: A10
+    match_type: related
+    issue: "Reward/penalty function design concerns"
+    judgment_alignment: n/a
+    severity_alignment: n/a
+    rationale: >-
+      O8 says the reward function's numerical choices (+1.0, -1.0, -0.5, -0.2) are
+      subjective and unverified by ablation. A10 says the violation-regeneration penalty
+      is presented as disjunctive alternatives without specifying which was implemented.
+      Same component (reward function), different complaints: unverified values (O8) vs.
+      ambiguous specification (A10). Per false match pattern #4.
+
+  - official_id: O10
+    agentic_id: A20
+    match_type: related
+    issue: "Submission preparation and checklist problems"
+    judgment_alignment: n/a
+    severity_alignment: n/a
+    rationale: >-
+      O10 flags placeholder references ('[BSAFE reference]' in Section 3) and the
+      undeleteded checklist instruction block. A20 flags inaccurately answered NeurIPS
+      checklist items (broader impacts, code of ethics, safeguards). Both are submission
+      preparation issues but target different problems: missing references/formatting
+      (O10) vs. checklist content accuracy (A20).
+
+positive_factor_matches:
+  - official_factor_id: D1
+    agentic_source: mention
+    agentic_text: >-
+      Paper presents a clear and well-motivated extension of prior backtracking-based
+      safety work (BSAFE).
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >-
+      D1 praises the paper as 'well-written with clear motivation.' M2 recognizes 'clear
+      and well-motivated extension of BSAFE.' Both acknowledge clear motivation. Partial
+      because D1 is broader (writing quality + motivation) while M2 focuses specifically
+      on the BSAFE extension narrative.
+
+  - official_factor_id: D2
+    agentic_source: mention
+    agentic_text: >-
+      Core idea of training models via RL to emit a lightweight 'backtrack by x tokens'
+      correction signal is intuitive and practically appealing.
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >-
+      D2 highlights the 'targeted backtracking mechanism that removes only violating
+      spans, making safety correction efficient.' M1 calls the core RL+backtrack idea
+      'intuitive and practically appealing.' Both recognize the mechanism's value. Partial
+      because D2 emphasizes targeted removal and efficiency while M1 emphasizes intuitive
+      design and practical appeal. Despite this positive acknowledgment, the agentic
+      system concluded novelty was incremental (A21).
+
+  - official_factor_id: D3
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >-
+      D3 cites 'strong empirical validation across attacks and model scales.' The agentic
+      system did not recognize this; instead it questioned empirical rigor (A19: no error
+      bars, A24: missing adaptive attacks, A12: unspecified model sizes). The system saw
+      the same results but concluded the validation was insufficient.
+
+  - official_factor_id: D4
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >-
+      D4 highlights that 'the backtracking approach is effective beyond safety (correcting
+      generation mistakes generally).' No agentic mention or concern captures the
+      beyond-safety generalization potential. Complete miss.
+
+  - official_factor_id: D8
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >-
+      D8 reflects post-rebuttal reviewer consensus for acceptance. This factor is
+      observable only at rebuttal stage (observable_stage: rebuttal) and could not have
+      been captured by the agentic system reviewing the pre-rebuttal submission.
+
+unmatched_official:
+  # O2: Missing evaluation of safety critic quality — only related edge (O2↔A16)
+  # O5: Missing end-to-end efficiency comparison — only related edge (O5↔A14)
+  # O6: Missing contextual comparisons with non-backtracking methods — no match at all
+  # O7: Baseline BSAFE is arXiv preprint (not peer-reviewed) — no match at all
+  # O8: Reward function design subjective and unverified — only related edge (O8↔A10)
+  # O9: Benchmark inconsistency with BSAFE paper — no match at all
+  # O10: Placeholder references and formatting errors — only related edge (O10↔A20)
+  # O12: Token count prediction accuracy under tokenization — no match
+  # O13: Figure 1 illustration is confusing — no match at all
+  [O2, O5, O6, O7, O8, O9, O10, O12, O13]
+
+unmatched_agentic:
+  # A1: KV cache rollback misleading description — no official counterpart
+  # A2: Plural critics described but single implemented — no official counterpart
+  # A3: 'Middle filling' undefined — no official counterpart
+  # A4: Misattributed GCG citation — no official counterpart
+  # A5: SFT formulation excludes violation from conditioning context — no official counterpart (decisive agentic concern, unique finding)
+  # A6: BSAFE+ comparison numbers unspecified — no official counterpart
+  # A8: Efficient backtracking hypothesis conflates BSAFE/BSAFE+ — no official counterpart (decisive agentic concern, unique finding)
+  # A10: Violation-regeneration penalty unclear — only related edge (O8↔A10)
+  # A11: Finance category incorrectly listed — no official counterpart
+  # A12: Tables 2 and 5 don't specify model sizes — no official counterpart
+  # A13: Solution Rate metric header misapplied — no official counterpart
+  # A14: Limitations section contradicts efficiency narrative — only related edge (O5↔A14)
+  # A15: BSAFE+ data generation prompt contradictory — no official counterpart
+  # A16: Critic prompt insufficient for RL reward function — only related edge (O2↔A16)
+  # A17: Critic prompt self-contradicts — no official counterpart
+  # A18: Red-team example miscalibrated — no official counterpart
+  # A19: No error bars despite narrow margins — no official counterpart
+  # A20: NeurIPS checklist items inaccurately answered — only related edge (O10↔A20)
+  # A21: Novelty over BSAFE is incremental — no official counterpart (decisive agentic concern)
+  # A23: Writing is repetitive — no official counterpart
+  [A1, A2, A3, A4, A5, A6, A8, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21, A23]

@@ -1,0 +1,130 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: AgenticConcernSheet
+description: >
+  Structured extraction of concerns from agentic review outputs.
+  One per paper × method × version.
+type: object
+required:
+  - schema_version
+  - paper
+  - version
+  - method
+  - verdict
+  - score
+  - concerns
+properties:
+  schema_version: { type: string, enum: ["v1"] }
+  paper: { type: string, description: "Paper slug matching ground_truth.yaml" }
+  version: { type: string, description: "System version, e.g., v0.61, v0.62" }
+  method:
+    type: string
+    enum: ["baseline", "decide_first", "panel", "delta_only"]
+  verdict: { type: string, enum: ["ACCEPT", "REJECT"] }
+  score:
+    type: ["number", "null"]
+    description: "Scorecard total (null if gates failed or method doesn't produce scores)"
+  decision_drivers:
+    type: array
+    description: "What drove the verdict — linked to specific concerns"
+    items:
+      type: object
+      required: [id, polarity, text]
+      properties:
+        id:
+          type: string
+          pattern: "^R\\d+$"
+        polarity:
+          type: string
+          enum: ["pro_accept", "pro_reject"]
+        text:
+          type: string
+          description: "One-sentence decisive reason"
+        evidence:
+          type: string
+          description: "Where this appears in the review outputs"
+        linked_concern_ids:
+          type: array
+          items: { type: string }
+          description: "Concern IDs that this driver is based on"
+
+  mentions:
+    type: array
+    description: "Things the review observed/mentioned but did NOT treat as decisive"
+    items:
+      type: object
+      required: [id, polarity, text]
+      properties:
+        id:
+          type: string
+          pattern: "^M\\d+$"
+        polarity:
+          type: string
+          enum: ["pro_accept", "pro_reject"]
+        text:
+          type: string
+        evidence:
+          type: string
+        note:
+          type: string
+          description: "Why this was mentioned but not decisive"
+
+  concerns:
+    type: array
+    items:
+      type: object
+      required: [id, text, severity, source, decisive, tags]
+      properties:
+        id:
+          type: string
+          pattern: "^A\\d+$"
+        text:
+          type: string
+          description: "One-sentence concern statement"
+        severity:
+          type: object
+          required: [level, addressability]
+          properties:
+            level:
+              type: string
+              enum: ["fatal", "major", "moderate", "minor", "unknown"]
+            addressability:
+              type: string
+              enum: ["unresolved", "addressable", "unknown"]
+            mechanism:
+              type: string
+              description: >
+                The rubric rule that caused this severity:
+                binding_rule, gate_fail, gate_caution, score_threshold, debate, none
+        source:
+          type: string
+          enum: ["review_major", "review_minor", "adversarial_brief",
+                 "gates", "scorecard", "debate", "other"]
+        source_detail:
+          type: string
+          description: "Specific location in the review outputs"
+        decisive:
+          type: boolean
+        tags:
+          type: array
+          items: { type: string }
+        dimension_impact:
+          type: array
+          items:
+            type: string
+            pattern: "^[A-H]$"
+          description: "Which scorecard dimensions were affected"
+
+        origin:
+          type: string
+          description: >
+            Optional provenance for panel/subagent outputs (e.g., champion|skeptic|calibrator|gates|scorecard|lit_search).
+            This is intended to preserve where the concern originally came from when the final review merges multiple sources.
+
+        origin_pointer:
+          type: string
+          description: >
+            Optional pointer into the originating artifact (e.g., "skeptic bullet #2", "gates G4", "lit_search tag T3").
+
+  method_specific:
+    type: object
+    description: "Method-specific metadata (adversarial_escalation_triggered, debate_outcome, etc.)"

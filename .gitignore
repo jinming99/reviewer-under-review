@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp
+tmp/
+*.tmp
+
+# Environment
+.env
+.venv/
+
+# Claude Code local settings (the .claude/skills/ tree IS tracked)
+.claude/settings.local.json

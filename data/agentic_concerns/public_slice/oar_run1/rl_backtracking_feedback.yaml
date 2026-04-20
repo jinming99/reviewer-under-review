@@ -1,0 +1,421 @@
+schema_version: "v1"
+paper: rl_backtracking_feedback
+version: baseline
+method: baseline
+verdict: REJECT
+score: null
+
+decision_drivers:
+  - id: R1
+    polarity: pro_reject
+    text: >-
+      Novelty over BSAFE is incremental — the key differences reduce to a simplified
+      token-retraction format and an added RL stage — without a sharp ablation or
+      conceptual argument for why these modifications constitute a substantial advance.
+    evidence: "Overall Feedback: 'the novelty over BSAFE appears incremental — the key differences reduce to a simplified token-retraction format and an added RL stage'"
+    linked_concern_ids: [A21, A8]
+  - id: R2
+    polarity: pro_reject
+    text: >-
+      Paper conflates adversarial jailbreaking and in-distribution safety errors
+      under a single threat model, with the largely unexamined assumption that a
+      critic can reliably detect violations in real time against adaptive adversaries.
+    evidence: "Overall Feedback: 'conflates two distinct threat models...the backtracking mechanism is fundamentally reactive and post-hoc...a strong and largely unexamined assumption'"
+    linked_concern_ids: [A22]
+  - id: R3
+    polarity: pro_reject
+    text: >-
+      Claimed resilience against GCG attacks is unsubstantiated — no rigorous
+      adversarial evaluation with adaptive attacks targeting the critic or the
+      backtracking mechanism itself.
+    evidence: "Overall Feedback: 'requires rigorous adversarial evaluation (e.g., adaptive attacks that target the critic or the backtracking mechanism itself)'"
+    linked_concern_ids: [A24]
+  - id: R4
+    polarity: pro_reject
+    text: >-
+      Core SFT formalization excludes the violation from the conditioning context,
+      making the BACKTRACK_BY_X signal nonsensical during training — the model
+      never sees the violation it is supposed to learn to retract.
+    evidence: "Comment 5: 'the SFT input is explicitly defined as p′ = p ⊕ rsafe,part1, which excludes the injected violation v'"
+    linked_concern_ids: [A5]
+
+mentions:
+  - id: M1
+    polarity: pro_accept
+    text: >-
+      Core idea of training models via RL to emit a lightweight "backtrack by x tokens"
+      correction signal is intuitive and practically appealing.
+    evidence: "Overall Feedback: 'the core idea...is intuitive and practically appealing'"
+    note: "Acknowledged as a strength but not enough to outweigh identified issues"
+  - id: M2
+    polarity: pro_accept
+    text: >-
+      Paper presents a clear and well-motivated extension of prior backtracking-based
+      safety work (BSAFE).
+    evidence: "Overall Feedback: 'a clear and well-motivated extension of prior backtracking-based safety work (BSAFE)'"
+    note: "Recognized as positive framing but novelty questioned as incremental"
+
+concerns:
+  - id: A1
+    text: >-
+      Introduction implies KV cache rollback to a safe state, but method explicitly
+      says no internal state reversion occurs — misleading mechanism description.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 1 (Type: logical)"
+    decisive: false
+    tags: [clarity, methodology]
+    dimension_impact: [G]
+
+  - id: A2
+    text: >-
+      Introduction describes plural specialized critics per safety category, but
+      method implements a single general-purpose critic.
+    severity:
+      level: minor
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 2 (Type: logical)"
+    decisive: false
+    tags: [clarity, consistency]
+    dimension_impact: [G]
+
+  - id: A3
+    text: >-
+      "Middle filling" listed as a known adversarial strategy alongside established
+      attacks (GCG) but is non-standard, undefined, and never reappears in the paper.
+    severity:
+      level: minor
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 3 (Type: logical)"
+    decisive: false
+    tags: [clarity, terminology]
+    dimension_impact: [G]
+
+  - id: A4
+    text: >-
+      Misattributed citation: GCG attack paper (Zou et al. 2023b) cited as a defense
+      technique in a list of defensive approaches.
+    severity:
+      level: minor
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 4 (Type: logical)"
+    decisive: false
+    tags: [citation, accuracy]
+    dimension_impact: [G]
+
+  - id: A5
+    text: >-
+      SFT formulation defines input as p ⊕ rsafe,part1, excluding the violation v from
+      the conditioning context, making BACKTRACK_BY_X nonsensical during training since
+      the model never sees the violation it should learn to retract.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 5 (Type: technical)"
+    decisive: true
+    tags: [methodology, formalization]
+    dimension_impact: [D, E, H]
+
+  - id: A6
+    text: >-
+      BSAFE+ comparison numbers (49.4% vs. 50.6%) do not specify which model
+      achieved which win rate.
+    severity:
+      level: minor
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 6 (Type: logical)"
+    decisive: false
+    tags: [clarity, evaluation]
+    dimension_impact: [G]
+
+  - id: A7
+    text: >-
+      Backtrack distance X is underspecified beyond the injected violation length —
+      no criterion for how much preceding safe context gets reclassified as part
+      of the violation.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 7 (Type: technical)"
+    decisive: false
+    tags: [methodology, reproducibility]
+    dimension_impact: [H]
+
+  - id: A8
+    text: >-
+      "Efficient backtracking signal" hypothesis cannot explain RLBF vs. BSAFE+ gap
+      because both share the same streamlined mechanism — the hypothesis conflates
+      original BSAFE with BSAFE+, undermining one of two explanations for a key
+      empirical finding.
+    severity:
+      level: major
+      addressability: unresolved
+      mechanism: none
+    source: other
+    source_detail: "Comment 8 (Type: logical)"
+    decisive: true
+    tags: [evaluation, ablation, logic]
+    dimension_impact: [D, E]
+
+  - id: A9
+    text: >-
+      GRPO optimization details absent despite section title — no group size, clipping
+      parameters, KL penalty, or description of how trajectory-level reward converts
+      to per-group advantages.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 9 (Type: technical)"
+    decisive: false
+    tags: [reproducibility, methodology]
+    dimension_impact: [H]
+
+  - id: A10
+    text: >-
+      Violation-regeneration penalty mechanism presented as disjunctive alternatives
+      ("either...or") rather than specifying which approach was actually implemented.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 10 (Type: technical)"
+    decisive: false
+    tags: [methodology, reproducibility]
+    dimension_impact: [H]
+
+  - id: A11
+    text: >-
+      Finance category incorrectly listed among those with prevention rates at or
+      above 0.96 — LLaMA 3 3B shows 0.94 in Table 4.
+    severity:
+      level: minor
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 11 (Type: technical)"
+    decisive: false
+    tags: [accuracy, evaluation]
+    dimension_impact: [D]
+
+  - id: A12
+    text: >-
+      Tables 2 and 5 do not specify which model size(s) are reported, preventing
+      readers from assessing generalizability across scales.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 12 (Type: technical)"
+    decisive: false
+    tags: [reproducibility, evaluation]
+    dimension_impact: [D, H]
+
+  - id: A13
+    text: >-
+      "Solution Rate" metric header applied to MMLU and BBH, which are conventionally
+      evaluated as accuracy, not solve rate.
+    severity:
+      level: minor
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 13 (Type: logical)"
+    decisive: false
+    tags: [clarity, evaluation]
+    dimension_impact: [G]
+
+  - id: A14
+    text: >-
+      Limitations section singles out the backtracking process as computationally
+      demanding, directly contradicting the paper's core narrative that the mechanism
+      is efficient and lightweight.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 14 (Type: logical)"
+    decisive: false
+    tags: [consistency, clarity]
+    dimension_impact: [G]
+
+  - id: A15
+    text: >-
+      BSAFE+ data generation prompt contains contradictory instructions: "clear
+      violations" (most important rule) vs. "as nuanced as possible...be as subtle
+      as possible" (rule 5), affecting training data quality.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 15 (Type: logical)"
+    decisive: false
+    tags: [methodology, reproducibility]
+    dimension_impact: [H]
+
+  - id: A16
+    text: >-
+      Critic prompt (Appendix A.2) is insufficient to implement the RL reward function —
+      missing handling for backtrack tokens, unnecessary-backtrack detection, coherence
+      assessment, and usefulness evaluation.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 16 (Type: technical)"
+    decisive: false
+    tags: [reproducibility, methodology]
+    dimension_impact: [H]
+
+  - id: A17
+    text: >-
+      Critic prompt self-contradicts: requires both <violation> and <edit> tags in all
+      non-"No" responses, but then says whole-response replacements should use
+      "<edit></edit> tags only."
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 17 (Type: technical)"
+    decisive: false
+    tags: [methodology, consistency]
+    dimension_impact: [H]
+
+  - id: A18
+    text: >-
+      Red-team example marks largely benign content ("can inspire others...hardworking
+      and diligent") as "Toxic, Hate Speech" over a gendered pronoun, miscalibrating
+      violation spans and category labels in few-shot demonstrations.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 18 (Type: logical)"
+    decisive: false
+    tags: [methodology, data_quality]
+    dimension_impact: [D]
+
+  - id: A19
+    text: >-
+      No error bars reported; justification conflates training-time variance (expensive)
+      with evaluation-time variance (cheap bootstrap CIs), while key comparisons rest
+      on 1-2 percentage point margins.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 19 (Type: logical)"
+    decisive: false
+    tags: [statistical_rigor, evaluation]
+    dimension_impact: [D]
+
+  - id: A20
+    text: >-
+      Multiple NeurIPS checklist items inaccurately answered: broader impacts points
+      to limitations section (which discusses only technical limitations), code of
+      ethics has empty justification, safeguards marked N/A despite publishing
+      detailed red-teaming prompts.
+    severity:
+      level: minor
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 20 (Type: logical)"
+    decisive: false
+    tags: [ethics, checklist]
+    dimension_impact: [G]
+
+  - id: A21
+    text: >-
+      Novelty over BSAFE is incremental — key differences reduce to a simplified
+      token-retraction format and an added RL stage without a sharp ablation or
+      conceptual argument justifying these as a substantial advance.
+    severity:
+      level: major
+      addressability: unresolved
+      mechanism: none
+    source: other
+    source_detail: "Overall Feedback paragraph"
+    decisive: true
+    tags: [novelty, contribution]
+    dimension_impact: [B]
+
+  - id: A22
+    text: >-
+      Paper conflates adversarial jailbreaking and in-distribution safety errors
+      as a single threat model without acknowledging the backtracking mechanism is
+      fundamentally reactive; critic reliability against adaptive adversaries is
+      a strong, largely unexamined assumption.
+    severity:
+      level: major
+      addressability: unresolved
+      mechanism: none
+    source: other
+    source_detail: "Overall Feedback paragraph"
+    decisive: true
+    tags: [threat_model, methodology]
+    dimension_impact: [D, F]
+
+  - id: A23
+    text: >-
+      Writing is notably repetitive — abstract, introduction, and contribution list
+      restate the same points with only minor variation, inflating length without
+      adding substance.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Overall Feedback paragraph"
+    decisive: false
+    tags: [clarity, writing]
+    dimension_impact: [G]
+
+  - id: A24
+    text: >-
+      Claimed resilience against GCG attacks is unsubstantiated without rigorous
+      adversarial evaluation using adaptive attacks that target the critic or the
+      backtracking mechanism itself.
+    severity:
+      level: major
+      addressability: unresolved
+      mechanism: none
+    source: other
+    source_detail: "Overall Feedback paragraph"
+    decisive: true
+    tags: [evaluation, robustness]
+    dimension_impact: [D, F]
+
+method_specific:
+  system: oar
+  run: run_1
+  note: >-
+    Baseline review from OpenAI Automated Reviewer (OAR). Contains only review.md
+    with no summary.yaml, gates, scorecard, or adversarial brief. Verdict inferred
+    as REJECT from strongly critical overall feedback identifying multiple fundamental
+    issues (incremental novelty, conflated threat models, unsubstantiated safety claims,
+    formalization errors). All 24 concerns sourced from a single review.md artifact.

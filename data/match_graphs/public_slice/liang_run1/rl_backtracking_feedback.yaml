@@ -1,0 +1,164 @@
+schema_version: "v1"
+paper: "rl_backtracking_feedback"
+version: "v0.9.2"
+condition: "own_group/liang_run1"
+method: "baseline_liang_etal"
+
+matches:
+  # ── O2 ↔ A4: Safety critic quality evaluation ──
+  - official_id: O2
+    agentic_id: A4
+    match_type: exact
+    issue: "Safety critic quality is not sufficiently evaluated — missing accuracy metrics, failure modes, and standalone assessment"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: major → gap 0
+    rationale: >-
+      O2 says Section 4.2 names a 'single, powerful LLM-based safety critic' but omits
+      evaluation of critic quality. A4 says the critic is 'barely described: model identity,
+      standalone accuracy, false positive/negative rates, and failure modes are all missing.'
+      Both identify the same core gap: the most important component lacks quality validation.
+      Scope test passes — fixing either would substantially address the other.
+
+  # ── O3 ↔ A4: Critic adversarial vulnerability vs. underspecification ──
+  - official_id: O3
+    agentic_id: A4
+    match_type: partial
+    issue: "Safety critic is insufficiently validated — adversarial robustness and general quality"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: major → gap 0
+    rationale: >-
+      O3 specifically flags adversarial vulnerability of the single LLM critic. A4 flags
+      the critic being barely described including missing 'failure modes.' Both are about
+      the critic needing more validation, but O3 targets adversarial robustness while A4
+      targets general underspecification. Fixing A4 (full description) would not necessarily
+      address O3 (adversarial robustness testing), so partial not exact.
+
+  # ── O6 ↔ A8: Incomplete non-backtracking baseline comparisons ──
+  - official_id: O6
+    agentic_id: A8
+    match_type: partial
+    issue: "Incomplete comparisons with methods beyond the backtracking paradigm"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: moderate, agentic: moderate → gap 0
+    rationale: >-
+      O6 asks for contextualization with non-backtracking methods (post-training, inference-time).
+      A8 flags Circuit Breakers comparison as incomplete (only Table 2) and missing other strong
+      baselines. Both want expanded comparisons beyond BSAFE/BSAFE+, but O6 frames it as
+      contextualizing ASR numbers while A8 frames it as baseline fairness. Circuit Breakers
+      is the primary non-backtracking method both reference, making this partial (same direction,
+      slightly different scope).
+
+  # ── O7 ↔ A7: BSAFE baseline concerns (different complaints) ──
+  - official_id: O7
+    agentic_id: A7
+    match_type: related
+    issue: "BSAFE baseline comparison adequacy"
+    judgment_alignment: n/a
+    severity_alignment: n/a
+    rationale: >-
+      O7's core complaint is that BSAFE is an arXiv preprint (not peer-reviewed), casting
+      doubt on comparison credibility. A7's core complaint is that original BSAFE is excluded
+      from main tables, making it impossible to attribute improvement to BSAFE+ data vs. RL
+      stage vs. simplified token. Same component (BSAFE baseline) but genuinely different
+      defects — one is about baseline credibility, the other about component attribution.
+      Different author fixes required.
+
+  # ── O8 ↔ A6: Reward function / hyperparameter justification ──
+  - official_id: O8
+    agentic_id: A6
+    match_type: exact
+    issue: "Reward function and hyperparameter values chosen without experimental justification or ablation"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: moderate, agentic: moderate → gap 0
+    rationale: >-
+      O8 says 'The design of the reward function is highly subjective and has not been
+      verified through experiments.' A6 says 'Key hyperparameters (lambda_SFT, reward values
+      -1.0/+1.0/-0.5/-0.2) chosen without justification or ablation.' Both target the same
+      core gap: the reward-related numerical choices in Section 4.2.2 lack experimental
+      validation. A6 additionally mentions lambda_SFT, but the shared reward function
+      complaint is specific enough that a neutral third party would identify these as the
+      same issue. Both require the same fix type (ablation/sensitivity study).
+
+positive_factor_matches:
+  # D1: Writing quality and clear motivation
+  - official_factor_id: D1
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >-
+      D1 praises clear writing and motivation. The agentic review does not explicitly
+      acknowledge writing quality or clarity as a strength in its mentions (M1-M5) or
+      decision drivers. No corresponding positive factor captured.
+
+  # D2: Novel targeted backtracking mechanism
+  - official_factor_id: D2
+    agentic_source: mention
+    agentic_text: >-
+      M3: 'Informative ablation study (Table 5) demonstrating mid-generation backtracking
+      is specifically important, not just the RL objective alone.'
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >-
+      D2 highlights the targeted backtracking mechanism as a key contribution. M3
+      acknowledges that ablation shows backtracking is specifically important (partial
+      capture of the mechanism's value). However, the agentic system simultaneously
+      treats the novelty as insufficient (A1: 'minor engineering refinement'), creating
+      tension. M3 alone is aligned but the overall system underweights this factor.
+
+  # D3: Strong empirical validation across attacks and scales
+  - official_factor_id: D3
+    agentic_source: mention
+    agentic_text: >-
+      M1: 'Strong empirical results: RLBF achieves very low ASR (1-5%) across multiple
+      attack types (MF, GCG, decoding parameter attacks), model families (Gemma 2, LLaMA 3),
+      and scales.'
+    match_type: exact
+    judgment_alignment: aligned
+    rationale: >-
+      D3 cites 'strong empirical validation across attacks and model scales, showing reduced
+      ASR while preserving standard benchmark performance.' M1 captures this nearly verbatim:
+      low ASR across attack types, model families, and scales. M2 additionally notes utility
+      preservation. Exact match on the empirical strength.
+
+  # D4: Beyond-safety applicability of backtracking
+  - official_factor_id: D4
+    agentic_source: mention
+    agentic_text: >-
+      M2: 'Compelling utility preservation with near-zero alignment tax on MMLU, BBH, GSM8K, MATH.'
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >-
+      D4 highlights that backtracking is 'effective beyond safety (correcting generation
+      mistakes generally) and outperforms alternatives in reducing ASR while maintaining
+      accuracy.' M2 captures the utility-preservation aspect (maintaining accuracy) but
+      misses the broader 'effective beyond safety' framing. The agentic system does not
+      recognize the generalization potential of backtracking as a correction mechanism.
+
+  # D8: Post-rebuttal consensus (not observable pre-rebuttal)
+  - official_factor_id: D8
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >-
+      D8 is a rebuttal-stage factor ('After author rebuttal and discussions, most concerns
+      have been addressed and reviewers reached consensus for acceptance'). The agentic
+      system reviewed the pre-rebuttal PDF and could not observe rebuttal outcomes. Not
+      a miss — this factor was unobservable.
+
+unmatched_official:
+  - O1   # Implementation details deferred to supplementary — no agentic counterpart
+  - O4   # Limited adaptive attack coverage — no agentic concern about attack methodology
+  - O5   # Missing efficiency metrics (tokens discarded, latency) — not flagged by agentic
+  - O7   # BSAFE is arXiv preprint — only related match to A7, no strict match
+  - O9   # Benchmark inconsistency with BSAFE paper — not flagged by agentic
+  - O10  # Placeholder references and formatting errors — not flagged by agentic
+  - O11  # Backtrack count representation unclear — not flagged by agentic
+  - O12  # Token count prediction accuracy under tokenization — not flagged by agentic
+  - O13  # Figure 1 illustration is confusing — not flagged by agentic
+
+unmatched_agentic:
+  - A1   # Insufficient novelty over BSAFE/Reset — no official concern about novelty (phantom)
+  - A2   # No error bars / significance tests — no official concern about statistical rigor (phantom)
+  - A3   # Evaluation limited to small scales / missing benchmarks — no official counterpart (phantom)
+  - A5   # BSAFE+ data generation quality unanalyzed — no official counterpart (phantom)
+  - A7   # Original BSAFE not in main tables — only related match to O7, no strict match (phantom)

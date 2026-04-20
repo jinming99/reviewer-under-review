@@ -1,0 +1,218 @@
+schema_version: "v1"
+paper: rl_backtracking_feedback
+version: baseline
+method: baseline
+verdict: REJECT
+score: null
+
+decision_drivers:
+  - id: R1
+    polarity: pro_reject
+    text: >-
+      Insufficient novelty over BSAFE/Reset — backtracking concept, standard GRPO
+      objective, and LLM-as-critic are all borrowed with only minor engineering
+      refinement in the backtracking token.
+    evidence: "Section 3, bullet 1: 'relatively minor engineering refinement over BSAFE's category-token-plus-rewrite mechanism'"
+    linked_concern_ids: [A1]
+
+  - id: R2
+    polarity: pro_reject
+    text: >-
+      No error bars, confidence intervals, or significance tests for any experiment;
+      small ASR differences (e.g., 3% vs 5%) could be within noise, undermining the
+      paper's entirely empirical claims.
+    evidence: "Section 3, bullet 2: 'a serious gap'"
+    linked_concern_ids: [A2]
+
+  - id: R3
+    polarity: pro_reject
+    text: >-
+      The LLM safety critic — foundation of both SFT annotations and RL rewards — is
+      barely described with no standalone evaluation of its accuracy or failure modes.
+    evidence: "Section 3, bullet 3: 'arguably the most important component...is barely described'"
+    linked_concern_ids: [A4]
+
+  - id: R4
+    polarity: pro_reject
+    text: >-
+      Incomplete and potentially misleading comparisons: original BSAFE excluded from
+      main tables, Circuit Breakers comparison partial, no recent strong baselines.
+    evidence: "Section 3, bullet 4: 'impossible to assess how much of the improvement comes from...'"
+    linked_concern_ids: [A7, A8]
+
+mentions:
+  - id: M1
+    polarity: pro_accept
+    text: >-
+      Strong empirical results: RLBF achieves very low ASR (1-5%) across multiple
+      attack types (MF, GCG, decoding parameter attacks), model families (Gemma 2,
+      LLaMA 3), and scales.
+    evidence: "Section 2, bullet 1"
+    note: Acknowledged as strength but offset by statistical rigor concerns.
+
+  - id: M2
+    polarity: pro_accept
+    text: >-
+      Compelling utility preservation with near-zero alignment tax on MMLU, BBH,
+      GSM8K, MATH.
+    evidence: "Section 2, bullet 2"
+    note: Noted as practical advantage but not treated as decisive.
+
+  - id: M3
+    polarity: pro_accept
+    text: >-
+      Informative ablation study (Table 5) demonstrating mid-generation backtracking
+      is specifically important, not just the RL objective alone.
+    evidence: "Section 2, bullet 3"
+    note: Partially credited but review notes the ablation still conflates factors.
+
+  - id: M4
+    polarity: pro_accept
+    text: >-
+      Per-category analysis (Table 4) shows broad coverage across diverse safety
+      categories.
+    evidence: "Section 2, bullet 4"
+    note: Descriptive strength, not treated as decisive.
+
+  - id: M5
+    polarity: pro_accept
+    text: >-
+      Streaming-compatible buffer-based post-processing design is deployment-friendly.
+    evidence: "Section 2, bullet 5"
+    note: Practical advantage noted but not weighted in verdict.
+
+concerns:
+  - id: A1
+    text: >-
+      Insufficient novelty over BSAFE/Reset: the backtracking concept is borrowed,
+      the RL stage uses a standard GRPO objective with hand-designed reward and SFT
+      guidance, and the critic is an existing LLM — the 'backtrack by x tokens'
+      command is a minor engineering refinement.
+    severity:
+      level: major
+      addressability: unresolved
+      mechanism: none
+    source: review_major
+    source_detail: "Section 3, bullet 1 (full paragraph + two sub-bullets) and Section 1 'novelty is moderate'"
+    decisive: true
+    tags: [novelty, incremental_contribution]
+    dimension_impact: [B]
+
+  - id: A2
+    text: >-
+      No error bars, confidence intervals, or significance tests reported for any
+      experiment; small ASR differences (e.g., RLBF 3% vs BSAFE+ 5%) could be
+      within noise.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Section 3, bullet 2, first sub-point: 'a serious gap'"
+    decisive: true
+    tags: [statistical_rigor, reproducibility]
+    dimension_impact: [D]
+
+  - id: A3
+    text: >-
+      Evaluation limited to two model families at small scales (up to 9B) with no
+      experiments on larger models (70B+) and missing standard safety benchmarks
+      (ToxiGen, RealToxicityPrompts), leaving generalizability claims unsupported.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Section 3, bullet 2, second sub-point"
+    decisive: false
+    tags: [evaluation_scope, generalizability]
+    dimension_impact: [D, F]
+
+  - id: A4
+    text: >-
+      The LLM safety critic — the most important component providing both SFT
+      annotations and RL rewards — is barely described: model identity, standalone
+      accuracy, false positive/negative rates, and failure modes are all missing.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Section 3, bullet 3, first sub-point: 'arguably the most important component...is barely described'"
+    decisive: true
+    tags: [methodology, reproducibility, underspecified]
+    dimension_impact: [E, H]
+
+  - id: A5
+    text: >-
+      BSAFE+ data generation quality unanalyzed: adversarial LLM-injected violations
+      may be formulaic or easily recognizable, risking that the model learns
+      superficial patterns rather than genuine safety understanding.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Section 3, bullet 3, second sub-point"
+    decisive: false
+    tags: [data_quality, methodology]
+    dimension_impact: [D, H]
+
+  - id: A6
+    text: >-
+      Key hyperparameters (lambda_SFT, reward values -1.0/+1.0/-0.5/-0.2) chosen
+      without justification or ablation; sensitivity of results to these choices is
+      unknown.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Section 3, bullet 3, third sub-point"
+    decisive: false
+    tags: [methodology, ablation]
+    dimension_impact: [E, H]
+
+  - id: A7
+    text: >-
+      Original BSAFE never directly compared in main tables — only the authors' own
+      BSAFE+ variant is included, making it impossible to attribute improvement to
+      BSAFE+ data vs RL stage vs simplified backtracking token.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Section 3, bullet 4, first sub-point"
+    decisive: true
+    tags: [baseline_fairness, ablation]
+    dimension_impact: [D]
+
+  - id: A8
+    text: >-
+      Circuit Breakers comparison incomplete (only Table 2, absent from Table 1) and
+      no comparison against other recent strong baselines such as representation
+      engineering defenses or adversarial training approaches.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Section 3, bullet 4, second sub-point"
+    decisive: false
+    tags: [baseline_fairness, evaluation_scope]
+    dimension_impact: [D]
+
+method_specific:
+  baseline_system: liang_etal
+  run: run_1
+  note: >-
+    Review from Liang et al. baseline system. Contains no explicit verdict;
+    REJECT inferred from the weight and detail of Section 3 concerns, the
+    framing of Section 4 as improvement suggestions, and the absence of
+    acceptance language. No numerical score provided.
+  original_structure:
+    section_1: "Significance and novelty (mixed assessment, 'novelty is moderate')"
+    section_2: "Potential reasons for acceptance (5 bullets)"
+    section_3: "Potential reasons for rejection (4 detailed bullets with sub-points)"
+    section_4: "Suggestions for improvement (4 bullets)"

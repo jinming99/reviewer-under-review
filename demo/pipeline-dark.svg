@@ -1,0 +1,175 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 260" fill="none" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <defs>
+    <linearGradient id="routeGradient" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#56B6C2"/>
+      <stop offset="1" stop-color="#C678DD"/>
+    </linearGradient>
+    <linearGradient id="flowGradient" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#f0c674" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#f0c674" stop-opacity="0.85"/>
+    </linearGradient>
+  </defs>
+
+  <g stroke-linecap="round" stroke-linejoin="round">
+
+    <!-- ============================================================ -->
+    <!-- Stage 1: Paper                                                -->
+    <!-- ============================================================ -->
+    <g transform="translate(40, 95)">
+      <!-- stacked pages glyph -->
+      <rect x="14" y="14" width="56" height="72" rx="4" fill="#1a1a2e" stroke="#9a9a9a" stroke-width="2"/>
+      <rect x="8"  y="8"  width="56" height="72" rx="4" fill="#1a1a2e" stroke="#9a9a9a" stroke-width="2"/>
+      <rect x="2"  y="2"  width="56" height="72" rx="4" fill="#1a1a2e" stroke="#f0c674" stroke-width="2.5"/>
+      <line x1="10" y1="16" x2="50" y2="16" stroke="#9a9a9a" stroke-width="2"/>
+      <line x1="10" y1="24" x2="50" y2="24" stroke="#9a9a9a" stroke-width="2"/>
+      <line x1="10" y1="32" x2="50" y2="32" stroke="#9a9a9a" stroke-width="2"/>
+      <line x1="10" y1="40" x2="42" y2="40" stroke="#9a9a9a" stroke-width="2"/>
+      <line x1="10" y1="52" x2="50" y2="52" stroke="#9a9a9a" stroke-width="2"/>
+      <line x1="10" y1="60" x2="50" y2="60" stroke="#9a9a9a" stroke-width="2"/>
+      <line x1="10" y1="68" x2="38" y2="68" stroke="#9a9a9a" stroke-width="2"/>
+    </g>
+    <text x="70" y="215" text-anchor="middle" font-size="12" fill="#e8e6e3" font-weight="600">Paper</text>
+
+    <!-- Flow line paper -> reviewers split -->
+    <path d="M110 130 C 135 130, 145 70, 175 70" stroke="#f0c674" stroke-width="2" stroke-opacity="0.7" stroke-dasharray="0" fill="none"/>
+    <path d="M110 130 C 135 130, 145 190, 175 190" stroke="#f0c674" stroke-width="2" stroke-opacity="0.7" fill="none"/>
+
+    <!-- ============================================================ -->
+    <!-- Stage 2: Split reviewers                                      -->
+    <!-- ============================================================ -->
+
+    <!-- Upper branch: Official (human) -->
+    <g transform="translate(180, 42)">
+      <!-- human glyph (teal) -->
+      <circle cx="16" cy="12" r="7" stroke="#56B6C2" stroke-width="2.5" fill="#1a1a2e"/>
+      <path d="M4 36 C 4 25, 28 25, 28 36 L 28 40 L 4 40 Z" stroke="#56B6C2" stroke-width="2.5" fill="#1a1a2e"/>
+      <!-- concerns box -->
+      <rect x="44" y="4" width="74" height="50" rx="6" stroke="#56B6C2" stroke-width="1.5" stroke-opacity="0.55" fill="#1a1a2e"/>
+      <circle cx="56"  cy="16" r="3.5" fill="#56B6C2"/>
+      <circle cx="72"  cy="16" r="3.5" fill="#56B6C2"/>
+      <circle cx="88"  cy="16" r="3.5" fill="#56B6C2"/>
+      <circle cx="104" cy="16" r="3.5" fill="#56B6C2"/>
+      <circle cx="56"  cy="30" r="3.5" fill="#56B6C2"/>
+      <circle cx="72"  cy="30" r="3.5" fill="#56B6C2"/>
+      <circle cx="88"  cy="30" r="3.5" fill="#56B6C2"/>
+      <circle cx="104" cy="30" r="3.5" fill="#56B6C2"/>
+      <circle cx="56"  cy="44" r="3.5" fill="#56B6C2"/>
+      <circle cx="72"  cy="44" r="3.5" fill="#56B6C2"/>
+    </g>
+    <text x="238" y="112" text-anchor="middle" font-size="11" fill="#9a9a9a">Official review</text>
+
+    <!-- Lower branch: AI (robot) -->
+    <g transform="translate(180, 160)">
+      <!-- robot glyph (purple) -->
+      <rect x="4" y="8" width="24" height="22" rx="4" stroke="#C678DD" stroke-width="2.5" fill="#1a1a2e"/>
+      <circle cx="12" cy="18" r="2" fill="#C678DD"/>
+      <circle cx="20" cy="18" r="2" fill="#C678DD"/>
+      <line x1="16" y1="2" x2="16" y2="8" stroke="#C678DD" stroke-width="2.5"/>
+      <circle cx="16" cy="2" r="1.5" fill="#C678DD"/>
+      <line x1="10" y1="24" x2="22" y2="24" stroke="#C678DD" stroke-width="1.5" stroke-opacity="0.6"/>
+      <!-- concerns box -->
+      <rect x="44" y="-4" width="74" height="50" rx="6" stroke="#C678DD" stroke-width="1.5" stroke-opacity="0.55" fill="#1a1a2e"/>
+      <circle cx="56"  cy="8"  r="3.5" fill="#C678DD"/>
+      <circle cx="72"  cy="8"  r="3.5" fill="#C678DD"/>
+      <circle cx="88"  cy="8"  r="3.5" fill="#C678DD"/>
+      <circle cx="104" cy="8"  r="3.5" fill="#C678DD"/>
+      <circle cx="56"  cy="22" r="3.5" fill="#C678DD"/>
+      <circle cx="72"  cy="22" r="3.5" fill="#C678DD"/>
+      <circle cx="88"  cy="22" r="3.5" fill="#C678DD"/>
+      <circle cx="104" cy="22" r="3.5" fill="#C678DD"/>
+      <circle cx="56"  cy="36" r="3.5" fill="#C678DD"/>
+      <circle cx="72"  cy="36" r="3.5" fill="#C678DD"/>
+      <circle cx="88"  cy="36" r="3.5" fill="#C678DD"/>
+    </g>
+    <text x="238" y="222" text-anchor="middle" font-size="11" fill="#9a9a9a">AI review</text>
+
+    <!-- Flow concerns -> match graph -->
+    <path d="M300 70 C 330 70, 345 95, 380 95" stroke="#f0c674" stroke-width="2" stroke-opacity="0.6" fill="none"/>
+    <path d="M300 185 C 330 185, 345 165, 380 165" stroke="#f0c674" stroke-width="2" stroke-opacity="0.6" fill="none"/>
+
+    <!-- ============================================================ -->
+    <!-- Stage 3: Bipartite match graph (centerpiece)                  -->
+    <!-- ============================================================ -->
+    <g transform="translate(400, 30)">
+      <!-- subtle backdrop to emphasise centerpiece -->
+      <rect x="-8" y="0" width="296" height="200" rx="14" fill="#1a1a2e" fill-opacity="0.55" stroke="#f0c674" stroke-width="1" stroke-opacity="0.25"/>
+
+      <!-- left nodes (teal) at x=20 -->
+      <!-- right nodes (purple) at x=260 -->
+
+      <!-- edges first so nodes sit on top -->
+      <!-- L1-R1 exact (green) -->
+      <path d="M26 30 C 100 30, 180 30, 254 30" stroke="#98c379" stroke-width="3"/>
+      <!-- L2-R2 partial (gold) -->
+      <path d="M26 62 C 100 62, 180 62, 254 62" stroke="#f0c674" stroke-width="3"/>
+      <!-- L2-R3 related (muted) -->
+      <path d="M26 62 C 110 62, 170 94, 254 94" stroke="#9a9a9a" stroke-width="2" stroke-opacity="0.7"/>
+      <!-- L3-R2 related (muted, crossing) -->
+      <path d="M26 94 C 110 94, 170 62, 254 62" stroke="#9a9a9a" stroke-width="2" stroke-opacity="0.7"/>
+      <!-- L3-R4 exact -->
+      <path d="M26 94 C 110 94, 180 126, 254 126" stroke="#98c379" stroke-width="3"/>
+      <!-- L4-R5 partial (gold) -->
+      <path d="M26 126 C 100 126, 180 158, 254 158" stroke="#f0c674" stroke-width="3"/>
+      <!-- L5 unmatched (no edge) -->
+      <!-- R6 unmatched -->
+
+      <!-- left (teal) nodes — official concerns -->
+      <circle cx="20" cy="30"  r="6" stroke="#56B6C2" stroke-width="3" fill="#1a1a2e"/>
+      <circle cx="20" cy="62"  r="6" stroke="#56B6C2" stroke-width="3" fill="#1a1a2e"/>
+      <circle cx="20" cy="94"  r="6" stroke="#56B6C2" stroke-width="3" fill="#1a1a2e"/>
+      <circle cx="20" cy="126" r="6" stroke="#56B6C2" stroke-width="3" fill="#1a1a2e"/>
+      <!-- unmatched (phantom-on-human-side: missed by AI) -->
+      <circle cx="20" cy="158" r="6" stroke="#e06c75" stroke-width="3" fill="#1a1a2e" stroke-dasharray="2 2"/>
+
+      <!-- right (purple) nodes — AI concerns -->
+      <circle cx="260" cy="30"  r="6" stroke="#C678DD" stroke-width="3" fill="#1a1a2e"/>
+      <circle cx="260" cy="62"  r="6" stroke="#C678DD" stroke-width="3" fill="#1a1a2e"/>
+      <circle cx="260" cy="94"  r="6" stroke="#C678DD" stroke-width="3" fill="#1a1a2e"/>
+      <circle cx="260" cy="126" r="6" stroke="#C678DD" stroke-width="3" fill="#1a1a2e"/>
+      <circle cx="260" cy="158" r="6" stroke="#C678DD" stroke-width="3" fill="#1a1a2e"/>
+      <!-- phantom AI concern (fabricated) -->
+      <circle cx="260" cy="190" r="6" stroke="#e06c75" stroke-width="3" fill="#1a1a2e" stroke-dasharray="2 2"/>
+    </g>
+
+    <text x="544" y="248" text-anchor="middle" font-size="12" fill="#e8e6e3" font-weight="600">Match graph</text>
+
+    <!-- tiny legend under title -->
+    <g transform="translate(410, 215)" font-size="10" fill="#9a9a9a">
+      <line x1="0"  y1="4" x2="14" y2="4" stroke="#98c379" stroke-width="2.5"/>
+      <text x="18" y="7">exact</text>
+      <line x1="56" y1="4" x2="70" y2="4" stroke="#f0c674" stroke-width="2.5"/>
+      <text x="74" y="7">partial</text>
+      <line x1="114" y1="4" x2="128" y2="4" stroke="#9a9a9a" stroke-width="2"/>
+      <text x="132" y="7">related</text>
+      <circle cx="178" cy="4" r="3" stroke="#e06c75" stroke-width="1.8" fill="none" stroke-dasharray="1.6 1.6"/>
+      <text x="186" y="7">unmatched</text>
+    </g>
+
+    <!-- Flow match -> ladder -->
+    <path d="M700 130 C 725 130, 735 130, 760 130" stroke="#f0c674" stroke-width="2" stroke-opacity="0.7" fill="none"/>
+    <path d="M755 125 L 762 130 L 755 135" stroke="#f0c674" stroke-width="2" fill="none"/>
+
+    <!-- ============================================================ -->
+    <!-- Stage 4: Evaluation ladder                                    -->
+    <!-- ============================================================ -->
+    <g transform="translate(770, 60)">
+      <!-- 5 bars, progressively shorter = progressive reveal -->
+      <rect x="0" y="0"   width="110" height="14" rx="3" fill="#56B6C2" fill-opacity="0.95"/>
+      <text x="118" y="11" font-size="10" fill="#9a9a9a">L0</text>
+
+      <rect x="0" y="22"  width="94"  height="14" rx="3" fill="#7aa8c9" fill-opacity="0.95"/>
+      <text x="118" y="33" font-size="10" fill="#9a9a9a">L1</text>
+
+      <rect x="0" y="44"  width="78"  height="14" rx="3" fill="#9b93c9" fill-opacity="0.95"/>
+      <text x="118" y="55" font-size="10" fill="#9a9a9a">L2</text>
+
+      <rect x="0" y="66"  width="62"  height="14" rx="3" fill="#b586d4" fill-opacity="0.95"/>
+      <text x="118" y="77" font-size="10" fill="#9a9a9a">L3</text>
+
+      <rect x="0" y="88"  width="46"  height="14" rx="3" fill="#C678DD" fill-opacity="0.95"/>
+      <text x="118" y="99" font-size="10" fill="#9a9a9a">L4</text>
+    </g>
+    <text x="820" y="215" text-anchor="middle" font-size="12" fill="#e8e6e3" font-weight="600">Evaluation ladder</text>
+
+  </g>
+</svg>

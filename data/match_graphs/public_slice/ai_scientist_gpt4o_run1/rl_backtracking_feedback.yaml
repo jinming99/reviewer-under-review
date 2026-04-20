@@ -1,0 +1,151 @@
+schema_version: "v1"
+paper: "rl_backtracking_feedback"
+version: "v0.9.2"
+condition: "own_group/ai_scientist_gpt4o_run1"
+method: "baseline_ai_scientist"
+
+matches:
+  # ============================================================
+  # STRICT MATCH (partial)
+  # ============================================================
+  - official_id: O5
+    agentic_id: A3
+    match_type: partial
+    issue: "Missing efficiency analysis despite efficiency-related claims"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: major → gap 0
+    rationale: >-
+      Both flag the absence of efficiency analysis. O5 is specifically about missing
+      inference-time backtracking metrics (tokens discarded, latency) to validate the
+      efficiency claim over BSAFE. A3 is broader — flagging unquantified computational
+      demands of the RLBF framework for practical deployment. Same issue family but
+      different scope: O5 needs a token/latency comparison at inference time, A3 needs
+      training resource quantification. Partial because fixing one would not necessarily
+      fix the other.
+
+  # ============================================================
+  # RELATED MATCHES (near-misses, not strict)
+  # ============================================================
+  - official_id: O1
+    agentic_id: A2
+    match_type: related
+    issue: "Reproducibility concerns"
+    judgment_alignment: n/a
+    severity_alignment: n/a
+    rationale: >-
+      Both are in the reproducibility family but target different defects. O1 flags
+      implementation details (data splits, hyperparameters, compute budget) deferred
+      to supplementary rather than appearing in the main text. A2 flags the absence
+      of open-source code and data. Different fixes: O1 requires moving text from
+      supplementary to main paper; A2 requires releasing code/data artifacts. Scope
+      test fails — fixing one does not fix the other.
+
+  - official_id: O6
+    agentic_id: A5
+    match_type: related
+    issue: "Evaluation coverage gaps"
+    judgment_alignment: n/a
+    severity_alignment: n/a
+    rationale: >-
+      O6 specifically flags missing comparisons with non-backtracking safety methods
+      (e.g., post-training or inference-time alternatives). A5 generically flags
+      "insufficient practical validation and efficiency analysis across different
+      settings beyond the tested benchmarks." O6 requires adding specific baselines;
+      A5 is too broad to pinpoint a concrete fix. The agentic concern is in the
+      neighborhood but does not identify the specific gap.
+
+  - official_id: O8
+    agentic_id: A7
+    match_type: related
+    issue: "Unvalidated design choices in the RL pipeline"
+    judgment_alignment: n/a
+    severity_alignment: n/a
+    rationale: >-
+      Both flag missing ablation/justification for design parameters. O8 targets
+      the reward function's specific numerical choices (+1.0, -1.0, -0.5, -0.2) as
+      subjective and unverified. A7 targets the critic's feedback frequency as an
+      unexplored hyperparameter. Same concern family (unjustified design choices)
+      but different parameters requiring different experiments.
+
+# ============================================================
+# POSITIVE FACTOR MATCHES (accepted paper)
+# ============================================================
+positive_factor_matches:
+  - official_factor_id: D1
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >-
+      D1 praises the paper as well-written with clear motivation. The agentic review
+      does not explicitly recognize writing quality or presentation as a strength.
+      Individual scores show clarity=3 and presentation=3 (neutral), with no
+      corresponding pro_accept mention.
+
+  - official_factor_id: D2
+    agentic_source: mention
+    agentic_text: "Innovative method for in-generation correction of LLM safety violations."
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >-
+      D2 highlights RLBF's targeted backtracking mechanism that removes only violating
+      spans for efficient correction. M1 recognizes the method's innovation in
+      in-generation correction but does not specifically mention the targeted span
+      removal or efficiency advantages over BSAFE. Partial because the core novelty
+      (in-generation correction) is captured but the distinctive mechanism detail
+      (targeted removal vs. full reset) is not.
+
+  - official_factor_id: D3
+    agentic_source: mention
+    agentic_text: "Significant reduction in diverse adversarial attack success rates."
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >-
+      D3 cites strong empirical validation across attacks AND model scales, plus
+      utility preservation. M2 captures the attack-reduction facet but omits the
+      multi-scale validation and utility-preservation aspects (the latter is in M3
+      separately). Partial because it captures one dimension of the broader empirical
+      strength.
+
+  - official_factor_id: D4
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >-
+      D4 highlights that backtracking is effective beyond safety — correcting
+      generation mistakes generally. No agentic mention captures this generalization
+      insight. M3 (maintains utility while enhancing safety) is about the
+      safety-utility tradeoff, not about applicability beyond the safety domain.
+
+  - official_factor_id: D8
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >-
+      D8 is a rebuttal-stage factor (reviewer consensus after author response).
+      The agentic system operates pre-rebuttal and cannot observe this. Not
+      matchable by design.
+
+# ============================================================
+# UNMATCHED CONCERNS
+# ============================================================
+unmatched_official:
+  - O1   # Implementation details in supplementary — no strict agentic match (A2 is related only: code/data release vs text placement)
+  - O2   # Safety critic quality not evaluated — no agentic concern about critic accuracy or validation
+  - O3   # Single LLM critic adversarial vulnerability — no agentic concern about adversarial attacks on the critic
+  - O4   # Limited adaptive attacks targeting backtracking signal — no agentic concern about adaptive adversaries
+  - O6   # Missing non-backtracking baseline comparisons — A5 is related only (too generic)
+  - O7   # Primary baseline BSAFE is arXiv preprint — no agentic concern about baseline validity/peer-review status
+  - O8   # Reward function design subjective and unverified — A7 is related only (different parameter)
+  - O9   # Benchmark inconsistency with BSAFE paper — no agentic concern about benchmark choice
+  - O10  # Placeholder references and formatting errors — no agentic concern about formatting
+  - O11  # Backtrack count representation unclear — no agentic concern about this mechanism detail
+  - O12  # Token count prediction accuracy under tokenization — no agentic concern about tokenization accuracy
+  - O13  # Figure 1 illustration confusing — no agentic concern about figure quality
+
+unmatched_agentic:
+  - A1   # No statistical significance tests — phantom: no official reviewer flagged this; generic AI Scientist criticism
+  - A2   # No open code/data — phantom: no official reviewer flagged missing artifacts; O1 is related only (different issue)
+  - A4   # Harmful content definition unclear — phantom: no official reviewer raised this definitional concern
+  - A5   # Insufficient validation across settings — phantom: generic catch-all not matching any specific official concern
+  - A6   # No scaling analysis across LLM sizes — phantom: the paper evaluates across Gemma-2B, 7B and Llama-3-8B; no official reviewer flagged this
+  - A7   # Missing critic feedback frequency ablation — phantom: no official reviewer flagged this specific ablation gap

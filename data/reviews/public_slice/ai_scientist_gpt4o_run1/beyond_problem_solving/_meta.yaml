@@ -1,0 +1,16 @@
+slug: beyond_problem_solving
+baseline: ai_scientist
+model: gpt-4o
+timestamp: '2026-04-10T12:46:54.603442+00:00'
+git_sha: 6b601aec
+git_branch: main
+elapsed_s: 25.0
+usage: {}
+cost_usd: 0.0
+num_sdk_calls: 3
+num_api_calls: 5
+num_chunks: null
+specialties: null
+paper_text_chars: 81111
+review_text_chars: 1948
+skip_refinement: false

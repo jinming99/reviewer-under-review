@@ -1,0 +1,124 @@
+schema_version: "v1"
+paper: "cmdp_meta_safe_rl"
+version: "v0.9.2"
+condition: "own_group/oar_run1"
+method: "baseline_openaireview"
+
+# ============================================================
+# Matching summary
+# ============================================================
+# The agentic review (baseline_openaireview) focused exclusively on
+# mathematical/proof errors (A1-A8: factor-of-M discrepancy, wrong
+# bound direction, abstract/theorem mismatch, incorrect approximation,
+# dropped terms, notation arity, copy-paste error, missing square).
+#
+# The official reviews focused on experimental scope, conceptual
+# design choices, clarity/presentation, novelty/contribution
+# significance, and ethics — none flagged the specific mathematical
+# errors the agentic system found.
+#
+# Result: near-total non-overlap. Only two weak (related) edges exist.
+# The agentic system discovered genuine proof issues the officials
+# missed, but missed every concern the officials raised.
+# ============================================================
+
+matches:
+  - official_id: "O13"
+    agentic_id: "A1"
+    match_type: "related"
+    issue: "Validity of Theorem 3.3 and its regret bounds"
+    judgment_alignment: "n/a"
+    severity_alignment: "n/a"
+    rationale: >
+      Both target Theorem 3.3 but from completely different angles: O13 questions
+      why the two regret upper bound assumptions (E_T^{opt}, U_T^{pi}) are reasonable,
+      while A1 identifies a factor-of-M mathematical error propagating from Equation (5)
+      through to the theorem. One asks 'are the assumptions justified?' and the other
+      says 'the math is wrong by a factor of M.' Different fixes required —
+      O13 needs explanatory justification, A1 needs a proof correction.
+
+  - official_id: "O12"
+    agentic_id: "A6"
+    match_type: "related"
+    issue: "Notation issues in the paper"
+    judgment_alignment: "n/a"
+    severity_alignment: "n/a"
+    rationale: >
+      Both flag notation problems but target different specific issues: O12 notes
+      unclear symbol definitions (V_{M_t}, pi^*), while A6 identifies an arity
+      inconsistency where c_{t,i} is defined on S x A but used with three arguments
+      (s_m, a_m, s_{m+1}). Same concern family (notation) but different defects
+      requiring different fixes.
+
+positive_factor_matches:
+  - official_factor_id: "D1"
+    agentic_source: "mention"
+    agentic_text: "This paper introduces a novel and theoretically interesting CMDP-within-online framework for meta-safe reinforcement learning"
+    match_type: "exact"
+    judgment_alignment: "aligned"
+    rationale: >
+      Both D1 and M1 recognize the CMDP-within-online framework as a novel,
+      innovative theoretical contribution to meta-safe RL. The agentic system
+      explicitly acknowledges novelty but ultimately overrides it as non-compensatory
+      against the mathematical errors it found.
+
+  - official_factor_id: "D2"
+    agentic_source: "mention"
+    agentic_text: "The key ideas (stationary distribution corrections, tame geometry for estimation error bounds, adaptive learning rates) are creative and well-motivated"
+    match_type: "partial"
+    judgment_alignment: "aligned"
+    rationale: >
+      D2 highlights both problem importance ('safe RL is very important') and
+      practicality ('only requires inexact sub-CMDP solutions'). M2 captures
+      the technical merit of the key ideas but does not explicitly acknowledge
+      safe RL as an important problem area or highlight the practical advantage
+      of only needing inexact solutions.
+
+  - official_factor_id: "D3"
+    agentic_source: "mention"
+    agentic_text: "the underlying framework and proof strategy appear sound and the errors seem correctable"
+    match_type: "partial"
+    judgment_alignment: "aligned"
+    rationale: >
+      D3 emphasizes the practical advantage that the framework only needs inexact
+      solutions (no optimal policy access required). M3 acknowledges the framework's
+      soundness but frames it in terms of correctability rather than practicality.
+      The specific 'inexact solutions' advantage that the AC highlighted is not
+      captured by the agentic system.
+
+unmatched_official:
+  # ALL 19 official concerns are strict-unmatched. The agentic review's
+  # mathematical-error focus left the entire official concern space uncovered.
+  # O12 and O13 have related edges but no exact/partial matches.
+  - "O1"   # Sparse experiments / few environments (major, all 3 reviewers)
+  - "O2"   # Meta-initialization policy safety from first step (moderate)
+  - "O3"   # Safety constraints should adapt to shifting environments (minor)
+  - "O4"   # Missing comparison to safe policy improvement / Thomas et al. (minor)
+  - "O5"   # Framework builds on simplified CRPO, restricts applicability (major)
+  - "O6"   # Theoretical analysis unclear, confusing notation (major)
+  - "O7"   # No CRPO explanation, no parameter comments (moderate)
+  - "O8"   # Algorithm/analysis is composition of existing work (major)
+  - "O9"   # Assumptions introduced without clear explanation (minor)
+  - "O10"  # Ethics/fairness concern for meta-learning (moderate)
+  - "O11"  # Static regret not useful for meta-learning (moderate)
+  - "O12"  # Notation unclear — V_{M_t}, pi^* (moderate) [related-only to A6]
+  - "O13"  # Theorem 3.3 assumptions unexplained (major) [related-only to A1]
+  - "O14"  # Only frozen lake and acrobot experiments (major)
+  - "O15"  # Assumption 2 (o-minimal) needs clarification (moderate)
+  - "O16"  # Why DualDICE not offline CMDP? (moderate)
+  - "O17"  # Writing unclear, claims vague (moderate)
+  - "O18"  # Novelty only marginally significant (major)
+  - "O19"  # Citation/cluster formats not standard (minor)
+
+unmatched_agentic:
+  # ALL 8 agentic concerns are strict-unmatched. No official reviewer
+  # flagged any of the specific mathematical/proof errors the agentic
+  # system identified. A1 and A6 have related edges but no exact/partial.
+  - "A1"   # Factor-of-M discrepancy in Eq (5) propagates to Thm 3.3 (fatal)
+  - "A2"   # Lemma 4 item 3 bounds constraint cost in wrong direction (major)
+  - "A3"   # Abstract regret rate doesn't match Theorem 3.2 (major)
+  - "A4"   # Incorrect asymptotic approximation in Corollary 3 proof (major)
+  - "A5"   # Remark 2 drops path-length terms without justification (moderate)
+  - "A6"   # Cost function arity inconsistency c_{t,i} (minor) [related-only to O12]
+  - "A7"   # Humanoid low-similarity same range as high-similarity (minor)
+  - "A8"   # Missing square in derivative in Corollary 3 proof (minor)

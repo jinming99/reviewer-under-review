@@ -1,0 +1,2006 @@
+{
+  "slug": "rl_backtracking_feedback",
+  "title": "Reinforcement Learning with Backtracking Feedback",
+  "venue": "NeurIPS 2025",
+  "decision": "accepted",
+  "decision_type": "Poster",
+  "reviewer_scores": [
+    5,
+    4,
+    4,
+    5
+  ],
+  "reviewer_scores_post": [
+    5,
+    4,
+    4,
+    5
+  ],
+  "ground_truth_notes": "Own-group accepted paper. Poster. Scores: 5/4/4/5. Surgical backtracking vs full-reset. Marginal RL improvement over SFT-only stage. No error bars.",
+  "case_study_files": [
+    "docs/case_studies/public_slice/A2_rl_backtracking.md"
+  ],
+  "evidence": {
+    "paper_pdf": "data/papers/public_slice/28718_Reinforcement_Learning_w.pdf",
+    "openreview_pdf": "data/openreviews/public_slice/Reinforcement Learning with Backtracking Feedback _ OpenReview.pdf",
+    "official_concerns": "data/official_concerns/rl_backtracking_feedback.yaml"
+  },
+  "official_concerns": [
+    {
+      "id": "O1",
+      "text": "Key implementation details (data splits, prompt sampling, training hyperparameters, compute budget) are deferred to supplementary, making reproducibility difficult from the main text alone.",
+      "severity": "major",
+      "decisive": false,
+      "ac_treatment": "resolved",
+      "issue_type": "empirical",
+      "tags": [
+        "reproducibility",
+        "experimental_transparency",
+        "implementation_details"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "wAMH"
+      ]
+    },
+    {
+      "id": "O2",
+      "text": "Section 4.2 names a 'single, powerful LLM-based safety critic' but omits evaluation of critic quality, making it hard to assess whether critic quality or policy learning drives the performance gains.",
+      "severity": "major",
+      "decisive": false,
+      "ac_treatment": "resolved",
+      "issue_type": "empirical",
+      "tags": [
+        "critic_evaluation",
+        "component_attribution",
+        "safety_critic"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "wAMH"
+      ]
+    },
+    {
+      "id": "O3",
+      "text": "The method relies on a single LLM safety critic, which can be vulnerable to adversarial attacks or otherwise produce incorrect judgments.",
+      "severity": "major",
+      "decisive": false,
+      "ac_treatment": "resolved",
+      "issue_type": "conceptual",
+      "tags": [
+        "single_critic_vulnerability",
+        "adversarial_robustness",
+        "safety_critic"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "Gc4v"
+      ]
+    },
+    {
+      "id": "O4",
+      "text": "The evaluation set includes GCG and decoding-parameter variants but does not target RLBF's specific backtracking signal, leaving robustness under truly adaptive adversaries unclear.",
+      "severity": "major",
+      "decisive": false,
+      "ac_treatment": "resolved",
+      "issue_type": "empirical",
+      "tags": [
+        "adaptive_attacks",
+        "robustness",
+        "adversarial_evaluation"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "wAMH"
+      ]
+    },
+    {
+      "id": "O5",
+      "text": "A core claim is higher efficiency relative to BSAFE, yet experiments only report ASR and utility, not metrics like average tokens discarded or latency under backtracking.",
+      "severity": "major",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "efficiency_evaluation",
+        "missing_metric",
+        "token_efficiency"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "wAMH"
+      ]
+    },
+    {
+      "id": "O6",
+      "text": "The paper does not contextualize ASR numbers with non-backtracking methods that improve safety via post-training or at inference time.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "resolved",
+      "issue_type": "empirical",
+      "tags": [
+        "missing_baselines",
+        "contextual_comparison",
+        "inference_time_methods"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "Gc4v"
+      ]
+    },
+    {
+      "id": "O7",
+      "text": "The primary baseline BSAFE is an arXiv preprint (not peer-reviewed), which may cast doubt on the persuasiveness of comparisons. Circuit Breakers baseline only compared in Table 2.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "baseline_validity",
+        "peer_review_status",
+        "comparison_scope"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "mSbG"
+      ]
+    },
+    {
+      "id": "O8",
+      "text": "The design of the reward function is highly subjective and has not been verified through experiments to justify the specific numerical choices.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "conceptual",
+      "tags": [
+        "reward_design",
+        "justification",
+        "ablation"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "mSbG"
+      ]
+    },
+    {
+      "id": "O9",
+      "text": "The selected benchmark (LMSYS-MF) does not appear consistent with the benchmark used in the BSAFE paper, potentially affecting evaluation validity.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "empirical",
+      "tags": [
+        "benchmark_consistency",
+        "evaluation_validity"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "mSbG"
+      ]
+    },
+    {
+      "id": "O10",
+      "text": "Multiple placeholder references remain in the submission ('[two references]', '[BSAFE reference]' in Section 3) and the Paper checklist instruction block was not deleted, indicating incomplete preparation.",
+      "severity": "minor",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "framing",
+      "tags": [
+        "formatting",
+        "placeholder_references",
+        "presentation"
+      ],
+      "resolved_in_rebuttal": false,
+      "raised_by": [
+        "wAMH",
+        "mSbG"
+      ]
+    },
+    {
+      "id": "O11",
+      "text": "Unclear how the backtrack count (number k of tokens to remove) is represented during redaction of harmful context.",
+      "severity": "minor",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "conceptual",
+      "tags": [
+        "mechanism_clarity",
+        "presentation"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "MaoP"
+      ]
+    },
+    {
+      "id": "O12",
+      "text": "LLM might not accurately predict the number of tokens to backtrack due to the tokenization step, potentially affecting results.",
+      "severity": "moderate",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "conceptual",
+      "tags": [
+        "tokenization",
+        "mechanism_robustness",
+        "technical_validity"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "MaoP"
+      ]
+    },
+    {
+      "id": "O13",
+      "text": "Figure 1 illustration is confusing and does not clearly show the difference between the two methods (BSAFE+ and RLBF).",
+      "severity": "minor",
+      "decisive": false,
+      "ac_treatment": "not_mentioned",
+      "issue_type": "framing",
+      "tags": [
+        "figure_clarity",
+        "presentation"
+      ],
+      "resolved_in_rebuttal": true,
+      "raised_by": [
+        "MaoP"
+      ]
+    }
+  ],
+  "methods": [
+    {
+      "method": "ai_scientist_run1",
+      "verdict": "REJECT",
+      "score": 4,
+      "error_type": "FN",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_reject",
+          "text": "Contribution is substantially incremental over BSAFE — core backtracking idea already exists and additions (simpler token format, better data generation, standard RL fine-tuning) offer limited conceptual novelty.",
+          "linked_concern_ids": [
+            "A1"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R2",
+          "polarity": "pro_reject",
+          "text": "Missing supplementary material renders experimental claims largely unverifiable and reproduction impossible, despite being referenced repeatedly for critical details.",
+          "linked_concern_ids": [
+            "A2"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R3",
+          "polarity": "pro_reject",
+          "text": "Original BSAFE and Reset approaches are never directly compared in experiments, making it impossible to assess the true marginal contribution over existing methods.",
+          "linked_concern_ids": [
+            "A3"
+          ],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "Problem of robust LLM safety beyond shallow alignment is important and well-motivated, with observation about brittle refusal supported by cited prior work.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "Backtrack-by-x-tokens mechanism is a sensible simplification over BSAFE's repeat-and-edit approach, avoiding regeneration of harmful content.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M3",
+          "polarity": "pro_accept",
+          "text": "BSAFE+ data generation strategy is well-reasoned with in-distribution continuations preserving answer quality (49.4% vs 50.6% win rate).",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M4",
+          "polarity": "pro_accept",
+          "text": "RLBF shows clear advantage over BSAFE+ on standard LMSYS harmful queries (1-2% ASR vs 14-17%), suggesting genuine RL stage value.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M5",
+          "polarity": "pro_accept",
+          "text": "Utility preservation is strong across four benchmarks (MMLU, BBH, GSM8K, MATH) with negligible degradation.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M6",
+          "polarity": "pro_accept",
+          "text": "Ablation study in Table 5 effectively isolates backtracking mechanism contribution, showing mid-generation backtracking is particularly important.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "Contribution is substantially incremental over BSAFE — core backtracking idea already exists; the additions (simpler token format, better data generation, standard RL fine-tuning) represent limited conceptual novelty.",
+          "severity": "major",
+          "addressability": "unresolved",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "novelty",
+            "incrementalism"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "Supplementary material referenced repeatedly for critical experimental details (hyperparameters, training specifics, compute resources, data generation) is not included, rendering experimental claims largely unverifiable and reproduction impossible.",
+          "severity": "fatal",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "reproducibility",
+            "missing_details",
+            "incomplete_submission"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "Original BSAFE method is never directly compared in experiments (only authors' BSAFE+ variant appears) and Reset approaches discussed in Section 3 are excluded from all experimental tables, making it impossible to assess the true marginal contribution.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "baseline_fairness",
+            "missing_baselines",
+            "evaluation_rigor"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "Table 4 attack prevention rates are all exact multiples of 0.02, strongly suggesting only ~50 samples per safety category, which is too small for reliable per-category conclusions.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "evaluation_rigor",
+            "sample_size",
+            "statistical_power"
+          ]
+        },
+        {
+          "id": "A5",
+          "text": "No evaluation of the LLM safety critic — no accuracy metrics, false positive/negative rates, or analysis of how critic errors propagate to the trained model. The entire framework hinges on this unvalidated component, creating a single point of failure.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "methodology",
+            "missing_evaluation",
+            "critical_component_unvalidated"
+          ]
+        },
+        {
+          "id": "A6",
+          "text": "Table 2 does not specify which model size or configuration was used for GCG and Decoding Parameter attacks, making results difficult to interpret or contextualize.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "clarity",
+            "missing_details",
+            "experimental_setup"
+          ]
+        },
+        {
+          "id": "A7",
+          "text": "GRPO implementation is underspecified — Section 4.2.3 vaguely mentions penalizing known violating patterns 'by adding constraints or penalty terms' without concrete algorithmic details. The RL contribution, claimed as the primary novelty, lacks precision needed for evaluation or reproduction.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "reproducibility",
+            "underspecified_method",
+            "missing_details"
+          ]
+        },
+        {
+          "id": "A8",
+          "text": "Despite claiming efficiency improvements over BSAFE, no latency measurements, throughput comparisons, or computational overhead analysis is provided.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "overclaiming",
+            "missing_evaluation",
+            "efficiency"
+          ]
+        },
+        {
+          "id": "A9",
+          "text": "No statistical significance analysis or error bars reported. When BSAFE+ and RLBF show similar ASRs on LMSYS-MF (e.g., both 3-7%), it is unclear whether differences are meaningful.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "statistical_rigor",
+            "missing_error_bars",
+            "evaluation_rigor"
+          ]
+        },
+        {
+          "id": "A10",
+          "text": "No analysis of adaptive attacks where adversaries are aware of the backtracking mechanism. Robustness to mechanism-aware adversaries is critical for evaluating a safety method.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "robustness",
+            "adaptive_adversary",
+            "threat_model"
+          ]
+        },
+        {
+          "id": "A11",
+          "text": "Reward function values (-1.0, +1.0, -0.5, -0.2) appear ad hoc with no justification or ablation study on their sensitivity.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "methodology",
+            "hyperparameter_sensitivity",
+            "missing_ablation"
+          ]
+        },
+        {
+          "id": "A12",
+          "text": "Limitations section is superficial, mentioning computational demands and difficulty defining harmful content without quantifying either concern.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "clarity",
+            "limitations_underspecified"
+          ]
+        },
+        {
+          "id": "A13",
+          "text": "No analysis of how cascading backtracks in long-form generation could degrade output quality or coherence.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "robustness",
+            "quality_degradation",
+            "edge_cases"
+          ]
+        },
+        {
+          "id": "A14",
+          "text": "No discussion of the risk that backtracking tokens could be adversarially triggered to suppress legitimate content, causing over-censorship via false positive backtracking.",
+          "severity": "moderate",
+          "addressability": "unresolved",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "robustness",
+            "over_refusal",
+            "adversarial_exploitation"
+          ]
+        },
+        {
+          "id": "A15",
+          "text": "No analysis of potential negative societal impact from the red-teaming data generation process.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "ethics",
+            "societal_impact"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O1",
+          "agentic_id": "A2",
+          "match_type": "partial",
+          "severity_alignment": "over",
+          "judgment_alignment": "aligned",
+          "issue": "Critical implementation details unavailable for reproducibility",
+          "rationale": "O1 says implementation details (data splits, hyperparameters, compute) are deferred to supplementary but should be in the main text. A2 says supplementary material is missing entirely, rendering experiments unverifiable. Same family (reproducibility harmed by inaccessible details) but different scope: O1 assumes supplementary exists and wants main-text self-containedness; A2 claims supplementary is absent. Different observations, overlapping impact. Partial because fixing O1 (moving details to main text) would partially address A2's concern, but A2's complaint is broader."
+        },
+        {
+          "official_id": "O2",
+          "agentic_id": "A5",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "No evaluation of LLM safety critic quality (accuracy, error rates, failure propagation)",
+          "rationale": "Both identify the same specific gap: the LLM safety critic is central to RLBF yet has no reported accuracy metrics, false positive/negative rates, or analysis of how critic errors propagate. O2 verbatim: \"omits the evaluation of the critic quality.\" A5: \"No evaluation of the LLM safety critic — no accuracy metrics, false positive/negative rates.\" Same issue, same scope."
+        },
+        {
+          "official_id": "O4",
+          "agentic_id": "A10",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "No adaptive attacks targeting RLBF's specific backtracking mechanism",
+          "rationale": "Both flag the same gap: evaluation includes GCG and decoding-parameter attacks but none specifically designed to exploit the backtracking signal. O4: \"does not target RLBF's specific backtracking signal.\" A10: \"No analysis of adaptive attacks where adversaries are aware of the backtracking mechanism.\" Exact match — a neutral reader would say these are the same complaint."
+        },
+        {
+          "official_id": "O5",
+          "agentic_id": "A8",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Missing efficiency comparison metrics despite claiming efficiency improvements over BSAFE",
+          "rationale": "Both identify the same contradiction: the paper claims efficiency gains over BSAFE but reports only ASR and utility, not latency, tokens discarded, or throughput. O5: \"experiments only report ASR and utility, not metrics like average tokens discarded or latency.\" A8: \"no latency measurements, throughput comparisons, or computational overhead analysis.\" Same issue, same scope."
+        },
+        {
+          "official_id": "O8",
+          "agentic_id": "A11",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Reward function values are ad hoc without sensitivity analysis or ablation",
+          "rationale": "Both flag the same concern about the reward function values (-1.0, +1.0, -0.5, -0.2) being chosen without experimental justification. O8: \"highly subjective and has not been verified through experiments.\" A11: \"appear ad hoc with no justification or ablation study on their sensitivity.\" Same specific issue."
+        },
+        {
+          "official_id": "O3",
+          "agentic_id": "A14",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "n/a",
+          "issue": "Adversarial vulnerability of system components",
+          "rationale": "Both concern adversarial robustness but target different system components. O3 is about the single LLM safety critic being adversarially exploitable or producing incorrect judgments. A14 is about backtracking tokens being adversarially triggered to suppress legitimate content (over-censorship). The critic and the backtracking mechanism are distinct components — exploiting the critic vs. triggering false backtracks require different attack vectors and different fixes. Related because both address adversarial vulnerability of RLBF, but not the same specific issue (false match pattern #4: same system, different complaint)."
+        }
+      ],
+      "metrics": {
+        "total_official": 13,
+        "total_decisive": 0,
+        "recall_strict": 0.3846,
+        "recall_loose": 0.4615,
+        "decisive_recall": null,
+        "matched_official_ids": [
+          "O1",
+          "O2",
+          "O3",
+          "O4",
+          "O5",
+          "O8"
+        ],
+        "strict_matched_ids": [
+          "O1",
+          "O2",
+          "O4",
+          "O5",
+          "O8"
+        ]
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/ai_scientist_run1/rl_backtracking_feedback.yaml",
+        "match_graph": "data/match_graphs/public_slice/ai_scientist_run1/rl_backtracking_feedback.yaml",
+        "review": "data/reviews/public_slice/ai_scientist_run1/rl_backtracking_feedback/"
+      }
+    },
+    {
+      "method": "ai_scientist_gpt4o_run1",
+      "verdict": "REJECT",
+      "score": 4,
+      "error_type": "FN",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_reject",
+          "text": "Lack of statistical significance documentation undermines confidence in all reported experimental improvements.",
+          "linked_concern_ids": [
+            "A1"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R2",
+          "polarity": "pro_reject",
+          "text": "No open access to code and data makes reproduction impossible, reducing credibility of empirical claims.",
+          "linked_concern_ids": [
+            "A2"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R3",
+          "polarity": "pro_reject",
+          "text": "High computational demands may limit practical deployment and are not quantified or analyzed.",
+          "linked_concern_ids": [
+            "A3"
+          ],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "Innovative method for in-generation correction of LLM safety violations.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "Significant reduction in diverse adversarial attack success rates.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M3",
+          "polarity": "pro_accept",
+          "text": "Maintains model utility and performance while enhancing safety.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "No statistical significance tests or confidence intervals reported for experimental results, reducing confidence in claimed improvements.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "statistical_rigor",
+            "missing_error_bars",
+            "evaluation_rigor"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "No open access to code or data, making reproduction of results impossible and reducing credibility of empirical claims.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "reproducibility",
+            "missing_artifacts"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "High computational demands of the RLBF framework may limit practical deployment, with no efficiency analysis or resource quantification provided.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "scalability",
+            "efficiency",
+            "missing_analysis"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "Potential challenges in precisely defining 'harmful' content are acknowledged but not addressed, leaving a core design assumption unvalidated.",
+          "severity": "moderate",
+          "addressability": "unresolved",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "methodology",
+            "definition_ambiguity"
+          ]
+        },
+        {
+          "id": "A5",
+          "text": "Insufficient practical validation and efficiency analysis across different settings beyond the tested benchmarks.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "evaluation_rigor",
+            "generalization",
+            "missing_evaluation"
+          ]
+        },
+        {
+          "id": "A6",
+          "text": "No analysis of how the RLBF framework scales across different LLM sizes in operational settings.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "scalability",
+            "missing_analysis"
+          ]
+        },
+        {
+          "id": "A7",
+          "text": "No exploration of how varying the RL critic's feedback frequency affects model performance — a missing ablation on a key design choice.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "missing_ablation",
+            "hyperparameter_sensitivity"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O5",
+          "agentic_id": "A3",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Missing efficiency analysis despite efficiency-related claims",
+          "rationale": "Both flag the absence of efficiency analysis. O5 is specifically about missing inference-time backtracking metrics (tokens discarded, latency) to validate the efficiency claim over BSAFE. A3 is broader — flagging unquantified computational demands of the RLBF framework for practical deployment. Same issue family but different scope: O5 needs a token/latency comparison at inference time, A3 needs training resource quantification. Partial because fixing one would not necessarily fix the other."
+        },
+        {
+          "official_id": "O1",
+          "agentic_id": "A2",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "n/a",
+          "issue": "Reproducibility concerns",
+          "rationale": "Both are in the reproducibility family but target different defects. O1 flags implementation details (data splits, hyperparameters, compute budget) deferred to supplementary rather than appearing in the main text. A2 flags the absence of open-source code and data. Different fixes: O1 requires moving text from supplementary to main paper; A2 requires releasing code/data artifacts. Scope test fails — fixing one does not fix the other."
+        },
+        {
+          "official_id": "O6",
+          "agentic_id": "A5",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "n/a",
+          "issue": "Evaluation coverage gaps",
+          "rationale": "O6 specifically flags missing comparisons with non-backtracking safety methods (e.g., post-training or inference-time alternatives). A5 generically flags \"insufficient practical validation and efficiency analysis across different settings beyond the tested benchmarks.\" O6 requires adding specific baselines; A5 is too broad to pinpoint a concrete fix. The agentic concern is in the neighborhood but does not identify the specific gap."
+        },
+        {
+          "official_id": "O8",
+          "agentic_id": "A7",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "n/a",
+          "issue": "Unvalidated design choices in the RL pipeline",
+          "rationale": "Both flag missing ablation/justification for design parameters. O8 targets the reward function's specific numerical choices (+1.0, -1.0, -0.5, -0.2) as subjective and unverified. A7 targets the critic's feedback frequency as an unexplored hyperparameter. Same concern family (unjustified design choices) but different parameters requiring different experiments."
+        }
+      ],
+      "metrics": {
+        "total_official": 13,
+        "total_decisive": 0,
+        "recall_strict": 0.0769,
+        "recall_loose": 0.3077,
+        "decisive_recall": null,
+        "matched_official_ids": [
+          "O1",
+          "O5",
+          "O6",
+          "O8"
+        ],
+        "strict_matched_ids": [
+          "O5"
+        ]
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/ai_scientist_gpt4o_run1/rl_backtracking_feedback.yaml",
+        "match_graph": "data/match_graphs/public_slice/ai_scientist_gpt4o_run1/rl_backtracking_feedback.yaml",
+        "review": "data/reviews/public_slice/ai_scientist_gpt4o_run1/rl_backtracking_feedback/"
+      }
+    },
+    {
+      "method": "liang_run1",
+      "verdict": "REJECT",
+      "score": null,
+      "error_type": "FN",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_reject",
+          "text": "Insufficient novelty over BSAFE/Reset — backtracking concept, standard GRPO objective, and LLM-as-critic are all borrowed with only minor engineering refinement in the backtracking token.",
+          "linked_concern_ids": [
+            "A1"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R2",
+          "polarity": "pro_reject",
+          "text": "No error bars, confidence intervals, or significance tests for any experiment; small ASR differences (e.g., 3% vs 5%) could be within noise, undermining the paper's entirely empirical claims.",
+          "linked_concern_ids": [
+            "A2"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R3",
+          "polarity": "pro_reject",
+          "text": "The LLM safety critic — foundation of both SFT annotations and RL rewards — is barely described with no standalone evaluation of its accuracy or failure modes.",
+          "linked_concern_ids": [
+            "A4"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R4",
+          "polarity": "pro_reject",
+          "text": "Incomplete and potentially misleading comparisons: original BSAFE excluded from main tables, Circuit Breakers comparison partial, no recent strong baselines.",
+          "linked_concern_ids": [
+            "A7",
+            "A8"
+          ],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "Strong empirical results: RLBF achieves very low ASR (1-5%) across multiple attack types (MF, GCG, decoding parameter attacks), model families (Gemma 2, LLaMA 3), and scales.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "Compelling utility preservation with near-zero alignment tax on MMLU, BBH, GSM8K, MATH.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M3",
+          "polarity": "pro_accept",
+          "text": "Informative ablation study (Table 5) demonstrating mid-generation backtracking is specifically important, not just the RL objective alone.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M4",
+          "polarity": "pro_accept",
+          "text": "Per-category analysis (Table 4) shows broad coverage across diverse safety categories.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M5",
+          "polarity": "pro_accept",
+          "text": "Streaming-compatible buffer-based post-processing design is deployment-friendly.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "Insufficient novelty over BSAFE/Reset: the backtracking concept is borrowed, the RL stage uses a standard GRPO objective with hand-designed reward and SFT guidance, and the critic is an existing LLM — the 'backtrack by x tokens' command is a minor engineering refinement.",
+          "severity": "major",
+          "addressability": "unresolved",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "novelty",
+            "incremental_contribution"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "No error bars, confidence intervals, or significance tests reported for any experiment; small ASR differences (e.g., RLBF 3% vs BSAFE+ 5%) could be within noise.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "statistical_rigor",
+            "reproducibility"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "Evaluation limited to two model families at small scales (up to 9B) with no experiments on larger models (70B+) and missing standard safety benchmarks (ToxiGen, RealToxicityPrompts), leaving generalizability claims unsupported.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "evaluation_scope",
+            "generalizability"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "The LLM safety critic — the most important component providing both SFT annotations and RL rewards — is barely described: model identity, standalone accuracy, false positive/negative rates, and failure modes are all missing.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "methodology",
+            "reproducibility",
+            "underspecified"
+          ]
+        },
+        {
+          "id": "A5",
+          "text": "BSAFE+ data generation quality unanalyzed: adversarial LLM-injected violations may be formulaic or easily recognizable, risking that the model learns superficial patterns rather than genuine safety understanding.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "data_quality",
+            "methodology"
+          ]
+        },
+        {
+          "id": "A6",
+          "text": "Key hyperparameters (lambda_SFT, reward values -1.0/+1.0/-0.5/-0.2) chosen without justification or ablation; sensitivity of results to these choices is unknown.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "methodology",
+            "ablation"
+          ]
+        },
+        {
+          "id": "A7",
+          "text": "Original BSAFE never directly compared in main tables — only the authors' own BSAFE+ variant is included, making it impossible to attribute improvement to BSAFE+ data vs RL stage vs simplified backtracking token.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "baseline_fairness",
+            "ablation"
+          ]
+        },
+        {
+          "id": "A8",
+          "text": "Circuit Breakers comparison incomplete (only Table 2, absent from Table 1) and no comparison against other recent strong baselines such as representation engineering defenses or adversarial training approaches.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "baseline_fairness",
+            "evaluation_scope"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O2",
+          "agentic_id": "A4",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Safety critic quality is not sufficiently evaluated — missing accuracy metrics, failure modes, and standalone assessment",
+          "rationale": "O2 says Section 4.2 names a 'single, powerful LLM-based safety critic' but omits evaluation of critic quality. A4 says the critic is 'barely described: model identity, standalone accuracy, false positive/negative rates, and failure modes are all missing.' Both identify the same core gap: the most important component lacks quality validation. Scope test passes — fixing either would substantially address the other."
+        },
+        {
+          "official_id": "O3",
+          "agentic_id": "A4",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Safety critic is insufficiently validated — adversarial robustness and general quality",
+          "rationale": "O3 specifically flags adversarial vulnerability of the single LLM critic. A4 flags the critic being barely described including missing 'failure modes.' Both are about the critic needing more validation, but O3 targets adversarial robustness while A4 targets general underspecification. Fixing A4 (full description) would not necessarily address O3 (adversarial robustness testing), so partial not exact."
+        },
+        {
+          "official_id": "O6",
+          "agentic_id": "A8",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Incomplete comparisons with methods beyond the backtracking paradigm",
+          "rationale": "O6 asks for contextualization with non-backtracking methods (post-training, inference-time). A8 flags Circuit Breakers comparison as incomplete (only Table 2) and missing other strong baselines. Both want expanded comparisons beyond BSAFE/BSAFE+, but O6 frames it as contextualizing ASR numbers while A8 frames it as baseline fairness. Circuit Breakers is the primary non-backtracking method both reference, making this partial (same direction, slightly different scope)."
+        },
+        {
+          "official_id": "O7",
+          "agentic_id": "A7",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "n/a",
+          "issue": "BSAFE baseline comparison adequacy",
+          "rationale": "O7's core complaint is that BSAFE is an arXiv preprint (not peer-reviewed), casting doubt on comparison credibility. A7's core complaint is that original BSAFE is excluded from main tables, making it impossible to attribute improvement to BSAFE+ data vs. RL stage vs. simplified token. Same component (BSAFE baseline) but genuinely different defects — one is about baseline credibility, the other about component attribution. Different author fixes required."
+        },
+        {
+          "official_id": "O8",
+          "agentic_id": "A6",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Reward function and hyperparameter values chosen without experimental justification or ablation",
+          "rationale": "O8 says 'The design of the reward function is highly subjective and has not been verified through experiments.' A6 says 'Key hyperparameters (lambda_SFT, reward values -1.0/+1.0/-0.5/-0.2) chosen without justification or ablation.' Both target the same core gap: the reward-related numerical choices in Section 4.2.2 lack experimental validation. A6 additionally mentions lambda_SFT, but the shared reward function complaint is specific enough that a neutral third party would identify these as the same issue. Both require the same fix type (ablation/sensitivity study)."
+        }
+      ],
+      "metrics": {
+        "total_official": 13,
+        "total_decisive": 0,
+        "recall_strict": 0.3077,
+        "recall_loose": 0.3846,
+        "decisive_recall": null,
+        "matched_official_ids": [
+          "O2",
+          "O3",
+          "O6",
+          "O7",
+          "O8"
+        ],
+        "strict_matched_ids": [
+          "O2",
+          "O3",
+          "O6",
+          "O8"
+        ]
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/liang_run1/rl_backtracking_feedback.yaml",
+        "match_graph": "data/match_graphs/public_slice/liang_run1/rl_backtracking_feedback.yaml",
+        "review": "data/reviews/public_slice/liang_run1/rl_backtracking_feedback/"
+      }
+    },
+    {
+      "method": "liang_gpt4o_run1",
+      "verdict": "REJECT",
+      "score": null,
+      "error_type": "FN",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_reject",
+          "text": "Experimental results lack statistical significance measures (no error bars or confidence intervals), making reliability and generalizability hard to assess.",
+          "linked_concern_ids": [
+            "A1"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R2",
+          "polarity": "pro_reject",
+          "text": "No open access to code or data, limiting reproducibility and independent verification.",
+          "linked_concern_ids": [
+            "A4"
+          ],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "Novel RLBF framework addresses critical need for robust LLM safety against adversarial attacks and in-distribution errors.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "Comprehensive empirical evaluations demonstrate effectiveness of RLBF in reducing attack success rates across diverse benchmarks and model scales.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M3",
+          "polarity": "pro_accept",
+          "text": "Integration of RL with critic feedback and streamlined backtracking mechanism offers a unique contribution to LLM safety and alignment research.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M4",
+          "polarity": "pro_accept",
+          "text": "Enhanced SFT data generation strategy (BSAFE+) supports acquisition of backtracking capabilities, providing a comprehensive approach.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "No error bars, confidence intervals, or statistical significance measures reported for experimental results.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "statistical_rigor",
+            "missing_uncertainty"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "No detailed information on computational resources required for RLBF, making scalability and practical deployment costs unclear.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "scalability",
+            "missing_detail"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "Insufficient exploration of potential negative societal impacts and ethical concerns around the proposed technology.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "ethics",
+            "broader_impact"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "No open access to code and data used in experiments, limiting reproducibility and independent verification.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "reproducibility",
+            "open_science"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O1",
+          "agentic_id": "A2",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Missing computational resource and implementation details hinder reproducibility",
+          "rationale": "O1 covers data splits, hyperparameters, prompt sampling, and compute budget deferred to supplementary. A2 captures only the computational resources subset, framed as a scalability concern rather than a reproducibility concern. Same issue family but different scope: A2 is a narrow slice of O1's broader complaint. Scope test: providing compute details would partially fix O1 but not fully (data splits and hyperparameters would remain), confirming partial not exact."
+        }
+      ],
+      "metrics": {
+        "total_official": 13,
+        "total_decisive": 0,
+        "recall_strict": 0.0769,
+        "recall_loose": 0.0769,
+        "decisive_recall": null,
+        "matched_official_ids": [
+          "O1"
+        ],
+        "strict_matched_ids": [
+          "O1"
+        ]
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/liang_gpt4o_run1/rl_backtracking_feedback.yaml",
+        "match_graph": "data/match_graphs/public_slice/liang_gpt4o_run1/rl_backtracking_feedback.yaml",
+        "review": "data/reviews/public_slice/liang_gpt4o_run1/rl_backtracking_feedback/"
+      }
+    },
+    {
+      "method": "marg_gpt4o_run1",
+      "verdict": "REJECT",
+      "score": null,
+      "error_type": "FN",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_reject",
+          "text": "Insufficient empirical evidence and comparative analysis to substantiate claims of RLBF's superiority in reducing attack success rates and preserving model utility.",
+          "linked_concern_ids": [
+            "A1",
+            "A13"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R2",
+          "polarity": "pro_reject",
+          "text": "Absence of error bars or statistical significance measures limits assessment of the reliability and variability of reported results.",
+          "linked_concern_ids": [
+            "A2"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R3",
+          "polarity": "pro_reject",
+          "text": "Code and data not available; reproducibility cannot be independently verified.",
+          "linked_concern_ids": [
+            "A5"
+          ],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "RLBF is acknowledged as a novel approach to enhancing LLM safety against adversarial attacks and in-distribution errors.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "The paper's discussion of societal impacts is described as commendable.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M3",
+          "polarity": "pro_accept",
+          "text": "The backtracking mechanism is recognized as a significant contribution to enhancing LLM safety.",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "Insufficient empirical evidence and comparative analysis to support claims of RLBF's superiority over existing safety methods.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "empirical_gap",
+            "baseline_comparison"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "No error bars or statistical significance tests reported; reliability and variability of results cannot be assessed.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "statistical_rigor"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "Backtracking mechanism insufficiently explained; criteria for identifying safety violations and the correction process are unclear; needs flowcharts or worked examples under adversarial conditions.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "clarity",
+            "method_description"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "Computational demands and deployment challenges of the RLBF backtracking process are not discussed.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "scalability",
+            "practical_applicability"
+          ]
+        },
+        {
+          "id": "A5",
+          "text": "Code and data not available; code release promised only upon acceptance, limiting independent reproducibility verification.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "review_major",
+          "tags": [
+            "reproducibility",
+            "open_access"
+          ]
+        },
+        {
+          "id": "A6",
+          "text": "No theoretical results or formal backing provided for the RLBF approach.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "theoretical_gap"
+          ]
+        },
+        {
+          "id": "A7",
+          "text": "Integration of SFT data into the RL process and the role of the LLM safety critic are not well explained; reward function effectiveness unclear.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "clarity",
+            "method_description"
+          ]
+        },
+        {
+          "id": "A8",
+          "text": "Insufficient evidence for claimed generalization and scalability of RLBF across different LLMs and tasks.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "generalization",
+            "empirical_gap"
+          ]
+        },
+        {
+          "id": "A9",
+          "text": "Missing real-world prevalence data or impact statistics to justify the need for RLBF over existing methods.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "motivation",
+            "problem_framing"
+          ]
+        },
+        {
+          "id": "A10",
+          "text": "No method proposed for validating the accuracy of feedback data used in the RLBF feedback loop.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "method_validity"
+          ]
+        },
+        {
+          "id": "A11",
+          "text": "Experimental settings lack detail: LMSYS-MF benchmark definitions, Middle Filling attack implementations, and specific hyperparameters not provided.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "reproducibility",
+            "experimental_detail"
+          ]
+        },
+        {
+          "id": "A12",
+          "text": "No framework provided for defining \"harmful\" content, which is central to the paper's safety focus.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "definition_gap",
+            "scope"
+          ]
+        },
+        {
+          "id": "A13",
+          "text": "Deeper mechanistic analysis needed to explain why RLBF outperforms existing methods, beyond reporting performance numbers.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_major",
+          "tags": [
+            "mechanistic_insight",
+            "causal_understanding"
+          ]
+        },
+        {
+          "id": "A14",
+          "text": "Ethical considerations for generating harmful content during testing not explicitly addressed.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "ethics"
+          ]
+        },
+        {
+          "id": "A15",
+          "text": "Discussion of societal impacts lacks concrete mitigation strategies for potential negative consequences.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "review_minor",
+          "tags": [
+            "societal_impact"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O1",
+          "agentic_id": "A11",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Insufficient experimental detail (hyperparameters, benchmark definitions, data splits) for reproducibility",
+          "rationale": "O1 flags key implementation details (data splits, hyperparameters, compute budget) deferred to supplementary. A11 flags missing LMSYS-MF benchmark definitions, Middle Filling attack implementations, and hyperparameters. Both target missing experimental detail for reproducibility but different specific items — O1 emphasizes supplementary deferral, A11 emphasizes absent definitions. Partial because the scope differs (paper organization vs. missing content)."
+        },
+        {
+          "official_id": "O2",
+          "agentic_id": "A10",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Safety critic/feedback quality not validated",
+          "rationale": "O2 flags that Section 4.2 names a \"single, powerful LLM-based safety critic\" but omits critic quality evaluation, making it unclear whether gains come from critic or policy learning. A10 flags no method for validating feedback data accuracy in the RLBF feedback loop. Both target unvalidated critic/feedback quality but at different levels: O2 wants accuracy metrics and component attribution; A10 wants a validation methodology for feedback data."
+        },
+        {
+          "official_id": "O4",
+          "agentic_id": "A1",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Insufficient evaluation against adaptive/strong attacks",
+          "rationale": "O4 specifically requests adaptive attacks targeting RLBF's backtracking signal (noting GCG and decoding-parameter variants are included but nothing targeting the backtracking mechanism itself). A1 broadly flags \"insufficient empirical evidence and comparative analysis.\" A1 is a broad umbrella that encompasses O4 as one instance — partial (broad-narrow pattern). Different fixes: O4 needs specific adaptive attack experiments; A1 needs broader evidence overall."
+        },
+        {
+          "official_id": "O5",
+          "agentic_id": "A4",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Efficiency and computational costs of backtracking not quantified",
+          "rationale": "O5 notes the paper claims higher efficiency relative to BSAFE yet only reports ASR and utility, not tokens discarded or latency. A4 flags that computational demands and deployment challenges are undiscussed. Same issue family (efficiency/cost gap) but different scope: O5 wants specific efficiency comparison metrics, A4 wants deployment-oriented discussion. The paper's Limitations section (Sec. 7) briefly mentions computational demands but provides no data."
+        },
+        {
+          "official_id": "O6",
+          "agentic_id": "A1",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Missing comparisons with non-backtracking safety baselines",
+          "rationale": "O6 requests contextualization with non-backtracking methods (Circuit Breakers appears in Table 2 but not Tables 1/3). A1 broadly flags insufficient comparative analysis. A1's scope subsumes O6 as one instance. Partial (broad-narrow): O6 needs specific baseline additions; A1 is a general evidence complaint."
+        },
+        {
+          "official_id": "O8",
+          "agentic_id": "A7",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Reward function design and effectiveness insufficiently justified",
+          "rationale": "O8 flags that the reward function values (+1.0, -1.0, -0.5, -0.2 in Section 4.2.2) are subjective with no ablation to justify the specific numbers. A7 flags unclear reward function effectiveness and poor explanation of SFT/RL integration and critic role. Both target the reward function but O8 wants ablation of numerical choices; A7 wants better explanation of effectiveness and integration."
+        },
+        {
+          "official_id": "O11",
+          "agentic_id": "A3",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Backtracking mechanism details insufficiently explained",
+          "rationale": "O11 asks how the backtrack count (number k of tokens to remove) is represented — a specific clarification question about the mechanism. A3 broadly flags that the backtracking mechanism is insufficiently explained and needs flowcharts or worked examples. A3 is broader, encompassing O11's specific question as one instance. Section 4.1.1 describes the BACKTRACK_BY_X token but reviewers wanted more detail."
+        },
+        {
+          "official_id": "O13",
+          "agentic_id": "A3",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "n/a",
+          "issue": "Visual/structural explanation of method is unclear",
+          "rationale": "O13 flags Figure 1 as confusing (doesn't clearly show BSAFE+ vs RLBF difference). A3 requests flowcharts or worked examples. Both concern method presentation clarity but target different presentation elements — a specific figure vs. the overall method description. Related, not partial, because they require different fixes (improve Figure 1 vs. add new explanatory material)."
+        },
+        {
+          "official_id": "O9",
+          "agentic_id": "A11",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "n/a",
+          "issue": "LMSYS-MF benchmark choice/definition issues",
+          "rationale": "O9 flags that LMSYS-MF is inconsistent with BSAFE's benchmark, questioning evaluation validity. A11 flags missing LMSYS-MF definitions. Both touch the LMSYS-MF benchmark but from different angles: consistency with prior work vs. missing definition details. Different fixes needed (justify benchmark choice vs. provide missing details)."
+        }
+      ],
+      "metrics": {
+        "total_official": 13,
+        "total_decisive": 0,
+        "recall_strict": 0.5385,
+        "recall_loose": 0.6923,
+        "decisive_recall": null,
+        "matched_official_ids": [
+          "O1",
+          "O11",
+          "O13",
+          "O2",
+          "O4",
+          "O5",
+          "O6",
+          "O8",
+          "O9"
+        ],
+        "strict_matched_ids": [
+          "O1",
+          "O11",
+          "O2",
+          "O4",
+          "O5",
+          "O6",
+          "O8"
+        ]
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/marg_gpt4o_run1/rl_backtracking_feedback.yaml",
+        "match_graph": "data/match_graphs/public_slice/marg_gpt4o_run1/rl_backtracking_feedback.yaml",
+        "review": "data/reviews/public_slice/marg_gpt4o_run1/rl_backtracking_feedback/"
+      }
+    },
+    {
+      "method": "oar_run1",
+      "verdict": "REJECT",
+      "score": null,
+      "error_type": "FN",
+      "decision_drivers": [
+        {
+          "id": "R1",
+          "polarity": "pro_reject",
+          "text": "Novelty over BSAFE is incremental — the key differences reduce to a simplified token-retraction format and an added RL stage — without a sharp ablation or conceptual argument for why these modifications constitute a substantial advance.",
+          "linked_concern_ids": [
+            "A21",
+            "A8"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R2",
+          "polarity": "pro_reject",
+          "text": "Paper conflates adversarial jailbreaking and in-distribution safety errors under a single threat model, with the largely unexamined assumption that a critic can reliably detect violations in real time against adaptive adversaries.",
+          "linked_concern_ids": [
+            "A22"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R3",
+          "polarity": "pro_reject",
+          "text": "Claimed resilience against GCG attacks is unsubstantiated — no rigorous adversarial evaluation with adaptive attacks targeting the critic or the backtracking mechanism itself.",
+          "linked_concern_ids": [
+            "A24"
+          ],
+          "severity": null
+        },
+        {
+          "id": "R4",
+          "polarity": "pro_reject",
+          "text": "Core SFT formalization excludes the violation from the conditioning context, making the BACKTRACK_BY_X signal nonsensical during training — the model never sees the violation it is supposed to learn to retract.",
+          "linked_concern_ids": [
+            "A5"
+          ],
+          "severity": null
+        }
+      ],
+      "mentions": [
+        {
+          "id": "M1",
+          "polarity": "pro_accept",
+          "text": "Core idea of training models via RL to emit a lightweight \"backtrack by x tokens\" correction signal is intuitive and practically appealing.",
+          "linked_concern_ids": [],
+          "severity": null
+        },
+        {
+          "id": "M2",
+          "polarity": "pro_accept",
+          "text": "Paper presents a clear and well-motivated extension of prior backtracking-based safety work (BSAFE).",
+          "linked_concern_ids": [],
+          "severity": null
+        }
+      ],
+      "agentic_concerns": [
+        {
+          "id": "A1",
+          "text": "Introduction implies KV cache rollback to a safe state, but method explicitly says no internal state reversion occurs — misleading mechanism description.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "clarity",
+            "methodology"
+          ]
+        },
+        {
+          "id": "A2",
+          "text": "Introduction describes plural specialized critics per safety category, but method implements a single general-purpose critic.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "clarity",
+            "consistency"
+          ]
+        },
+        {
+          "id": "A3",
+          "text": "\"Middle filling\" listed as a known adversarial strategy alongside established attacks (GCG) but is non-standard, undefined, and never reappears in the paper.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "clarity",
+            "terminology"
+          ]
+        },
+        {
+          "id": "A4",
+          "text": "Misattributed citation: GCG attack paper (Zou et al. 2023b) cited as a defense technique in a list of defensive approaches.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "citation",
+            "accuracy"
+          ]
+        },
+        {
+          "id": "A5",
+          "text": "SFT formulation defines input as p ⊕ rsafe,part1, excluding the violation v from the conditioning context, making BACKTRACK_BY_X nonsensical during training since the model never sees the violation it should learn to retract.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": true,
+          "source": "other",
+          "tags": [
+            "methodology",
+            "formalization"
+          ]
+        },
+        {
+          "id": "A6",
+          "text": "BSAFE+ comparison numbers (49.4% vs. 50.6%) do not specify which model achieved which win rate.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "clarity",
+            "evaluation"
+          ]
+        },
+        {
+          "id": "A7",
+          "text": "Backtrack distance X is underspecified beyond the injected violation length — no criterion for how much preceding safe context gets reclassified as part of the violation.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "methodology",
+            "reproducibility"
+          ]
+        },
+        {
+          "id": "A8",
+          "text": "\"Efficient backtracking signal\" hypothesis cannot explain RLBF vs. BSAFE+ gap because both share the same streamlined mechanism — the hypothesis conflates original BSAFE with BSAFE+, undermining one of two explanations for a key empirical finding.",
+          "severity": "major",
+          "addressability": "unresolved",
+          "decisive": true,
+          "source": "other",
+          "tags": [
+            "evaluation",
+            "ablation",
+            "logic"
+          ]
+        },
+        {
+          "id": "A9",
+          "text": "GRPO optimization details absent despite section title — no group size, clipping parameters, KL penalty, or description of how trajectory-level reward converts to per-group advantages.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "reproducibility",
+            "methodology"
+          ]
+        },
+        {
+          "id": "A10",
+          "text": "Violation-regeneration penalty mechanism presented as disjunctive alternatives (\"either...or\") rather than specifying which approach was actually implemented.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "methodology",
+            "reproducibility"
+          ]
+        },
+        {
+          "id": "A11",
+          "text": "Finance category incorrectly listed among those with prevention rates at or above 0.96 — LLaMA 3 3B shows 0.94 in Table 4.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "accuracy",
+            "evaluation"
+          ]
+        },
+        {
+          "id": "A12",
+          "text": "Tables 2 and 5 do not specify which model size(s) are reported, preventing readers from assessing generalizability across scales.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "reproducibility",
+            "evaluation"
+          ]
+        },
+        {
+          "id": "A13",
+          "text": "\"Solution Rate\" metric header applied to MMLU and BBH, which are conventionally evaluated as accuracy, not solve rate.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "clarity",
+            "evaluation"
+          ]
+        },
+        {
+          "id": "A14",
+          "text": "Limitations section singles out the backtracking process as computationally demanding, directly contradicting the paper's core narrative that the mechanism is efficient and lightweight.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "consistency",
+            "clarity"
+          ]
+        },
+        {
+          "id": "A15",
+          "text": "BSAFE+ data generation prompt contains contradictory instructions: \"clear violations\" (most important rule) vs. \"as nuanced as possible...be as subtle as possible\" (rule 5), affecting training data quality.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "methodology",
+            "reproducibility"
+          ]
+        },
+        {
+          "id": "A16",
+          "text": "Critic prompt (Appendix A.2) is insufficient to implement the RL reward function — missing handling for backtrack tokens, unnecessary-backtrack detection, coherence assessment, and usefulness evaluation.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "reproducibility",
+            "methodology"
+          ]
+        },
+        {
+          "id": "A17",
+          "text": "Critic prompt self-contradicts: requires both <violation> and <edit> tags in all non-\"No\" responses, but then says whole-response replacements should use \"<edit></edit> tags only.\"",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "methodology",
+            "consistency"
+          ]
+        },
+        {
+          "id": "A18",
+          "text": "Red-team example marks largely benign content (\"can inspire others...hardworking and diligent\") as \"Toxic, Hate Speech\" over a gendered pronoun, miscalibrating violation spans and category labels in few-shot demonstrations.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "methodology",
+            "data_quality"
+          ]
+        },
+        {
+          "id": "A19",
+          "text": "No error bars reported; justification conflates training-time variance (expensive) with evaluation-time variance (cheap bootstrap CIs), while key comparisons rest on 1-2 percentage point margins.",
+          "severity": "major",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "statistical_rigor",
+            "evaluation"
+          ]
+        },
+        {
+          "id": "A20",
+          "text": "Multiple NeurIPS checklist items inaccurately answered: broader impacts points to limitations section (which discusses only technical limitations), code of ethics has empty justification, safeguards marked N/A despite publishing detailed red-teaming prompts.",
+          "severity": "minor",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "ethics",
+            "checklist"
+          ]
+        },
+        {
+          "id": "A21",
+          "text": "Novelty over BSAFE is incremental — key differences reduce to a simplified token-retraction format and an added RL stage without a sharp ablation or conceptual argument justifying these as a substantial advance.",
+          "severity": "major",
+          "addressability": "unresolved",
+          "decisive": true,
+          "source": "other",
+          "tags": [
+            "novelty",
+            "contribution"
+          ]
+        },
+        {
+          "id": "A22",
+          "text": "Paper conflates adversarial jailbreaking and in-distribution safety errors as a single threat model without acknowledging the backtracking mechanism is fundamentally reactive; critic reliability against adaptive adversaries is a strong, largely unexamined assumption.",
+          "severity": "major",
+          "addressability": "unresolved",
+          "decisive": true,
+          "source": "other",
+          "tags": [
+            "threat_model",
+            "methodology"
+          ]
+        },
+        {
+          "id": "A23",
+          "text": "Writing is notably repetitive — abstract, introduction, and contribution list restate the same points with only minor variation, inflating length without adding substance.",
+          "severity": "moderate",
+          "addressability": "addressable",
+          "decisive": false,
+          "source": "other",
+          "tags": [
+            "clarity",
+            "writing"
+          ]
+        },
+        {
+          "id": "A24",
+          "text": "Claimed resilience against GCG attacks is unsubstantiated without rigorous adversarial evaluation using adaptive attacks that target the critic or the backtracking mechanism itself.",
+          "severity": "major",
+          "addressability": "unresolved",
+          "decisive": true,
+          "source": "other",
+          "tags": [
+            "evaluation",
+            "robustness"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "official_id": "O4",
+          "agentic_id": "A24",
+          "match_type": "exact",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Evaluation lacks adaptive attacks targeting RLBF's specific backtracking mechanism",
+          "rationale": "O4: 'evaluation set does not target RLBF's specific backtracking signal.' A24: 'adaptive attacks that target the critic or the backtracking mechanism itself.' Both identify the same gap: the paper evaluates only standard attacks (GCG, decoding parameters) without adaptive attacks designed to exploit the backtracking signal. Same fix resolves both."
+        },
+        {
+          "official_id": "O3",
+          "agentic_id": "A22",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Single LLM safety critic may be unreliable under adversarial conditions",
+          "rationale": "O3 focuses narrowly on the single critic's adversarial vulnerability. A22 is broader — also includes threat model conflation (adversarial jailbreaking vs. in-distribution errors treated as one). The 'critic reliability against adaptive adversaries is unexamined' component of A22 directly overlaps O3. Partial because A22's threat-model-conflation component has no counterpart in O3."
+        },
+        {
+          "official_id": "O1",
+          "agentic_id": "A9",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "Key implementation details missing from main text, hindering reproducibility",
+          "rationale": "O1 is broad: data splits, prompt sampling, training hyperparameters, and compute budget deferred to supplementary. A9 is one specific instance: GRPO optimization details (group size, clipping, KL penalty) absent despite a section title promising them. A9 is a sub-concern of O1. Fixing O1 (moving details to main text) would likely address A9; fixing A9 alone would not fully address O1."
+        },
+        {
+          "official_id": "O11",
+          "agentic_id": "A7",
+          "match_type": "partial",
+          "severity_alignment": "match",
+          "judgment_alignment": "aligned",
+          "issue": "BACKTRACK_BY_X mechanism specification is unclear",
+          "rationale": "O11 asks how the backtrack count k is represented during redaction. A7 says the backtrack distance X is underspecified beyond the injected violation length — no criterion for how much preceding safe context gets reclassified. Both target the BACKTRACK_BY_X mechanism's clarity but from different angles: representation (O11) vs. scope criterion (A7). Same mechanism, different facets."
+        },
+        {
+          "official_id": "O2",
+          "agentic_id": "A16",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "n/a",
+          "issue": "Safety critic component is insufficiently validated or specified",
+          "rationale": "O2 wants critic quality evaluation (accuracy metrics, disentangling critic quality from policy learning). A16 says the critic prompt in Appendix A.2 is insufficient to implement the RL reward function. Both identify critic-related gaps but require different fixes: O2 needs accuracy experiments, A16 needs prompt implementation details. Same component, different complaints (false match pattern #4)."
+        },
+        {
+          "official_id": "O5",
+          "agentic_id": "A14",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "n/a",
+          "issue": "Efficiency claims about the backtracking mechanism are unsupported",
+          "rationale": "O5 requests missing efficiency metrics (tokens discarded, latency) despite efficiency being a core claim. A14 flags that the limitations section calls backtracking 'computationally demanding,' contradicting the core efficiency narrative. Both concern the paper's efficiency claims but identify different defects: missing data (O5) vs. internal contradiction (A14). Different fixes."
+        },
+        {
+          "official_id": "O8",
+          "agentic_id": "A10",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "n/a",
+          "issue": "Reward/penalty function design concerns",
+          "rationale": "O8 says the reward function's numerical choices (+1.0, -1.0, -0.5, -0.2) are subjective and unverified by ablation. A10 says the violation-regeneration penalty is presented as disjunctive alternatives without specifying which was implemented. Same component (reward function), different complaints: unverified values (O8) vs. ambiguous specification (A10). Per false match pattern #4."
+        },
+        {
+          "official_id": "O10",
+          "agentic_id": "A20",
+          "match_type": "related",
+          "severity_alignment": "n/a",
+          "judgment_alignment": "n/a",
+          "issue": "Submission preparation and checklist problems",
+          "rationale": "O10 flags placeholder references ('[BSAFE reference]' in Section 3) and the undeleteded checklist instruction block. A20 flags inaccurately answered NeurIPS checklist items (broader impacts, code of ethics, safeguards). Both are submission preparation issues but target different problems: missing references/formatting (O10) vs. checklist content accuracy (A20)."
+        }
+      ],
+      "metrics": {
+        "total_official": 13,
+        "total_decisive": 0,
+        "recall_strict": 0.3077,
+        "recall_loose": 0.6154,
+        "decisive_recall": null,
+        "matched_official_ids": [
+          "O1",
+          "O10",
+          "O11",
+          "O2",
+          "O3",
+          "O4",
+          "O5",
+          "O8"
+        ],
+        "strict_matched_ids": [
+          "O1",
+          "O11",
+          "O3",
+          "O4"
+        ]
+      },
+      "evidence": {
+        "agentic_concerns": "data/agentic_concerns/public_slice/oar_run1/rl_backtracking_feedback.yaml",
+        "match_graph": "data/match_graphs/public_slice/oar_run1/rl_backtracking_feedback.yaml",
+        "review": "data/reviews/public_slice/oar_run1/rl_backtracking_feedback/"
+      }
+    }
+  ]
+}

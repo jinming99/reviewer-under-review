@@ -1,0 +1,248 @@
+schema_version: "v1"
+paper: rl_reasoning_limits
+version: baseline
+method: baseline
+verdict: REJECT
+score: null
+
+decision_drivers:
+  - id: R1
+    polarity: pro_reject
+    text: >
+      Missing detailed algorithmic description and pseudocode for RLVR
+      optimization process, limiting reproducibility assessment.
+    evidence: >
+      Clarity Reproducibility refined comment point 1: "The paper should
+      include a detailed algorithm or pseudocode for the RLVR optimization
+      process. This is crucial for reproducibility."
+    linked_concern_ids: [A5]
+
+  - id: R2
+    polarity: pro_reject
+    text: >
+      Insufficient metrics beyond pass@k for evaluating sampling efficiency
+      and reasoning boundaries; additional analyses like reasoning path
+      diversity needed.
+    evidence: >
+      Experiments Proofs refined comment point 1: "it would benefit from
+      incorporating additional analyses to provide deeper insights into
+      the narrowing of reasoning boundaries"
+    linked_concern_ids: [A1]
+
+mentions:
+  - id: M1
+    polarity: pro_accept
+    text: >
+      Pass@k metric is acknowledged as effective for evaluating sampling
+      efficiency and reasoning boundaries.
+    evidence: >
+      Experiments Proofs refined comment point 1: "The paper effectively
+      uses pass@k metrics to evaluate sampling efficiency and reasoning
+      boundaries."
+    note: >
+      Acknowledged the paper's metric choice as effective but suggested
+      additional analyses on top.
+
+  - id: M2
+    polarity: pro_accept
+    text: >
+      The comparison with distillation methods is described as insightful
+      for highlighting RLVR's limitations in introducing new reasoning
+      patterns.
+    evidence: >
+      Experiments Proofs refined comment point 2: "The comparison with
+      distillation methods is insightful, highlighting RLVR's limitations
+      in introducing new reasoning patterns."
+    note: >
+      Positively noted the existing distillation comparison but sought
+      more quantitative expansion.
+
+  - id: M3
+    polarity: pro_accept
+    text: >
+      Ablation studies are recognized as offering valuable insights into
+      parameter effects on model performance.
+    evidence: >
+      Experiments Proofs refined comment point 3: "The ablation studies
+      offer valuable insights into parameter effects on model performance."
+    note: >
+      Praised existing ablations but wanted more detailed parameter
+      interplay analysis.
+
+  - id: M4
+    polarity: pro_accept
+    text: >
+      The proposed improvements to RL paradigms are described as promising.
+    evidence: >
+      Clarity Reproducibility refined comment point 3, key concepts:
+      "The proposed improvements to RL paradigms are promising."
+    note: >
+      Acknowledged the future directions but wanted more implementation
+      details.
+
+concerns:
+  - id: A1
+    text: >
+      Need additional metrics and analyses beyond pass@k for evaluating
+      sampling efficiency and reasoning boundaries, such as reasoning
+      path diversity.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: >
+      Experiments Proofs refined comment point 1: "incorporating additional
+      analyses could provide deeper insights into the narrowing of reasoning
+      boundaries"
+    decisive: false
+    tags: [evaluation_diversity, additional_metrics, reasoning_diversity]
+    dimension_impact: [D]
+
+  - id: A2
+    text: >
+      Insufficient quantitative comparison between distillation and RLVR
+      to determine the extent to which distillation expands reasoning
+      scope relative to RLVR.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: >
+      Experiments Proofs refined comment point 2: "conduct experiments to
+      quantify the extent to which distillation expands the reasoning scope
+      compared to RLVR"
+    decisive: false
+    tags: [distillation_comparison, quantitative_analysis]
+    dimension_impact: [D]
+
+  - id: A3
+    text: >
+      Ablation studies lack detailed analysis of parameter interplay (e.g.,
+      KL Loss and Rollout Number combined effects on reasoning boundaries).
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: >
+      Experiments Proofs refined comment point 3: "a more detailed analysis
+      of the interplay between parameters, such as KL Loss and Rollout Number"
+    decisive: false
+    tags: [ablation_depth, parameter_interplay]
+    dimension_impact: [D, E]
+
+  - id: A4
+    text: >
+      Perplexity analysis should further explore correlation between
+      perplexity and reasoning diversity.
+    severity:
+      level: minor
+      addressability: addressable
+      mechanism: none
+    source: review_minor
+    source_detail: >
+      Experiments Proofs refined comment point 1 (secondary suggestion):
+      "further exploration of how perplexity correlates with reasoning
+      diversity"
+    decisive: false
+    tags: [perplexity_analysis, analysis_depth]
+    dimension_impact: [D]
+
+  - id: A5
+    text: >
+      Missing detailed algorithm or pseudocode for RLVR optimization
+      process, limiting reproducibility.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: >
+      Clarity Reproducibility refined comment point 1: "The paper should
+      include a detailed algorithm or pseudocode for the RLVR optimization
+      process. This is crucial for reproducibility."
+    decisive: true
+    tags: [reproducibility, algorithmic_detail, pseudocode]
+    dimension_impact: [H]
+
+  - id: A6
+    text: >
+      Missing justifications for temperature and top-p sampling parameter
+      choices.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: >
+      Clarity Reproducibility refined comment point 2a: "it should provide
+      justifications for these choices"
+    decisive: false
+    tags: [hyperparameter_justification, sampling_parameters]
+    dimension_impact: [D, H]
+
+  - id: A7
+    text: >
+      Missing configuration and fine-tuning details of baseline models
+      used in experiments.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: >
+      Clarity Reproducibility refined comment point 2b: "The configuration
+      or fine-tuning details of baseline models used in the experiments
+      should be elaborated."
+    decisive: false
+    tags: [reproducibility, baseline_details]
+    dimension_impact: [D, H]
+
+  - id: A8
+    text: >
+      Missing concrete examples illustrating limitations imposed by
+      pretrained priors on RLVR models.
+    severity:
+      level: minor
+      addressability: addressable
+      mechanism: none
+    source: review_minor
+    source_detail: >
+      Clarity Reproducibility refined comment point 3a: "include examples
+      or scenarios illustrating the limitations imposed by pretrained priors"
+    decisive: false
+    tags: [clarity, pretrained_prior_examples]
+    dimension_impact: [G]
+
+  - id: A9
+    text: >
+      Missing implementation details for proposed RL paradigm improvements
+      beyond RLVR.
+    severity:
+      level: minor
+      addressability: addressable
+      mechanism: none
+    source: review_minor
+    source_detail: >
+      Clarity Reproducibility refined comment point 3b: "the paper should
+      elaborate on how these strategies are implemented or tested"
+    decisive: false
+    tags: [future_work_detail, implementation]
+    dimension_impact: [G, H]
+
+method_specific:
+  system: marg_gpt4o
+  verdict_source: implicit
+  notes: >
+    MARG system generates refined review comments organized by specialty
+    (experiments_proofs, novelty_impact, clarity_reproducibility) without
+    producing an explicit accept/reject verdict or score. The novelty_impact
+    specialty entirely failed to generate substantive content (agent
+    communication loop produced no review output). Verdict coded as REJECT
+    because the system raised only concerns with no acceptance justification.
+    Many concerns may be factually incorrect -- the paper already contains
+    information the agentic system claims is missing (e.g., the paper
+    includes temperature analysis in Appendix D.8, hyperparameters in
+    Section 4.3 and Appendix A.1, and distillation comparison in Section 4.2).

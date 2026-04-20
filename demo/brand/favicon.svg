@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="favFill" x1="20" y1="18" x2="42" y2="42" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF" stop-opacity="0.92"/>
+      <stop offset="1" stop-color="#F0C674" stop-opacity="0.18"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="12" fill="#10131F"/>
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="13" cy="20" r="2.6" fill="#56B6C2"/>
+    <circle cx="13" cy="44" r="2.6" fill="#56B6C2"/>
+    <circle cx="51" cy="14" r="2.6" fill="#C678DD"/>
+    <circle cx="51" cy="50" r="2.6" fill="#C678DD"/>
+    <path d="M15 20C23 20 27 29 30 29" stroke="#56B6C2" stroke-width="2.2" opacity="0.55"/>
+    <path d="M30 29C33 29 41 17 49 14" stroke="#C678DD" stroke-width="2.2" opacity="0.55"/>
+    <path d="M15 44C23 44 27 35 30 35" stroke="#56B6C2" stroke-width="2.2" opacity="0.55"/>
+    <path d="M30 35C33 35 41 50 49 50" stroke="#C678DD" stroke-width="2.2" opacity="0.55"/>
+    <circle cx="32" cy="32" r="13" fill="url(#favFill)"/>
+    <circle cx="32" cy="32" r="13" stroke="#F0C674" stroke-width="3"/>
+    <path d="M41 41L51 51" stroke="#F0C674" stroke-width="4.5"/>
+  </g>
+</svg>

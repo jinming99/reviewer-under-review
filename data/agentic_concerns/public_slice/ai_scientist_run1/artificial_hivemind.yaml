@@ -1,0 +1,155 @@
+schema_version: "v1"
+paper: "artificial_hivemind"
+version: "own_group/ai_scientist_run1"
+method: "baseline"  # AI Scientist external baseline; closest analog for schema compliance
+verdict: "REJECT"
+score: 4  # Overall score (1-10 scale)
+
+decision_drivers:
+  - id: "R1"
+    polarity: "pro_reject"
+    text: "Core diversity measurement relies on a single unvalidated embedding model (text-embedding-3-small) without alternative metric triangulation."
+    evidence: "review.md Weakness 1"
+    linked_concern_ids: ["A1"]
+  - id: "R2"
+    polarity: "pro_reject"
+    text: "No human diversity baseline makes the claim that LMs are 'too homogeneous' empirically ungrounded."
+    evidence: "review.md Weakness 2"
+    linked_concern_ids: ["A2"]
+  - id: "R3"
+    polarity: "pro_reject"
+    text: "Paper framing of AI safety risks and homogenization of human thought overstates what the evidence supports."
+    evidence: "review.md Weakness 7"
+    linked_concern_ids: ["A7"]
+
+mentions:
+  - id: "M1"
+    polarity: "pro_accept"
+    text: "Addresses an important and timely problem with implications for creativity and pluralistic alignment."
+    evidence: "review.md Strength 1"
+    note: "Acknowledged as a strength but did not overcome methodological concerns."
+  - id: "M2"
+    polarity: "pro_accept"
+    text: "Impressive scale: 70+ models evaluated, 26K queries mined, 31K+ human annotations with 25 annotators per item."
+    evidence: "review.md Strength 2"
+    note: "Scale acknowledged but deemed insufficient to compensate for methodological issues."
+  - id: "M3"
+    polarity: "pro_accept"
+    text: "The inter-model homogeneity analysis is novel — first systematic cross-model convergence analysis on real-world open-ended queries."
+    evidence: "review.md Strength 3"
+    note: "Novelty recognized but overshadowed by measurement validity concerns."
+  - id: "M4"
+    polarity: "pro_accept"
+    text: "Well-constructed taxonomy of open-ended query types grounded in naturally occurring user interactions."
+    evidence: "review.md Strength 4"
+    note: "Taxonomy not weighted in verdict."
+  - id: "M5"
+    polarity: "pro_accept"
+    text: "Compelling qualitative examples (e.g., Figure 1 showing 25 models collapsing into two metaphor clusters)."
+    evidence: "review.md Strength 5"
+    note: "Presentation quality not weighted against methodological weaknesses."
+  - id: "M6"
+    polarity: "pro_accept"
+    text: "Thorough appendix with extensive model-level breakdowns, annotation interface, and paraphrase experiments."
+    evidence: "review.md Strength 6"
+    note: "Documentation thoroughness noted but not decisive."
+
+concerns:
+  - id: "A1"
+    text: "The entire diversity measurement framework relies on cosine similarity from a single embedding model (text-embedding-3-small), never validated against human diversity judgments, with no alternative metrics explored."
+    severity:
+      level: "major"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "review.md Weakness 1; echoed in Questions 1-2"
+    decisive: true
+    tags: ["metric_validity", "evaluation_methodology", "single_metric"]
+    dimension_impact: ["D"]
+
+  - id: "A2"
+    text: "No human diversity baseline is provided; without measuring pairwise similarity among human-authored responses, the claim that LMs are 'too homogeneous' cannot distinguish model convergence from task-inherent constraints."
+    severity:
+      level: "major"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "review.md Weakness 2; Question 1; Limitation 1"
+    decisive: true
+    tags: ["baseline_missing", "human_comparison", "evaluation_methodology"]
+    dimension_impact: ["D"]
+
+  - id: "A3"
+    text: "Core experimental analyses use only 100 queries (intra/inter-model) and 50 queries (human annotation) from a pool of 26K, significantly limiting generalizability without adequate justification."
+    severity:
+      level: "major"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "review.md Weakness 3; Question 3; Limitation 4"
+    decisive: false
+    tags: ["sample_size", "generalizability", "evaluation_scope"]
+    dimension_impact: ["D", "F"]
+
+  - id: "A4"
+    text: "Section 4 findings are partly expected by construction: model-human correlation naturally drops in restricted-range (similar-quality) and high-noise (high-disagreement) subsets, and the paper does not control for this statistical artifact."
+    severity:
+      level: "major"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "review.md Weakness 4; Question 5"
+    decisive: false
+    tags: ["statistical_artifact", "restricted_range", "methodology"]
+    dimension_impact: ["D"]
+
+  - id: "A5"
+    text: "No causal analysis of why homogeneity occurs; the paper cannot distinguish shared training data, RLHF alignment, memorization, task constraints, or embedding artifacts as drivers."
+    severity:
+      level: "major"
+      addressability: "unresolved"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "review.md Weakness 5"
+    decisive: false
+    tags: ["causal_analysis", "mechanistic_understanding"]
+    dimension_impact: ["E"]
+
+  - id: "A6"
+    text: "The quality-diversity tradeoff is not studied; diversity is measured at a single decoding configuration without assessing whether more diverse outputs maintain acceptable quality."
+    severity:
+      level: "moderate"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "review.md Weakness 6; Limitation 2"
+    decisive: false
+    tags: ["quality_diversity_tradeoff", "evaluation_scope"]
+    dimension_impact: ["D"]
+
+  - id: "A7"
+    text: "The framing ('Artificial Hivemind,' 'long-term AI safety risks,' 'homogenization of human thought') is stronger than the evidence supports; the paper measures output similarity but provides no evidence of downstream impact on human creativity or behavior."
+    severity:
+      level: "major"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "review.md Weakness 7; Limitation 3"
+    decisive: true
+    tags: ["overclaiming", "framing", "evidence_gap"]
+    dimension_impact: ["A", "G"]
+
+method_specific:
+  system: "ai_scientist"
+  model: "claude-opus-4-6"
+  note: "External baseline (AI Scientist). Review contains no adversarial_brief, gates, scorecard, or debate artifacts. Method field set to 'baseline' as closest analog for schema compliance."
+  original_scores:
+    originality: 3
+    quality: 2
+    clarity: 3
+    significance: 2
+    soundness: 2
+    presentation: 3
+    contribution: 2
+    overall: 4
+    confidence: 4

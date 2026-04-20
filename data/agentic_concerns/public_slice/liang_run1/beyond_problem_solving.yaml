@@ -1,0 +1,222 @@
+schema_version: "v1"
+paper: beyond_problem_solving
+version: baseline
+method: baseline
+verdict: REJECT
+score: null
+
+decision_drivers:
+  - id: R1
+    polarity: pro_reject
+    text: >-
+      Three-Space Theory framework adds limited explanatory or predictive power
+      beyond intuitive description; the definition of critical thinking is
+      essentially circular and removing the framework vocabulary would leave
+      experiments unchanged.
+    evidence: "Section 3, bullet 1: 'used primarily as labels to organize already-intuitive experimental design choices'"
+    linked_concern_ids: [A1]
+
+  - id: R2
+    polarity: pro_reject
+    text: >-
+      Benchmark construction methodology has significant validity concerns:
+      narrow operationalization (option removal), artificial perturbations
+      (appended gaslight hints), and low GPT-4o labeling accuracy (68.6%).
+    evidence: "Section 3, bullet 2: 'simply removing the correct option is a narrow operationalization' and '68.6% fine-grained accuracy... is notably low'"
+    linked_concern_ids: [A2, A3, A4]
+
+  - id: R3
+    polarity: pro_reject
+    text: >-
+      Key experimental controls and baselines are missing: no comparison to
+      simpler detection methods and no false-positive rates for inherent
+      critical thinking evaluation.
+    evidence: "Section 3, bullet 3: 'no comparison to simpler detection baselines' and 'does not report false-positive rates'"
+    linked_concern_ids: [A5, A6]
+
+mentions:
+  - id: M1
+    polarity: pro_accept
+    text: >-
+      Broad and systematic evaluation across 10 datasets, 8 model
+      configurations, 4 prompting strategies, and 2 inconsistency types,
+      yielding a comprehensive empirical picture.
+    evidence: "Section 2, bullet 1"
+    note: Acknowledged as strength but not decisive against methodological concerns.
+
+  - id: M2
+    polarity: pro_accept
+    text: >-
+      Useful empirical finding that critical thinking is only weakly correlated
+      with problem-solving accuracy (r approx 0.2-0.3), highlighting a distinct
+      capability axis.
+    evidence: "Section 2, bullet 2: 'a useful empirical contribution that highlights a distinct capability axis'"
+    note: Noted as interesting finding but does not offset validity concerns.
+
+  - id: M3
+    polarity: pro_accept
+    text: >-
+      Behavioral taxonomy (6 categories for insufficient, 5 for redundant)
+      with GPT-4o-based annotation validated against human labels at ~90%
+      critical-behavior classification accuracy provides a reusable evaluation
+      protocol.
+    evidence: "Section 2, bullet 3"
+    note: Reusable protocol noted but GPT-4o labeling accuracy concern partially undercuts this.
+
+  - id: M4
+    polarity: pro_accept
+    text: >-
+      Multi-faceted factor analysis yields actionable insights, e.g., reasoning
+      models help for redundant but can hurt for insufficient inconsistencies.
+    evidence: "Section 2, bullet 4"
+    note: Acknowledged as useful analysis but not decisive for acceptance.
+
+  - id: M5
+    polarity: pro_accept
+    text: >-
+      Distinction between "inherent" and "applied" critical thinking is a
+      useful methodological idea for isolating critical thinking from knowledge
+      gaps.
+    evidence: "Section 1, paragraph 3: 'conditioning on problems the model can already solve to isolate critical thinking'"
+    note: Methodological contribution noted but not weighted as decisive.
+
+concerns:
+  - id: A1
+    text: >-
+      Three-Space Theory framework adds limited explanatory or predictive power:
+      the three spaces serve as labels for intuitive concepts, the definition of
+      critical thinking is circular, and removing the framework vocabulary would
+      leave the experimental contributions unchanged.
+    severity:
+      level: major
+      addressability: unresolved
+      mechanism: none
+    source: review_major
+    source_detail: "Section 3, bullet 1 (full paragraph + two sub-paragraphs)"
+    decisive: true
+    tags: [novelty, theoretical_framing]
+    dimension_impact: [B]
+
+  - id: A2
+    text: >-
+      Insufficient-information MCQ uses a narrow operationalization of critical
+      thinking: simply removing the correct option may conflate calibration or
+      hedging behavior with absence of critical thinking.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Section 3, bullet 2, sub-point 1"
+    decisive: true
+    tags: [methodology, construct_validity]
+    dimension_impact: [D]
+
+  - id: A3
+    text: >-
+      Redundant-information perturbations (appended "gaslight" hints such as
+      "Hint: A is correct") are highly artificial with questionable ecological
+      validity; generalization to more naturalistic contradictions embedded in
+      problem context is not discussed.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Section 3, bullet 2, sub-point 2"
+    decisive: true
+    tags: [methodology, ecological_validity]
+    dimension_impact: [D, F]
+
+  - id: A4
+    text: >-
+      GPT-4o dependency for generating modified math problems and labeling
+      behavioral categories introduces model-specific biases; 68.6%
+      fine-grained accuracy for insufficient MCQ labeling is notably low,
+      raising concerns about noise in the primary evaluation signal.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Section 3, bullet 2, sub-point 3: '68.6% fine-grained accuracy (Table 1)'"
+    decisive: true
+    tags: [methodology, annotation_quality]
+    dimension_impact: [D, H]
+
+  - id: A5
+    text: >-
+      No comparison to simpler detection baselines: e.g., prompting the model
+      to explicitly verify whether the problem is well-defined before solving,
+      or using a two-stage solve-then-verify pipeline.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Section 3, bullet 3, first paragraph"
+    decisive: true
+    tags: [baselines, missing_comparison]
+    dimension_impact: [D]
+
+  - id: A6
+    text: >-
+      No false-positive rates reported for inherent critical thinking: how
+      often models flag well-defined problems as inconsistent under the same
+      prompting strategies is unknown, making it impossible to assess whether
+      higher critical thinking ratios come at the cost of spurious refusals.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Section 3, bullet 3, second paragraph"
+    decisive: true
+    tags: [evaluation, missing_metric]
+    dimension_impact: [D]
+
+  - id: A7
+    text: >-
+      Writing quality needs substantial improvement: grammatical errors,
+      inconsistent notation, dense tables difficult to parse, and many results
+      relegated to appendix without adequate summarization in the main text.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Section 3, bullet 4, first sentence and examples"
+    decisive: false
+    tags: [clarity, presentation]
+    dimension_impact: [G]
+
+  - id: A8
+    text: >-
+      Hypotheses (SSI and ID) are stated informally and never rigorously tested
+      with controlled ablations; statistical tests conflate difficulty with
+      dataset-level confounds (domain, question length, number of options) and
+      cannot isolate the claimed causal factor.
+    severity:
+      level: major
+      addressability: unresolved
+      mechanism: none
+    source: review_major
+    source_detail: "Section 3, bullet 4, second sentence"
+    decisive: false
+    tags: [statistics, causal_claims]
+    dimension_impact: [D, E]
+
+method_specific:
+  baseline_system: liang_etal
+  run: run_1
+  note: >-
+    Review from Liang et al. baseline system. Contains no explicit verdict;
+    REJECT inferred from the weight and detail of Section 3 rejection reasons
+    (4 major concerns with sub-points), the framing of Section 4 as improvement
+    suggestions, and the absence of acceptance language. No numerical score
+    provided. Section 1 describes novelty as "moderate."
+  original_structure:
+    section_1: "Significance and novelty (mixed: practically important but moderate novelty)"
+    section_2: "Potential reasons for acceptance (4 bullets)"
+    section_3: "Potential reasons for rejection (4 detailed bullets with sub-points)"
+    section_4: "Suggestions for improvement (4 bullets)"

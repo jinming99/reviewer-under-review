@@ -1,0 +1,240 @@
+schema_version: "v1"
+paper: cmdp_meta_safe_rl
+version: baseline
+method: baseline
+verdict: REJECT
+score: null
+
+decision_drivers:
+  - id: R1
+    polarity: pro_reject
+    text: >-
+      Experimental evaluation is weak — simplistic baselines, no empirical
+      verification of theoretical predictions, and insufficient scale to draw
+      meaningful conclusions.
+    evidence: "Section 3, bullet 1: 'The experimental evaluation is weak and does not adequately validate the theoretical contributions'"
+    linked_concern_ids: [A1, A2, A3]
+
+  - id: R2
+    polarity: pro_reject
+    text: >-
+      Tabular softmax restriction fundamentally limits practical relevance, and
+      the MuJoCo experiments are disconnected from the tabular theory with no
+      bridge provided.
+    evidence: "Section 3, bullet 2: 'The theoretical framework is restricted to the tabular softmax setting, significantly limiting practical relevance'"
+    linked_concern_ids: [A4, A5]
+
+  - id: R3
+    polarity: pro_reject
+    text: >-
+      Theoretical bounds are opaque and potentially vacuous — desingularizing
+      function h is uncharacterized, cumulative inexactness is hard to control,
+      and numerous problem-dependent constants obscure practical meaning.
+    evidence: "Section 3, bullet 3: 'The cumulative inexactness E_T and the desingularizing function h obscure the practical meaning of the bounds'"
+    linked_concern_ids: [A6, A7]
+
+  - id: R4
+    polarity: pro_reject
+    text: >-
+      Claimed framework modularity is not demonstrated — entire theoretical
+      development is CRPO-specific, and CRPO's own limitations and proof
+      corrections undermine within-task guarantees.
+    evidence: "Section 3, bullet 4: 'The reliance on CRPO as the sole within-task algorithm is limiting, and the claimed modularity is not demonstrated'"
+    linked_concern_ids: [A8, A9]
+
+mentions:
+  - id: M1
+    polarity: pro_accept
+    text: >-
+      First provable guarantees for meta-safe RL, filling a genuine gap; the
+      problem formulation (Def. 1, TAOG/TACV) is clean and well-motivated.
+    evidence: "Section 2, bullet 1: 'First provable guarantees for meta-safe RL, filling a genuine gap in the literature'"
+    note: Acknowledged as a significant contribution but not weighted against the four rejection concerns.
+
+  - id: M2
+    polarity: pro_accept
+    text: >-
+      Technically substantial: estimation error decomposition (Eq. 4), tame
+      geometry argument (Theorem 3.1, Appendix F), and inexact OGD bounds may be
+      of independent interest.
+    evidence: "Section 2, bullet 2: 'Technically substantial: the estimation error decomposition...represent meaningful technical contributions'"
+    note: Technical depth acknowledged but insufficient to offset fundamental scope and evaluation limitations.
+
+  - id: M3
+    polarity: pro_accept
+    text: >-
+      Modular framework design with INIT/SIM decomposition and clear
+      articulation of how task-similarity/relatedness drive bounds.
+    evidence: "Section 2, bullet 3: 'The framework is modular: the meta-learner is decoupled from the within-task algorithm'"
+    note: Noted as structural strength but directly contradicted by rejection concern R4 about undemonstrated modularity.
+
+  - id: M4
+    polarity: pro_accept
+    text: >-
+      Comprehensive theoretical development covering static regret, dynamic
+      regret, and adaptive learning rates with improved O(1/M^{3/4}) rate.
+    evidence: "Section 2, bullet 4: 'Comprehensive theoretical development with static regret...providing a relatively complete picture'"
+    note: Theoretical completeness credited but practical interpretability questioned in R3.
+
+concerns:
+  - id: A1
+    text: >-
+      Baselines are simplistic (random init, simple averaging, pre-trained, FAL)
+      with no comparison to natural competitors such as meta-RL algorithms (MAML
+      variants) augmented with Lagrangian constraint handling or primal-dual
+      meta-learning approaches.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Section 3, bullet 1, sub-point 1"
+    decisive: true
+    tags: [baseline_fairness, evaluation_rigor]
+    dimension_impact: [D]
+
+  - id: A2
+    text: >-
+      Experiments do not empirically verify key theoretical predictions: no
+      ablation showing how TAOG/TACV scale with the number of tasks T, within-task
+      steps M, or task-similarity/relatedness measures D* and V_psi.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Section 3, bullet 1, sub-point 2"
+    decisive: true
+    tags: [claim_evidence_gap, evaluation_rigor, ablation]
+    dimension_impact: [D, E]
+
+  - id: A3
+    text: >-
+      Experiments use very few training steps on test tasks (5-10 steps), variance
+      bars are large in some figures, and MuJoCo results are relegated to the
+      appendix, making it difficult to draw meaningful conclusions.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Section 3, bullet 1, sub-point 3"
+    decisive: true
+    tags: [evaluation_rigor, statistical_significance, experimental_scale]
+    dimension_impact: [D, F]
+
+  - id: A4
+    text: >-
+      The theoretical framework is restricted to the tabular softmax setting;
+      Assumption 1 (shrinkage simplex) requires full support over all
+      state-action pairs, which is fundamentally incompatible with continuous
+      control problems and large action spaces.
+    severity:
+      level: major
+      addressability: unresolved
+      mechanism: none
+    source: review_major
+    source_detail: "Section 3, bullet 2, sub-point 1"
+    decisive: true
+    tags: [scope_limitation, assumptions, practical_relevance]
+    dimension_impact: [A, B]
+
+  - id: A5
+    text: >-
+      Theory-experiment disconnect: bounds depend on |S|x|A| explicitly (e.g.,
+      ct_2 = 4c^2_max|S||A|/(1-gamma)^3), making them vacuous for large
+      state-action spaces, yet experiments use MuJoCo environments (376-dim
+      observation, 17-dim action) with no discussion bridging the gap.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Section 3, bullet 2, sub-point 2"
+    decisive: true
+    tags: [theory_practice_gap, scope_limitation, clarity]
+    dimension_impact: [D, G]
+
+  - id: A6
+    text: >-
+      The desingularizing function h in Theorem 3.1 is problem-specific and not
+      characterized beyond existence — the convergence rate h(1/sqrt(M)) could be
+      arbitrarily slow depending on the geometry of the specific CMDP, making the
+      bound uninterpretable for concrete settings.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Section 3, bullet 3, sub-point 1"
+    decisive: true
+    tags: [theoretical_clarity, bound_interpretability]
+    dimension_impact: [E]
+
+  - id: A7
+    text: >-
+      Cumulative inexactness E_T depends on DualDICE approximation and
+      optimization errors that are hard to control in practice, and the final
+      bound (Corollary 1) involves numerous problem-dependent constants (C1-C5,
+      ct_1-ct_5, path lengths) that make it impossible to assess whether
+      guarantees are meaningful.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Section 3, bullet 3, sub-points 2-3"
+    decisive: true
+    tags: [theoretical_clarity, bound_interpretability, practical_guidance]
+    dimension_impact: [E, H]
+
+  - id: A8
+    text: >-
+      Claimed framework modularity is not demonstrated: the entire theoretical
+      development (Lemmas 19-21, Theorem G.1) is built on CRPO-specific
+      derivations with no concrete instantiation using any alternative within-task
+      algorithm, despite claiming the framework "can be potentially adapted to
+      most of the existing RL literature."
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Section 3, bullet 4, sub-point 1"
+    decisive: true
+    tags: [overclaimed_contribution, modularity, generality]
+    dimension_impact: [B, E]
+
+  - id: A9
+    text: >-
+      CRPO has known limitations inherited by the meta-framework (handles only one
+      violated constraint at a time, requires careful eta_t tuning), and the
+      correction to the original CRPO proof via Assumption 4 raises concerns
+      about the robustness of the within-task guarantees that the meta-level
+      analysis builds upon.
+    severity:
+      level: moderate
+      addressability: unresolved
+      mechanism: none
+    source: review_major
+    source_detail: "Section 3, bullet 4, sub-points 2-3"
+    decisive: true
+    tags: [technical_soundness, proof_correctness, inherited_limitations]
+    dimension_impact: [E]
+
+method_specific:
+  baseline_system: liang_etal
+  run: run_1
+  note: >-
+    Review from Liang et al. baseline system. Contains no explicit verdict;
+    REJECT inferred from the weight, detail, and structural emphasis of the
+    four rejection concerns in Section 3, which identify fundamental limitations
+    (tabular restriction, opaque bounds, undemonstrated modularity, weak
+    experiments) while the acceptance reasons in Section 2 are more compact and
+    none are framed as sufficient to outweigh the weaknesses. No numerical
+    score provided.
+  original_structure:
+    section_1: "Significance and novelty (mixed framing)"
+    section_2: "Potential reasons for acceptance (4 bullets)"
+    section_3: "Potential reasons for rejection (4 detailed bullets with sub-points)"
+    section_4: "Suggestions for improvement (4 bullets)"

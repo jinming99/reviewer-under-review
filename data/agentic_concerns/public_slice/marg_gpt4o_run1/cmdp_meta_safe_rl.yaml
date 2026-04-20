@@ -1,0 +1,241 @@
+schema_version: "v1"
+paper: cmdp_meta_safe_rl
+version: baseline
+method: baseline
+verdict: REJECT
+score: null
+
+decision_drivers:
+  - id: R1
+    polarity: pro_reject
+    text: >-
+      Paper lacks statistical significance tests and component ablation to
+      substantiate its empirical claims.
+    evidence: >-
+      Experiments Proofs section: "the paper does not include detailed
+      statistical significance tests for its results, nor does it provide a
+      thorough component analysis isolating each component's impact on
+      performance metrics"
+    linked_concern_ids: [A1, A2]
+
+  - id: R2
+    polarity: pro_reject
+    text: >-
+      Insufficient algorithmic and experimental detail undermines
+      reproducibility of the Meta-SRL framework.
+    evidence: >-
+      Clarity Reproducibility section: framework algorithms "not clearly
+      outlined", CRPO decision rule "not fully explained", experimental
+      details "limited"
+    linked_concern_ids: [A6, A8, A9]
+
+  - id: R3
+    polarity: pro_reject
+    text: >-
+      Theoretical assumptions (task-similarity, task-relatedness, inexactness)
+      are neither explicitly stated nor justified.
+    evidence: >-
+      Novelty Impact section point 3: "assumptions underlying these guarantees
+      ... should be more explicitly stated and discussed"; point 5: "more
+      thorough justification for the assumptions"
+    linked_concern_ids: [A3]
+
+mentions:
+  - id: M1
+    polarity: pro_accept
+    text: >-
+      Novel CMDP-within-online framework that effectively integrates
+      task-similarity and task-relatedness into meta-reinforcement learning.
+    evidence: >-
+      Novelty Impact section point 1: "introduces a novel CMDP-within-online
+      framework that effectively integrates task-similarity and
+      task-relatedness into meta-reinforcement learning"
+    note: >-
+      Acknowledged as a positive contribution but not weighted against the
+      concerns raised.
+
+  - id: M2
+    polarity: pro_accept
+    text: >-
+      Addresses the significant challenge of constraint violations in
+      real-world applications of meta-RL.
+    evidence: >-
+      Novelty Impact section point 1: "significant as it addresses the
+      challenge of constraint violations in real-world applications of
+      meta-RL"
+    note: >-
+      Motivation recognized as well-founded but not treated as offsetting
+      the identified gaps.
+
+  - id: M3
+    polarity: pro_accept
+    text: >-
+      Theoretical guarantees including task-averaged regret bounds and dynamic
+      regret bounds are well-justified through mathematical proofs and
+      empirical results.
+    evidence: >-
+      Novelty Impact section point 3: "findings are well-justified through
+      mathematical proofs and empirical results"
+    note: >-
+      Theoretical strength acknowledged but concerns about unstated assumptions
+      reduce its weight.
+
+concerns:
+  - id: A1
+    text: >-
+      Paper lacks statistical significance tests to validate the robustness and
+      reliability of its empirical results across environments and baselines.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: >-
+      Experiments Proofs section, refined comment point 1: "lacks detailed
+      statistical significance tests to support these claims"
+    decisive: true
+    tags: [statistical_rigor, evaluation]
+    dimension_impact: [D]
+
+  - id: A2
+    text: >-
+      No component analysis isolating individual impact of CMDP-within-online
+      framework, CRPO algorithm, and DualDICE on performance metrics.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: >-
+      Experiments Proofs section, refined comment point 2: "does not provide a
+      detailed analysis isolating each component's impact on performance
+      metrics"
+    decisive: true
+    tags: [ablation, evaluation]
+    dimension_impact: [D, E]
+
+  - id: A3
+    text: >-
+      Assumptions regarding task-similarity, task-relatedness, and inexactness
+      are not explicitly stated, lack thorough justification, and do not
+      discuss scenarios where they may not hold.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: >-
+      Novelty Impact section points 3 and 5: "assumptions ... should be more
+      explicitly stated and discussed" and "more thorough justification for the
+      assumptions"
+    decisive: true
+    tags: [theoretical_rigor, assumptions]
+    dimension_impact: [E, F]
+
+  - id: A4
+    text: >-
+      Insufficient comparison with and differentiation from specific prior
+      works in safe RL and meta-learning literature.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_minor
+    source_detail: >-
+      Novelty Impact section point 4: "benefit from a more comprehensive
+      discussion of how it compares to and improves upon specific prior works"
+    decisive: false
+    tags: [related_work, novelty]
+    dimension_impact: [B]
+
+  - id: A5
+    text: >-
+      Motivations for addressing constraint violations in meta-RL not clearly
+      linked to specific real-world applications or concrete scenarios.
+    severity:
+      level: minor
+      addressability: addressable
+      mechanism: none
+    source: review_minor
+    source_detail: >-
+      Novelty Impact section point 2: "benefit from a clearer explanation of
+      how these motivations align with specific real-world applications"
+    decisive: false
+    tags: [motivation, clarity]
+    dimension_impact: [A, G]
+
+  - id: A6
+    text: >-
+      CMDP-within-online framework lacks detail on specific algorithms for
+      deriving inexact optimal policies and approximate state visitation
+      distributions.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: >-
+      Clarity Reproducibility section point 1: "exact methods for these
+      approximations are not clearly outlined"
+    decisive: true
+    tags: [reproducibility, algorithmic_detail]
+    dimension_impact: [G, H]
+
+  - id: A7
+    text: >-
+      Criteria for meta-initialization policy and KL divergence parameters used
+      to measure task-similarity are not clearly specified.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_minor
+    source_detail: >-
+      Clarity Reproducibility section point 2: "criteria for determining the
+      meta-initialization policy and the parameters used for calculating KL
+      divergence should be clearly outlined"
+    decisive: false
+    tags: [clarity, reproducibility]
+    dimension_impact: [G, H]
+
+  - id: A8
+    text: >-
+      CRPO algorithm implementation details insufficient: decision rule for
+      switching between gradient ascent and descent not explained,
+      hyperparameters, learning rates, and safety thresholds not specified.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: >-
+      Clarity Reproducibility section point 3: "decision rule for switching
+      between these processes is not fully explained"
+    decisive: true
+    tags: [reproducibility, algorithmic_detail]
+    dimension_impact: [G, H]
+
+  - id: A9
+    text: >-
+      Experimental setup lacks comprehensive description of task variations
+      and evaluation metrics used for performance assessment.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: >-
+      Clarity Reproducibility section point 4: "details on task variations and
+      evaluation criteria are limited"
+    decisive: true
+    tags: [reproducibility, evaluation]
+    dimension_impact: [D, H]
+
+method_specific:
+  baseline_system: marg_gpt4o
+  run: 1
+  note: >-
+    Review has no explicit accept/reject verdict. Verdict inferred as REJECT
+    based on density and severity of concerns raised. Review structured as
+    three thematic sections (Experiments Proofs, Novelty Impact, Clarity
+    Reproducibility) rather than numbered review format.

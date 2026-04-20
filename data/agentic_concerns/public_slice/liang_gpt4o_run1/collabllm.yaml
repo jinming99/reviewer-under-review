@@ -1,0 +1,120 @@
+schema_version: "v1"
+paper: collabllm
+version: baseline
+method: baseline_liang_etal
+verdict: ACCEPT
+score: null
+
+decision_drivers:
+  - id: R1
+    polarity: pro_accept
+    text: >-
+      Novel CollabLLM framework addresses a critical limitation in LLMs' passive
+      multiturn behavior, with Multiturn-aware Rewards enabling optimization for
+      long-term interaction outcomes — theoretically grounded and practically applicable.
+    evidence: "review.md section 1 (Significance and novelty) + section 2 bullet 1"
+    linked_concern_ids: []
+
+  - id: R2
+    polarity: pro_accept
+    text: >-
+      Compelling experimental results showing significant improvements in task
+      performance, interactivity, and user satisfaction compared to baseline models.
+    evidence: "review.md section 2 bullet 2 (Potential reasons for acceptance)"
+    linked_concern_ids: []
+
+mentions:
+  - id: M1
+    polarity: pro_accept
+    text: >-
+      Comprehensive user study with 201 MTurk participants provides real-world
+      validation of the approach and demonstrates effectiveness in enhancing
+      user experience.
+    evidence: "review.md section 2 bullet 3"
+    note: "Acknowledged as a positive contribution but not treated as a decisive driver."
+
+  - id: M2
+    polarity: pro_accept
+    text: >-
+      Work is highly relevant to current trends in AI research, particularly
+      improving human-LLM interactions and making AI systems more collaborative.
+    evidence: "review.md section 2 bullet 4"
+    note: "Framed as domain relevance, not weighted as decisive."
+
+  - id: M3
+    polarity: pro_accept
+    text: >-
+      Development of a multiturn interaction benchmark highlights the potential
+      impact of this work on the field of conversational AI.
+    evidence: "review.md section 1 bullet 3"
+    note: "Noted as a contribution but not elevated to a decisive factor."
+
+concerns:
+  - id: A1
+    text: >-
+      Multiturn-aware Reward mechanism description lacks clarity regarding how
+      it is computed and integrated into the training process; collaborative
+      simulation module insufficiently explained for estimating long-term impacts.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "review.md section 3 bullet 1 (Lack of clarity in methodology) — two sub-bullets on MR computation and simulation module"
+    decisive: false
+    tags: [clarity, mechanism_description, methodology]
+    dimension_impact: [G]
+
+  - id: A2
+    text: >-
+      Evaluation scope limited to three tasks; generalizability to other domains
+      and tasks not thoroughly explored. User study limited to a specific task set
+      and may not fully capture the diversity of real-world interactions.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "review.md section 3 bullet 2 (Limited scope of evaluation) — two sub-bullets on task diversity and user study scope"
+    decisive: false
+    tags: [evaluation_breadth, generalizability, limited_scope]
+    dimension_impact: [D, F]
+
+  - id: A3
+    text: >-
+      Over-reliance on simulated user environments for training raises realism
+      and diversity concerns; model performance may not translate to settings
+      where user behavior deviates significantly from simulated patterns.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "review.md section 3 bullet 3 (Potential over-reliance on simulated environments) — two sub-bullets on simulator realism and sim-to-real transfer"
+    decisive: false
+    tags: [user_simulation_bias, sim_to_real_gap, training_validity]
+    dimension_impact: [D, F]
+
+  - id: A4
+    text: >-
+      Insufficient comparison with other state-of-the-art models addressing
+      similar multiturn interaction challenges; discussion of how CollabLLM
+      differs from or improves upon existing methods is lacking.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "review.md section 3 bullet 4 (Insufficient comparison with state-of-the-art models) — two sub-bullets on missing SOTA comparisons and positioning"
+    decisive: false
+    tags: [missing_baselines, related_work, positioning]
+    dimension_impact: [D, B]
+
+method_specific:
+  review_format: "outline_style"
+  verdict_inference: >-
+    No explicit verdict stated. Inferred ACCEPT from overall positive framing:
+    significance and novelty section is entirely positive, acceptance reasons are
+    strong (4 bullets), rejection reasons use hedging language throughout (could,
+    may, would), and suggestions section frames all issues as improvements rather
+    than fundamental flaws. Consistent with a favorable assessment.

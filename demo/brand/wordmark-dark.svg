@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 140" width="720" height="140">
+  <defs>
+    <linearGradient id="wmRoute" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#56B6C2"/>
+      <stop offset="1" stop-color="#C678DD"/>
+    </linearGradient>
+    <linearGradient id="wmLens" x1="40" y1="40" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="#F0C674" stop-opacity="0.14"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(14, 22)" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="14" cy="14" r="5" stroke="#56B6C2" stroke-width="3"/>
+    <circle cx="14" cy="48" r="5" stroke="#56B6C2" stroke-width="3"/>
+    <circle cx="14" cy="82" r="5" stroke="#56B6C2" stroke-width="3"/>
+    <circle cx="110" cy="10" r="5" stroke="#C678DD" stroke-width="3"/>
+    <circle cx="110" cy="40" r="5" stroke="#C678DD" stroke-width="3"/>
+    <circle cx="110" cy="68" r="5" stroke="#C678DD" stroke-width="3"/>
+    <circle cx="110" cy="96" r="5" stroke="#C678DD" stroke-width="3"/>
+    <path d="M20 14C34 14 42 28 52 36C60 42 66 44 70 44C75 44 80 42 87 32C94 22 101 14 108 10" stroke="url(#wmRoute)" stroke-width="3"/>
+    <path d="M20 48C34 48 50 48 60 48C68 48 78 46 87 40C96 34 101 40 108 40" stroke="url(#wmRoute)" stroke-width="3" opacity="0.85"/>
+    <path d="M20 48C34 48 50 48 60 48C68 48 78 52 88 60C96 66 101 68 108 68" stroke="url(#wmRoute)" stroke-width="3" opacity="0.85"/>
+    <path d="M20 82C34 82 42 70 52 62C60 56 66 54 70 54C75 54 80 56 87 66C94 78 101 88 108 96" stroke="url(#wmRoute)" stroke-width="3"/>
+    <circle cx="70" cy="49" r="18" fill="url(#wmLens)"/>
+    <circle cx="70" cy="49" r="18" stroke="#F5F7FB" stroke-width="3.2"/>
+    <path d="M83 62L95 74" stroke="#F5F7FB" stroke-width="4.8"/>
+  </g>
+  <text x="160" y="78" font-family="Georgia, 'Times New Roman', serif" font-size="50" font-weight="400" fill="#EDEEF5" letter-spacing="-0.5">Reviewer Under Review</text>
+  <text x="162" y="108" font-family="'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="400" fill="#9299B0" letter-spacing="0.5">concern-level diagnostics for AI paper review</text>
+</svg>

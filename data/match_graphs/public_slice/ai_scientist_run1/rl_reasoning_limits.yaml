@@ -1,0 +1,210 @@
+schema_version: "v1"
+paper: "rl_reasoning_limits"
+version: "v0.9.2"
+condition: "own_group/ai_scientist_run1"
+method: "baseline_ai_scientist"
+
+matches:
+  # ============================================================
+  # STRICT MATCHES (exact / partial)
+  # ============================================================
+
+  - official_id: O17
+    agentic_id: A1
+    match_type: exact
+    issue: "Similar insights about RLVR limitations already observed in prior work (DeepSeekMath, Dang et al.)"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: major
+    rationale: >
+      Both flag the same novelty concern: prior work (DeepSeekMath Section 5.2.2,
+      Dang et al.) already noted pass@k deterioration and base-model origin of
+      reasoning patterns. O17 cites DeepSeekMath specifically; A1 cites Dang et al.,
+      DeepSeekMath, and Liu et al. Same underlying issue, same severity.
+
+  - official_id: O19
+    agentic_id: A2
+    match_type: exact
+    issue: "Perplexity analysis limited to too few samples to support distribution claim"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: moderate, agentic: major — gap +1, within tolerance
+    rationale: >
+      Both identify the same flaw: the perplexity analysis in Section 4.1 / Figure 6
+      uses only two AIME problems, which is insufficient evidence for the claim that
+      all RLVR reasoning paths exist in the base model distribution. O19 severity
+      moderate, A2 severity major — within ±1 tolerance.
+
+  - official_id: O10
+    agentic_id: A3
+    match_type: partial
+    issue: "Relationship between the findings and RL theory"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: major
+    rationale: >
+      O10 requests a theoretical explanation for why RLVR fails to expand reasoning
+      boundaries. A3 argues the finding is theoretically unsurprising given standard
+      RL theory (policy gradient stays within support). Both are about the theory gap
+      but from different angles: O10 wants theory added to enrich the paper; A3 argues
+      existing theory already predicts the finding, reducing its significance. Same
+      issue family (theory dimension), different normative framing. Both treat as
+      weakness. Partial because they target different aspects of the theory-paper
+      relationship.
+
+  - official_id: O14
+    agentic_id: A3
+    match_type: partial
+    issue: "No theoretical explanation for the empirical findings"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: major
+    rationale: >
+      O14 (6ryS) makes the same point as O10 (tKuY) — the paper has only extensive
+      experimental results and no theoretical explanation. A3 addresses this from the
+      opposite direction (the theory already exists and predicts the finding). Same
+      severity, aligned judgment. Partial for the same reason as O10-A3: requesting
+      theory vs. claiming theory makes the finding trivial are related but
+      differently scoped complaints.
+
+  - official_id: O8
+    agentic_id: A4
+    match_type: partial
+    issue: "Temperature/entropy experiment has methodological limitations"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: minor, agentic: moderate — gap +1, within tolerance
+    rationale: >
+      O8 flags a specific empirical inconsistency in Figure 16 (higher temperature
+      benefits RL model at high pass@k on AIME24). A4 argues temperature scaling is
+      too crude to disentangle entropy from capability loss. Both question the
+      entropy-matching experiment's adequacy but target different facets: O8 is a
+      specific data point, A4 is a methodological critique. Partial — same experiment,
+      different level of complaint.
+
+  - official_id: O1
+    agentic_id: A8
+    match_type: partial
+    issue: "Conclusions may not hold at larger scales"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: moderate — gap -1, within tolerance
+    rationale: >
+      O1 flags small model sizes (7-32B) and low training data diversity. A8 flags
+      modest RLVR training compute (SimpleRLZoo, 450 steps). Both are about
+      generalizability to larger scales but target different dimensions: model
+      parameter count and data diversity (O1) vs. RL training compute budget (A8).
+      Partial because a fix to one would not necessarily fix the other.
+
+  - official_id: O20
+    agentic_id: A8
+    match_type: partial
+    issue: "Scaling to larger (70B+) models"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: moderate — gap -1, within tolerance
+    rationale: >
+      O20 specifically asks about 70B+ models and frontier-level evaluation. A8
+      addresses the training compute regime relevant to frontier labs. Both are about
+      whether conclusions generalize to frontier scale. Partial because O20 focuses
+      on model size while A8 focuses on training compute, but the underlying question
+      is the same: do results hold at scale?
+
+  - official_id: O21
+    agentic_id: A6
+    match_type: partial
+    issue: "Understanding which types of problems are affected by RLVR"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: moderate, agentic: moderate
+    rationale: >
+      O21 asks how the pass@k gap changes with task difficulty. A6 asks what types
+      of problems RLVR loses coverage on. Both seek characterization of affected
+      problems. O21 is specifically about difficulty stratification; A6 is broader
+      (difficulty, domains, reasoning strategies). Partial because A6 subsumes O21's
+      specific question within a wider scope.
+
+  - official_id: O16
+    agentic_id: A9
+    match_type: partial
+    issue: "Adequacy of pass@k-centric evaluation"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: moderate, agentic: moderate
+    rationale: >
+      O16 wants more analyses beyond pass@k curves (accuracy distributions, reasoning
+      coverage, distillation comparisons). A9 argues pass@k conflates output diversity
+      with reasoning capability. Both question the pass@k-centric evaluation but from
+      different angles: O16 wants complementary analyses alongside pass@k; A9 questions
+      the metric's fundamental validity. Partial — same concern family, different scope.
+
+# ============================================================
+# POSITIVE FACTOR MATCHES (for accepted papers)
+# ============================================================
+
+positive_factor_matches:
+  - official_factor_id: D1
+    agentic_source: mention
+    agentic_text: >
+      Addresses a fundamental and timely question about what RLVR actually
+      achieves in terms of LLM reasoning capabilities.
+    match_type: exact
+    judgment_alignment: aligned
+    rationale: >
+      D1 highlights the important topic (pass@k vs reasoning boundary question).
+      M1 captures the same recognition. Both frame the research question as
+      fundamental and timely.
+
+  - official_factor_id: D2
+    agentic_source: mention
+    agentic_text: >
+      Exceptionally comprehensive experimental coverage across model families,
+      sizes, task domains, benchmarks, and RL algorithms.
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >
+      D2 cites masterful execution and clean rebuttal earning perfect scores.
+      The agentic system captured the experimental comprehensiveness (M2, M3)
+      but could not observe the rebuttal or reviewer consensus. Partial because
+      only the pre-rebuttal execution quality dimension is captured.
+
+  - official_factor_id: D3
+    agentic_source: none
+    agentic_text: ""
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >
+      D3 references unanimous post-rebuttal reviewer consensus (all scores
+      raised to 6). This is entirely post-discussion and unobservable to the
+      agentic system.
+
+  - official_factor_id: D4
+    agentic_source: none
+    agentic_text: ""
+    match_type: none
+    judgment_alignment: inverted
+    rationale: >
+      D4 highlights the distillation contrast as diagnostic value showing RLVR
+      limitation is specific to RLVR. The agentic system observed the same
+      distillation comparison (A7) but framed it as a weakness (unfair comparison
+      using a vastly stronger model). Inverted judgment: AC saw diagnostic value;
+      agentic system saw methodological unfairness.
+
+# ============================================================
+# UNMATCHED
+# ============================================================
+
+unmatched_official:
+  # No strict match: minor presentation concerns
+  - O2   # Random guessing explanation not fully ruled out
+  - O3   # Overfitting to test set as alternative explanation
+  - O4   # Table 1 should note training data (minor)
+  - O5   # Figure 6 perplexity vs o1 clarity (minor)
+  - O6   # Figure 8 readability (minor)
+  - O7   # Tables 4 & 5 format (minor)
+  - O9   # Terminology misnomer (minor)
+  - O11  # Narrow scope — future RL paradigms/reward structures
+  - O12  # Limited improvement suggestions
+  - O13  # Base model dependency
+  - O15  # Experiments mainly Qwen series
+  - O18  # Specific policy optimization parameters not reported (minor)
+  - O22  # Train vs test set pass@k not distinguished
+  - O23  # Perplexity evolution during training not shown
+  - O24  # Limitations section insufficient
+  - O25  # Contradicting CoT-Pass@k paper
+  - O26  # SFT pre-training effect
+
+unmatched_agentic:
+  - A5   # Magistral AIME25 result undermines universality claim
+  - A7   # Distillation comparison is unfair

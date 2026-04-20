@@ -1,0 +1,122 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: ConcernMatchGraph
+description: >
+  Explicit bipartite mapping between official and agentic concerns.
+  Each edge captures issue identity, judgment alignment, and severity calibration.
+  One per paper × method × version.
+type: object
+required:
+  - schema_version
+  - paper
+  - version
+  - method
+  - matches
+  - unmatched_official
+  - unmatched_agentic
+properties:
+  schema_version: { type: string, enum: ["v1"] }
+  paper: { type: string }
+  version: { type: string }
+  method: { type: string }
+
+  matches:
+    type: array
+    items:
+      type: object
+      required:
+        - official_id
+        - agentic_id
+        - match_type
+        - issue
+        - judgment_alignment
+        - severity_alignment
+      properties:
+        official_id:
+          type: string
+          pattern: "^O\\d+$"
+        agentic_id:
+          type: string
+          pattern: "^A\\d+$"
+        match_type:
+          type: string
+          enum: ["exact", "partial", "related"]
+          description: >
+            exact: same underlying issue, same scope.
+            partial: same issue family, different scope/sub-claim.
+            related: nearby topic, not the same issue (use sparingly).
+        issue:
+          type: string
+          description: "Canonical one-sentence issue statement shared by both sides"
+        judgment_alignment:
+          type: string
+          enum: ["aligned", "inverted", "mixed", "n/a"]
+          description: >
+            aligned: both treat as weakness/concern.
+            inverted: same fact, opposite normative conclusion (feature vs flaw).
+            mixed: partially aligned, partially inverted.
+            n/a: match too weak to assess.
+        severity_alignment:
+          type: string
+          enum: ["match", "under", "over", "n/a"]
+          description: >
+            match: same severity bucket (±1 level OK).
+            under: agentic severity lower than official (system too lenient).
+            over: agentic severity higher than official (system too harsh).
+            n/a: match too weak to compare.
+        rationale:
+          type: string
+          description: "Brief explanation of the match and alignment annotations"
+
+  positive_factor_matches:
+    type: array
+    description: >
+      One row per official pro_accept decision driver, recording whether and
+      how the agentic system captured that positive factor. Use match_type: none
+      for misses. Include only pro_accept drivers (not pro_reject).
+      Only populated for accepted papers.
+    items:
+      type: object
+      required: [official_factor_id, agentic_source, match_type, judgment_alignment]
+      properties:
+        official_factor_id:
+          type: string
+          pattern: "^D\\d+$"
+          description: "ID from official concern sheet ac_decision_drivers"
+        agentic_source:
+          type: string
+          enum: ["above_the_line_reason", "mention", "decision_driver", "none"]
+          description: "Where the agentic system expressed this positive factor"
+        agentic_text:
+          type: string
+          description: "The agentic system's text that matches this factor (if any)"
+        match_type:
+          type: string
+          enum: ["exact", "partial", "related", "none"]
+        judgment_alignment:
+          type: string
+          enum: ["aligned", "inverted", "n/a"]
+          description: "aligned = system recognized same value; inverted = system saw it but framed negatively"
+        rationale:
+          type: string
+
+  unmatched_positive_factors:
+    type: array
+    items: { type: string }
+    description: >
+      DEPRECATED — use positive_factor_matches with match_type: none instead.
+      Kept for backward compatibility. Lists official pro_accept factor IDs
+      the agentic system did not capture.
+
+  unmatched_official:
+    type: array
+    items: { type: string }
+    description: >
+      Official concern IDs with no strict (exact/partial) agentic match.
+      Related-only matches still count as strict-unmatched.
+
+  unmatched_agentic:
+    type: array
+    items: { type: string }
+    description: >
+      Agentic concern IDs with no strict (exact/partial) official match.
+      Related-only matches still count as strict-unmatched (phantom concerns).

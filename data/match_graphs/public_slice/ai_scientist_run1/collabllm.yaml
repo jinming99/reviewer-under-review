@@ -1,0 +1,161 @@
+schema_version: "v1"
+paper: "collabllm"
+version: "v0.9.2"
+condition: "own_group/ai_scientist_run1"
+method: "baseline_ai_scientist"
+
+matches:
+  # ============================================================
+  # Exact matches
+  # ============================================================
+  - official_id: "O21"
+    agentic_id: "A1"
+    match_type: "exact"
+    issue: "Missing quantitative/empirical comparisons with existing multiturn training methods (MTPO, ArCHer, etc.)"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # O21=moderate, A1=major → gap=+1, within tolerance
+    rationale: "Both flag the same specific gap: no empirical comparison with prior multiturn training methods despite conceptual discussion. O21 cites mUmH requesting MTPO/ArCHer comparisons; A1 calls this 'the most significant gap.' Same issue, same direction. Severity within tolerance (moderate vs major)."
+
+  - official_id: "O2"
+    agentic_id: "A6"
+    match_type: "exact"
+    issue: "Causal inference framing of the MR reward is overclaimed or unconvincing"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # O2=major, A6=major
+    rationale: "Both target the causal effect estimation claim. O2 says 'somewhat convincing' and needs elaboration on distinction from MTPO. A6 says Eq.5 is standard conditional expectation, not front-door adjustment, and MTPO distinction is overstated. Same underlying issue: the causal framing doesn't hold up."
+
+  - official_id: "O9"
+    agentic_id: "A10"
+    match_type: "exact"
+    issue: "Simulated LLM users may diverge substantially from real human users; sim-to-real gap not measured"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # O9=moderate, A10=moderate
+    rationale: "Both flag the sim-to-real gap. O9 (raised by 2AZE, mUmH) says simulated users could be substantially biased. A10 asks for simulator sensitivity analysis and sim-to-real gap measurement. Same concern about training validity."
+
+  # ============================================================
+  # Partial matches
+  # ============================================================
+  - official_id: "O12"
+    agentic_id: "A2"
+    match_type: "partial"
+    issue: "Attribution of performance gains — which component drives improvement"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # O12=major, A2=major
+    rationale: "Both question whether improvements are properly attributed. O12 asks whether gains stem from MR design vs reward modification (component-level). A2 asks whether gains come from MR framework vs simply training on multiturn data curated by GPT-4o (framework-level). Same issue family (contribution attribution) but different decomposition axes."
+
+  - official_id: "O11"
+    agentic_id: "A4"
+    match_type: "partial"
+    issue: "Magnitude of performance improvements is small or potentially misleading"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # O11=major, A4=major
+    rationale: "Both question the practical significance of reported gains. O11 focuses on small improvements over prompt engineering in Table 1 (35% to 36-38% BLEU). A4 focuses on low absolute performance levels making relative improvements misleading. Same theme (effect size doubts) but different angle (incremental vs absolute)."
+
+  - official_id: "O7"
+    agentic_id: "A7"
+    match_type: "partial"
+    issue: "Generalization evidence is limited or mixed"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # O7=moderate, A7=moderate
+    rationale: "Both flag generalization weaknesses. O7 notes testing on only one additional dataset (Abg-CoQA). A7 notes that on Abg-CoQA, non-ambiguous accuracy drops from 90.4% to 72.3% (over-asking). O7 is about scope; A7 is about mixed results. Complementary facets of the same generalization concern."
+
+  - official_id: "O20"
+    agentic_id: "A9"
+    match_type: "partial"
+    issue: "User simulator model choice and its implications"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # O20=moderate, A9=moderate
+    rationale: "Both concern the user simulator dependency. O20 asks why GPT-4o is used instead of the target model and whether self-play is feasible. A9 flags the practical reproducibility bottleneck of relying on proprietary simulators. O20 is more about scientific understanding of the choice; A9 is about practical consequences."
+
+  - official_id: "O6"
+    agentic_id: "A11"
+    match_type: "partial"
+    issue: "Computational overhead of the forward simulation approach"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # O6=moderate, A11=minor → gap=-1, within tolerance
+    rationale: "Both raise computational cost concerns. O6 (Fu3N, 2AZE) requests more detailed discussion of computational overhead and scalability. A11 asks for total training compute comparison with standard DPO/PPO. O6 is broader (scalability of long conversations); A11 is narrower (training cost comparison)."
+
+  # ============================================================
+  # Related matches (near-misses, not strict)
+  # ============================================================
+  - official_id: "O4"
+    agentic_id: "A2"
+    match_type: "related"
+    issue: "Whether the contribution goes beyond training on simulated multiturn data"
+    judgment_alignment: "n/a"
+    severity_alignment: "n/a"
+    rationale: "O4 questions novelty (methodology resembles self-training tailored for multiturn conversations). A2 questions whether gains come from MR vs data quality. Both touch on 'is the MR framework doing something beyond data curation?' but target different aspects — O4 is about novelty framing, A2 is about empirical attribution. Different fixes needed."
+
+  - official_id: "O19"
+    agentic_id: "A1"
+    match_type: "related"
+    issue: "Missing comparisons with prior work using user simulators"
+    judgment_alignment: "n/a"
+    severity_alignment: "n/a"
+    rationale: "O19 requests discussion/comparison with user-simulator-based prior work (Hong et al.). A1 requests empirical comparisons with multiturn training methods (MTPO, ARCHER, STaR-GATE). Both about 'missing prior work comparison' but different specific literatures and different scopes (discussion vs empirical)."
+
+# ============================================================
+# Positive factor matches (paper was ACCEPTED officially)
+# ============================================================
+positive_factor_matches:
+  - official_factor_id: "D1"
+    agentic_source: "mention"
+    agentic_text: "Addresses an important and practical problem: training LLMs for active multiturn collaboration rather than passive single-turn response generation."
+    match_type: "exact"
+    judgment_alignment: "aligned"
+    rationale: "D1 says paper addresses 'essential problem' of multiturn conversational capability. M1 calls it 'important and practical problem.' Same positive assessment."
+
+  - official_factor_id: "D2"
+    agentic_source: "mention"
+    agentic_text: "Framework is conceptually clean and general — MR formulation naturally combines forward simulation with decomposed reward, agnostic to RL algorithm."
+    match_type: "partial"
+    judgment_alignment: "aligned"
+    rationale: "D2 highlights method for data generation with user simulator and multi-turn reward as technically sound. M2 praises the conceptual cleanliness and generality. Both see the framework design positively, but D2 emphasizes data generation + technical soundness while M2 emphasizes conceptual elegance."
+
+  - official_factor_id: "D3"
+    agentic_source: "mention"
+    agentic_text: "Large-scale user study with 201 MTurk participants provides genuine real-world validation."
+    match_type: "partial"
+    judgment_alignment: "mixed"
+    rationale: "D3 says 'results are strong' with 'strong baselines.' The agentic system acknowledges the user study as strong validation (M3) but explicitly attacks the baselines as insufficient (A1) and questions effect sizes (A4). Partial alignment on results quality, inverted on baseline adequacy."
+
+  - official_factor_id: "D4"
+    agentic_source: "none"
+    agentic_text: ""
+    match_type: "related"
+    judgment_alignment: "n/a"
+    rationale: "D4 highlights three public benchmarks as a contribution. The agentic review mentions the benchmarks factually in the summary but does not value them as a positive factor or strength."
+
+  - official_factor_id: "D5"
+    agentic_source: "none"
+    agentic_text: ""
+    match_type: "none"
+    judgment_alignment: "n/a"
+    rationale: "D5 credits substantial author rebuttal work. The AI Scientist reviews the paper cold without access to the rebuttal process, so this factor is unobservable."
+
+# ============================================================
+# Unmatched concerns
+# ============================================================
+# Official concerns with no strict (exact/partial) agentic match.
+# Related-only edges do NOT prevent a concern from appearing here.
+unmatched_official:
+  - "O1"   # Unclear how MR encourages collaboration
+  - "O3"   # Dataset access / reproducibility
+  - "O4"   # Novelty concern — resemblance to self-training (related-only to A2)
+  - "O5"   # Missing related references on multi-turn RL benchmarks
+  - "O8"   # Integration with existing RL frameworks
+  - "O10"  # MR function hard to define for ambiguous tasks
+  - "O13"  # BLEU metric appropriateness
+  - "O14"  # ITR performance decrease w=2 to w=3
+  - "O15"  # ITR metric scoring clarity
+  - "O16"  # Caption typo
+  - "O17"  # Helpfulness as w=0 reward not explored
+  - "O18"  # Broader literature missing from main text
+  - "O19"  # Missing comparison with user-simulator-based prior work (related-only to A1)
+  - "O22"  # Limitations of LLM as user simulator
+
+# Agentic concerns with no strict (exact/partial) official match.
+unmatched_agentic:
+  - "A3"   # Evaluation circularity (LLM judge in training + evaluation) — novel concern, no official reviewer raised this
+  - "A5"   # No error bars / statistical significance tests — not raised by officials
+  - "A8"   # Only one model family/size evaluated — not raised by officials

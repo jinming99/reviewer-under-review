@@ -1,0 +1,215 @@
+schema_version: "v1"
+paper: "collabllm"
+version: "baseline"
+method: "baseline_ai_scientist"
+verdict: "REJECT"
+score: 5  # AI Scientist "Overall" score on 1-10 scale (not our weighted scorecard)
+
+decision_drivers:
+  - id: "R1"
+    polarity: "pro_reject"
+    text: "Critical absence of empirical comparisons with existing multiturn training methods (MTPO, ARCHER, STaR-GATE) — only vanilla Llama-3.1-8B and prompting variant used as baselines."
+    evidence: "Weaknesses bullet 1; Questions Q1: 'This is the most significant gap in the evaluation.'"
+    linked_concern_ids: ["A1"]
+
+  - id: "R2"
+    polarity: "pro_reject"
+    text: "No ablation isolating the MR contribution from the effect of simply training on multiturn data curated by a strong model (GPT-4o)."
+    evidence: "Weaknesses bullet 2; Questions Q2"
+    linked_concern_ids: ["A2"]
+
+  - id: "R3"
+    polarity: "pro_reject"
+    text: "Evaluation circularity — model trained with LLM-judged interactivity reward, then evaluated by LLM-judged ITR metric, which shows the largest gains (46.3%)."
+    evidence: "Weaknesses bullet 3; Questions Q3"
+    linked_concern_ids: ["A3"]
+
+mentions:
+  - id: "M1"
+    polarity: "pro_accept"
+    text: "Addresses an important and practical problem: training LLMs for active multiturn collaboration rather than passive single-turn response generation."
+    evidence: "Strengths bullet 1"
+    note: "Acknowledged as positive but insufficient to overcome evaluation concerns."
+
+  - id: "M2"
+    polarity: "pro_accept"
+    text: "Framework is conceptually clean and general — MR formulation naturally combines forward simulation with decomposed reward, agnostic to RL algorithm."
+    evidence: "Strengths bullet 2"
+    note: "Design praised but empirical validation questioned."
+
+  - id: "M3"
+    polarity: "pro_accept"
+    text: "Large-scale user study with 201 MTurk participants provides genuine real-world validation; longitudinal interaction ratings show sustained engagement."
+    evidence: "Strengths bullet 3"
+    note: "Acknowledged as strongest empirical evidence but doesn't compensate for missing baselines."
+
+  - id: "M4"
+    polarity: "pro_accept"
+    text: "Thorough ablation study systematically varies reward components and forward window sizes."
+    evidence: "Strengths bullet 4"
+    note: "Ablation praised but reviewer argues it doesn't isolate MR from data quality (see A2)."
+
+  - id: "M5"
+    polarity: "pro_accept"
+    text: "Clear and well-organized writing with informative figures and concrete case study analysis."
+    evidence: "Strengths bullet 5"
+    note: "Presentation quality acknowledged."
+
+  - id: "M6"
+    polarity: "pro_accept"
+    text: "Safety evaluation demonstrates collaborative training does not degrade base model's safety alignment."
+    evidence: "Strengths bullet 6"
+    note: "Safety consideration noted positively."
+
+concerns:
+  # ============================================================
+  # From Weaknesses section
+  # ============================================================
+  - id: "A1"
+    text: "Critical absence of empirical comparisons with existing multiturn training methods (MTPO, STaR-GATE, ARCHER); only baselines are vanilla Llama-3.1-8B and a prompting variant, insufficient for a top venue."
+    severity:
+      level: "major"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "Weaknesses bullet 1; reinforced in Questions Q1 as 'the most significant gap in the evaluation'"
+    decisive: true
+    tags: ["missing_baselines", "quantitative_comparison", "multi_turn_methods"]
+    dimension_impact: ["D"]
+
+  - id: "A2"
+    text: "No ablation isolating the MR contribution from the effect of multiturn training data — all variants trained on MR-guided data, and GPT-4o used for synthetic data generation means training data quality is partly inherited from a stronger model."
+    severity:
+      level: "major"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "Weaknesses bullet 2; reinforced in Questions Q2"
+    decisive: true
+    tags: ["ablation", "contribution_attribution", "data_quality"]
+    dimension_impact: ["D", "E"]
+
+  - id: "A3"
+    text: "Evaluation circularity: intrinsic reward uses LLM judge during training, and primary evaluation metric ITR is also scored by LLM judge — model partially trained to produce what LLM judges reward, then evaluated by LLM judges."
+    severity:
+      level: "major"
+      addressability: "unresolved"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "Weaknesses bullet 3; reinforced in Questions Q3"
+    decisive: true
+    tags: ["evaluation_circularity", "LLM_judge", "metric_validity"]
+    dimension_impact: ["D"]
+
+  - id: "A4"
+    text: "Absolute performance levels are low (MATH-Chat 16.5%, BLEU 36.8%, BigCodeBench 13.0%), making large relative improvements (18.5% average) potentially misleading."
+    severity:
+      level: "major"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "Weaknesses bullet 4"
+    decisive: false
+    tags: ["effect_size", "absolute_performance", "reporting"]
+    dimension_impact: ["D"]
+
+  - id: "A5"
+    text: "No error bars, confidence intervals, or statistical significance tests reported for simulated experiments or user study, despite small test sets (100 for MediumDocEdit, 200 for MATH)."
+    severity:
+      level: "major"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "Weaknesses bullet 5; reinforced in Questions Q4"
+    decisive: false
+    tags: ["statistical_rigor", "uncertainty", "reproducibility"]
+    dimension_impact: ["D"]
+
+  - id: "A6"
+    text: "Causal inference framing overclaimed — Equation 5 is standard conditional expectation, not a front-door adjustment; distinction from MTPO in Appendix A.2 is overstated since both estimate expected future reward with different sampling strategies."
+    severity:
+      level: "major"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "Weaknesses bullet 6"
+    decisive: false
+    tags: ["causal_claims", "overclaiming", "theoretical_framing"]
+    dimension_impact: ["B", "E"]
+
+  - id: "A7"
+    text: "Generalization evidence is mixed — on Abg-CoQA, non-ambiguous accuracy drops from 90.4% to 72.3% (over-asking clarification questions), and Macro F1 improvement is only 1.77 points."
+    severity:
+      level: "moderate"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "Weaknesses bullet 7; reinforced in Questions Q5"
+    decisive: false
+    tags: ["generalizability", "over_asking", "evaluation_scope"]
+    dimension_impact: ["F"]
+
+  - id: "A8"
+    text: "Only one model family and size (Llama-3.1-8B) evaluated; scalability and generalization to other architectures and scales is untested."
+    severity:
+      level: "moderate"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "Weaknesses bullet 8"
+    decisive: false
+    tags: ["model_diversity", "scalability", "generalizability"]
+    dimension_impact: ["F"]
+
+  # ============================================================
+  # From Limitations + Questions sections
+  # ============================================================
+  - id: "A9"
+    text: "Dependence on high-quality proprietary user simulators (GPT-4o) for training; open-source models reportedly perform poorly, creating a practical bottleneck for reproducibility and adoption."
+    severity:
+      level: "moderate"
+      addressability: "unresolved"
+      mechanism: "none"
+    source: "other"
+    source_detail: "Limitations bullet 1; related to Questions Q6"
+    decisive: false
+    tags: ["user_simulator", "reproducibility", "practical_adoption"]
+    dimension_impact: ["H"]
+
+  - id: "A10"
+    text: "Sensitivity to user simulator quality not characterized; sim-to-real gap between LLM-simulated and real human users not measured, though user study partially mitigates."
+    severity:
+      level: "moderate"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "other"
+    source_detail: "Questions Q6: 'Have you quantified performance when using different simulators or measured the sim-to-real gap?'; Limitations bullet 4"
+    decisive: false
+    tags: ["user_simulation_bias", "sim_to_real_gap", "sensitivity_analysis"]
+    dimension_impact: ["F"]
+
+  - id: "A11"
+    text: "Total training compute overhead of CollabLLM (including all forward simulation costs) compared to standard DPO/PPO training not reported."
+    severity:
+      level: "minor"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "other"
+    source_detail: "Questions Q7: 'What is the total training compute overhead of COLLABLLM compared to standard DPO/PPO training?'"
+    decisive: false
+    tags: ["computational_cost", "training_overhead", "scalability"]
+    dimension_impact: ["H"]
+
+method_specific:
+  system: "ai_scientist"
+  note: "External baseline system (AI Scientist, claude-opus-4-6). Single-pass review without gates, adversarial brief, scorecard, or debate. Method field set to 'baseline' for schema compliance as the closest single-pass equivalent."
+  confidence: 4  # AI Scientist confidence score
+  scores:
+    originality: 3
+    quality: 2
+    clarity: 3
+    significance: 2
+    soundness: 2
+    presentation: 3
+    contribution: 2
+    overall: 5

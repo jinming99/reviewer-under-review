@@ -1,0 +1,21 @@
+slug: adversarial_dejavu
+baseline: marg
+model: gpt-4o
+timestamp: '2026-04-10T13:17:21.177235+00:00'
+git_sha: 6b601aec
+git_branch: main
+elapsed_s: 1172.9
+usage:
+  input_tokens: 5364746
+  output_tokens: 100663
+cost_usd: 0.0
+num_sdk_calls: 0
+num_api_calls: null
+num_chunks: 8
+specialties:
+- experiments_proofs
+- novelty_impact
+- clarity_reproducibility
+paper_text_chars: 111723
+review_text_chars: 31931
+skip_refinement: false

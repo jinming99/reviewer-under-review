@@ -1,0 +1,114 @@
+schema_version: "v1"
+paper: "artificial_hivemind"
+version: "own_group/ai_scientist_gpt4o_run1"
+method: "baseline"  # AI Scientist external baseline
+
+matches:
+  # ---- A1 (English-only) ↔ O1 (English-only scope) ----
+  - official_id: "O1"
+    agentic_id: "A1"
+    match_type: "exact"
+    issue: "English-only dataset limits generalizability across languages and cultures"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # both moderate
+    rationale: "Both identify the same limitation: INFINITY-CHAT is restricted to English queries from WildChat, constraining cross-linguistic generalizability. Same scope, same severity."
+
+  # ---- A3 (no mitigation validation) ↔ O2 (limited actionable guidance) ----
+  - official_id: "O2"
+    agentic_id: "A3"
+    match_type: "partial"
+    issue: "Gap between diagnosing the Hivemind effect and providing actionable mitigation"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # official: moderate, agentic: major (2 levels apart)
+    rationale: "O2 flags limited actionable guidance on applying the metric; A3 flags missing empirical validation of mitigation strategies. Both target the diagnosis-to-action gap but from different angles: O2 is about how to use the metric, A3 is about whether mitigations work. Agentic rates major vs official moderate."
+
+  # ---- A4 (annotation-mitigation gap) ↔ O2 (limited actionable guidance) ----
+  - official_id: "O2"
+    agentic_id: "A4"
+    match_type: "partial"
+    issue: "Unclear how the paper's insights translate to practical mitigation"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # both moderate
+    rationale: "O2 asks for more actionable guidance on using the Hivemind metric; A4 asks how human annotation insights inform mitigation. Both target the same actionability gap from different facets. A4 specifically questions the annotation→mitigation link."
+
+  # ---- A2 (oversimplify creativity) ↔ O4 (statistically expected) ----
+  - official_id: "O4"
+    agentic_id: "A2"
+    match_type: "related"
+    issue: "Conceptual challenge to the significance of the Hivemind finding"
+    judgment_alignment: "aligned"
+    severity_alignment: "n/a"  # related match — severity comparison not applicable
+    rationale: "Both challenge the paper's core conceptual framing but target different aspects. O4 argues homogeneity is statistically expected (not surprising); A2 argues the framing oversimplifies creativity scope. Related but not the same specific complaint — O4 is about statistical inevitability, A2 is about reductive framing."
+
+positive_factor_matches:
+  # D1: Benchmark construction quality
+  - official_factor_id: "D1"
+    agentic_source: "mention"
+    agentic_text: "Extensive human-annotated data for preference analysis."
+    match_type: "partial"
+    judgment_alignment: "aligned"
+    rationale: "D1 highlights meticulous benchmark construction with 31K+ annotations and 25 per example. M3 acknowledges the annotation scale but does not mention construction quality specifically."
+
+  # D2: Comprehensive evaluation framework
+  - official_factor_id: "D2"
+    agentic_source: "mention"
+    agentic_text: "Novel dataset addressing a gap in evaluating language model diversity."
+    match_type: "partial"
+    judgment_alignment: "aligned"
+    rationale: "D2 praises the fine-grained evaluation framework measuring diversity, alignment, and homogenization. M1 acknowledges the dataset fills an evaluation gap but does not describe the framework's comprehensiveness."
+
+  # D3: Hivemind effect demonstrated across 70+ LMs
+  - official_factor_id: "D3"
+    agentic_source: "none"
+    agentic_text: ""
+    match_type: "none"
+    judgment_alignment: "n/a"
+    rationale: "D3 highlights the novel finding of the Hivemind effect across 70+ LMs with both automatic and hand-written queries. The agentic review summary mentions the Hivemind effect but no strength captures the scale or novelty of this finding specifically."
+
+  # D4: Critical challenges for aligned LLMs
+  - official_factor_id: "D4"
+    agentic_source: "none"
+    agentic_text: ""
+    match_type: "none"
+    judgment_alignment: "n/a"
+    rationale: "D4 highlights the alignment-diversity tension and human pluralism challenges. The agentic review does not capture these broader implications as a positive factor."
+
+  # D5: Well-written with clear figures
+  - official_factor_id: "D5"
+    agentic_source: "none"
+    agentic_text: ""
+    match_type: "none"
+    judgment_alignment: "inverted"
+    rationale: "D5 praises writing quality and clear figures. The agentic system rated Clarity: 2 and Presentation: 2 — an inverted assessment. No strength mentions writing or presentation quality."
+
+  # D6: Authors addressed reviewer concerns in rebuttal
+  - official_factor_id: "D6"
+    agentic_source: "none"
+    agentic_text: ""
+    match_type: "none"
+    judgment_alignment: "n/a"
+    rationale: "D6 is a post-rebuttal factor. The agentic system reviewed the paper without access to the rebuttal discussion, so this factor is not observable."
+
+unmatched_official:
+  # O1 matched (exact to A1)
+  # O2 matched (partial to A3 and A4)
+  - "O3"   # insufficient causal analysis — not raised by agentic
+  - "O4"   # statistically expected — only related match to A2, counts as unmatched
+  - "O5"   # paraphrase robustness test needed — not raised
+  - "O6"   # query entropy impact — not raised
+  - "O7"   # Figure 1 conciseness — not raised
+  - "O8"   # taxonomy in related work — not raised
+  - "O9"   # open-endedness not verified — not raised
+  - "O10"  # similarity scores lack baseline — not raised
+  - "O11"  # Section 4 analysis technically flawed — not raised
+  - "O12"  # similarity score range too narrow — not raised
+  - "O13"  # cosine metric inconsistency — not raised
+  - "O14"  # broken data link — not raised
+  - "O15"  # foundation model baseline needed — not raised
+  - "O16"  # testing scripts for reproducibility — not raised
+  - "O17"  # rebuttal results in camera-ready — not raised
+  - "O18"  # deeper interpretation needed — not raised
+  - "O19"  # justification for averaging ratings — not raised
+
+unmatched_agentic:
+  - "A2"   # oversimplify creativity scope — only related match to O4, counts as unmatched (phantom concern)

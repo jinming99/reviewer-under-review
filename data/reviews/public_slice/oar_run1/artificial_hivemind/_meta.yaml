@@ -1,0 +1,18 @@
+slug: artificial_hivemind
+baseline: openaireview_zero_shot
+model: claude-opus-4-6
+timestamp: '2026-04-12T01:35:50.503251+00:00'
+git_sha: 6b601aec
+git_branch: main
+elapsed_s: 368.0
+usage:
+  input_tokens: 0
+  output_tokens: 0
+cost_usd: 1.1161
+num_sdk_calls: 1
+num_api_calls: 1
+num_chunks: null
+specialties: null
+paper_text_chars: 254145
+review_text_chars: 7023
+skip_refinement: false

@@ -1,0 +1,612 @@
+schema_version: v1
+version: own_group
+generated_by: skill_5b_claude_code
+
+edge_overrides:
+  # ============================================================
+  # panel_no_ls (5 edges — all confirmed)
+  # ============================================================
+  - method: panel_no_ls
+    paper: beyond_problem_solving
+    official_id: O1
+    agentic_id: A1
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify TST as decorative/superficial with no operational role in experiments. O1: 'not tightly integrated'; A1: 'no experiment isolates or tests the three-space decomposition.' Same specific complaint, same scope. Severity gap of 1 (major vs fatal) within tolerance."
+    confidence: high
+
+  - method: panel_no_ls
+    paper: beyond_problem_solving
+    official_id: O2
+    agentic_id: A7
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "O2 targets construct validity (CT equated solely with inconsistency detection). A7 targets title-content misalignment. Same observation (scope narrower than claimed) but different fixes: broaden evaluation (O2) vs narrow framing (A7). Severity gap of 2 (major vs minor) → under."
+    confidence: high
+
+  - method: panel_no_ls
+    paper: beyond_problem_solving
+    official_id: O3
+    agentic_id: A3
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both question GPT-4o evaluation reliability. O3 frames as bias risk from internal criteria; A3 provides empirical evidence (0.686 accuracy) and missing error propagation. Core complaint identical: GPT-4o evaluation pipeline is unreliable. The 68.6% accuracy and error propagation demands are supporting evidence, not independent fix-actions."
+    confidence: high
+
+  - method: panel_no_ls
+    paper: beyond_problem_solving
+    official_id: O5
+    agentic_id: A2
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify confounds threatening validity but target different specific confounds. O5: stimulus confound (LLMs detect modification patterns). A2: analysis confound (correlation r=0.258 confounded by format/difficulty changes). Same issue family, different variables requiring different fixes."
+    confidence: high
+
+  - method: panel_no_ls
+    paper: beyond_problem_solving
+    official_id: O9
+    agentic_id: A8
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both flag no artifact release for reproducibility. O9: modified dataset not released. A8: no code or data release. A8 slightly broader (includes code) but core complaint identical. Severity gap of 1 (moderate vs minor) within tolerance."
+    confidence: high
+
+  # ============================================================
+  # panel_arch_b (5 edges — all confirmed)
+  # ============================================================
+  - method: panel_arch_b
+    paper: beyond_problem_solving
+    official_id: O1
+    agentic_id: A1
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify TST as decorative. O1: 'not tightly integrated'; A1: 'decorative — all metrics fully definable without the framework.' Same issue, same scope. Severity gap of 1 (major vs fatal) within tolerance."
+    confidence: high
+
+  - method: panel_arch_b
+    paper: beyond_problem_solving
+    official_id: O2
+    agentic_id: A7
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "O2 targets construct validity (narrow CT definition). A7 targets framing (title overpromises). Same underlying observation but different facets: O2 targets what is measured, A7 targets how it is presented. Severity gap of 2 (major vs minor) → under."
+    confidence: high
+
+  - method: panel_arch_b
+    paper: beyond_problem_solving
+    official_id: O3
+    agentic_id: A2
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both concern GPT-4o validity threats but target different roles. O3: GPT-4o as evaluator/judge (bias from internal criteria). A2: GPT-4o as data generator simultaneously being an evaluated model (confound). Different fix-actions: O3 requires human evaluation; A2 requires separating generator from subjects."
+    confidence: high
+
+  - method: panel_arch_b
+    paper: beyond_problem_solving
+    official_id: O3
+    agentic_id: A5
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O3 raises conceptual concern about GPT-4o evaluator bias. A5 provides empirical evidence: 68.6% categorization accuracy on insufficient MC. Same issue family (GPT-4o evaluation quality) but different angles: conceptual risk (O3) vs empirical evidence of unreliability (A5)."
+    confidence: high
+
+  - method: panel_arch_b
+    paper: beyond_problem_solving
+    official_id: O9
+    agentic_id: A9
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify missing artifact release. O9 targets modified benchmark dataset specifically. A9 is broader: no code or benchmark release for a benchmark paper. Releasing dataset fixes O9 but A9 would still note missing code. Same issue family, slightly different scope. Severity gap of 1 (moderate vs minor) within tolerance."
+    confidence: high
+
+  # ============================================================
+  # df_no_ls (5 edges — all confirmed)
+  # ============================================================
+  - method: df_no_ls
+    paper: beyond_problem_solving
+    official_id: O1
+    agentic_id: A1
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify TST as decorative/superficial. O1: 'not tightly integrated.' A1: 'strip-the-framing test fails, experiments identical without framework labels.' Same complaint, same scope."
+    confidence: high
+
+  - method: df_no_ls
+    paper: beyond_problem_solving
+    official_id: O2
+    agentic_id: A6
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both say the paper narrows CT to inconsistency detection. O2: 'equates CT solely with detecting introduced inconsistencies.' A6: 'claims to assess rich cognitive-science construct but tests only two types of inconsistency detection.' Identical concern. Severity gap of 1 (major vs moderate) within tolerance."
+    confidence: high
+
+  - method: df_no_ls
+    paper: beyond_problem_solving
+    official_id: O9
+    agentic_id: A10
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both flag no artifact release. O9: modified dataset not released. A10: no code or modified dataset release. Core complaint identical. Severity gap of 1 (moderate vs minor) within tolerance."
+    confidence: high
+
+  - method: df_no_ls
+    paper: beyond_problem_solving
+    official_id: O3
+    agentic_id: A4
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Same issue family (GPT-4o circularity/bias) but different GPT-4o roles. O3: GPT-4o as evaluator of model responses (judging bias). A4: GPT-4o as data generator (modification naturalness/calibration). Different fixes needed."
+    confidence: high
+
+  - method: df_no_ls
+    paper: beyond_problem_solving
+    official_id: O5
+    agentic_id: A4
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both target data generation validity. O5: LLMs may detect abnormal data patterns. A4: GPT-4o modifications not validated for naturalness. O5 is broader (questions whether task measures CT at all); A4 is about a specific validation gap. Same family, different scope."
+    confidence: high
+
+  # ============================================================
+  # df_arch_c (5 edges — all confirmed)
+  # ============================================================
+  - method: df_arch_c
+    paper: beyond_problem_solving
+    official_id: O1
+    agentic_id: A1
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify TST as decorative. O1: 'not tightly integrated.' A1: 'strip-the-framing and operationalization tests fail.' Same core defect. Severity gap of 1 (major vs fatal) within tolerance."
+    confidence: high
+
+  - method: df_arch_c
+    paper: beyond_problem_solving
+    official_id: O2
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both concern construct validity but different facets. O2: scope breadth (CT equated with inconsistency detection, missing source credibility, logical fallacies). A3: internal validity (operationalization may measure format pattern-matching via formulaic gaslight hints). Different fixes: broaden scope (O2) vs improve stimuli (A3)."
+    confidence: high
+
+  - method: df_arch_c
+    paper: beyond_problem_solving
+    official_id: O5
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify the validity threat that LLMs detect surface cues rather than genuinely reason. O5 focuses on data generation method creating detectable patterns; A3 focuses on formulaic gaslight hint text. Convergent concerns from different angles on the same construct validity failure."
+    confidence: high
+
+  - method: df_arch_c
+    paper: beyond_problem_solving
+    official_id: O7
+    agentic_id: A8
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Identical concern: reasoning-mode comparison (Section 4.2) uses only Qwen3, insufficient to generalize. Severity gap of 1 (moderate vs minor) within tolerance."
+    confidence: high
+
+  - method: df_arch_c
+    paper: beyond_problem_solving
+    official_id: O9
+    agentic_id: A11
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both flag no public artifact release. O9: modified dataset. A11: no code or data. Core complaint identical. A11 subsumes O9. Severity gap of 1 (moderate vs minor) within tolerance."
+    confidence: high
+
+  # ============================================================
+  # ai_scientist_run1 (5 edges — 2 overridden, 3 confirmed)
+  # ============================================================
+  - method: ai_scientist_run1
+    paper: beyond_problem_solving
+    official_id: O1
+    agentic_id: A1
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify TST as superficial. O1: 'not tightly integrated with experimental design.' A1: 'adds no non-obvious hypotheses or predictions beyond a simpler framing.' Same specific complaint, same scope."
+    confidence: high
+
+  - method: ai_scientist_run1
+    paper: beyond_problem_solving
+    official_id: O3
+    agentic_id: A3
+    original_match_type: exact
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O3 targets GPT-4o as evaluator (bias from internal criteria). A3 bundles both question generation AND response classification roles, plus 68.6% accuracy data. The generator role is an independent fix-action beyond O3's scope — you could fix evaluation bias by replacing GPT-4o as evaluator while A3's generator concern persists. Per E22 (shared core + independent extras → partial)."
+    confidence: medium
+
+  - method: ai_scientist_run1
+    paper: beyond_problem_solving
+    official_id: O2
+    agentic_id: A2
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both concern construct validity. O2: definitional scope too narrow (missing source credibility, logical fallacies). A2: operationalization quality (gaslight hints test authority susceptibility, not CT). Same family, different facets."
+    confidence: high
+
+  - method: ai_scientist_run1
+    paper: beyond_problem_solving
+    official_id: O6
+    agentic_id: A2
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both flag artificiality of test stimuli. O6: artificial contradictions differ from real-world (ecological validity). A2: gaslight hints are artificial, test authority susceptibility (broader scope). A2 subsumes O6's ecological validity concern but adds authority susceptibility. Partial because A2 is broader."
+    confidence: high
+
+  - method: ai_scientist_run1
+    paper: beyond_problem_solving
+    official_id: O8
+    agentic_id: A9
+    original_match_type: partial
+    override_match_type: related
+    override_judgment_alignment: n/a
+    override_severity_alignment: n/a
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O8 targets macro paper structure (scattered, unclear logical flow). A9 targets micro writing quality (grammatical errors, informal 'gaslight' terminology, hard-to-read figures). Per E18 pattern: paper structure and writing mechanics are different sub-topics of presentation requiring fundamentally different fixes. Restructuring would not fix grammar; fixing grammar would not fix structure."
+    confidence: high
+
+  # ============================================================
+  # ai_scientist_gpt4o_run1 (2 edges — 1 overridden, 1 confirmed)
+  # ============================================================
+  - method: ai_scientist_gpt4o_run1
+    paper: beyond_problem_solving
+    official_id: O8
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: related
+    override_judgment_alignment: n/a
+    override_severity_alignment: n/a
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O8 is about paper organization (scattered structure, unclear logical flow). A3 is about experimental setup detail sufficiency (gaps impacting reproducibility). These are different issue families: organization/flow vs content completeness. Restructuring the paper would not add experimental details; adding details would not fix the structure."
+    confidence: high
+
+  - method: ai_scientist_gpt4o_run1
+    paper: beyond_problem_solving
+    official_id: O7
+    agentic_id: A5
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both flag limited scope undermining generalizability but on different axes. O7: model coverage (reasoning mode tested only on Qwen3). A5: dataset/domain coverage (limited range of datasets). Same issue family, different specific gaps."
+    confidence: high
+
+  # ============================================================
+  # liang_run1 (6 edges — 2 overridden, 4 confirmed)
+  # ============================================================
+  - method: liang_run1
+    paper: beyond_problem_solving
+    official_id: O1
+    agentic_id: A1
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify TST as window dressing. O1: 'prominently introduced but not tightly integrated.' A1: 'removing the framework vocabulary would leave experimental contributions unchanged.' Same issue, same scope."
+    confidence: high
+
+  - method: liang_run1
+    paper: beyond_problem_solving
+    official_id: O2
+    agentic_id: A2
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both target narrowness of CT measurement but at different levels. O2: overall definitional scope (should include source credibility, fallacies, synthesis). A2: one specific operationalization choice (removing correct option may conflate calibration with absence of CT). Same family, different sub-claims."
+    confidence: high
+
+  - method: liang_run1
+    paper: beyond_problem_solving
+    official_id: O3
+    agentic_id: A4
+    original_match_type: exact
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O3 targets GPT-4o as evaluator (bias from internal criteria). A4 explicitly bundles GPT-4o 'dependency for generating modified math problems AND labeling behavioral categories.' The generator role is an independent fix-action: replacing GPT-4o as evaluator (fixing O3) would not address A4's concern about GPT-4o-generated test stimuli. Per E22, shared core + independent extras → partial."
+    confidence: medium
+
+  - method: liang_run1
+    paper: beyond_problem_solving
+    official_id: O5
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O5: confound mechanism (models detect abnormal data patterns). A3: stimulus artificiality (gaslight hints are artificial, questionable ecological validity). Same family (artificial perturbations undermine validity) but different sub-claims: O5 is about what models detect, A3 is about whether stimuli resemble real-world."
+    confidence: high
+
+  - method: liang_run1
+    paper: beyond_problem_solving
+    official_id: O6
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O6 explicitly raises ecological validity: artificial contradictions differ from real-world. A3 flags the same for gaslight hints specifically. O6 is broader (all inconsistency types), A3 narrower (redundant-info condition). Both addressed by more naturalistic perturbation design."
+    confidence: high
+
+  - method: liang_run1
+    paper: beyond_problem_solving
+    official_id: O8
+    agentic_id: A7
+    original_match_type: partial
+    override_match_type: related
+    override_judgment_alignment: n/a
+    override_severity_alignment: n/a
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O8 targets structural organization (scattered structure, unclear logical flow). A7 targets writing mechanics (grammatical errors, inconsistent notation, dense tables, appendix-heavy). Per E18 pattern: paper structure and writing mechanics are different sub-topics of presentation. Fixing structure would not fix grammar/notation; fixing grammar would not fix structure."
+    confidence: high
+
+  # ============================================================
+  # liang_gpt4o_run1 (2 edges — 1 overridden, 1 confirmed)
+  # ============================================================
+  - method: liang_gpt4o_run1
+    paper: beyond_problem_solving
+    official_id: O1
+    agentic_id: A1
+    original_match_type: exact
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O1 targets conceptual theory-experiment integration (TST is superficial, metrics not matched to spaces). A1 targets exposition clarity (TST explanation is too abstract, connection to results not explicitly drawn). Different thresholds of satisfaction per E23: O1 would need experimental redesign to integrate theory; A1 would need better writing to draw the connection. Better explanation (fixing A1) would not make a superficial framework less superficial (O1)."
+    confidence: medium
+
+  - method: liang_gpt4o_run1
+    paper: beyond_problem_solving
+    official_id: O7
+    agentic_id: A4
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O7 specifically targets reasoning-mode experiment being limited to Qwen3. A4 is broader: over-reliance on limited datasets AND models. A4 subsumes O7 but has wider scope. Severity gap of 1 (moderate vs major) within tolerance."
+    confidence: high
+
+  # ============================================================
+  # marg_gpt4o_run1 (4 edges — 3 overridden, 1 confirmed)
+  # ============================================================
+  - method: marg_gpt4o_run1
+    paper: beyond_problem_solving
+    official_id: O1
+    agentic_id: A4
+    original_match_type: partial
+    override_match_type: related
+    override_judgment_alignment: n/a
+    override_severity_alignment: n/a
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O1 targets theory-experiment integration (TST doesn't drive experiments, metrics not matched to spaces). A4 targets theory explanation clarity (interactions between spaces unclear, no diagrams). Different issue families: conceptual design gap vs exposition quality. Better explanation (A4 fix) would not make the theory less superficial in experimental design (O1 fix), and redesigning experiments (O1 fix) would not add diagrams or clarify exposition (A4 fix)."
+    confidence: high
+
+  - method: marg_gpt4o_run1
+    paper: beyond_problem_solving
+    official_id: O1
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "A3 flags that specific hypotheses (SSI and ID) are stated without supporting evidence. This is a narrower instance of O1's broader complaint that TST is not integrated with experiments. Per E4 pattern: A3 is one specific instance of O1's broader pattern → partial."
+    confidence: high
+
+  - method: marg_gpt4o_run1
+    paper: beyond_problem_solving
+    official_id: O4
+    agentic_id: A7
+    original_match_type: partial
+    override_match_type: related
+    override_judgment_alignment: n/a
+    override_severity_alignment: n/a
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O4 is about conceptual metric validity (metrics reduce to binary classification, cannot capture complex cognitive process). A7 is about specification clarity (terms like 'Wrong Gaslight' undefined, metric thresholds unspecified). Same component (metrics system) but genuinely different defects: designing richer metrics (O4 fix) would not define existing terms (A7 fix), and defining terms clearly (A7 fix) would not make binary metrics less simplistic (O4 fix)."
+    confidence: high
+
+  - method: marg_gpt4o_run1
+    paper: beyond_problem_solving
+    official_id: O8
+    agentic_id: A6
+    original_match_type: partial
+    override_match_type: related
+    override_judgment_alignment: n/a
+    override_severity_alignment: n/a
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O8 targets overall paper structure (scattered, unclear logical flow). A6 targets table/figure readability (inconsistent labeling, ordering, no insight summaries). Per E18 pattern: paper structure and visual element readability are different sub-topics of presentation. Restructuring would not fix table labels; fixing tables would not fix structure."
+    confidence: high
+
+  # ============================================================
+  # oar_run1 (0 strict edges — nothing to verify)
+  # ============================================================
+
+missed_matches: []
+
+phantom_judgments: []
+
+verification_summary:
+  total_edges_verified: 39
+  total_unmatched_verified: 109
+  error_counts:
+    false_matches: 0
+    type_errors: 9
+    severity_errors: 0
+    missed_matches: 0
+  error_rates:
+    false_match_rate: "0.0%"
+    type_error_rate: "23.1%"
+    severity_error_rate: "0.0%"
+    missed_match_rate: "0.0%"
+  skill26_health: needs_improvement
+  papers_verified:
+    - paper: beyond_problem_solving
+      method: panel_no_ls
+      edges_verified: 5
+      unmatched_verified: 9
+      errors_found: 0
+    - paper: beyond_problem_solving
+      method: panel_arch_b
+      edges_verified: 5
+      unmatched_verified: 10
+      errors_found: 0
+    - paper: beyond_problem_solving
+      method: df_no_ls
+      edges_verified: 5
+      unmatched_verified: 12
+      errors_found: 0
+    - paper: beyond_problem_solving
+      method: df_arch_c
+      edges_verified: 5
+      unmatched_verified: 11
+      errors_found: 0
+    - paper: beyond_problem_solving
+      method: ai_scientist_run1
+      edges_verified: 5
+      unmatched_verified: 11
+      errors_found: 2
+    - paper: beyond_problem_solving
+      method: ai_scientist_gpt4o_run1
+      edges_verified: 2
+      unmatched_verified: 11
+      errors_found: 1
+    - paper: beyond_problem_solving
+      method: liang_run1
+      edges_verified: 6
+      unmatched_verified: 6
+      errors_found: 2
+    - paper: beyond_problem_solving
+      method: liang_gpt4o_run1
+      edges_verified: 2
+      unmatched_verified: 9
+      errors_found: 1
+    - paper: beyond_problem_solving
+      method: marg_gpt4o_run1
+      edges_verified: 4
+      unmatched_verified: 11
+      errors_found: 3
+    - paper: beyond_problem_solving
+      method: oar_run1
+      edges_verified: 0
+      unmatched_verified: 19
+      errors_found: 0

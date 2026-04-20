@@ -1,0 +1,16 @@
+slug: artificial_hivemind
+baseline: ai_scientist
+model: gpt-4o
+timestamp: '2026-04-12T01:54:45.374884+00:00'
+git_sha: 6b601aec
+git_branch: main
+elapsed_s: 17.6
+usage: {}
+cost_usd: 0.0
+num_sdk_calls: 3
+num_api_calls: 5
+num_chunks: null
+specialties: null
+paper_text_chars: 254145
+review_text_chars: 1535
+skip_refinement: false

@@ -1,0 +1,402 @@
+schema_version: "v1"
+paper: "cmdp_meta_safe_rl"
+title: "A CMDP-within-online Framework for Meta-Safe Reinforcement Learning"
+venue: "ICLR 2023"
+official_verdict: "accepted"
+decision_type: "Spotlight"
+reviewer_scores: [8, 6, 3]  # DCQm, fmH2, GvYx (pre-rebuttal; fmH2 initial unclear, GvYx=3)
+reviewer_scores_post: [8, 6, 3]  # DCQm maintained 8, fmH2 updated to 6, GvYx never responded
+
+pdf_is_revised: true
+revision_evidence: "Authors state 'revisions to the paper (highlighted in blue)' in rebuttal summary. PDF contains added appendices B (CRPO), D (proofs), H (Mujoco experiments), I (Kwon et al. relation), J (notation), and Section 6 (Broader Impact)."
+
+ac_rationale_quality: "adequate"
+# AC provides a structured meta-review with Strengths, Weaknesses, Justification for Not Higher/Lower.
+# Strengths: "highly innovative work", "safe RL is very important", "practical framework".
+# Weaknesses: "sparse experiments (although a few environments were added in the rebuttal)",
+# "theoretical analysis is not always clear". Does not explicitly arbitrate the sharp 8/6/3
+# disagreement or explain why GvYx's score-3 concerns were overridden. AC championed on
+# theory despite weak experiments.
+
+concerns:
+  # ============================================================
+  # Reviewer DCQm concerns (Rating: 8, Confidence: 4)
+  # Technical Novelty: 4, Empirical Novelty: 3
+  # ============================================================
+  - id: "O1"
+    text: "Experimental evaluation is very sparse, with only a few environments tested."
+    verbatim: "Experimental evaluation is very sparse"
+    raised_by: ["DCQm", "fmH2", "GvYx"]
+    severity: "major"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors added experiments on HalfCheetah and Humanoid environments from Mujoco, plus detailed distribution shift descriptions for all environments."
+    ac_treatment: "accepted_limitation"
+    decisive: false
+    tags: ["experimental_scope", "sparse_experiments", "environment_coverage"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Appendix H (pp. 42-46) contains detailed additional experiments: H.1 Frozen Lake, H.2 Acrobot, H.3 Half Cheetah (Figures 6-7), H.4 Humanoid (Figures 8-9). Main text Section 4 (p. 9) references 'extra experiments on Mujoco, please refer to Appendix H'."
+    note: "AC explicitly lists under weaknesses: 'Sparse experiments (although a few environments were added in the rebuttal)'. All three reviewers flagged this. AC accepts the limitation as non-blocking given the theoretical contribution."
+
+  - id: "O2"
+    text: "Meta-initialization policy may not be safe from the first step; full support over state/action space assumption may not guarantee safety."
+    verbatim: "how is it justified that the 'meta-initialization' policy is 'fair'...has full support over the state/action space? It will necessarily not be safe"
+    raised_by: ["DCQm"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors explained Assumption 1 (full support over shrinkage simplex) is minimal for single-task CRPO convergence, and acknowledged learning a safe meta-initialization from the first step as promising future work."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["safety_guarantee", "initialization", "assumption_validity"]
+    issue_type: "conceptual"
+    addressed_in_pdf: true
+    pdf_evidence: "Appendix F, p. 28-29 includes 'Discussion on Assumption 1' explaining its necessity for CRPO convergence and bounding the KL divergence term. Main text p. 4 discusses Assumption 1 with the shrinkage simplex set."
+
+  - id: "O3"
+    text: "Safety constraints should also be adapted to shifting environments rather than remaining static."
+    verbatim: "should the safety constraints also be adapted with shifting environments, or what is the motivation to have them static?"
+    raised_by: ["DCQm"]
+    severity: "minor"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors clarified that in CRPO, reward maximization and constraint satisfaction upper bounds happen to align, so a single loss function suffices. Acknowledged multi-objective extension as future work."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["constraint_adaptation", "shifting_environments", "design_choice"]
+    issue_type: "conceptual"
+    addressed_in_pdf: false
+    pdf_evidence: "No evidence of added discussion in the PDF about adapting safety constraints. The rebuttal response was given in OpenReview comments only."
+
+  - id: "O4"
+    text: "Comparison to safe policy improvement problem (Thomas et al.) is missing; unclear how individual tasks relate to finding a policy that safely outperforms the behavior policy."
+    verbatim: "how do the individual tasks compare to a safe policy improvement problem (Thomas et al.)"
+    raised_by: ["DCQm"]
+    severity: "minor"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors provided a detailed comparison: CMDP setup has constraints separate from reward; safe policy improvement defines safety via return not lower than behavior policy. Noted shared goal of learning initialization for fast adaptation."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["related_work", "positioning", "safe_policy_improvement"]
+    issue_type: "conceptual"
+    addressed_in_pdf: true
+    pdf_evidence: "Appendix A (p. 16) includes expanded related work section covering safe RL and CMDP literature. Thomas et al. (2015) is cited in the references (p. 14)."
+
+  # ============================================================
+  # Reviewer fmH2 concerns (Rating: 6 post-rebuttal, Confidence: 4)
+  # Technical Novelty: 3, Empirical Novelty: 2
+  # fmH2 initially gave lower score, updated to 6 after rebuttal
+  # ============================================================
+  - id: "O5"
+    text: "The framework builds on a simplified version of the existing CRPO algorithm, which restricts applicability despite claiming convenience in analysis."
+    verbatim: "The provided CMDP embedded online learning framework builds on a simplified version of the existing CRPO algorithm...it brings some restriction to the applicability"
+    raised_by: ["fmH2", "GvYx"]
+    severity: "major"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors provided full analysis with non-simplified CRPO in Theorems 3.3, Cor. 1, and appendices. Demonstrated the simplified version was for illustration; key results use original CRPO."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["algorithm_simplification", "CRPO", "applicability"]
+    issue_type: "conceptual"
+    addressed_in_pdf: true
+    pdf_evidence: "Main text p. 3 footnote clarifies the simplified regret is for 'exact critic estimation for simplicity' and refers to Appendices B and D. Appendix B (p. 17) provides full CRPO algorithm and notations. Appendix D (p. 17) provides proof with non-simplified CRPO. Theorem 3.3 and Corollary 1 (pp. 7-8) present results with the original CRPO."
+    note: "fmH2 raised this as W1. GvYx also noted 'the whole algorithm/analysis seems to be a composition of existing analysis (DualDICE+CRPO)'. Authors provided extensive clarification."
+
+  - id: "O6"
+    text: "Theoretical analysis is not always clear; notation is confusing and the paper is hard to read for those unfamiliar with CRPO."
+    verbatim: "Theoretical analysis is not always clear"
+    raised_by: ["fmH2", "GvYx"]
+    severity: "major"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors added appendices B and D with detailed CRPO algorithm explanation, notation clarifications, and parameter choice comments. Fixed notation issues flagged by GvYx."
+    ac_treatment: "accepted_limitation"
+    decisive: false
+    tags: ["clarity", "notation", "presentation", "readability"]
+    issue_type: "framing"
+    addressed_in_pdf: true
+    pdf_evidence: "Appendix B (p. 17) provides full CRPO preliminaries and notations. Appendix J (pp. 48-49) contains Tables 1-2 with complete notation and constants tables. Main text p. 2 paragraph before Section 2 explains key contributions with independent interest items."
+    note: "AC explicitly lists under weaknesses: 'Theoretical analysis is not always clear'. Both fmH2 and GvYx flagged clarity issues. AC accepts this as a non-blocking weakness."
+
+  - id: "O7"
+    text: "No explanation about CRPO and no comments about the 'carefully chosen parameters'; the primal approach in Section 2.1 is confusing regarding why sub-optimality gap in (2) holds when running CRPO."
+    verbatim: "There is no explanation about CRPO and no comments about the 'carefully chosen parameters'. It is not helpful for people who is not familiar with CRPO"
+    raised_by: ["fmH2"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors added Appendix B explaining CRPO algorithm and notations, Appendix D with parameter specifications, and a paragraph before Section 2.2 explaining the simplified CRPO form."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["missing_explanation", "CRPO", "parameter_justification"]
+    issue_type: "framing"
+    addressed_in_pdf: true
+    pdf_evidence: "Appendix B (p. 17) titled 'CRPO Algorithm and Notations' provides full 3-step CRPO description (policy evaluation, constraint estimation, policy optimization). Appendix D (p. 17) titled 'Proof in Section 2' explains the sub-optimality gap. Main text p. 3 adds a paragraph explaining the simplified form and footnote referencing Appendices B and D."
+
+  - id: "O8"
+    text: "Lemma 1 relies on known result and Theorem 3.1 relies on approximation error of DualDICE; the whole algorithm/analysis seems to be a composition of existing analysis that might lack generality."
+    verbatim: "Lemma 1 relies on known result...Thm 3.1 relies on approximation error of DualDice. The whole algorithm/analysis seems to be a composition of existing analysis"
+    raised_by: ["fmH2", "GvYx"]
+    severity: "major"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors decomposed Thm 3.1 into three terms with strategies potentially different from DualDICE, developed new techniques based on tame geometry and subgradient flow systems, and showed their result is algorithm-agnostic and the first in meta-safe RL optimization landscape."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["novelty", "theoretical_contribution", "compositionality"]
+    issue_type: "conceptual"
+    addressed_in_pdf: true
+    pdf_evidence: "Appendix F (pp. 28-36) provides the full KL divergence estimation error bound decomposition into terms (A), (B), (C) on p. 28 (Eq. 29), with (A) bounded via tame geometry/subgradient flow (Sections F.3-F.5), (B) via DualDICE (Section F.6), and (C) independently. Main text p. 2 explicitly claims 'algorithm-agnostic' optimization landscape analysis as contribution of independent interest."
+    note: "This was a central concern from both fmH2 and GvYx. Authors argued their key theoretical results (Thms 3.2 and 3.3) are of independent interest and use new techniques."
+
+  - id: "O9"
+    text: "Some assumptions and techniques (Assumption 1 and references to Kwon et al. 2021) are introduced in the middle of the paper without clear explanation of how they relate, and references are mixed into content distractingly."
+    verbatim: "Some assumptions or techniques are introduced in the middle of the paper...major references are mixed in the content, which is a distraction"
+    raised_by: ["fmH2"]
+    severity: "minor"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors moved Algorithm 1 to the beginning, reorganized presentation, and added detailed discussion of Assumption 1's relation to Kwon et al. (2021)."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["paper_organization", "presentation", "flow"]
+    issue_type: "framing"
+    addressed_in_pdf: true
+    pdf_evidence: "Algorithm 1 now appears on p. 5 (before the theoretical results). Appendix I (pp. 46-47) provides detailed comparison to Kwon et al. (2021). Assumption 1 is presented on p. 4 with a full paragraph of technical discussion following it."
+
+  - id: "O10"
+    text: "Ethics concern: the meta-learning framework applied to problems with fairness constraints on different tasks requires discussion of pros/cons."
+    verbatim: "It is important to discuss the pros/cons of the proposed framework when engineers apply the proposed method to problems with fairness constraints"
+    raised_by: ["fmH2"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors added a broader impact statement and discussion on incorporating fairness constraints for socially responsible systems."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["ethics", "fairness", "broader_impact"]
+    issue_type: "conceptual"
+    addressed_in_pdf: true
+    pdf_evidence: "Section 6 'Broader Impact Statements' (p. 10) discusses fairness as a constraint in RL, the potential to adapt the framework for fairness-aware learning, and acknowledges challenges including discrimination/bias in real-world settings. References Zhao et al. (2021) and Bai et al. (2021)."
+
+  - id: "O11"
+    text: "Static regret is not useful for meta-learning since bounded task similarity is assumed and environments differ; otherwise, it reduces to a single-task problem."
+    verbatim: "In the meta-learning problem with multiple tasks, the static regret seems to be not very useful since the bounded task similarity is assumed and environments associated with different tasks are different"
+    raised_by: ["fmH2"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors clarified that static regret with respect to the initial policy (not the final learned policy) provides freedom for the safe RL algorithm to adapt based on within-task observations. They further analyzed dynamic regret with respect to the dynamic sequence of optimal policies in Theorems 3.2 and 3.3."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["static_regret", "metric_appropriateness", "meta_learning_formulation"]
+    issue_type: "conceptual"
+    addressed_in_pdf: true
+    pdf_evidence: "Main text p. 6 explicitly states: 'A static regret with respect to an initial policy provides freedom for the safe RL algorithm to adapt the initial policy based on observations within the task.' Section 3.2 (p. 7) develops dynamic regret and task-relatedness. Theorem 3.3 and Corollary 1 (p. 8) provide bounds that improve with task-relatedness."
+    note: "fmH2 W2. Authors provided extensive rebuttal explaining the static-to-dynamic regret relationship. fmH2 accepted the clarification (score updated to 6)."
+
+  # ============================================================
+  # Reviewer GvYx concerns (Rating: 3, Confidence: 3)
+  # Technical Novelty: 2, Empirical Novelty: 2
+  # NOTE: GvYx never responded to the rebuttal -- disengaged reviewer.
+  # Authors explicitly flagged to AC that GvYx 'has been the only reviewer
+  # who has not engaged in discussions'.
+  # ============================================================
+  - id: "O12"
+    text: "The notation is unclear (e.g., $V_{M_t}$, $\\pi^*$) making the paper harder to understand."
+    verbatim: "the notation $V_{M_t}$...is unclear. What is $\\pi^*$? It makes it harder to understand the paper"
+    raised_by: ["GvYx"]
+    severity: "moderate"
+    resolved_in_rebuttal: null
+    rebuttal_resolution: "Authors fixed the notation typo and clarified in the updated paper. GvYx never responded."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["notation", "clarity", "presentation"]
+    issue_type: "framing"
+    addressed_in_pdf: true
+    pdf_evidence: "Appendix J Table 1 (p. 48) provides a comprehensive notation table defining all symbols. The main text uses consistent notation throughout."
+    note: "GvYx never engaged with the rebuttal. Authors specifically flagged to AC that GvYx 'has been the only reviewer who has not engaged in discussions on whether our response has addressed the concerns raised'."
+
+  - id: "O13"
+    text: "Theorem 3.3 relies on assumptions of two regret upper bounds (E_T^{opt} and U_T^{pi}) with no explanation regarding why those assumptions are reasonable."
+    verbatim: "Theorem 3.3 relies on the assumptions of two regret upper bounds...There is no explanation regarding why those assumptions are reasonable"
+    raised_by: ["GvYx"]
+    severity: "major"
+    resolved_in_rebuttal: null
+    rebuttal_resolution: "Authors clarified these are placeholders for upper bounds of any inexact online optimization algorithm; presented results for inexact OGD in Corollary 1 with concrete bounds. GvYx never responded."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["assumption_justification", "theoretical_rigor", "regret_bounds"]
+    issue_type: "conceptual"
+    addressed_in_pdf: true
+    pdf_evidence: "Main text p. 8 below Theorem 3.3 explicitly states: 'Note that the terms U_T^{init} and U_T^{sim} are simply placeholders for upper bounds on the respective regrets for some inexact online algorithms.' Corollary 1 (p. 8) instantiates these for inexact OGD with concrete bounds."
+    note: "Authors provided a detailed response showing these are standard in online optimization literature. GvYx did not engage."
+
+  - id: "O14"
+    text: "Only frozen lake and acrobot experiments are considered; experimental scope is extremely limited."
+    verbatim: "In the experiment, only frozen lake and acrobat are considered. How about your algorithm for Mujoco environments?"
+    raised_by: ["GvYx"]
+    severity: "major"
+    resolved_in_rebuttal: null
+    rebuttal_resolution: "Authors added HalfCheetah and Humanoid experiments from Mujoco in Appendix H, showing Meta-SRL outperforms baselines in high task-similarity settings. GvYx never responded."
+    ac_treatment: "accepted_limitation"
+    decisive: false
+    tags: ["experimental_scope", "environment_diversity", "Mujoco"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Appendix H.3 Half Cheetah (pp. 44-45, Figures 6-7) and H.4 Humanoid (pp. 45-46, Figures 8-9) provide full Mujoco experiments with both high and low task-similarity settings. Main text Section 4 (p. 9) mentions these additional environments."
+    note: "Overlaps with O1. GvYx specifically asked for Mujoco. Authors delivered but GvYx never acknowledged."
+
+  - id: "O15"
+    text: "Assumption 2 ('o-minimal structure') needs clarification; it is non-standard and its necessity is unclear."
+    verbatim: "Assumption 2 need to be clarified: 'o-minimal structure'"
+    raised_by: ["GvYx"]
+    severity: "moderate"
+    resolved_in_rebuttal: null
+    rebuttal_resolution: "Authors provided detailed clarification: o-minimal structure covers deep neural networks, compositions of mappings, and many classical operations. Explained where Assumption 2 is used and its practical scope."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["assumption_clarity", "o-minimal_structure", "mathematical_foundations"]
+    issue_type: "conceptual"
+    addressed_in_pdf: true
+    pdf_evidence: "Main text p. 6 provides expanded discussion: 'Assumption 2 is mild as practically all functions from real-world applications, including deep neural networks, are definable in some o-minimal structures.' Appendix F.1 (p. 29) provides full preliminaries on tame geometry. Appendix F.3 (p. 30) explains Assumption 2's role in bounding policy distance."
+    note: "GvYx never responded to the clarification."
+
+  - id: "O16"
+    text: "Why not use some offline CMDP algorithm to estimate state distributions instead of DualDICE, which is an existing offline RL algorithm for standard MDPs?"
+    verbatim: "DualDICE is an existing offline RL algorithm for the standard MDPs. It is more natural to think of some offline CMDP algorithms"
+    raised_by: ["GvYx"]
+    severity: "moderate"
+    resolved_in_rebuttal: null
+    rebuttal_resolution: "Authors explained they only need to estimate the stationary distribution of the learned policy, so DualDICE suffices. Acknowledged offline CMDP algorithms could help with constraint violation but noted this is not required for their method."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["algorithm_choice", "DualDICE", "offline_CMDP"]
+    issue_type: "conceptual"
+    addressed_in_pdf: false
+    pdf_evidence: "No evidence of added discussion about offline CMDP alternatives in the PDF. The justification for DualDICE remains as in the original text (Section 3.1, p. 5) without addressing the offline CMDP alternative."
+
+  - id: "O17"
+    text: "Writing of the paper is somewhat unclear overall; claims and results are vague or modified in an ambiguous way."
+    verbatim: "some cited results are vague or modified in an ambiguous way"
+    raised_by: ["GvYx"]
+    severity: "moderate"
+    resolved_in_rebuttal: null
+    rebuttal_resolution: "Authors made extensive revisions to clarify the paper. GvYx never responded."
+    ac_treatment: "accepted_limitation"
+    decisive: false
+    tags: ["writing_quality", "ambiguity", "clarity"]
+    issue_type: "framing"
+    addressed_in_pdf: true
+    pdf_evidence: "Multiple clarifications added throughout: expanded notation table (Appendix J), additional explanatory paragraphs in Sections 2 and 3, and reorganized presentation with Algorithm 1 moved earlier. However, overall clarity remains a limitation per AC."
+    note: "Related to O6 and O12. GvYx's overall assessment was that the writing lacked clarity. AC acknowledged theoretical analysis is not always clear."
+
+  - id: "O18"
+    text: "The proposed meta-learning method combines existing RL algorithms for safe RL with theory building on existing results and assumptions; novelty is only marginally significant."
+    verbatim: "The proposed meta learning method combines existing RL algorithms for safe RL and theory builds on existing results and assumptions"
+    raised_by: ["GvYx"]
+    severity: "major"
+    resolved_in_rebuttal: null
+    rebuttal_resolution: "Authors argued their key contributions are independently significant: algorithm-agnostic CMDP optimization landscape analysis, inexact online gradient descent bounds using new tame geometry techniques, and a template for meta-safe RL analysis. GvYx never responded."
+    ac_treatment: "dismissed"
+    decisive: false
+    tags: ["novelty", "incremental", "contribution_significance"]
+    issue_type: "conceptual"
+    addressed_in_pdf: true
+    pdf_evidence: "Main text p. 2 explicitly frames key technical contributions of independent interest: '1) We study the optimization landscape of CMDP that is algorithm-agnostic...2) we provide static and dynamic regret bounds for inexact online gradient descent.' Appendix F develops the tame geometry-based analysis over 8 pages."
+    note: "GvYx rated Technical Novelty as 2 and Empirical Novelty as 2. AC implicitly dismissed this by championing the paper as 'highly innovative work' and accepting as Spotlight."
+
+  - id: "O19"
+    text: "Please check citation/cluster formats; they are not standard."
+    verbatim: "Please check your cluster formats. They are not standard"
+    raised_by: ["GvYx"]
+    severity: "minor"
+    resolved_in_rebuttal: null
+    rebuttal_resolution: "Authors likely addressed in revisions. GvYx never responded."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["formatting", "citations", "presentation"]
+    issue_type: "framing"
+    addressed_in_pdf: true
+    pdf_evidence: "References (pp. 10-15) appear to use standard citation formatting throughout the revised PDF."
+
+ac_decision_drivers:
+  - id: "D1"
+    polarity: "pro_accept"
+    text: "Highly innovative work introducing the CMDP-within-online framework for meta-safe RL, recognized as a strong theoretical contribution."
+    decisive: true
+    tags: ["innovation", "theoretical_contribution", "meta_safe_RL"]
+    observable_stage: "pre_rebuttal"
+
+  - id: "D2"
+    polarity: "pro_accept"
+    text: "Safe RL is a very important problem area, and the practical framework only requires inexact sub-CMDP solutions and data trajectories from previous tasks."
+    decisive: true
+    tags: ["problem_importance", "practicality", "safe_RL"]
+    observable_stage: "pre_rebuttal"
+
+  - id: "D3"
+    polarity: "pro_accept"
+    text: "The practical CMDP embedded online learning framework relies only on inexact solutions, making it applicable without requiring optimal policy access."
+    decisive: true
+    tags: ["practical_applicability", "inexact_solutions"]
+    observable_stage: "pre_rebuttal"
+
+  - id: "D4"
+    polarity: "pro_reject"
+    text: "Sparse experiments, even after rebuttal additions of a few environments."
+    decisive: false
+    tags: ["experimental_scope", "sparse_experiments"]
+    observable_stage: "rebuttal"
+
+  - id: "D5"
+    polarity: "pro_reject"
+    text: "Theoretical analysis is not always clear."
+    decisive: false
+    tags: ["clarity", "theoretical_presentation"]
+    observable_stage: "pre_rebuttal"
+
+critical_references:
+  - id: "CR1"
+    title: "Robust anytime learning of Markov Decision Processes"
+    short_name: "Suilen et al."
+    cited_by: ["DCQm"]
+    role: "missing_citation"
+    decisive: false
+    concern_ids: []
+    verbatim: "Perhaps relevant to add to the literature is the recent paper Suilen et al."
+    note: "DCQm suggested this paper on robust MDP learning against shifting environments as relevant literature. Authors added the reference."
+
+  - id: "CR2"
+    title: "Achieving Zero Constraint Violation for Concave Utility Constrained Reinforcement Learning via Primal-Dual Approach"
+    short_name: "Bai et al. (2022)"
+    cited_by: ["DCQm"]
+    role: "methodological_basis"
+    decisive: false
+    concern_ids: ["O2"]
+    verbatim: "Learning policies with zero constraint violation for constrained mdps"
+    note: "Referenced by authors in response to DCQm's concern about meta-initialization safety. Related to zero-constraint violation literature."
+
+  - id: "CR3"
+    title: "RL for Latent MDPs: Regret Guarantees and a Lower Bound"
+    short_name: "Kwon et al. (2021)"
+    cited_by: ["fmH2", "GvYx"]
+    role: "methodological_basis"
+    decisive: false
+    concern_ids: ["O8", "O13"]
+    verbatim: "The authors mentioned the hardness of bounding regrets in meta-learning by citing Kwon et al. (2021)"
+    note: "fmH2 questioned how Assumption 1 addresses the hardness results from Kwon et al. (2021). Authors provided detailed clarification in Appendix I (pp. 46-47) of key differences between their setting and latent MDP setting."
+
+  - id: "CR4"
+    title: "On the global convergence rates of softmax policy gradient methods"
+    short_name: "Mei et al. (2020)"
+    cited_by: ["fmH2"]
+    role: "methodological_basis"
+    decisive: false
+    concern_ids: ["O8"]
+    verbatim: "non-uniform Lojasiewicz for policy gradients (Mei et al., (2020))"
+    note: "Authors cited this in their rebuttal to fmH2 to explain the theoretical novelty of their Lemma 3 and Thm 3.3 results."
+
+  - id: "CR5"
+    title: "Safe reinforcement learning"
+    short_name: "Thomas, Philip S. (2015)"
+    cited_by: ["DCQm"]
+    role: "positive_positioning"
+    decisive: false
+    concern_ids: ["O4"]
+    verbatim: "the meta-safe RL problem and the safe policy improvement problem"
+    note: "Referenced in discussion about the relation between meta-safe RL and safe policy improvement."
+
+ac_decisive_negative_ids: []

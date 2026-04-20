@@ -1,0 +1,121 @@
+schema_version: "v1"
+paper: "collabllm"
+version: "own_group/liang_run1"
+method: "baseline"
+verdict: "REJECT"
+score: null
+
+decision_drivers:
+  - id: "R1"
+    polarity: "pro_reject"
+    text: "Narrow baselines (vanilla Llama-3.1-8B and proactive prompt only) make gains difficult to interpret; no comparison with existing multi-turn RL methods."
+    evidence: "review.md section 3 'Potential reasons for rejection' bullet 1"
+    linked_concern_ids: ["A1"]
+  - id: "R2"
+    polarity: "pro_reject"
+    text: "Heavy reliance on LLM-based evaluation introduces circularity and fragility: model trained to optimize LLM-judge preferences and evaluated by LLM judges."
+    evidence: "review.md section 3 'Potential reasons for rejection' bullet 2"
+    linked_concern_ids: ["A2"]
+  - id: "R3"
+    polarity: "pro_reject"
+    text: "User simulator fidelity is insufficiently validated despite being the linchpin of the entire framework."
+    evidence: "review.md section 3 'Potential reasons for rejection' bullet 3"
+    linked_concern_ids: ["A3"]
+  - id: "R4"
+    polarity: "pro_reject"
+    text: "Limited scale and scope of the user study relative to the claims made."
+    evidence: "review.md section 3 'Potential reasons for rejection' bullet 4"
+    linked_concern_ids: ["A4"]
+
+mentions:
+  - id: "M1"
+    polarity: "pro_accept"
+    text: "Well-motivated problem with clear practical relevance; gap between single-turn RLHF and real-world multiturn deployment is well-articulated with compelling examples."
+    evidence: "review.md section 2 'Potential reasons for acceptance' bullet 1"
+    note: "Acknowledged as a strength but not treated as decisive for an accept verdict."
+  - id: "M2"
+    polarity: "pro_accept"
+    text: "MR formulation is clean, draws principled connection to causal effect estimation (front-door adjustment), and ablation over window sizes convincingly validates each design choice."
+    evidence: "review.md section 2 'Potential reasons for acceptance' bullet 2"
+    note: "Recognized as technically sound but insufficient to overcome baseline and evaluation concerns."
+  - id: "M3"
+    polarity: "pro_accept"
+    text: "Comprehensive evaluation across three diverse tasks, multiple training regimes, generalization to out-of-domain Abg-CoQA, and a real-world user study with quantitative and qualitative analysis."
+    evidence: "review.md section 2 'Potential reasons for acceptance' bullet 3"
+    note: "Breadth of evaluation acknowledged, but depth and statistical rigor questioned in rejection reasons."
+  - id: "M4"
+    polarity: "pro_accept"
+    text: "Practical viability demonstrated with transparent compute costs (Table 7), task-agnostic framework, and full artifact release (code, models, data)."
+    evidence: "review.md section 2 'Potential reasons for acceptance' bullet 4"
+    note: "Appreciated but not sufficient to offset methodological concerns."
+
+concerns:
+  # ============================================================
+  # A1: Narrow and weak baselines
+  # Source: review.md section 3 bullet 1 + section 4 suggestion 1
+  # ============================================================
+  - id: "A1"
+    text: "Baselines limited to vanilla Llama-3.1-8B and a prompting-only intervention; no comparison against existing multi-turn RL methods (MTPO, ArCHer, DMPO) or clarification-question training methods (STaR-GATE) despite extensive related work discussion."
+    severity:
+      level: "major"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "review.md section 3 'Potential reasons for rejection' bullet 1: 'The only baselines are a vanilla Llama-3.1-8B and the same model with a proactive system prompt.' Section 4 suggestion 1 reiterates: 'Include at least one existing multiturn RL training method.'"
+    decisive: true
+    tags: ["missing_baselines", "evaluation_scope", "multi_turn_methods"]
+    dimension_impact: ["D"]
+
+  # ============================================================
+  # A2: LLM-based evaluation circularity
+  # Source: review.md section 3 bullet 2 + section 4 suggestion 4
+  # ============================================================
+  - id: "A2"
+    text: "LLM-based evaluation circularity: ITR scored by LLM judge (Claude-3.5-Sonnet), intrinsic and extrinsic training rewards use LLM judges, creating reward hacking and circular validation risks; ITR scoring rubric weighting (A=3, B=2, C=1) and rescaling (S'=2*(S-2.5)) appear ad hoc with no sensitivity analysis."
+    severity:
+      level: "major"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "review.md section 3 'Potential reasons for rejection' bullet 2: 'The model is thus trained to optimize for LLM-judge preferences and then evaluated by LLM judges—raising concerns about reward hacking and circular validation.' Section 4 suggestion 4: 'Decouple training and evaluation judges.'"
+    decisive: true
+    tags: ["LLM_judge", "circular_validation", "metric_robustness"]
+    dimension_impact: ["D"]
+
+  # ============================================================
+  # A3: User simulator fidelity insufficiently validated
+  # Source: review.md section 3 bullet 3 + section 4 suggestion 2
+  # ============================================================
+  - id: "A3"
+    text: "User simulator fidelity insufficiently validated: significant sim-to-real divergence acknowledged (real users shorter, less predictable, more emotional) but no quantitative distributional gap measure provided, no ablation over simulator model quality, and risk that MR computed entirely via simulator may overfit to simulator behaviors."
+    severity:
+      level: "major"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "review.md section 3 'Potential reasons for rejection' bullet 3: 'no quantitative measure of sim-to-real gap (e.g., distributional divergence of conversation statistics, reward correlation) is provided.' Also: 'no ablation over simulator quality is presented.' Section 4 suggestion 2: 'Report distributional statistics...ablate over simulator model quality.'"
+    decisive: true
+    tags: ["user_simulation_bias", "sim_to_real_gap", "training_validity"]
+    dimension_impact: ["D", "F"]
+
+  # ============================================================
+  # A4: Limited user study scope and statistical rigor
+  # Source: review.md section 3 bullet 4 + section 4 suggestion 3
+  # ============================================================
+  - id: "A4"
+    text: "User study covers only one task type (document creation in three genres) with N~67 per condition; no significance tests, confidence intervals, or effect sizes reported for any user-study metric; does not validate coding or math task claims with human participants."
+    severity:
+      level: "major"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "review.md section 3 'Potential reasons for rejection' bullet 4: 'modest for detecting the reported 17.6% satisfaction improvement with statistical confidence. No significance tests, confidence intervals, or effect sizes are reported.' Section 4 suggestion 3: 'Report statistical significance tests...extend the study to at least one additional task domain.'"
+    decisive: true
+    tags: ["statistical_rigor", "user_study", "evaluation_scope"]
+    dimension_impact: ["D"]
+
+method_specific:
+  external_reviewer: "liang_etal"
+  review_format: "structured_review_outline"
+  no_explicit_verdict: true
+  note: "Verdict inferred as REJECT from the weight of four detailed rejection reasons against more general acceptance points. The Liang et al. system produces structured review outlines without binary verdicts."

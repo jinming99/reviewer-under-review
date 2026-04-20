@@ -1,0 +1,155 @@
+schema_version: "v1"
+paper: "artificial_hivemind"
+version: "own_group/ai_scientist_run1"
+method: "ai_scientist"
+
+matches:
+  # ── Strict matches (exact / partial) ──────────────────────────
+
+  - official_id: "O3"
+    agentic_id: "A5"
+    match_type: "exact"
+    issue: "No causal analysis of why inter-model homogenization occurs"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # both major
+    rationale: >
+      Both identify that the paper diagnoses the Hivemind phenomenon but does not
+      mechanistically disentangle potential causes (shared training data, alignment,
+      decoding). O3 verbatim: 'does not clearly provide sufficient insights into the
+      underlying causes.' A5: 'cannot distinguish shared training data, RLHF alignment,
+      memorization.' Same specific gap.
+
+  - official_id: "O10"
+    agentic_id: "A2"
+    match_type: "partial"
+    issue: "Similarity scores lack a reference baseline for meaningful interpretation"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # both major
+    rationale: >
+      Both flag missing baselines for interpreting cosine similarity scores.
+      O10 requests a random/expected similarity baseline (resolved in rebuttal with
+      random pairs at 0.1-0.2 range). A2 requests a human diversity baseline (pairwise
+      similarity among human-authored responses). Different reference points but same
+      underlying gap: similarity values are uninterpretable without context. Partial
+      because the specific baselines requested differ and would require different fixes.
+
+  - official_id: "O11"
+    agentic_id: "A4"
+    match_type: "partial"
+    issue: "Section 4 correlation analysis between model and human ratings has methodological flaws"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # both major
+    rationale: >
+      Both identify Section 4 methodology as problematic. O11 is broader: questions
+      subset selection methods, entropy as disagreement measure, and motivation for
+      averaging human ratings. A4 is narrower: specifically flags restricted-range effects
+      as a statistical artifact in similar-quality and high-disagreement subsets. A4
+      captures one facet of O11's broader concern.
+
+  # ── Related-only matches (not strict) ─────────────────────────
+
+  - official_id: "O4"
+    agentic_id: "A7"
+    match_type: "related"
+    issue: "Whether the Hivemind finding is significant enough to warrant the paper's claims"
+    judgment_alignment: "aligned"
+    severity_alignment: "n/a"
+    rationale: >
+      O4 challenges whether the Hivemind effect is truly surprising (statistically
+      expected from shared training data and law of large numbers). A7 challenges whether
+      the framing overstates the evidence (safety risks, human thought homogenization).
+      Both question the paper's significance but from different angles: O4 is a
+      conceptual/novelty challenge, A7 is an overclaiming/framing critique. Different
+      issues despite thematic proximity.
+
+# ── Positive factor matches (accepted paper) ──────────────────
+
+positive_factor_matches:
+  - official_factor_id: "D1"
+    agentic_source: "mention"
+    agentic_text: "Impressive scale: 70+ models evaluated, 26K queries mined, 31K+ human annotations with 25 independent annotators per item"
+    match_type: "partial"
+    judgment_alignment: "aligned"
+    rationale: >
+      D1 emphasizes meticulous benchmark construction and annotation density (31K+
+      annotations, 25 per example). M2 recognizes the same scale and annotation richness.
+      Partial because M2 focuses on scale numbers while D1 also emphasizes construction
+      quality ('meticulously constructed').
+
+  - official_factor_id: "D2"
+    agentic_source: "none"
+    agentic_text: ""
+    match_type: "none"
+    judgment_alignment: "n/a"
+    rationale: >
+      D2 highlights the evaluation framework as 'fine-grained and comprehensive.' The
+      agentic review does not recognize the framework as a unified strength; instead it
+      critiques the framework's methodological foundations (A1: single metric, A2: no
+      baseline). The system saw the framework but framed it negatively rather than
+      positively.
+
+  - official_factor_id: "D3"
+    agentic_source: "mention"
+    agentic_text: "The inter-model homogeneity analysis is novel — prior work focused on intra-model repetition or narrow synthetic tasks. This paper provides the first systematic cross-model convergence analysis on real-world open-ended queries."
+    match_type: "exact"
+    judgment_alignment: "aligned"
+    rationale: >
+      Both identify the inter-model Hivemind finding across 70+ LMs as novel and
+      significant. M3 directly mirrors D3's emphasis on first-of-its-kind cross-model
+      convergence analysis.
+
+  - official_factor_id: "D4"
+    agentic_source: "mention"
+    agentic_text: "Addresses an important and timely problem: the homogenization of LM outputs in open-ended settings, with implications for creativity and pluralistic alignment."
+    match_type: "partial"
+    judgment_alignment: "aligned"
+    rationale: >
+      D4 highlights alignment-diversity tension and human pluralism as experimental
+      findings. M1 recognizes the problem's importance and alignment implications but
+      frames it as problem significance rather than an experimental result.
+
+  - official_factor_id: "D5"
+    agentic_source: "mention"
+    agentic_text: "Compelling qualitative examples (e.g., Figure 1 showing 25 models collapsing into two metaphor clusters) make the central phenomenon vivid and intuitive."
+    match_type: "partial"
+    judgment_alignment: "aligned"
+    rationale: >
+      D5 highlights writing quality, clear figures, well-structured code, and strong
+      documentation. M5 captures compelling qualitative examples and M6 captures thorough
+      appendix. Partial coverage of D5's broader quality assessment.
+
+  - official_factor_id: "D6"
+    agentic_source: "none"
+    agentic_text: ""
+    match_type: "none"
+    judgment_alignment: "n/a"
+    rationale: >
+      D6 is about authors addressing reviewer concerns during rebuttal, leading to score
+      increases. AI Scientist reviews the pre-rebuttal paper only and cannot observe
+      rebuttal quality. Structurally unobservable.
+
+unmatched_positive_factors: []  # Deprecated; using positive_factor_matches with match_type: none
+
+unmatched_official:
+  - "O1"   # English-only scope limits generalizability
+  - "O2"   # Limited actionable guidance for applying the metric
+  - "O4"   # Hivemind effect is statistically expected (related-only to A7)
+  - "O5"   # Need to test with paraphrased queries
+  - "O6"   # Query entropy impact on Hivemind effect
+  - "O7"   # Figure 1 could be more concise
+  - "O8"   # Missing taxonomy discussion in related work
+  - "O9"   # Open-endedness of queries not verified
+  - "O12"  # Similarity score range too narrow for comparison
+  - "O13"  # Cosine metric vs inter/intra metric inconsistency
+  - "O14"  # Data availability issue (broken link)
+  - "O15"  # Need foundation models without instruction-following
+  - "O16"  # Codebase should include testing scripts
+  - "O17"  # New human annotation results should be in camera-ready
+  - "O18"  # Results need deeper interpretation and discussion
+  - "O19"  # Justification for averaging human ratings
+
+unmatched_agentic:
+  - "A1"   # Single embedding metric validation (phantom — no official reviewer raised this)
+  - "A3"   # Small evaluation scope 100/50 queries (phantom — officials accepted the subset)
+  - "A6"   # Quality-diversity tradeoff not studied (phantom — not flagged by officials)
+  - "A7"   # Overclaiming/framing (related-only to O4; different specific critique)

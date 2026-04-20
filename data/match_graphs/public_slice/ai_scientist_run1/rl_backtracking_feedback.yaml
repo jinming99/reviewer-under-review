@@ -1,0 +1,190 @@
+schema_version: "v1"
+paper: "rl_backtracking_feedback"
+version: "v0.9.2"
+condition: "own_group/ai_scientist_run1"
+method: "baseline_ai_scientist"
+
+matches:
+  # ============================================================
+  # STRICT MATCHES (exact / partial)
+  # ============================================================
+
+  - official_id: O1
+    agentic_id: A2
+    match_type: partial
+    issue: "Critical implementation details unavailable for reproducibility"
+    judgment_alignment: aligned
+    severity_alignment: over  # official: major, agentic: fatal — gap +1, within tolerance
+    rationale: >
+      O1 says implementation details (data splits, hyperparameters, compute) are
+      deferred to supplementary but should be in the main text. A2 says supplementary
+      material is missing entirely, rendering experiments unverifiable. Same family
+      (reproducibility harmed by inaccessible details) but different scope: O1 assumes
+      supplementary exists and wants main-text self-containedness; A2 claims
+      supplementary is absent. Different observations, overlapping impact. Partial
+      because fixing O1 (moving details to main text) would partially address A2's
+      concern, but A2's complaint is broader.
+
+  - official_id: O2
+    agentic_id: A5
+    match_type: exact
+    issue: "No evaluation of LLM safety critic quality (accuracy, error rates, failure propagation)"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: major
+    rationale: >
+      Both identify the same specific gap: the LLM safety critic is central to RLBF
+      yet has no reported accuracy metrics, false positive/negative rates, or analysis
+      of how critic errors propagate. O2 verbatim: "omits the evaluation of the critic
+      quality." A5: "No evaluation of the LLM safety critic — no accuracy metrics,
+      false positive/negative rates." Same issue, same scope.
+
+  - official_id: O4
+    agentic_id: A10
+    match_type: exact
+    issue: "No adaptive attacks targeting RLBF's specific backtracking mechanism"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: major
+    rationale: >
+      Both flag the same gap: evaluation includes GCG and decoding-parameter attacks
+      but none specifically designed to exploit the backtracking signal. O4: "does not
+      target RLBF's specific backtracking signal." A10: "No analysis of adaptive
+      attacks where adversaries are aware of the backtracking mechanism." Exact match
+      — a neutral reader would say these are the same complaint.
+
+  - official_id: O5
+    agentic_id: A8
+    match_type: exact
+    issue: "Missing efficiency comparison metrics despite claiming efficiency improvements over BSAFE"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: moderate — gap -1, within tolerance
+    rationale: >
+      Both identify the same contradiction: the paper claims efficiency gains over
+      BSAFE but reports only ASR and utility, not latency, tokens discarded, or
+      throughput. O5: "experiments only report ASR and utility, not metrics like
+      average tokens discarded or latency." A8: "no latency measurements, throughput
+      comparisons, or computational overhead analysis." Same issue, same scope.
+
+  - official_id: O8
+    agentic_id: A11
+    match_type: exact
+    issue: "Reward function values are ad hoc without sensitivity analysis or ablation"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: moderate, agentic: moderate
+    rationale: >
+      Both flag the same concern about the reward function values (-1.0, +1.0, -0.5,
+      -0.2) being chosen without experimental justification. O8: "highly subjective
+      and has not been verified through experiments." A11: "appear ad hoc with no
+      justification or ablation study on their sensitivity." Same specific issue.
+
+  # ============================================================
+  # RELATED MATCHES (near-misses, not strict)
+  # ============================================================
+
+  - official_id: O3
+    agentic_id: A14
+    match_type: related
+    issue: "Adversarial vulnerability of system components"
+    judgment_alignment: n/a
+    severity_alignment: n/a
+    rationale: >
+      Both concern adversarial robustness but target different system components.
+      O3 is about the single LLM safety critic being adversarially exploitable or
+      producing incorrect judgments. A14 is about backtracking tokens being
+      adversarially triggered to suppress legitimate content (over-censorship). The
+      critic and the backtracking mechanism are distinct components — exploiting the
+      critic vs. triggering false backtracks require different attack vectors and
+      different fixes. Related because both address adversarial vulnerability of RLBF,
+      but not the same specific issue (false match pattern #4: same system, different
+      complaint).
+
+# ============================================================
+# POSITIVE FACTOR MATCHES (accepted paper)
+# ============================================================
+positive_factor_matches:
+  - official_factor_id: D1
+    agentic_source: mention
+    agentic_text: >
+      Problem of robust LLM safety beyond shallow alignment is important and
+      well-motivated, with observation about brittle refusal supported by cited
+      prior work. (M1)
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >
+      D1 praises clear motivation and writing quality. M1 captures the motivation
+      aspect ("important and well-motivated") but does not comment on writing quality.
+      Partial because motivation is shared but presentation quality is not addressed.
+
+  - official_factor_id: D2
+    agentic_source: mention
+    agentic_text: >
+      Backtrack-by-x-tokens mechanism is a sensible simplification over BSAFE's
+      repeat-and-edit approach, avoiding regeneration of harmful content. (M2)
+    match_type: exact
+    judgment_alignment: aligned
+    rationale: >
+      Both recognize RLBF's targeted backtracking mechanism as a key positive. D2:
+      "introduces a targeted backtracking mechanism that removes only violating spans,
+      making safety correction efficient." M2: "sensible simplification over BSAFE's
+      repeat-and-edit approach, avoiding regeneration of harmful content." Same
+      mechanism, same positive assessment. The agentic system frames it as
+      "simplification" rather than "novel contribution" but recognizes the same value.
+
+  - official_factor_id: D3
+    agentic_source: mention
+    agentic_text: >
+      RLBF shows clear advantage over BSAFE+ on standard LMSYS harmful queries
+      (1-2% ASR vs 14-17%), suggesting genuine RL stage value. (M4)
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >
+      D3 emphasizes "strong empirical validation across attacks and model scales."
+      M4 captures one facet — ASR advantage on LMSYS queries — but does not
+      emphasize multi-attack breadth or cross-scale validation. M5 (utility
+      preservation) adds another facet. Together they partially cover D3 but miss the
+      "across attacks and model scales" framing that the AC highlighted.
+
+  - official_factor_id: D4
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >
+      D4 highlights that "the backtracking approach is effective beyond safety
+      (correcting generation mistakes generally)." The agentic system does not
+      capture this generalization-beyond-safety value anywhere in its mentions or
+      decision drivers. This is a significant miss — the AC found the broader
+      applicability of backtracking to be a decisive positive factor.
+
+  - official_factor_id: D8
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >
+      D8 is a rebuttal-stage observation ("after author rebuttal and discussions,
+      most concerns have been addressed and reviewers reached consensus"). The agentic
+      system operated pre-rebuttal and could not observe this factor. Not a system
+      failure — this factor was inherently unobservable at review time.
+
+# ============================================================
+# UNMATCHED CONCERNS
+# ============================================================
+unmatched_official:
+  - O3   # Single critic adversarial vulnerability — only related edge to A14 (different component)
+  - O6   # Missing non-backtracking method comparisons (Circuit Breakers scope)
+  - O7   # BSAFE is arXiv preprint (peer review status concern)
+  - O9   # Benchmark inconsistency with BSAFE paper (LMSYS-MF choice)
+  - O10  # Placeholder references and formatting errors
+  - O11  # Backtrack count representation unclear
+  - O12  # Token count prediction accuracy under tokenization
+  - O13  # Figure 1 illustration is confusing
+
+unmatched_agentic:
+  - A1   # Contribution incrementalism over BSAFE — no official raised novelty concern
+  - A3   # Original BSAFE never directly compared — officials didn't flag this gap
+  - A4   # Table 4 sample size too small (~50 per category)
+  - A6   # Table 2 missing model size specification
+  - A7   # GRPO implementation underspecified
+  - A9   # No statistical significance or error bars
+  - A12  # Limitations section is superficial
+  - A13  # Cascading backtracks quality degradation
+  - A14  # Adversarial triggering of backtracking tokens — only related edge to O3
+  - A15  # No societal impact analysis of red-teaming data

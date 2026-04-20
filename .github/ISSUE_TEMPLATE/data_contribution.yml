@@ -1,0 +1,72 @@
+name: Data contribution
+description: Propose adding a paper, concern sheet, or match graph to the benchmark.
+title: "[data] "
+labels: ["data-contribution"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The benchmark accepts new papers and concern sheets, but every contribution has to pass the same scope checks as the existing set. Review is concern-level rather than just a check that the files parse.
+
+  - type: input
+    id: paper_title
+    attributes:
+      label: Paper title
+      description: Full title of the paper being added.
+    validations:
+      required: true
+
+  - type: input
+    id: venue
+    attributes:
+      label: Venue and decision
+      description: e.g. "ICLR 2026, poster, accepted" or "ACL ARR 2025, rejected"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Which scope does this contribution target
+      options:
+        - 48-paper benchmark calibration set
+        - 9-paper Named Papers public slice
+        - Neither — suggesting a new third scope
+    validations:
+      required: true
+
+  - type: textarea
+    id: why
+    attributes:
+      label: Why this paper
+      description: What does adding this paper teach the benchmark that the existing ones don't? Keep this focused on diagnostic value, not paper quality.
+    validations:
+      required: true
+
+  - type: textarea
+    id: artifacts
+    attributes:
+      label: Available artifacts
+      description: What do you already have — the PDF, the official reviews, a concern sheet, a match graph, system outputs? Link anything public.
+    validations:
+      required: true
+
+  - type: textarea
+    id: conflict
+    attributes:
+      label: Conflict of interest disclosure
+      description: Are you an author, reviewer, AC, or otherwise connected to this paper? Disclosure does not disqualify a contribution; it shapes how the concern sheet is framed.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Scope hygiene checklist
+      options:
+        - label: I have not included reviewer identities or private OpenReview content.
+          required: true
+        - label: Every visible number in my proposed artifact belongs cleanly to either the 48-paper or the 9-paper scope.
+          required: true
+        - label: I understand the concern sheet may be edited before it lands.
+          required: true

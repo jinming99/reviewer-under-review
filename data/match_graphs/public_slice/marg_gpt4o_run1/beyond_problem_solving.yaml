@@ -1,0 +1,96 @@
+schema_version: "v1"
+paper: "beyond_problem_solving"
+version: "v0.9.2"
+condition: "own_group/marg_gpt4o_run1"
+method: "baseline_marg"
+
+matches:
+  # ---- O1 ↔ A4: Three-Space Theory inadequacy (explanation clarity) ----
+  - official_id: O1
+    agentic_id: A4
+    match_type: partial
+    issue: "Three-Space Theory presentation is inadequate for grounding the paper's contributions"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: major → same level
+    rationale: >
+      Both target the Three-Space Theory as a core weakness. O1 says the theory is not
+      tightly integrated with the experimental design (superficial framing); A4 says the
+      theory is poorly explained with unclear interactions and no diagrams. Same component
+      but different complaints: O1 needs experiments redesigned to map to theory spaces,
+      A4 needs clearer exposition. Partial because fixing A4 (better explanation) would
+      not necessarily fix O1 (deeper experimental integration).
+
+  # ---- O1 ↔ A3: Theory-experiment gap (unsupported hypotheses) ----
+  - official_id: O1
+    agentic_id: A3
+    match_type: partial
+    issue: "Theory-derived hypotheses lack experimental grounding"
+    judgment_alignment: aligned
+    severity_alignment: under  # official: major, agentic: moderate → ±1 within tolerance
+    rationale: >
+      A3 flags that specific hypotheses about strategy-space interaction and inconsistency
+      difficulty are stated without supporting evidence. This is a narrow sub-concern of
+      O1's broader complaint that the Three-Space Theory is not tightly integrated with the
+      experimental design. A3 addresses one instance of the theory-experiment disconnect
+      rather than the full scope of O1.
+
+  # ---- O4 ↔ A7: Metrics system inadequacy ----
+  - official_id: O4
+    agentic_id: A7
+    match_type: partial
+    issue: "Evaluation metrics for critical thinking are inadequately specified"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: moderate → ±1 within tolerance
+    rationale: >
+      O4 argues the metrics (Applied CT Rate, Inherent CT Rate, F1) reduce critical
+      thinking to binary classification, a conceptual validity concern. A7 says metric
+      terms ('Wrong Gaslight,' 'Right Gaslight') lack formal definitions and thresholds
+      are unspecified, a clarity concern. Same component (metrics system) but different
+      defects: O4 needs process-level metrics, A7 needs formal definitions. Partial
+      because both attack the metrics but from different angles.
+
+  # ---- O8 ↔ A6: Presentation quality ----
+  - official_id: O8
+    agentic_id: A6
+    match_type: partial
+    issue: "Paper presentation hinders reader comprehension"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: moderate, agentic: minor → ±1 within tolerance
+    rationale: >
+      O8 is about the overall paper structure being scattered with unclear logical flow
+      (raised by XThf). A6 is specifically about tables and figures having inconsistent
+      labeling and ordering. Both are presentation concerns but O8 is broader (whole-paper
+      structure) while A6 is narrower (visual elements only). Partial due to different scope.
+
+  # ---- O9 ↔ A5: Reproducibility (different facets) ----
+  - official_id: O9
+    agentic_id: A5
+    match_type: related
+    issue: "Reproducibility concerns"
+    judgment_alignment: aligned
+    severity_alignment: n/a  # n/a for related matches
+    rationale: >
+      O9 is about the modified benchmark dataset not being publicly released. A5 is about
+      missing methodology details (question selection criteria, modification guidelines,
+      preprocessing steps). Both relate to reproducibility but target entirely different
+      facets: O9 requires releasing a data artifact, A5 requires documenting the
+      experimental process. Fixing one would not fix the other. Related rather than
+      partial because these are genuinely different specific issues within the broader
+      reproducibility theme.
+
+# This paper was rejected — positive_factor_matches only populated for accepted papers.
+
+unmatched_official:
+  - O2  # Narrow CT definition (equating CT with inconsistency detection) — no agentic counterpart
+  - O3  # GPT-4o evaluator bias — agentic system did not flag LLM-as-judge circularity
+  - O5  # Data generation confound (artifact detection vs genuine reasoning) — not raised
+  - O6  # Artificial vs real-world inconsistencies (ecological validity) — not raised
+  - O7  # Reasoning mode analysis limited to Qwen3 only — not raised
+  - O9  # Dataset not released — only related match with A5, no strict match
+
+unmatched_agentic:
+  - A1  # No baseline comparisons — not raised by official reviewers
+  - A2  # No ablation studies — not raised by official reviewers
+  - A5  # Reproducibility detail missing — only related match with O9, no strict match
+  - A8  # Hyperparameter justification — not raised by official reviewers
+  - A9  # Discussion lacks depth — not raised by official reviewers

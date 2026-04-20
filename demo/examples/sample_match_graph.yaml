@@ -1,0 +1,32 @@
+schema_version: "v1"
+paper: "example_paper"
+version: "v1.0"
+method: "example_system"
+
+# A minimal match graph showing one exact match, one partial, and one phantom.
+# Validate against schemas/match_graph.schema.yaml using
+# scripts/lint_concern_alignment.py.
+
+matches:
+  - official_id: O1
+    agentic_id: A1
+    match_type: exact
+    issue: "Limited evaluation scope — only one dataset tested"
+    judgment_alignment: aligned
+    severity_alignment: match
+    rationale: "Both flag the same evaluation gap."
+
+  - official_id: O2
+    agentic_id: A2
+    match_type: partial
+    issue: "Method does not generalize beyond the tested domain"
+    judgment_alignment: aligned
+    severity_alignment: over  # AI rated it higher severity than officials
+    rationale: "Same issue family but AI focuses on deployment risk while official focuses on experimental design."
+
+unmatched_official:
+  - O3  # Missed by AI: reviewers flagged inconsistent baselines
+
+unmatched_agentic:
+  - A3  # Phantom: AI invented a concern about computational cost with no official basis
+  - A4  # Phantom: AI flagged a formatting issue officials didn't mention

@@ -1,0 +1,146 @@
+schema_version: "v1"
+paper: collabllm
+version: baseline
+method: baseline
+
+verdict: ACCEPT
+score: null
+
+decision_drivers:
+  - id: R1
+    polarity: pro_accept
+    text: >
+      Core idea of using forward simulation to estimate long-term reward of
+      individual responses is sound, and the experimental design is thorough.
+    evidence: "Overall Feedback: 'The core idea—using forward simulation to estimate long-term reward of individual responses—is sound and the experimental design is thorough'"
+    linked_concern_ids: []
+
+mentions:
+  - id: M1
+    polarity: pro_accept
+    text: >
+      Well-motivated framework for training LLMs to be more collaborative
+      in multiturn interactions.
+    evidence: "Overall Feedback: 'COLLABLLM presents a well-motivated framework for training LLMs to be more collaborative in multiturn interactions'"
+    note: Positive framing acknowledged but not explicitly stated as decisive for acceptance.
+  - id: M2
+    polarity: pro_accept
+    text: >
+      Supporting experiments include a large user study.
+    evidence: "Overall Feedback: 'supporting experiments including a large user study'"
+    note: Empirical breadth noted but not explicitly weighted.
+  - id: M3
+    polarity: pro_accept
+    text: >
+      Clear formulation of Multiturn-aware Rewards.
+    evidence: "Overall Feedback: 'with a clear formulation of Multiturn-aware Rewards'"
+    note: Technical clarity acknowledged but not stated as decisive.
+
+concerns:
+  - id: A1
+    text: >
+      MATH-Chat ITR relative improvement in Table 1 is computed against Base
+      (44.0) instead of Proactive Base (46.0) as stated in the caption,
+      inflating the reported 36.4% to what should be 30.4% and propagating
+      to the abstract's headline "46.3% improved interactivity" claim.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Comment 1: MATH-Chat ITR relative improvement computed against wrong baseline"
+    decisive: false
+    tags: [numerical_error, overclaiming, evaluation_reporting]
+    dimension_impact: [D, G]
+
+  - id: A2
+    text: >
+      Figure 2 labels identical token counts (1.39k tokens) as both
+      "Low Efficiency" and "High Efficiency," contradicting the paper's
+      own efficiency metric (Eq. 4) which penalizes token count.
+    severity:
+      level: minor
+      addressability: addressable
+      mechanism: none
+    source: review_minor
+    source_detail: "Comment 2: Figure 2 labels identical token counts as both Low and High Efficiency"
+    decisive: false
+    tags: [presentation, logical_consistency]
+    dimension_impact: [G]
+
+  - id: A3
+    text: >
+      Equation 5 (Appendix A.1) claiming front-door adjustment has three
+      errors: (1) model response mj does not appear in the expression,
+      (2) the first algebraic equality is incorrect unless P(th_j)=1,
+      (3) the equation is a simple conditional expectation with no
+      resemblance to the front-door adjustment formula.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Comment 3: Equation 5 is not front-door adjustment and contains a mathematical error"
+    decisive: false
+    tags: [mathematical_error, causal_claims, theoretical_contribution]
+    dimension_impact: [B, E]
+
+  - id: A4
+    text: >
+      Table 2 generalization result is overclaimed: "maintaining high accuracy"
+      on non-ambiguous questions despite a 20% relative drop (72.32% vs 90.40%
+      for the base model), obscuring a meaningful accuracy-proactivity tradeoff.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Comment 4: Overclaimed generalization — 'maintaining high accuracy' despite 20% relative drop"
+    decisive: false
+    tags: [overclaiming, evaluation_interpretation, tradeoff_disclosure]
+    dimension_impact: [D, G]
+
+  - id: A5
+    text: >
+      The distinction from trajectory-level methods (MTPO) is overstated:
+      forward simulation sampling from P(t_{j+1:K}|t_{1:j}) is still a
+      Monte Carlo conditional expectation, not a true intervention in the
+      do-calculus sense. The practical advantage is finer-grained reward
+      attribution, not causal vs. observational.
+    severity:
+      level: moderate
+      addressability: unresolved
+      mechanism: none
+    source: review_major
+    source_detail: "Comment 5: Appendix A.2 distinction from trajectory-level methods is overstated"
+    decisive: false
+    tags: [overclaiming, causal_claims, novelty_delta]
+    dimension_impact: [B]
+
+  - id: A6
+    text: >
+      Intrinsic reward token penalty saturates for typical MATH-Chat
+      conversations: with lambda=5e-4 and ~2.4k-3.4k tokens, the clamp
+      at 1 is always reached, providing zero gradient signal for efficiency
+      differences and making the token penalty ineffective for most
+      training examples.
+    severity:
+      level: minor
+      addressability: addressable
+      mechanism: none
+    source: review_minor
+    source_detail: "Comment 6: Intrinsic reward token penalty saturates for typical MATH-Chat conversations"
+    decisive: false
+    tags: [reward_design, technical_detail, ablation_interpretation]
+    dimension_impact: [E]
+
+method_specific:
+  system: oar_baseline
+  note: >
+    Extracted from OAR (OpenAI-format zero-shot review) run 1 using
+    claude-opus-4-6. No summary.yaml, gates, scorecard, or adversarial
+    brief available. Verdict inferred as ACCEPT from overall feedback
+    tone: core idea praised as sound, experimental design as thorough,
+    all six concerns are correctional (numerical fixes, figure updates,
+    derivation corrections, framing adjustments) rather than fundamental
+    methodological flaws.

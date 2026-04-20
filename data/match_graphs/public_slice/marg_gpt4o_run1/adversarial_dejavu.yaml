@@ -1,0 +1,232 @@
+schema_version: "v1"
+paper: "adversarial_dejavu"
+version: "v0.9.2"
+condition: "own_group/marg_gpt4o_run1"
+method: "baseline_marg"
+
+# ============================================================
+# Match summary
+# ============================================================
+# Official concerns: 22 (O1–O22), spanning model coverage, missing baselines,
+#   novelty/AutoDAN-Turbo overlap, evaluation fairness, control experiments,
+#   statistical rigor, DL method justification, and notation clarity.
+# Agentic concerns: 10 (A1–A10), ALL clarity/presentation issues. No fundamental
+#   methodological, experimental design, validity, or novelty concerns raised.
+# Strict matches (exact/partial): 4. Related: 2. Very low match rate reflects
+#   the agentic system's shallow, presentation-only focus vs officials' deep
+#   methodological and empirical concerns.
+
+matches:
+  # ============================================================
+  # Match 1: Concrete skill composition examples needed
+  # ============================================================
+  - official_id: O6
+    agentic_id: A1
+    match_type: exact
+    issue: "Paper lacks concrete examples illustrating how adversarial skill primitives compose to create jailbreaks"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: moderate (gap=1, within tolerance)
+    rationale: >
+      Both concerns request concrete examples of skill composition. O6 asks for
+      before-and-after prompt transformation examples; A1 asks for case studies
+      showing how unseen jailbreaks are recompositions of observed skills. The
+      same fix (Figure 4) addresses both. A neutral reader would identify these
+      as the same complaint.
+
+  # ============================================================
+  # Match 2: Temporal cutoff methodology
+  # ============================================================
+  - official_id: O8
+    agentic_id: A7
+    match_type: partial
+    issue: "Temporal cutoff for seen/unseen attack classification needs better justification"
+    judgment_alignment: aligned
+    severity_alignment: under  # official: major, agentic: minor (gap=2, agentic too lenient)
+    rationale: >
+      Both concern the temporal cutoff mechanism. O8 specifically challenges
+      whether AutoDAN-Turbo can be called "unseen" when its paper is in the
+      curated set; A7 more broadly asks for cutoff rationale and dataset
+      specification. Same issue family but different scope: O8 targets a
+      specific fairness violation, A7 targets general justification.
+
+  # ============================================================
+  # Match 3: Evaluation metric definitions
+  # ============================================================
+  - official_id: O3
+    agentic_id: A8
+    match_type: partial
+    issue: "Evaluation metrics lack clear definitions and measurement methodology"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: moderate, agentic: moderate (gap=0)
+    rationale: >
+      O3 specifically asks "what is StrongReject score?" with questions about
+      definition, dataset, and calculation. A8 asks for detailed definitions of
+      "general capability," "harmfulness," and "over-refusal rates." Both flag
+      evaluation metrics as underspecified, but target different specific metrics.
+      O3 is narrower (one metric); A8 is broader (three criteria).
+
+  # ============================================================
+  # Match 4: Dictionary construction / D_over clarity
+  # ============================================================
+  - official_id: O16
+    agentic_id: A2
+    match_type: partial
+    issue: "Jailbreak Dictionary construction and terminology insufficiently defined"
+    judgment_alignment: aligned
+    severity_alignment: over  # official: minor (notation), agentic: major (gap=2, agentic too harsh)
+    rationale: >
+      O16 flags the specific undefined term D_over in Table 1. A2 broadly flags
+      that dictionary construction and practical application are insufficiently
+      described. A2 is the broad version; O16 is a narrow instance of dictionary
+      clarity. Fixing A2 (describe construction fully) would likely resolve O16,
+      but A2's scope far exceeds O16's. Agentic severity (major) substantially
+      exceeds official (minor).
+
+  # ============================================================
+  # Match 5 (related): Explainability scoring methodology
+  # ============================================================
+  - official_id: O11
+    agentic_id: A4
+    match_type: related
+    issue: "Explainability scoring methodology concerns"
+    judgment_alignment: n/a
+    severity_alignment: n/a
+    rationale: >
+      Both concern explainability scoring but with different complaints.
+      O11 flags GPT-4.1 evaluator bias and lack of independent verification
+      (methodology independence). A4 flags that the scoring rubric criteria are
+      unspecified (description clarity). Different fixes: O11 requires adding a
+      second judge; A4 requires describing the rubric. False match pattern #4
+      (same component, different complaint) applies.
+
+  # ============================================================
+  # Match 6 (related): Skill extraction pipeline
+  # ============================================================
+  - official_id: O9
+    agentic_id: A10
+    match_type: related
+    issue: "Skill extraction pipeline concerns"
+    judgment_alignment: n/a
+    severity_alignment: n/a
+    rationale: >
+      Both concern the skill extraction pipeline but target different defects.
+      O9 questions extraction stability when relying on prompts (robustness).
+      A10 asks for clearer definitions, better organization, and more consistent
+      examples (clarity). Different fixes needed: O9 requires stability evidence;
+      A10 requires rewriting for clarity. False match pattern #4 applies.
+
+# ============================================================
+# Positive factor matches (accepted paper)
+# ============================================================
+positive_factor_matches:
+  - official_factor_id: D1
+    agentic_source: decision_driver
+    agentic_text: >
+      Paper presents a novel approach to improving robustness against unseen
+      jailbreak attacks using the Adversarial Déjà Vu hypothesis and Jailbreak
+      Dictionary, acknowledged as making significant contributions.
+    match_type: exact
+    judgment_alignment: aligned
+    rationale: >
+      Both identify the Adversarial Deja Vu hypothesis as a novel and important
+      contribution. Agentic R1 directly names the hypothesis and calls it novel.
+      M1 also recognizes the hypothesis as a novel conceptual contribution.
+
+  - official_factor_id: D2
+    agentic_source: decision_driver
+    agentic_text: >
+      Paper presents a novel approach... using the Adversarial Déjà Vu hypothesis
+      and Jailbreak Dictionary.
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >
+      Agentic R1 references the "Jailbreak Dictionary" as part of the novel
+      contribution, but does not specifically praise the DL-based pipeline,
+      LLM-augmented basis pursuit, or the explainability methodology that the
+      AC specifically calls "smart" and "principally justified." The DL
+      methodology details are not surfaced as a distinct strength.
+
+  - official_factor_id: D3
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >
+      D3 records reviewer Q4KG's reversal from 2 to 6 post-rebuttal. This is
+      a post-rebuttal event not observable by the agentic system.
+
+  - official_factor_id: D4
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >
+      D4 records post-discussion reviewer consensus (three positive +
+      one reversed). Not observable by the agentic system.
+
+  - official_factor_id: D5
+    agentic_source: decision_driver
+    agentic_text: >
+      Paper presents a novel approach to improving robustness against unseen
+      jailbreak attacks.
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >
+      Agentic R1 captures the pre-rebuttal aspect (ASCoT improves robustness
+      to unseen attacks). However, D5 specifically cites control experiments
+      added per reviewer suggestion and multi-turn validation — these are
+      post-rebuttal additions the agentic system could not observe. The
+      robustness claim is acknowledged but not the empirical validation depth.
+
+  - official_factor_id: D6
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >
+      D6 is the AC's post-discussion holistic judgment that "merits outweigh
+      missing opportunities." Not observable by the agentic system, which
+      cannot access the AC's deliberation.
+
+  - official_factor_id: D7
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >
+      D7 highlights the novelty measurement aspect as independently valuable
+      for tracking jailbreak attacks in the field. The agentic system did not
+      identify this specific practical utility dimension; its positive framing
+      was limited to the hypothesis and robustness improvement.
+
+# ============================================================
+# Unmatched concerns
+# ============================================================
+# 18 of 22 official concerns have no strict match — the agentic system missed
+# nearly all substantive concerns (novelty, baselines, controls, statistics,
+# method justification, scope limitations) and only caught clarity issues.
+unmatched_official:
+  - O1   # Too few base models (model coverage)
+  - O2   # Missing jailbreak baselines (BEAST, SAA)
+  - O4   # Skill extraction overlaps AutoDAN-Turbo (novelty)
+  - O5   # Paper format violation
+  - O7   # AutoDAN-Turbo resemblance / incremental (novelty)
+  - O9   # Stability of skill extraction (related-only match with A10)
+  - O10  # Dictionary subset ablation gap
+  - O11  # GPT-4.1 evaluator bias (related-only match with A4)
+  - O12  # Missing key control experiments
+  - O13  # Single-turn to multi-turn gap
+  - O14  # Missing statistics / variance / CIs
+  - O15  # Comparison to skill-mix methods
+  - O17  # CAT*/LAT* 40K samples not detailed
+  - O18  # Skills extracted from GCG unclear
+  - O19  # DL vs clustering advantages not shown
+  - O20  # Training dataset composition not justified
+  - O21  # ASR vs ALO reporting suggestion
+  - O22  # Is dictionary learning truly needed?
+
+# 6 of 10 agentic concerns have no strict match — these are phantom concerns
+# (clarity issues the official reviewers did not flag as problems).
+unmatched_agentic:
+  - A3   # Redundancy filtering thresholds unspecified
+  - A4   # Explainability score rubric unclear (related-only match with O11)
+  - A5   # ASCoT training implementation details missing
+  - A6   # Evaluation pipeline / reconstruction metrics need elaboration
+  - A9   # Ethics & reproducibility statement needs restructuring
+  - A10  # Skill extraction pipeline definitions unclear (related-only match with O9)

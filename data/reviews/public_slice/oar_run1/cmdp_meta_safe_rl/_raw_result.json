@@ -1,0 +1,69 @@
+{
+  "overall_feedback": "This paper introduces a novel and theoretically interesting CMDP-within-online framework for meta-safe reinforcement learning, extending the ARUBA-style meta-learning approach to constrained MDPs. The key ideas\u2014using stationary distribution corrections for inexact online learning, leveraging tame geometry for estimation error bounds, and adapting learning rates\u2014are creative and well-motivated. However, the paper contains several technical errors that undermine confidence in the stated results. Most critically, there is a factor-of-M discrepancy between the per-task regret bound from the within-task analysis (Lemma 21/Equation 2) and the loss function used by the meta-algorithm (Equation 5/Algorithm 1), which propagates to Theorem 3.3 and Corollary 1. Additionally, Lemma 4 item 3 bounds the constraint quantity in the wrong direction, the abstract states a rate that does not match Theorem 3.2, and the proof of Corollary 3 uses an incorrect asymptotic approximation. While the underlying framework and proof strategy appear sound and the errors seem correctable, they require careful revision before the theoretical claims can be fully trusted.",
+  "comments": [
+    {
+      "title": "Equation (5) is M times the actual per-task regret, causing an error in Theorem 3.3",
+      "quote": "Ut(\u03c0t,0, \u03b1t) := ct\n1\n\u03b1t\nEs\u223c\u03bd\u2217\nt [DKL(\u03c0\u2217\nt |\u03c0t,0)] + \u03b1t(ct\n2M + ct\n4\n\u221a\nM) + ct\n3\n\u221a\nM",
+      "explanation": "I initially assumed Equation (5) defines the per-task regret bound used in the ARUBA-style decomposition. However, comparing with Equation (2) and Lemma 21 (Equation 45), the per-task optimality gap is bounded by (c\u2081\u1d57)/(\u03b1_t M) \u00b7 E[D_KL] + c\u2082\u1d57 \u03b1_t + lower-order terms, where the first term has M in the denominator. Equation (5) instead has c\u2081\u1d57/\u03b1_t (no M) and \u03b1_t(c\u2082\u1d57 M + c\u2084\u1d57\u221aM) in the second term (extra factor of M). This means U_t in Equation (5) is approximately M times the actual per-task suboptimality bound. Since Theorem 3.3 claims R\u0304_i \u2264 L(\u03ba*)/T, but the actual TAOG satisfies R\u0304_i = (1/T)\u2211U_{t,0} \u2248 (1/T)\u2211U_t/M = L(\u03ba*)/(MT), the theorem is off by a factor of M. The same discrepancy appears in Algorithm 1's f\u0302\u1d57_sim definition. This error propagates to Corollary 1: with the correct factor, the dominant rate from the \u03ba-optimization would be O(1/(\u221aM \u00b7 \u221aT)) rather than the claimed O(1/(M^{3/4}\u221aT)).",
+      "comment_type": "technical",
+      "paragraph_index": 6
+    },
+    {
+      "title": "Lemma 4 item 3 bounds the constraint cost in the wrong direction",
+      "quote": "3. Jt,i (\u03c0\u2217\nt ) \u2212Jt,i (\u02c6\u03c0t) \u2264\u03b7t, for i = 1, . . . , p.",
+      "explanation": "Item 3 states J_{t,i}(\u03c0*_t) \u2212 J_{t,i}(\u03c0\u0302_t) \u2264 \u03b7_t, which implies J_{t,i}(\u03c0\u0302_t) \u2265 J_{t,i}(\u03c0*_t) \u2212 \u03b7_t. This is a lower bound on the learned policy's cost, but what is needed for the constraint violation bound R_i = E[J_{t,i}(\u03c0\u0302_t)] \u2212 d_{t,i} (Equation 2) is an upper bound. The proof says 'item 3 holds obviously since \u03c0\u0302_t is sampled from N_{t,0}', but this argument actually supports J_{t,i}(\u03c0\u0302_t) \u2264 d_{t,i} + \u03b7_t (because at steps m \u2208 N_{t,0}, CRPO ensures approximate constraint satisfaction), which gives the constraint violation bound J_{t,i}(\u03c0\u0302_t) \u2212 d_{t,i} \u2264 \u03b7_t. The correct statement should be E[J_{t,i}(\u03c0\u0302_t)] \u2212 d_{t,i} \u2264 \u03b7_t, matching Equation (2)'s definition of R_i.",
+      "comment_type": "technical",
+      "paragraph_index": 17
+    },
+    {
+      "title": "Abstract rate does not match Theorem 3.2",
+      "quote": "task-averaged regret of O\n\n1\n\u221a\nM\nq\nET\n\u221a\nT + \u02c6D\u22172",
+      "explanation": "The abstract claims the task-averaged regret is O((1/\u221aM)\u221a(E_T/\u221aT + D\u0302*\u00b2)). However, Theorem 3.2 states R\u0304_i \u2264 O((1/\u221aM)\u221a(1/\u221aT + E_T/T + D\u0302*\u00b2)). The expressions inside the square root differ in two ways: (1) the abstract has E_T/\u221aT while the theorem has E_T/T (different power of T in the denominator), and (2) the theorem contains an additional 1/\u221aT term independent of E_T. These cannot be reconciled: E_T/\u221aT > E_T/T for T > 1, so the abstract's term is strictly larger for the E_T component, while the 1/\u221aT term in the theorem is absent from the abstract. The detailed proof (Theorem E.2) confirms the structure of Theorem 3.2, so the abstract misrepresents the formal result.",
+      "comment_type": "logical",
+      "paragraph_index": 1
+    },
+    {
+      "title": "Incorrect approximation in the proof of Corollary 3",
+      "quote": "using the approximation\nq\n1\nM+\n\u221a\nM\n\u224a\n1\nM 1/4",
+      "explanation": "The proof approximates \u221a(1/(M + \u221aM)) \u2248 1/M^{1/4}. For large M, M + \u221aM \u2248 M, so \u221a(1/(M + \u221aM)) \u2248 1/\u221aM, which differs from 1/M^{1/4} by a factor of M^{1/4}. Concretely, at M = 10000: \u221a(1/10100) \u2248 0.01, while 1/10000^{0.25} \u2248 0.1\u2014a 10\u00d7 discrepancy. While 1/M^{1/4} is a valid upper bound on \u221a(1/(M+\u221aM)) for M \u2265 1, calling it an 'approximation' obscures that it is M^{1/4} times looser than the actual value. This looseness is what produces the M^{3/4} rate in Corollary 1; using the correct asymptotic would yield a different (tighter) dependence on M. Together with the factor-of-M issue from Equation (5), this affects whether the claimed improvement from 1/\u221aM (Theorem 3.2) to 1/M^{3/4} (Corollary 1) is valid.",
+      "comment_type": "technical",
+      "paragraph_index": 53
+    },
+    {
+      "title": "Remark 2 drops path-length terms without justification",
+      "quote": "the bounds diminish at a rate O\n\n1\nM 3/4\u221a\nT\n\nET +\nq\nET\nT + \u02c6V 2\n\u03c8",
+      "explanation": "Corollary 1 (Equation 8) contains the term min(S_T + E_T, P_T + \u1ebc_T) inside the square root, where S_T and P_T are the squared path-length and path-length of the comparator sequence. Remark 2 replaces this with just E_T, effectively dropping S_T and P_T. These quantities capture how much the optimal comparator changes across tasks and can be significant in dynamic environments\u2014precisely the setting Corollary 1 addresses. The remark states this simplified rate as the general bound without noting any conditions under which S_T and P_T are negligible. Since the remark is comparing the adaptive rate to Theorem 3.2's rate to demonstrate improvement, this omission could mislead readers about the actual conditions under which the improvement holds.",
+      "comment_type": "logical",
+      "paragraph_index": 7
+    },
+    {
+      "title": "Cost function arity inconsistency in value function definition",
+      "quote": "V i\nt,\u03c0(s) =\nEt [P\u221e\nm=0 \u03b3mct,i (sm, am, sm+1) | s0 = s, \u03c0]",
+      "explanation": "The cost functions are defined as c_{t,i} : S \u00d7 A \u2192 [0,1], taking two arguments (state, action). However, the value function definition uses c_{t,i}(s_m, a_m, s_{m+1}) with three arguments including the next state s_{m+1}. In the standard CMDP literature, cost functions depend on (s, a) only, consistent with the domain declaration S \u00d7 A. The value function should use c_{t,i}(s_m, a_m), or the domain should be S \u00d7 A \u00d7 S if the next-state dependence is intended. This inconsistency also appears in the action-value function definition with Q^i_{t,\u03c0}(s,a).",
+      "comment_type": "technical",
+      "paragraph_index": 2
+    },
+    {
+      "title": "Humanoid low-similarity setting uses the same range as high-similarity",
+      "quote": "To generate tasks with low similarity for the humanoid, the goal direction for each training task is uniformly sampled from a range of [\u2212\u03c0/4, \u03c0/4].",
+      "explanation": "In Section H.4, the high task-similarity setting samples the humanoid's goal direction from [\u2212\u03c0/4, \u03c0/4]. The low task-similarity setting states the exact same range [\u2212\u03c0/4, \u03c0/4]. This appears to be a copy-paste error; by analogy with the half-cheetah experiments (where high similarity uses [0.35, 0.65] and low similarity uses [0.0, 1.0]), the low-similarity humanoid setting should presumably use a wider range such as [\u2212\u03c0/2, \u03c0/2]. Despite this, the experimental results in Figures 8 and 9 do show different performance patterns, suggesting the actual experiments may have used different ranges than what is stated in the text.",
+      "comment_type": "logical",
+      "paragraph_index": 57
+    },
+    {
+      "title": "Proof of Corollary 3 has a missing square in the derivative",
+      "quote": "dL\nd\u03ba = \u2212U init\nT\n({\u03c8}t\u2208[T ])\n\u03ba2\n\u2212ET\n\u03ba2 \u2212T \u02c6V\u03c8\n\u03ba2\n+ ct\n2M + ct\n4\n\u221a\nM.",
+      "explanation": "In the proof of Corollary 3, the derivative dL/d\u03ba contains the term \u2212TV\u0302_\u03c8/\u03ba\u00b2 where V\u0302_\u03c8 should be V\u0302\u00b2_\u03c8 (squared). This is because the relevant term in L(\u03ba) is TV\u0302\u00b2_\u03c8/\u03ba, whose derivative with respect to \u03ba is \u2212TV\u0302\u00b2_\u03c8/\u03ba\u00b2. The subsequent formula for \u03ba* = \u221a((U^init_T + E_T + TV\u0302\u00b2_\u03c8)/(c\u00b2_t M + c\u2074_t \u221aM)) correctly uses V\u0302\u00b2_\u03c8, indicating the derivative expression is a typo rather than a propagating error, but it could confuse readers verifying the derivation.",
+      "comment_type": "technical",
+      "paragraph_index": 53
+    }
+  ],
+  "usage": {
+    "input_tokens": 0,
+    "output_tokens": 0
+  },
+  "num_api_calls": 1,
+  "num_comments": 8,
+  "method": "openaireview_zero_shot",
+  "model": "anthropic/claude-opus-4-6"
+}

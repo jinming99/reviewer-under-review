@@ -1,0 +1,177 @@
+schema_version: "v1"
+paper: "collabllm"
+version: "v0.9.2"
+condition: "own_group/ai_scientist_gpt4o_run1"
+method: "baseline_ai_scientist"
+
+matches:
+  # ============================================================
+  # A1 ↔ O4: Novelty questioned
+  # ============================================================
+  - official_id: O4
+    agentic_id: A1
+    match_type: partial
+    issue: "Novelty of the multiturn-aware reward approach questioned"
+    judgment_alignment: aligned
+    severity_alignment: match  # both major
+    rationale: >-
+      Both question the novelty of the MR approach. O4 specifically identifies
+      resemblance to self-training ('using forward-looking strategies with a user
+      simulator is essentially generating more realistic multi-turn data with an LLM');
+      A1 generically states novelty 'is not clearly distinguished from existing methods'
+      without identifying the specific comparison point (self-training). Partial because
+      A1 lacks the diagnostic specificity of O4.
+
+  # ============================================================
+  # A2 ↔ O2: Theoretical foundations questioned
+  # ============================================================
+  - official_id: O2
+    agentic_id: A2
+    match_type: related
+    issue: "Theoretical/conceptual foundations of the reward design questioned"
+    judgment_alignment: aligned
+    severity_alignment: match  # both major
+    rationale: >-
+      Both question the theoretical basis of the MR approach. O2 specifically targets
+      the causal effect estimation claim as 'somewhat convincing' and asks for
+      elaboration on how it differs from existing trajectory-level methods. A2 is a
+      blanket criticism ('methodology lacks strong theoretical underpinnings') with no
+      specific target. Related only — O2 identifies a precise claim to challenge, A2
+      is too vague to constitute the same issue.
+
+  # ============================================================
+  # A5 ↔ O9: User simulator fidelity
+  # ============================================================
+  - official_id: O9
+    agentic_id: A5
+    match_type: partial
+    issue: "User simulator may not faithfully represent real human behavior"
+    judgment_alignment: aligned
+    severity_alignment: match  # O9=moderate, A5=major; gap=+1 → within tolerance
+    rationale: >-
+      Both concern user simulator fidelity to real users. O9 flags 'prompt-defined
+      simulated LLM users could be substantially biased compared to real human users';
+      A5 flags 'may not account for the unpredictable nature of human interactions.'
+      Same issue family — both say the simulator may not represent real users — with
+      different emphasis (systematic bias vs behavioral unpredictability).
+
+  # ============================================================
+  # A5 ↔ O22: User simulator limitations
+  # ============================================================
+  - official_id: O22
+    agentic_id: A5
+    match_type: related
+    issue: "Limitations of LLM-based user simulators"
+    judgment_alignment: aligned
+    severity_alignment: over  # O22=minor, A5=major; gap=+2
+    rationale: >-
+      Both address user simulator limitations but at different specificity. O22
+      identifies a particular failure mode ('instruction-tuned LLMs tend to be overly
+      agreeable and always consent to requests'). A5 broadly states simulators 'may not
+      account for the unpredictable nature of human interactions.' Related only — O22
+      pinpoints agreeableness bias while A5 is generic.
+
+  # ============================================================
+  # A4 ↔ O9: Simulated evaluation and sim-to-real gap
+  # ============================================================
+  - official_id: O9
+    agentic_id: A4
+    match_type: related
+    issue: "Simulated evaluation setting limits real-world validity"
+    judgment_alignment: aligned
+    severity_alignment: match  # O9=moderate, A4=major; gap=+1 → within tolerance
+    rationale: >-
+      Both touch the sim-to-real theme but at different scope. O9 specifically flags
+      user simulator bias during training; A4 broadly dismisses the entire simulated
+      evaluation as insufficient for real-world claims. Different issues per false match
+      pattern test: A4 questions evaluation methodology (simulated vs real settings), O9
+      targets a specific artifact (simulator bias). Related only.
+
+# ============================================================
+# Positive factor matches (paper officially accepted as oral)
+# ============================================================
+positive_factor_matches:
+  - official_factor_id: D1
+    agentic_source: mention
+    agentic_text: "Paper presents a structured training approach for LLMs targeting multiturn interactions."
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >-
+      D1 highlights problem importance ('improving LLMs' multi-turn conversational
+      capability'). M1 acknowledges the multiturn focus as a strength but frames it as
+      'structured training approach' rather than explicitly recognizing the problem's
+      importance. Partial — same topic area, different framing emphasis.
+
+  - official_factor_id: D2
+    agentic_source: mention
+    agentic_text: "Paper presents a structured training approach for LLMs targeting multiturn interactions."
+    match_type: related
+    judgment_alignment: inverted
+    rationale: >-
+      D2 praises the method (data generation with user simulator + multi-turn reward)
+      as technically sound. M1 notes the training approach exists but the review
+      simultaneously criticizes the methodology's novelty (A1) and theoretical basis
+      (A2). The agentic system recognized the approach but judged it negatively —
+      inverted conclusion.
+
+  - official_factor_id: D3
+    agentic_source: mention
+    agentic_text: "Extensive experimental analysis shows improvements over existing baselines in simulated environments."
+    match_type: partial
+    judgment_alignment: inverted
+    rationale: >-
+      D3 says results are strong with strong baselines. M2 acknowledges experimental
+      improvements but qualifies them as 'in simulated environments' and the review's
+      verdict dismisses the evaluation as insufficient (A4). Same observation (results
+      show improvements), opposite conclusion (strong evidence vs insufficient evidence).
+
+  - official_factor_id: D4
+    agentic_source: none
+    agentic_text: ""
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >-
+      D4 (three public benchmarks as community contribution) not mentioned anywhere
+      in the agentic review. Complete miss of a tangible positive contribution.
+
+  - official_factor_id: D5
+    agentic_source: none
+    agentic_text: ""
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >-
+      D5 (authors addressed all reviewer concerns) is a post-rebuttal factor not
+      observable by the agentic system. Not a system failure.
+
+# ============================================================
+# Unmatched concerns
+# ============================================================
+# 20 of 22 official concerns unmatched — GPT-4o AI Scientist review is
+# extremely sparse (5 generic weaknesses, no specific paper references)
+# compared to 5 official reviewers raising 22 specific concerns.
+unmatched_official:
+  - O1   # Unclear how MR encourages collaboration (mechanism clarity)
+  - O2   # Causal effect estimation claim unconvincing (only related to A2)
+  - O3   # Dataset access / reproducibility
+  - O5   # Missing related references on multi-turn RL benchmarks
+  - O6   # Computational overhead of MR / scalability
+  - O7   # Generalization tested on single additional dataset
+  - O8   # Integration with existing RL frameworks
+  - O10  # MR function hard to define for ambiguous tasks
+  - O11  # Small improvements over prompt engineering in Table 1
+  - O12  # Source of improvement unclear — reward design vs MR framework
+  - O13  # BLEU metric appropriateness for document editing
+  - O14  # ITR performance decrease from w=2 to w=3
+  - O15  # ITR metric scoring clarity
+  - O16  # Caption typo in Figure 2
+  - O17  # Helpfulness as w=0 reward not explored
+  - O18  # Broader literature missing from main text
+  - O19  # Missing comparison with user-simulator-based prior work
+  - O20  # Discussion of user simulator model choice (GPT-4o vs self-play)
+  - O21  # Quantitative comparison with MTPO/ArCHer
+  - O22  # Limitations of LLM user simulator (only related to A5)
+
+unmatched_agentic:
+  - A2   # Lacks theoretical underpinnings — only related to O2; too vague to match specifically
+  - A3   # Clarity concern — phantom; no official reviewer raised clarity issues (all scored Accept)
+  - A4   # Simulated evaluation limits applicability — only related to O9; review missed the real-world user study (Sec 6, 201 participants)

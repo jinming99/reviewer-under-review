@@ -1,0 +1,39 @@
+# Summary
+
+The paper presents a framework called COLLABLLM designed to improve human-LLM collaboration by focusing on multiturn interactions with a novel reward structure termed Multiturn-aware Rewards. The framework simulates human conversation dynamics and assesses responses based on their impact over multiple turns to better guide user requests and enhance satisfaction.
+# Strengths
+
+- The paper presents a structured training approach for LLMs targeting multiturn interactions.
+- Extensive experimental analysis shows improvements over existing baselines in simulated environments.
+
+# Weaknesses
+
+- The novelty of the 'Multiturn-aware Reward' approach is not clearly distinguished from existing methods.
+- The methodology lacks strong theoretical underpinnings, potentially undermining claimed improvements.
+- The paper's clarity suffers due to overwhelming experimental details overshadowing key contributions.
+- Evaluation primarily in simulated settings limits the significance of real-world applicability claims.
+- Transference and applicability to real-world usage are unconvincing without concrete validation.
+
+# Questions
+
+- How does the proposed multiturn-aware reward specifically differ from existing multiturn dialogue approaches?
+- What measures have been taken to ensure that simulated user interactions represent real-world user expectations and behavior?
+
+# Limitations
+
+- The performance improvement results come from simulated tests, lacking diverse real-world validation.
+- The approach heavily relies on user simulators, which may not account for the unpredictable nature of human interactions.
+
+# Scores
+
+- **Originality**: 2
+- **Quality**: 2
+- **Clarity**: 2
+- **Significance**: 2
+- **Soundness**: 2
+- **Presentation**: 2
+- **Contribution**: 2
+- **Overall**: 3
+- **Confidence**: 4
+
+# Decision: Reject

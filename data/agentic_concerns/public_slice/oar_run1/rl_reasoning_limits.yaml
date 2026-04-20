@@ -1,0 +1,145 @@
+schema_version: "v1"
+paper: rl_reasoning_limits
+version: baseline
+method: baseline
+verdict: REJECT
+score: null
+
+decision_drivers:
+  - id: R1
+    polarity: pro_reject
+    text: >-
+      Sampling Efficiency Gap (∆SE) metric has ambiguous definition and reported numerical
+      values inconsistent with the paper's own tables, undermining the proposed quantitative
+      framework for comparing RL algorithms.
+    evidence: "Overall Feedback: 'the proposed Sampling Efficiency Gap metric has an ambiguous definition and numerical values that are inconsistent with the paper's own tables'"
+    linked_concern_ids: [A1, A2]
+  - id: R2
+    polarity: pro_reject
+    text: >-
+      Central distributional claim that reasoning paths exist in the base model's distribution
+      rests on a perplexity analysis of only two randomly selected AIME24 problems.
+    evidence: "Overall Feedback: 'the perplexity analysis underpinning a central claim rests on only two problems'"
+    linked_concern_ids: [A3]
+  - id: R3
+    polarity: pro_reject
+    text: >-
+      Paper's strongest claims about 'reasoning patterns' overreach the solvability evidence,
+      which cannot distinguish whether RLVR finds the same paths more efficiently vs. different
+      paths to the same problems.
+    evidence: "Overall Feedback: 'the paper's strongest claims about reasoning patterns overreach the evidence, which primarily concerns problem solvability rather than the nature of reasoning itself'"
+    linked_concern_ids: [A4]
+
+mentions:
+  - id: M1
+    polarity: pro_accept
+    text: >-
+      Paper presents a thought-provoking empirical investigation into whether RLVR genuinely
+      expands LLM reasoning capabilities beyond the base model.
+    evidence: "Overall Feedback: 'a thought-provoking empirical investigation'"
+    note: "Acknowledged as an interesting research question but not treated as decisive"
+  - id: M2
+    polarity: pro_accept
+    text: >-
+      Experimental breadth covering multiple model families, RL algorithms, and task domains
+      is commendable.
+    evidence: "Overall Feedback: 'The experimental breadth—covering multiple model families, RL algorithms, and task domains—is commendable'"
+    note: "Breadth praised but did not offset identified analytical weaknesses"
+  - id: M3
+    polarity: pro_accept
+    text: >-
+      Core finding that pass@k curves cross over is well-demonstrated.
+    evidence: "Overall Feedback: 'the core finding that pass@k curves cross over is well-demonstrated'"
+    note: "Primary empirical finding acknowledged as solid but claims built on it questioned"
+
+concerns:
+  - id: A1
+    text: >-
+      Sampling Efficiency Gap (∆SE) definition is ambiguous — 'the difference between A and B'
+      implies A − B (yielding negative values), but all reported values are positive, indicating
+      the actual computation is B − A without being stated explicitly.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 1 (Type: logical)"
+    decisive: true
+    tags: [metric_definition, notation_ambiguity]
+    dimension_impact: [D, G]
+
+  - id: A2
+    text: >-
+      Reported ∆SE values and algorithm attribution are inconsistent with Table 3 — the value
+      42.6 attributed to RLOO actually matches DAPO, and the claimed range (42.6-43.9) understates
+      the true variation across algorithms (41.0-45.3).
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 2 (Type: technical)"
+    decisive: true
+    tags: [numerical_accuracy, internal_consistency, data_reporting]
+    dimension_impact: [D]
+
+  - id: A3
+    text: >-
+      Perplexity analysis supporting the central claim that RLVR reasoning paths exist within
+      the base model's distribution is based on only two randomly selected AIME24 problems with
+      16 responses each — insufficient sample size for the generality of the conclusion.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 3 (Type: technical)"
+    decisive: true
+    tags: [sample_size, evidence_strength, perplexity_analysis]
+    dimension_impact: [D, E]
+
+  - id: A4
+    text: >-
+      Claims about 'fundamentally new reasoning patterns' overshoot what the solvability evidence
+      supports — pass@k evidence shows problem coverage but cannot distinguish whether RLVR finds
+      the same reasoning paths more efficiently vs. different paths to the same problems.
+    severity:
+      level: major
+      addressability: unresolved
+      mechanism: none
+    source: other
+    source_detail: "Comment 4 (Type: logical)"
+    decisive: true
+    tags: [overclaiming, logical_gap, reasoning_patterns]
+    dimension_impact: [A, G]
+
+  - id: A5
+    text: >-
+      Showcased 'correct' base model CoT in Figure 20 contains two canceling arithmetic errors
+      (2024 not 1924; 905 not 805), raising concerns about the rigor of the manual CoT inspection
+      process used to validate that 24/25 GSM8K and 5/6 AIME24 hard problems had correct CoTs.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 5 (Type: technical)"
+    decisive: false
+    tags: [data_quality, manual_inspection, CoT_verification]
+    dimension_impact: [D]
+
+  - id: A6
+    text: >-
+      Distillation comparison lacks a controlled baseline — the distilled model receives long CoT
+      traces from a vastly more capable teacher (DeepSeek-R1), confounding the learning paradigm
+      effect with the additional information injected. A controlled comparison holding training
+      data source constant is needed.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Comment 6 (Type: logical)"
+    decisive: false
+    tags: [experimental_design, confound, controlled_comparison, distillation]
+    dimension_impact: [D]

@@ -1,0 +1,179 @@
+schema_version: "v1"
+paper: rl_reasoning_limits
+version: "own_group/marg_gpt4o_run1"
+method: baseline
+
+matches:
+  # ── Strict matches (exact/partial) ──────────────────────────────
+
+  - official_id: O16
+    agentic_id: A1
+    match_type: partial
+    issue: "Evaluation too centered on pass@k; additional analysis metrics needed"
+    judgment_alignment: aligned
+    severity_alignment: match  # both moderate
+    rationale: >
+      O16 (6ryS) says "evaluation is too centered on pass@k curves" and wants
+      more diverse analyses. A1 similarly requests "additional metrics and
+      analyses beyond pass@k." Both target the same issue family (metric
+      diversity) but differ in specifics: O16 cites perplexity analysis and
+      distillation comparison as exemplars, while A1 focuses on reasoning
+      path diversity. Partial because scope differs.
+
+  - official_id: O18
+    agentic_id: A5
+    match_type: partial
+    issue: "RLVR implementation details insufficient for reproducibility"
+    judgment_alignment: aligned
+    severity_alignment: over  # official=minor, agentic=major (gap=+2)
+    rationale: >
+      O18 asks for specific policy optimization parameters (ppo_mini_batch_size,
+      ppo_epochs). A5 asks for a detailed algorithm or pseudocode for the RLVR
+      process. Both target RLVR reproducibility but require different author
+      fixes — parameter reporting vs. algorithmic description. Agentic system
+      over-rates severity: officials treated parameter gaps as minor (a
+      question, not a weakness), while the agentic system elevates it to major
+      and makes it decisive.
+
+  - official_id: O12
+    agentic_id: A9
+    match_type: partial
+    issue: "Improvement suggestions for RL paradigms are insufficiently developed"
+    judgment_alignment: aligned
+    severity_alignment: match  # official=moderate, agentic=minor (gap=1, within tolerance)
+    rationale: >
+      O12 says the paper "provides limited improvement suggestions" for
+      addressing RLVR limitations. A9 says "proposed improvements to RL
+      paradigms" need more implementation details. Both target the paper's
+      future-direction discussion as underdeveloped, though O12 focuses on
+      breadth (not enough suggestions) while A9 focuses on depth (existing
+      suggestions lack implementation detail).
+
+  # ── Related matches (near-misses, not strict) ──────────────────
+
+  - official_id: O19
+    agentic_id: A4
+    match_type: related
+    issue: "Perplexity analysis limitations"
+    judgment_alignment: aligned
+    severity_alignment: n/a
+    rationale: >
+      O19 criticizes the perplexity analysis for using only two AIME samples
+      (sample size concern). A4 wants perplexity analysis to explore
+      correlation with reasoning diversity (analytical direction concern).
+      Both target perplexity analysis quality but with different specific
+      complaints: sample size vs. analytical scope. Different fixes required.
+
+  - official_id: O8
+    agentic_id: A6
+    match_type: related
+    issue: "Temperature parameter choices"
+    judgment_alignment: aligned
+    severity_alignment: n/a
+    rationale: >
+      O8 notes that higher temperature actually benefits the RL model at high
+      pass@k in Figure 16, questioning the T=0.6 choice. A6 asks for general
+      justification of temperature and top-p choices. Both involve temperature
+      parameter decisions but O8 is an empirical observation about a specific
+      figure while A6 is a generic reproducibility/justification request.
+      Different underlying complaints despite same component.
+
+  - official_id: O10
+    agentic_id: A8
+    match_type: related
+    issue: "Explanation of pretrained prior limitations on RLVR"
+    judgment_alignment: aligned
+    severity_alignment: n/a
+    rationale: >
+      O10 wants a theoretical explanation for why RLVR fails to expand
+      reasoning boundaries (formal/informal theory). A8 wants concrete
+      examples illustrating limitations imposed by pretrained priors.
+      Both target the explanatory gap around pretrained prior constraints,
+      but O10 seeks theory while A8 seeks illustrative examples. Different
+      levels of abstraction and different author responses needed.
+
+# ── Positive factor matches (accepted paper) ──────────────────────
+
+positive_factor_matches:
+  - official_factor_id: D1
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >
+      The agentic system did not recognize the importance or intriguingness
+      of the research question (whether RLVR genuinely expands reasoning
+      beyond the base model). No mention or decision driver captures this
+      positive assessment.
+
+  - official_factor_id: D2
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >
+      The agentic system did not recognize the paper's masterful execution
+      or the strength of the negative result. Instead, it focused exclusively
+      on improvement suggestions, missing the paper's empirical contribution
+      entirely.
+
+  - official_factor_id: D3
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >
+      Post-discussion reviewer consensus (unanimous Strong Accept) is not
+      observable to the agentic system. This factor is inherently
+      unmatchable for any pre-discussion review system.
+
+  - official_factor_id: D4
+    agentic_source: mention
+    agentic_text: >
+      The comparison with distillation methods is described as insightful
+      for highlighting RLVR's limitations in introducing new reasoning
+      patterns.
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >
+      M2 acknowledges the distillation comparison as insightful, partially
+      matching D4's emphasis on the diagnostic value of the RLVR-vs-
+      distillation contrast. However, the agentic system treats it as
+      a building block for further experiments rather than recognizing it
+      as a standalone positive contribution to the paper's argument.
+
+# ── Unmatched concerns ────────────────────────────────────────────
+
+# Official concerns with no strict (exact/partial) agentic match.
+# Related-only edges still count as strict-unmatched.
+unmatched_official:
+  - O1   # Model scale (7-32B) and training data diversity
+  - O2   # Random guessing explanation
+  - O3   # Overfitting to test set
+  - O4   # Table 1 training data annotation
+  - O5   # Figure 6 perplexity vs o1 relevance
+  - O6   # Figure 8 readability
+  - O7   # Tables 4-5 percentage overlap format
+  - O8   # Temperature inconsistency (related-only to A6)
+  - O9   # Terminology misnomer
+  - O10  # Theoretical explanation gap (related-only to A8)
+  - O11  # Narrow scope / future RL paradigms
+  - O13  # Base model dependency
+  - O14  # No theoretical explanation (overlaps O10)
+  - O15  # Qwen model series dominance
+  - O17  # Novelty concern / DeepSeekMath prior work
+  - O19  # Perplexity analysis limited samples (related-only to A4)
+  - O20  # Scaling to 70B+ models
+  - O21  # Task difficulty effect on pass@k gap
+  - O22  # Train vs test pass@k curves
+  - O23  # Perplexity evolution during training
+  - O24  # Limitations section insufficient
+  - O25  # Contradicting CoT-Pass@k paper
+  - O26  # SFT pre-training effect
+
+# Agentic concerns with no strict (exact/partial) official match.
+# Related-only edges still count as strict-unmatched (phantom concerns).
+unmatched_agentic:
+  - A2   # Distillation quantitative comparison (phantom -- paper already has Section 4.2)
+  - A3   # Ablation parameter interplay (phantom -- no official raised this)
+  - A4   # Perplexity-diversity correlation (related-only to O19)
+  - A6   # Temperature/top-p justification (related-only to O8)
+  - A7   # Baseline model configuration details (phantom)
+  - A8   # Pretrained prior examples (related-only to O10)

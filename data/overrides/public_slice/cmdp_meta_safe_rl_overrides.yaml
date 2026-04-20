@@ -1,0 +1,751 @@
+schema_version: v1
+version: "own_group"
+generated_by: skill_5b_claude_code
+
+edge_overrides:
+  # ============================================================
+  # panel_no_ls (5 edges)
+  # ============================================================
+  - method: panel_no_ls
+    paper: cmdp_meta_safe_rl
+    official_id: O1
+    agentic_id: A1
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both flag experimental evaluation inadequacy but target distinct defects: environment count/diversity (O1) vs. unmeasured theoretical quantities D*/E_T (A1). Different fixes required. Partial correct."
+    confidence: high
+
+  - method: panel_no_ls
+    paper: cmdp_meta_safe_rl
+    official_id: O5
+    agentic_id: A5
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "Both concern CRPO-centricity from different angles: theoretical simplification restricting applicability (O5) vs. only CRPO tested empirically (A5). Severity gap of 2 (major vs minor) = under."
+    confidence: high
+
+  - method: panel_no_ls
+    paper: cmdp_meta_safe_rl
+    official_id: O6
+    agentic_id: A11
+    original_match_type: exact
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O6 focuses on confusing notation and difficulty for CRPO-unfamiliar readers. A11 adds a distinct facet -- heavy appendix reliance for key details (related work, experiment specifics) -- not present in O6. Fixing notation clarity (O6) would not fix appendix reliance (A11). Same readability family but different fixes needed. Reclassify exact to partial."
+    confidence: high
+
+  - method: panel_no_ls
+    paper: cmdp_meta_safe_rl
+    official_id: O12
+    agentic_id: A11
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O12 flags specific notation symbols (V_{M_t}, pi*); A11 flags overall notation density plus appendix reliance. Same family (clarity/presentation) but different scope. Severity gap 1 (moderate vs minor) within tolerance."
+    confidence: high
+
+  - method: panel_no_ls
+    paper: cmdp_meta_safe_rl
+    official_id: O13
+    agentic_id: A4
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both flag theoretical incompleteness but in different theorems (3.3 vs 3.1) and targeting different quantities (regret bound assumptions vs convergence function characterization). Both major = match."
+    confidence: high
+
+  # ============================================================
+  # panel_arch_b (3 edges)
+  # ============================================================
+  - method: panel_arch_b
+    paper: cmdp_meta_safe_rl
+    official_id: O1
+    agentic_id: A1
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Different specific experimental defects: sparse environment coverage (O1) vs. no quantitative measurement of D*/V_o (A1). Different fixes required. Both major = match."
+    confidence: high
+
+  - method: panel_arch_b
+    paper: cmdp_meta_safe_rl
+    official_id: O8
+    agentic_id: A8
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "A8 captures the generality facet of O8 (only CRPO instantiated) but misses the primary novelty/compositionality dimension. Partial defensible since A8 addresses a genuine sub-facet. Severity gap 2 (major vs minor) = under."
+    confidence: high
+
+  - method: panel_arch_b
+    paper: cmdp_meta_safe_rl
+    official_id: O9
+    agentic_id: A9
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both address main paper organization but different facets: mid-paper assumption/reference insertions (O9) vs. related work relegated to appendix (A9). Different fixes required. Both minor = match."
+    confidence: high
+
+  # ============================================================
+  # df_no_ls (6 edges)
+  # ============================================================
+  - method: df_no_ls
+    paper: cmdp_meta_safe_rl
+    official_id: O1
+    agentic_id: A1
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O1 targets scope (few environments), A1 targets methodology (no theory-validating plots). Same experiment-weakness family but different fixes required. Both major = match."
+    confidence: high
+
+  - method: df_no_ls
+    paper: cmdp_meta_safe_rl
+    official_id: O2
+    agentic_id: A6
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O2 questions whether Assumption 1 suffices for safety; A6 questions whether full support is practical in large action spaces. Same assumption, different angles (sufficiency vs feasibility). Severity gap 1 within threshold."
+    confidence: high
+
+  - method: df_no_ls
+    paper: cmdp_meta_safe_rl
+    official_id: O5
+    agentic_id: A5
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "Both about CRPO dependence limiting framework. O5 flags simplified version restricting applicability; A5 flags exclusivity and need for alternatives. Different facets. Severity gap 2 (major vs minor) = under."
+    confidence: high
+
+  - method: df_no_ls
+    paper: cmdp_meta_safe_rl
+    official_id: O6
+    agentic_id: A8
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify notation/clarity in theoretical sections impeding understanding for non-specialists. A8 specifies sections 2.3 and 3.1-3.3 but core defect is identical. Severity gap 2 (major vs minor) = under."
+    confidence: high
+
+  - method: df_no_ls
+    paper: cmdp_meta_safe_rl
+    official_id: O12
+    agentic_id: A8
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O12 targets specific unclear symbols (V_{M_t}, pi*); A8 targets notation density in sections. Same family but different granularity. Severity gap 1 (moderate vs minor) within tolerance."
+    confidence: high
+
+  - method: df_no_ls
+    paper: cmdp_meta_safe_rl
+    official_id: O13
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O13 targets Theorem 3.3 unjustified regret bound assumptions; A3 targets Theorem 3.1 uncharacterized function h. Different theorems, different complaints. Same family (theoretical opacity). Both major."
+    confidence: high
+
+  # ============================================================
+  # df_arch_c (5 edges)
+  # ============================================================
+  - method: df_arch_c
+    paper: cmdp_meta_safe_rl
+    official_id: O1
+    agentic_id: A1
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O1 targets scope (few environments), A1 targets methodology (no tables, CIs, statistical tests, ablations). Same experiment-weakness family but different fixes. Both major."
+    confidence: high
+
+  - method: df_arch_c
+    paper: cmdp_meta_safe_rl
+    official_id: O8
+    agentic_id: A2
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify the contribution as composition of existing techniques (DualDICE, known results, OWO framework). Developing new machinery would resolve both. Same core novelty defect. Both major."
+    confidence: high
+
+  - method: df_arch_c
+    paper: cmdp_meta_safe_rl
+    official_id: O18
+    agentic_id: A2
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O18 is a restatement of the novelty concern from a different reviewer. A2 correctly maps to both O8 and O18. Both major."
+    confidence: high
+
+  - method: df_arch_c
+    paper: cmdp_meta_safe_rl
+    official_id: O5
+    agentic_id: A8
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "O5 flags theoretical restriction from simplified CRPO; A8 flags empirical gap (only CRPO tested, no alternatives). Same CRPO-dependence family, different angles. Severity gap 2 (major vs minor) = under."
+    confidence: high
+
+  - method: df_arch_c
+    paper: cmdp_meta_safe_rl
+    official_id: O15
+    agentic_id: A4
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O15 wants theoretical clarification of Assumption 2; A4 wants empirical validation of Assumptions 1-2 in neural network settings. Same concern family, different remedies (explain vs validate). Severity gap 1 within threshold."
+    confidence: high
+
+  # ============================================================
+  # ai_scientist_run1 (4 edges)
+  # ============================================================
+  - method: ai_scientist_run1
+    paper: cmdp_meta_safe_rl
+    official_id: O6
+    agentic_id: A7
+    original_match_type: exact
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O6 targets confusing notation and unclear theoretical analysis for CRPO-unfamiliar readers. A7 targets the paper being 49-page dense with details deferred to appendices. Both about readability but different specific defects: notation confusion vs. structural density/appendix-deferral. Fixing O6 (clarify notation) would not fix A7 (consolidate appendix content). Reclassify exact to partial."
+    confidence: medium
+
+  - method: ai_scientist_run1
+    paper: cmdp_meta_safe_rl
+    official_id: O5
+    agentic_id: A5
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O5 targets CRPO simplification restricting applicability; A5 targets being locked into CRPO with no analysis for other algorithms. Both concern CRPO-centric limitations but different facets. Severity gap 1 (major vs moderate) = match."
+    confidence: high
+
+  - method: ai_scientist_run1
+    paper: cmdp_meta_safe_rl
+    official_id: O2
+    agentic_id: A8
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O2 targets initialization safety (meta-init not safe from step 1). A8 targets constraint violations during learning broadly. Same safety-guarantee-gap family but different scope. Both moderate = match."
+    confidence: high
+
+  - method: ai_scientist_run1
+    paper: cmdp_meta_safe_rl
+    official_id: O17
+    agentic_id: A7
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O17 targets vague/ambiguous claims and results. A7 targets density and appendix-deferral. Both clarity concerns but different facets: content vagueness vs structural density. Both moderate = match."
+    confidence: high
+
+  # ============================================================
+  # ai_scientist_gpt4o_run1 (8 edges)
+  # ============================================================
+  - method: ai_scientist_gpt4o_run1
+    paper: cmdp_meta_safe_rl
+    official_id: O6
+    agentic_id: A4
+    original_match_type: exact
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O6 specifically targets confusing notation and unclear theoretical analysis for CRPO-unfamiliar readers. A4 is a very broad/vague statement that 'interpretive clarity is lacking.' O6 identifies specific defects (notation, CRPO familiarity barrier) while A4 identifies no specific defect. Fixing O6 would partially address A4 but A4 could encompass many other clarity issues. Reclassify exact to partial."
+    confidence: medium
+
+  - method: ai_scientist_gpt4o_run1
+    paper: cmdp_meta_safe_rl
+    official_id: O7
+    agentic_id: A4
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O7 targets specific missing CRPO explanation and parameter justification. A4 is a broad interpretive clarity complaint. O7 is one specific instance of A4's broader concern. Partial correct. Severity gap 1 (moderate vs major) = match."
+    confidence: high
+
+  - method: ai_scientist_gpt4o_run1
+    paper: cmdp_meta_safe_rl
+    official_id: O13
+    agentic_id: A1
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O13 specifically targets Theorem 3.3's regret upper bound assumptions. A1 broadly targets theoretical claims about task similarity and convergence being abstract. Same family (unjustified theoretical claims) but different scope. Both major."
+    confidence: high
+
+  - method: ai_scientist_gpt4o_run1
+    paper: cmdp_meta_safe_rl
+    official_id: O10
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O10 targets ethics/fairness discussion. A3 bundles practical validation with societal impact and fairness. Fairness component aligns well but A3 also includes practical validation which O10 does not address. Partial correct. Severity gap 1 (moderate vs major) = match."
+    confidence: high
+
+  - method: ai_scientist_gpt4o_run1
+    paper: cmdp_meta_safe_rl
+    official_id: O5
+    agentic_id: A5
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O5 targets simplified CRPO restricting applicability. A5 targets narrow CRPO focus without exploring other algorithms. Same CRPO-limitation family but different facets. Severity gap 1 (major vs moderate) = match."
+    confidence: high
+
+  - method: ai_scientist_gpt4o_run1
+    paper: cmdp_meta_safe_rl
+    official_id: O16
+    agentic_id: A6
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O16 proposes offline CMDP alternatives to DualDICE. A6 questions DualDICE's validation breadth. Both target DualDICE appropriateness from different angles. Both moderate."
+    confidence: high
+
+  - method: ai_scientist_gpt4o_run1
+    paper: cmdp_meta_safe_rl
+    official_id: O11
+    agentic_id: A7
+    original_match_type: partial
+    override_match_type: related
+    override_judgment_alignment: "n/a"
+    override_severity_alignment: "n/a"
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O11 argues static regret is not useful for meta-learning given task heterogeneity -- questions the regret formulation choice. A7 asks about sensitivity of the framework to changes in task-relatedness metrics -- questions parameter robustness. While both involve task-relatedness, they target genuinely different defects: conceptual metric appropriateness vs empirical parameter sensitivity. Fixing O11 (changing regret formulation) would not fix A7 (clarifying parameter sensitivity). Reclassify partial to related."
+    confidence: medium
+
+  - method: ai_scientist_gpt4o_run1
+    paper: cmdp_meta_safe_rl
+    official_id: O17
+    agentic_id: A2
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O17 targets overall unclear writing with vague/ambiguous claims. A2 targets insufficient clarity in experimental setups and result interpretation. Both about unclear presentation but different scopes (overall writing vs experiments). Severity gap 1 (moderate vs major) = match."
+    confidence: high
+
+  # ============================================================
+  # liang_run1 (6 edges)
+  # ============================================================
+  - method: liang_run1
+    paper: cmdp_meta_safe_rl
+    official_id: O1
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O1 wants more environments (scope); A3 wants better methodology (training steps, variance, appendix placement). Same family, different facets. Severity gap 1 (major vs moderate) = match."
+    confidence: high
+
+  - method: liang_run1
+    paper: cmdp_meta_safe_rl
+    official_id: O14
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O14 asks for MuJoCo environments implying absence; A3 notes MuJoCo exists but is poorly presented in appendix. Both concern MuJoCo coverage from different angles. Severity gap 1 (major vs moderate) = match."
+    confidence: high
+
+  - method: liang_run1
+    paper: cmdp_meta_safe_rl
+    official_id: O5
+    agentic_id: A8
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O5 is about simplified CRPO restricting applicability; A8 is about undemonstrated modularity across algorithms. Both concern CRPO dependence. Fixing O5 (use full CRPO) would not fix A8 (show non-CRPO instantiation). Both major."
+    confidence: high
+
+  - method: liang_run1
+    paper: cmdp_meta_safe_rl
+    official_id: O8
+    agentic_id: A8
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O8 has novelty dimension (composing known results) that A8 lacks; both converge on limited generality. Same family with different facets. Both major."
+    confidence: high
+
+  - method: liang_run1
+    paper: cmdp_meta_safe_rl
+    official_id: O13
+    agentic_id: A7
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O13 asks why regret bound assumptions are reasonable (justification); A7 says bounds have too many opaque constants (interpretability). Both target theoretical bound opacity from different angles. Severity gap 1 (major vs moderate) = match."
+    confidence: high
+
+  - method: liang_run1
+    paper: cmdp_meta_safe_rl
+    official_id: O15
+    agentic_id: A6
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O15 questions Assumption 2 (o-minimal structure) necessity; A6 questions the resulting desingularizing function h being uncharacterized. Both target tame geometry apparatus from different facets. Severity gap 1 (moderate vs major) = match."
+    confidence: high
+
+  # ============================================================
+  # liang_gpt4o_run1 (7 edges)
+  # ============================================================
+  - method: liang_gpt4o_run1
+    paper: cmdp_meta_safe_rl
+    official_id: O1
+    agentic_id: A5
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both say experiments cover too few environments. A5's 'not fully capturing diversity' is rhetorical elaboration of O1's 'very sparse, only a few environments.' Fixing one necessarily fixes the other. Both major."
+    confidence: high
+
+  - method: liang_gpt4o_run1
+    paper: cmdp_meta_safe_rl
+    official_id: O14
+    agentic_id: A5
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O14 is a specific restatement of environment coverage concern. A5 captures the same limited-environment concern. Adding diverse environments fixes both. Both major."
+    confidence: high
+
+  - method: liang_gpt4o_run1
+    paper: cmdp_meta_safe_rl
+    official_id: O6
+    agentic_id: A7
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "Both flag theoretical presentation/notation hindering comprehension. Core complaint identical: notation/theory is hard to follow. Severity gap 2 (major vs minor) = under."
+    confidence: high
+
+  - method: liang_gpt4o_run1
+    paper: cmdp_meta_safe_rl
+    official_id: O12
+    agentic_id: A7
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O12 flags specific notation symbols (V_{M_t}, pi*); A7 flags dense notation generally. A7 captures the family but not specific symbols. Severity gap 1 (moderate vs minor) = match."
+    confidence: high
+
+  - method: liang_gpt4o_run1
+    paper: cmdp_meta_safe_rl
+    official_id: O2
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O2 questions Assumption 1 and meta-initialization safety; A3 broadly flags distribution/parameter access. Same assumption-validity family but O2 targets safety while A3 targets generalizability. Severity gap 1 (moderate vs major) = match."
+    confidence: high
+
+  - method: liang_gpt4o_run1
+    paper: cmdp_meta_safe_rl
+    official_id: O11
+    agentic_id: A4
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O11 critiques static regret as inappropriate metric; A4 says task-similarity assumptions may not hold. Both concern task-similarity validity but O11 additionally critiques metric choice. Severity gap 1 (moderate vs major) = match."
+    confidence: high
+
+  - method: liang_gpt4o_run1
+    paper: cmdp_meta_safe_rl
+    official_id: O15
+    agentic_id: A2
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O15 asks for o-minimal structure clarification; A2 flags advanced math deterring readers. Both concern the same mathematical material's accessibility from different angles (assumption necessity vs reader deterrence). Severity gap 1 (moderate vs minor) = match."
+    confidence: high
+
+  # ============================================================
+  # marg_gpt4o_run1 (5 edges)
+  # ============================================================
+  - method: marg_gpt4o_run1
+    paper: cmdp_meta_safe_rl
+    official_id: O7
+    agentic_id: A8
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both target the same gap: CRPO is not explained and its parameters are unspecified. Explaining CRPO and documenting parameters fixes both. Severity gap 1 (moderate vs major) = match."
+    confidence: high
+
+  - method: marg_gpt4o_run1
+    paper: cmdp_meta_safe_rl
+    official_id: O13
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both flag unjustified assumptions but target different ones: O13 targets Theorem 3.3's regret upper bounds; A3 targets task-similarity, task-relatedness, and inexactness assumptions. Same complaint family, different scope. Both major."
+    confidence: high
+
+  - method: marg_gpt4o_run1
+    paper: cmdp_meta_safe_rl
+    official_id: O6
+    agentic_id: A6
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O6 is about clarity of existing content (confusing notation). A6 is about missing algorithmic content (no detail on algorithms for inexact policies). Both relate to framework comprehension but differ in remedy (cleaner writing vs more content). Partial defensible. Both major."
+    confidence: medium
+
+  - method: marg_gpt4o_run1
+    paper: cmdp_meta_safe_rl
+    official_id: O4
+    agentic_id: A4
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O4 asks specifically about Thomas et al. comparison; A4 broadly flags insufficient comparison with prior safe RL and meta-learning works. O4 is a specific instance of A4's broader concern. Severity gap 1 (minor vs moderate) = match."
+    confidence: high
+
+  - method: marg_gpt4o_run1
+    paper: cmdp_meta_safe_rl
+    official_id: O2
+    agentic_id: A7
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both target meta-initialization policy from different angles: O2 questions safety guarantee, A7 says criteria and KL divergence parameters are unspecified. Same component, different defects. Both moderate."
+    confidence: medium
+
+  # ============================================================
+  # oar_run1 (0 edges -- no edge overrides)
+  # ============================================================
+
+missed_matches:
+  - method: ai_scientist_run1
+    paper: cmdp_meta_safe_rl
+    official_id: O12
+    agentic_id: A7
+    recommended_match_type: partial
+    recommended_judgment_alignment: aligned
+    recommended_severity_alignment: match
+    rationale: "O12 flags unclear notation (V_{M_t}, pi*) making the paper harder to understand. A7 explicitly mentions 'heavy notation' as part of its density/readability complaint. O12's notation issue is partially subsumed by A7's broader notation-and-density concern. A7 is already matched to O6 (reclassified to partial) and O17 (partial)."
+    confidence: medium
+
+phantom_judgments: []
+
+verification_summary:
+  total_edges_verified: 49
+  total_unmatched_verified: 189
+  error_counts:
+    false_matches: 0
+    type_errors: 4
+    severity_errors: 0
+    missed_matches: 1
+  error_rates:
+    false_match_rate: "0.0%"
+    type_error_rate: "8.2%"
+    severity_error_rate: "0.0%"
+    missed_match_rate: "0.5%"
+  skill26_health: needs_improvement
+  papers_verified:
+    - paper: cmdp_meta_safe_rl
+      method: panel_no_ls
+      edges_verified: 5
+      unmatched_verified: 21
+      errors_found: 1
+    - paper: cmdp_meta_safe_rl
+      method: panel_arch_b
+      edges_verified: 3
+      unmatched_verified: 23
+      errors_found: 0
+    - paper: cmdp_meta_safe_rl
+      method: df_no_ls
+      edges_verified: 6
+      unmatched_verified: 16
+      errors_found: 0
+    - paper: cmdp_meta_safe_rl
+      method: df_arch_c
+      edges_verified: 5
+      unmatched_verified: 20
+      errors_found: 0
+    - paper: cmdp_meta_safe_rl
+      method: ai_scientist_run1
+      edges_verified: 4
+      unmatched_verified: 21
+      errors_found: 2
+    - paper: cmdp_meta_safe_rl
+      method: ai_scientist_gpt4o_run1
+      edges_verified: 8
+      unmatched_verified: 11
+      errors_found: 2
+    - paper: cmdp_meta_safe_rl
+      method: liang_run1
+      edges_verified: 6
+      unmatched_verified: 18
+      errors_found: 0
+    - paper: cmdp_meta_safe_rl
+      method: liang_gpt4o_run1
+      edges_verified: 7
+      unmatched_verified: 14
+      errors_found: 0
+    - paper: cmdp_meta_safe_rl
+      method: marg_gpt4o_run1
+      edges_verified: 5
+      unmatched_verified: 18
+      errors_found: 0
+    - paper: cmdp_meta_safe_rl
+      method: oar_run1
+      edges_verified: 0
+      unmatched_verified: 27
+      errors_found: 0

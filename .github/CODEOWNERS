@@ -1,0 +1,5 @@
+# CODEOWNERS for reviewer-under-review.
+# These are the default reviewers on any pull request.
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+*       @jinming99

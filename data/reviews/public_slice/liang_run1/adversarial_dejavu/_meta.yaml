@@ -1,0 +1,18 @@
+slug: adversarial_dejavu
+baseline: liang_etal
+model: claude-opus-4-6
+timestamp: '2026-04-09T13:06:35.282440+00:00'
+git_sha: 6b601aec
+git_branch: main
+elapsed_s: 60.6
+usage:
+  input_tokens: 0
+  output_tokens: 0
+cost_usd: 0.2708
+num_sdk_calls: 1
+num_api_calls: 1
+num_chunks: null
+specialties: null
+paper_text_chars: 111723
+review_text_chars: 8372
+skip_refinement: false

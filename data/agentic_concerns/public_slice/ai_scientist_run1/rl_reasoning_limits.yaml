@@ -1,0 +1,274 @@
+schema_version: "v1"
+paper: rl_reasoning_limits
+version: baseline
+method: baseline_ai_scientist
+verdict: REJECT
+score: 5
+
+decision_drivers:
+  - id: R1
+    polarity: pro_reject
+    text: >
+      Limited novelty — Dang et al., DeepSeekMath, and Liu et al. have
+      previously noted similar pass@k deterioration or base-model origin of
+      reflective behaviors after RLVR. The contribution is primarily
+      systematization, which is useful but not conceptually new.
+    evidence: "Weaknesses bullet 1: 'Limited novelty: Dang et al. and DeepSeek-Math have previously noted similar pass@k deterioration'"
+    linked_concern_ids: [A1]
+  - id: R2
+    polarity: pro_reject
+    text: >
+      Weak evidence for central claim — the perplexity analysis supporting
+      'all reasoning paths already exist in the base model's distribution' is
+      conducted on only 2 AIME24 problems with 16 responses each, far too
+      small for the claim's scope.
+    evidence: "Weaknesses bullet 2: 'conducted on only 2 randomly selected AIME24 problems with 16 responses each'"
+    linked_concern_ids: [A2]
+  - id: R3
+    polarity: pro_reject
+    text: >
+      Finding is a predictable consequence of policy gradient theory — on-policy
+      methods without explicit exploration mechanisms naturally stay within the
+      base model's distribution, reducing the significance of the result.
+    evidence: "Weaknesses bullet 3: 'policy gradient methods optimize within the support of the current policy...the expected outcome'"
+    linked_concern_ids: [A3]
+
+mentions:
+  - id: M1
+    polarity: pro_accept
+    text: >
+      Addresses a fundamental and timely question about what RLVR actually
+      achieves for LLM reasoning capabilities.
+    evidence: "Strengths bullet 1"
+    note: Noted as a strength but did not prevent reject verdict despite high relevance.
+  - id: M2
+    polarity: pro_accept
+    text: >
+      Exceptionally comprehensive experimental coverage across model families
+      (Qwen, LLaMA), sizes (7B-32B+), three task domains, six benchmarks,
+      and six RL algorithms.
+    evidence: "Strengths bullet 2"
+    note: Breadth acknowledged but insufficiently novel to outweigh weaknesses.
+  - id: M3
+    polarity: pro_accept
+    text: >
+      Multiple complementary analyses (pass@k curves, accuracy distributions,
+      solvable-problem coverage, perplexity analysis, entropy-matching) provide
+      converging evidence.
+    evidence: "Strengths bullet 3"
+    note: Convergence noted but individual analyses (especially perplexity) critiqued as weak.
+  - id: M4
+    polarity: pro_accept
+    text: >
+      Paper addresses potential confounds carefully — CoT validity is manually
+      verified and the random guessing issue is explicitly discussed.
+    evidence: "Strengths bullet 4"
+    note: Acknowledged as positive but did not weigh against decisive weaknesses.
+  - id: M5
+    polarity: pro_accept
+    text: >
+      The Sampling Efficiency Gap (delta_SE) metric provides a useful
+      quantitative framework for comparing RL algorithms.
+    evidence: "Strengths bullet 5"
+    note: Methodological contribution recognized but not sufficient to shift verdict.
+  - id: M6
+    polarity: pro_accept
+    text: >
+      Well-organized paper with clear figures, especially Figure 1 which
+      effectively communicates the core finding.
+    evidence: "Strengths bullet 6"
+    note: Presentation quality noted but non-compensatory with respect to substance.
+
+concerns:
+  # ============================================================
+  # A1: Limited novelty — prior work overlap
+  # Source: Weaknesses bullet 1
+  # ============================================================
+  - id: A1
+    text: >
+      Limited novelty: Dang et al. and DeepSeekMath previously noted similar
+      pass@k deterioration after RLVR; Liu et al. observed that reflective
+      behaviors originate from base models. Contribution is primarily
+      systematization across more settings, not a conceptually new finding.
+    severity:
+      level: major
+      addressability: unresolved
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 1"
+    decisive: true
+    tags: [novelty, prior_work_overlap]
+    dimension_impact: [B]
+
+  # ============================================================
+  # A2: Perplexity analysis sample too small
+  # Source: Weaknesses bullet 2
+  # ============================================================
+  - id: A2
+    text: >
+      The perplexity analysis (Section 4.1, Figure 6) is conducted on only
+      2 randomly selected AIME24 problems with 16 responses each — far too
+      small to support the strong claim that all RLVR reasoning paths already
+      exist in the base model's distribution.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 2"
+    decisive: true
+    tags: [sample_size, evidence_quality]
+    dimension_impact: [D]
+
+  # ============================================================
+  # A3: Finding is theoretically unsurprising
+  # Source: Weaknesses bullet 3
+  # ============================================================
+  - id: A3
+    text: >
+      The finding is theoretically unsurprising: policy gradient methods
+      optimize within the support of the current policy, and without explicit
+      exploration mechanisms, staying within the base model's distribution is
+      the expected outcome. The paper does not explain why the finding should
+      be considered surprising given standard RL theory.
+    severity:
+      level: major
+      addressability: unresolved
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 3"
+    decisive: true
+    tags: [theoretical_depth, significance]
+    dimension_impact: [A, B]
+
+  # ============================================================
+  # A4: Entropy-matching experiment uses crude temperature scaling
+  # Source: Weaknesses bullet 4
+  # ============================================================
+  - id: A4
+    text: >
+      The entropy-matching experiment (Section 4.5) uses only crude temperature
+      scaling, which adjusts sharpness but not shape of the distribution. This
+      is insufficient to fully disentangle reduced entropy/diversity from
+      genuine loss of reasoning capability.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 4"
+    decisive: false
+    tags: [methodology, entropy]
+    dimension_impact: [D, E]
+
+  # ============================================================
+  # A5: Magistral AIME25 result undermines universality
+  # Source: Weaknesses bullet 5
+  # ============================================================
+  - id: A5
+    text: >
+      The Magistral experiment (Section 4.6) shows the gap narrowing at large k
+      but the base model does not clearly surpass the RLVR model on AIME25,
+      partially undermining the universality of the main claim. The paper does
+      not adequately discuss this discrepancy.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 5"
+    decisive: false
+    tags: [generalizability, frontier_models]
+    dimension_impact: [D, F]
+
+  # ============================================================
+  # A6: No characterization of lost problem types
+  # Source: Weaknesses bullet 6
+  # ============================================================
+  - id: A6
+    text: >
+      No characterization of what types of problems RLVR loses coverage on.
+      Understanding whether these are harder problems, specific mathematical
+      domains, or problems requiring particular reasoning strategies would
+      provide crucial mechanistic insight.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 6"
+    decisive: false
+    tags: [mechanistic_insight, analysis_depth]
+    dimension_impact: [E]
+
+  # ============================================================
+  # A7: Distillation comparison unfair
+  # Source: Weaknesses bullet 7
+  # ============================================================
+  - id: A7
+    text: >
+      The distillation comparison (Section 4.2) is somewhat unfair: distillation
+      uses data from DeepSeek-R1, a vastly stronger model, so naturally it
+      expands boundaries. This illuminates the benefit of external knowledge
+      but does not deeply inform about RLVR's intrinsic limitations.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 7"
+    decisive: false
+    tags: [baseline_fairness, confound]
+    dimension_impact: [D]
+
+  # ============================================================
+  # A8: Modest RLVR training scales
+  # Source: Weaknesses bullet 8
+  # ============================================================
+  - id: A8
+    text: >
+      Most experiments use relatively modest RLVR training scales (e.g.,
+      SimpleRLZoo, 450 steps max). Whether conclusions hold under significantly
+      larger training compute budgets — the regime most relevant to frontier
+      labs — remains an open question.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 8"
+    decisive: false
+    tags: [generalizability, training_scale]
+    dimension_impact: [D, F]
+
+  # ============================================================
+  # A9: Pass@k conflates diversity with reasoning capability
+  # Source: Limitations bullet 2
+  # ============================================================
+  - id: A9
+    text: >
+      Pass@k as a measure of 'reasoning boundary' conflates output diversity
+      with reasoning capability — higher entropy models naturally achieve
+      higher pass@k regardless of reasoning depth.
+    severity:
+      level: moderate
+      addressability: unresolved
+      mechanism: none
+    source: other
+    source_detail: "Limitations bullet 2"
+    decisive: false
+    tags: [metric_validity, evaluation_design]
+    dimension_impact: [D]
+
+method_specific:
+  reviewer_system: "AI Scientist (Sakana AI)"
+  scores:
+    originality: 2
+    quality: 3
+    clarity: 3
+    significance: 2
+    soundness: 2
+    presentation: 3
+    contribution: 2
+    overall: 5
+    confidence: 4

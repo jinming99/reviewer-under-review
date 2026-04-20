@@ -1,0 +1,73 @@
+schema_version: "v1"
+paper: "beyond_problem_solving"
+version: "v0.9.2"
+condition: "own_group/ai_scientist_gpt4o_run1"
+method: "baseline_ai_scientist"
+
+matches:
+  # ──────────────────────────────────────────────────────────────
+  # Match 1: Clarity / presentation concerns
+  # ──────────────────────────────────────────────────────────────
+  - official_id: O8
+    agentic_id: A3
+    match_type: partial
+    issue: "Paper clarity and presentation hinder comprehension or reproducibility"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: moderate, agentic: major — gap +1, within tolerance
+    rationale: >
+      O8 flags scattered paper structure and unclear logical flow; A3 flags gaps
+      in experimental setup clarity impacting reproducibility. Both are
+      clarity/presentation weaknesses but target different facets: overall
+      organization (O8) vs experimental detail sufficiency (A3). Different fixes
+      required (restructure paper vs add method details), so partial not exact.
+
+  # ──────────────────────────────────────────────────────────────
+  # Match 2: Reproducibility (related only — near-miss)
+  # ──────────────────────────────────────────────────────────────
+  - official_id: O9
+    agentic_id: A3
+    match_type: related
+    issue: "Reproducibility barriers"
+    judgment_alignment: "n/a"
+    severity_alignment: "n/a"
+    rationale: >
+      Both touch reproducibility but from entirely different angles. O9 is about
+      the modified benchmark dataset not being publicly released (artifact
+      availability); A3 is about clarity of experimental setup description. These
+      require different fixes (release data vs improve writing) and share only
+      a thematic connection through 'reproducibility.'
+
+  # ──────────────────────────────────────────────────────────────
+  # Match 3: Limited scope / generalizability
+  # ──────────────────────────────────────────────────────────────
+  - official_id: O7
+    agentic_id: A5
+    match_type: partial
+    issue: "Study scope is too narrow to support generalizability claims"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: moderate, agentic: moderate — same level
+    rationale: >
+      Both flag limited scope undermining generalizability, but on different axes.
+      O7 targets model coverage (reasoning mode tested only on Qwen3); A5 targets
+      dataset/domain coverage (framework tested on limited datasets). Same issue
+      family (insufficient scope) but different specific gaps requiring different
+      fixes, so partial not exact.
+
+# No positive_factor_matches — paper was rejected.
+# Pro_accept drivers D4/D5/D6 are non-decisive and this section
+# is only populated for accepted papers per schema.
+
+unmatched_official:
+  - O1  # Theory-experiment gap (decisive) — agentic system praised Three-Space Theory (M2) but never flagged the disconnect with experimental design
+  - O2  # Narrow critical thinking definition (decisive) — agentic system did not identify construct validity issues
+  - O3  # GPT-4o evaluator bias (decisive) — agentic system missed this entirely
+  - O4  # Metrics reduce to binary classification — no agentic counterpart
+  - O5  # Data generation confound (artifact detection vs reasoning) — no agentic counterpart
+  - O6  # Artificial contradictions lack ecological validity — no agentic counterpart
+  - O9  # Dataset not released — only related edge to A3, counts as strict-unmatched
+
+unmatched_agentic:
+  - A1  # Moderate originality / prior benchmarks — officials did not raise novelty as a concern
+  - A2  # Lack of prior work comparison — officials did not raise positioning as a concern
+  - A4  # Insufficient limitations discussion — no matching official concern (officials raised specific limitations instead)
+  - A6  # Societal implications insufficiently explored — no official counterpart

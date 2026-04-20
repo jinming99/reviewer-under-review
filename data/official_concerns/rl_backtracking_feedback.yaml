@@ -1,0 +1,342 @@
+schema_version: "v1"
+paper: "rl_backtracking_feedback"
+title: "Reinforcement Learning with Backtracking Feedback"
+venue: "NeurIPS 2025"
+official_verdict: "accepted"
+decision_type: "Poster"
+reviewer_scores: [5, 4, 4, 5]  # MaoP, wAMH, mSbG, Gc4v (pre-rebuttal)
+reviewer_scores_post: [5, 4, 4, 5]  # wAMH and mSbG both stated they raised scores but displayed ratings in PDF snapshot remain 4; Gc4v raised Quality from 3 to 4
+
+pdf_is_revised: false
+revision_evidence: "No colored/highlighted revision markup in PDF. Key rebuttal-promised additions are absent: no efficiency comparison tables, no adaptive GCG results, no weak critic ablation, no comprehensive Circuit Breakers comparisons. Paper checklist instruction block not deleted. PDF appears to be original submission."
+
+ac_rationale_quality: "detailed"
+# AC provides multi-paragraph rationale with explicit summary of the paper, 4 specific
+# strengths (bullet points), 3 specific weaknesses (bullet points), and a clear conclusion
+# that most concerns were addressed post-rebuttal with reviewer consensus for acceptance.
+
+concerns:
+  # ============================================================
+  # INSUFFICIENT EXPERIMENTAL TRANSPARENCY / REPRODUCIBILITY
+  # ============================================================
+  - id: "O1"
+    text: "Key implementation details (data splits, prompt sampling, training hyperparameters, compute budget) are deferred to supplementary, making reproducibility difficult from the main text alone."
+    verbatim: "Key implementation choices—data splits, prompt sampling, training hyper-parameters, and compute budget—are deferred to the supplementary"
+    raised_by: ["wAMH"]
+    severity: "major"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors committed to moving key implementation details from supplementary to main text in camera-ready version (allowed by 10-page limit vs. 9-page submission limit)."
+    ac_treatment: "resolved"
+    decisive: false
+    tags: ["reproducibility", "experimental_transparency", "implementation_details"]
+    issue_type: "empirical"
+    addressed_in_pdf: false
+    pdf_evidence: "No evidence in PDF. Main text (9 pages) does not contain detailed data splits, prompt sampling strategy, training hyperparameters, or compute budget. These remain in the supplementary material. Section 5 states 'We provide all necessary information to reproduce the experiments in the supplementary material.'"
+    note: "AC lists this weakness but concludes 'most of the concerns have been addressed and the reviewers reached a consensus.' ac_treatment changed from unresolved to resolved based on AC's overall assessment. Note: resolved in rebuttal but not incorporated into the evaluated PDF (pdf_is_revised: false)."
+
+  # ============================================================
+  # MISSING EVALUATION OF SAFETY CRITIC QUALITY
+  # ============================================================
+  - id: "O2"
+    text: "Section 4.2 names a 'single, powerful LLM-based safety critic' but omits evaluation of critic quality, making it hard to assess whether critic quality or policy learning drives the performance gains."
+    verbatim: "Section 4.2 names a 'single, powerful LLM-based safety critic' but omits the evaluation of the critic quality"
+    raised_by: ["wAMH"]
+    severity: "major"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors provided detailed critic quality validation: tested 3 prompt prototypes on 100 prompt-response pairs (97.6%, 97.6%, 98.0% accuracy), categorized by severity (43 high, 38 medium, 19 low). Also provided weak critic ablation: Llama-2 8B model at 82.0% accuracy still shows RLBF outperforms baselines."
+    ac_treatment: "resolved"
+    decisive: false
+    tags: ["critic_evaluation", "component_attribution", "safety_critic"]
+    issue_type: "empirical"
+    addressed_in_pdf: false
+    pdf_evidence: "No evidence in PDF. Section 4.2.1 describes the critic's functionality and online feedback role but provides no accuracy metrics, no prompt prototype testing, and no weak critic ablation. The critic quality validation results (97.6-98.0% accuracy) and weak critic experiment appear only in the rebuttal."
+    note: "AC groups this under the weakness about 'depending on one LLM-based critic, whose quality is not sufficiently evaluated.' wAMH's final justification says rebuttal 'fully addresses my concerns.'"
+
+  # ============================================================
+  # SINGLE LLM CRITIC VULNERABILITY TO ADVERSARIAL ATTACKS
+  # ============================================================
+  - id: "O3"
+    text: "The method relies on a single LLM safety critic, which can be vulnerable to adversarial attacks or otherwise produce incorrect judgments."
+    verbatim: "method relies on a single LLM safety critic, which can be vulnerable to adversarial attacks or otherwise produce incorrect judgments"
+    raised_by: ["Gc4v"]
+    severity: "major"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors described protective mechanisms: structured evaluation format (Appendix A.2), critic quality validation (97.6-98.0% accuracy), and policy learning vs. critic quality ablation showing gains stem from the learning process not just critic quality."
+    ac_treatment: "resolved"
+    decisive: false
+    tags: ["single_critic_vulnerability", "adversarial_robustness", "safety_critic"]
+    issue_type: "conceptual"
+    addressed_in_pdf: false
+    pdf_evidence: "No evidence in PDF. Section 4.2.1 describes the critic but does not discuss adversarial vulnerability or protective mechanisms. Appendix A.2 shows the critic prompt format (structured evaluation) but no explicit discussion of adversarial robustness. The defensive arguments appear only in the rebuttal."
+    note: "AC explicitly identifies this: 'depending on one LLM-based critic, whose quality is not sufficiently evaluated and may itself be adversarially exploitable or error-prone.' Related to O2 but focuses on adversarial vulnerability rather than missing quality metrics. Gc4v's final justification: 'The authors' response answered my questions.'"
+
+  # ============================================================
+  # LIMITED COVERAGE OF ADAPTIVE ATTACKS
+  # ============================================================
+  - id: "O4"
+    text: "The evaluation set includes GCG and decoding-parameter variants but does not target RLBF's specific backtracking signal, leaving robustness under truly adaptive adversaries unclear."
+    verbatim: "evaluation set does not appear to target RLBF's specific backtracking signal...robustness under truly adaptive adversaries remains unclear"
+    raised_by: ["wAMH"]
+    severity: "major"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors showed adaptive GCG results (optimizing to suppress backtracking tokens) with negligible improvement for attacker (RLBF: 4.7 vs RLBF(AGCG): 4.7 on AdvBench; 4.3 vs 4.3 on HEx-PHI). Also argued DPE is inherently adaptive to backtracking."
+    ac_treatment: "resolved"
+    decisive: false
+    tags: ["adaptive_attacks", "robustness", "adversarial_evaluation"]
+    issue_type: "empirical"
+    addressed_in_pdf: false
+    pdf_evidence: "No evidence in PDF. Table 2 shows GCG and Decoding Parameters results but not adaptive GCG variants. The adaptive GCG comparison table (BSAFE+ vs BSAFE+(AGCG) vs RLBF vs RLBF(AGCG)) appears only in the rebuttal."
+    note: "AC explicitly lists: 'incomplete experimental coverage, particularly the lack of tests against stronger adaptive attacks.' wAMH's final justification confirms this was addressed in rebuttal."
+
+  # ============================================================
+  # MISSING END-TO-END EFFICIENCY COMPARISON
+  # ============================================================
+  - id: "O5"
+    text: "A core claim is higher efficiency relative to BSAFE, yet experiments only report ASR and utility, not metrics like average tokens discarded or latency under backtracking."
+    verbatim: "A core claim is higher efficiency relative to BSAFE, yet the experiments focus on Attack Success Rate and utility benchmarks"
+    raised_by: ["wAMH"]
+    severity: "major"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors trained 5 new baseline models with BSAFE backtracking version and showed RLBF models complete backtracking with 68.3 and 72.6 fewer tokens than BSAFE. Estimated 2.5-3.5 sec savings for production chatbots."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["efficiency_evaluation", "missing_metric", "token_efficiency"]
+    issue_type: "empirical"
+    addressed_in_pdf: false
+    pdf_evidence: "No evidence in PDF. Section 5 reports only ASR (Tables 1-2), utility (Table 3), per-category prevention rates (Table 4), and ablation (Table 5). No token-level efficiency comparison or latency metrics appear in the paper. The efficiency comparison table with BSAFE token counts appears only in the rebuttal."
+    note: "wAMH's final justification specifically mentions 'e2e efficiency computation' as fully addressed in rebuttal."
+
+  # ============================================================
+  # MISSING CONTEXTUAL COMPARISONS WITH NON-BACKTRACKING METHODS
+  # ============================================================
+  - id: "O6"
+    text: "The paper does not contextualize ASR numbers with non-backtracking methods that improve safety via post-training or at inference time."
+    verbatim: "paper doesn't contextualize the ASR numbers with non-backtracking methods that improve safety via post-training or at inference time"
+    raised_by: ["Gc4v"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors provided comprehensive comparisons with Circuit Breakers across all benchmarks (LMSYS-MF and LMSYS), showing CB underperforms RLBF and BSAFE+ across all model sizes. Also argued IT baselines represent state-of-the-art post-training safety."
+    ac_treatment: "resolved"
+    decisive: false
+    tags: ["missing_baselines", "contextual_comparison", "inference_time_methods"]
+    issue_type: "empirical"
+    addressed_in_pdf: false
+    pdf_evidence: "Partial evidence in PDF. Table 2 includes Circuit Breakers for GCG and Decoding Parameter attacks. However, Circuit Breakers is NOT included in the main LMSYS-MF comparison (Table 1), the utility comparison (Table 3), or the LMSYS harmless query evaluation. The comprehensive CB results across all benchmarks appear only in the rebuttal."
+    note: "AC's weakness: 'limited baseline/contextual comparisons, which weakens claims of robustness and superiority.' Gc4v's final justification: 'The authors' response answered my questions.'"
+
+  # ============================================================
+  # BASELINE BSAFE IS ARXIV PREPRINT (NOT PEER-REVIEWED)
+  # ============================================================
+  - id: "O7"
+    text: "The primary baseline BSAFE is an arXiv preprint (not peer-reviewed), which may cast doubt on the persuasiveness of comparisons. Circuit Breakers baseline only compared in Table 2."
+    verbatim: "baseline BSAFE[1] for the comparison is an article published on arXiv, which might cast doubt on the persuasiveness"
+    raised_by: ["mSbG"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors explained RLBF is orthogonal to other safety methods by design; BSAFE is the most direct comparison as it introduced backtracking for safety. Added comprehensive Circuit Breakers comparisons across all benchmarks."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["baseline_validity", "peer_review_status", "comparison_scope"]
+    issue_type: "empirical"
+    addressed_in_pdf: false
+    pdf_evidence: "No change in PDF. BSAFE remains the primary baseline referenced throughout. Table 2 includes Circuit Breakers but Tables 1, 3, 4, 5 do not. The expanded CB comparisons were provided only in rebuttal."
+    note: "AC's weakness about 'limited baseline/contextual comparisons' partially captures this. mSbG's final justification: 'most of my concerns are addressed.'"
+
+  # ============================================================
+  # REWARD FUNCTION DESIGN IS SUBJECTIVE AND UNVERIFIED
+  # ============================================================
+  - id: "O8"
+    text: "The design of the reward function is highly subjective and has not been verified through experiments to justify the specific numerical choices."
+    verbatim: "The design of the reward function is highly subjective and has not been verified through experiments"
+    raised_by: ["mSbG"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors provided principled justification: binary safety outcomes (+1.0/-1.0), graduated penalties for backtracking (-0.5 unnecessary, -0.2 failed correction), alignment with safety objectives. Cited empirical support across all model families and sizes."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["reward_design", "justification", "ablation"]
+    issue_type: "conceptual"
+    addressed_in_pdf: false
+    pdf_evidence: "The reward function is defined in Section 4.2.2 (p.5-6) with specific numerical values (+1.0, -1.0, -0.5, -0.2) but no ablation or sensitivity analysis of these values appears in the paper. The justification for these specific numbers appears only in the rebuttal."
+
+  # ============================================================
+  # BENCHMARK INCONSISTENCY WITH BSAFE PAPER
+  # ============================================================
+  - id: "O9"
+    text: "The selected benchmark (LMSYS-MF) does not appear consistent with the benchmark used in the BSAFE paper, potentially affecting evaluation validity."
+    verbatim: "The selected benchmark does not seem to be consistent with the benchmark chosen in the baseline method paper"
+    raised_by: ["mSbG"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors explained LMSYS-MF follows a similar idea to BSAFE's proposed benchmark but is grounded on a widely known LMSYS dataset to better represent real question distributions."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["benchmark_consistency", "evaluation_validity"]
+    issue_type: "empirical"
+    addressed_in_pdf: false
+    pdf_evidence: "No discussion in PDF comparing the LMSYS-MF benchmark choice to BSAFE's benchmark. The paper does not explicitly justify why a different benchmark was used versus the baseline method paper."
+
+  # ============================================================
+  # PLACEHOLDER REFERENCES AND FORMATTING ERRORS
+  # ============================================================
+  - id: "O10"
+    text: "Multiple placeholder references remain in the submission ('[two references]', '[BSAFE reference]' in Section 3) and the Paper checklist instruction block was not deleted, indicating incomplete preparation."
+    verbatim: "Multiple placeholders ('[two references]', '[BSAFE reference]') remain in Section 3"
+    raised_by: ["wAMH", "mSbG"]
+    severity: "minor"
+    resolved_in_rebuttal: null
+    rebuttal_resolution: null
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["formatting", "placeholder_references", "presentation"]
+    issue_type: "framing"
+    addressed_in_pdf: false
+    pdf_evidence: "Confirmed in PDF. Section 3 (p.3-4) contains '[BSAFE reference]' placeholder text. The NeurIPS Paper Checklist (p.16-20) retains the instruction guidelines that should have been deleted before submission."
+    note: "mSbG noted 'obvious formatting errors, such as the [BSAFE reference] on line 112 and line 124, and the instruction block in the Paper checklist has not been deleted.' Both issues remain in the evaluated PDF."
+
+  # ============================================================
+  # BACKTRACK COUNT REPRESENTATION UNCLEAR
+  # ============================================================
+  - id: "O11"
+    text: "Unclear how the backtrack count (number k of tokens to remove) is represented during redaction of harmful context."
+    verbatim: "When redacting harmful context, how do you represent the number k parts?"
+    raised_by: ["MaoP"]
+    severity: "minor"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors explained the [BACKTRACK_BY_X] token representation where X is an integer directly embedded in the special token, with tokens added to vocabulary during training."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["mechanism_clarity", "presentation"]
+    issue_type: "conceptual"
+    addressed_in_pdf: true
+    pdf_evidence: "Section 4.1.1 (p.4) describes the mechanism: 'Generate a specific backtrack command token: [BACKTRACK_BY_X], where X is an integer representing the number of tokens to retract.' The core mechanism is described, though the rebuttal provided additional detail about token vocabulary additions."
+    note: "Clarification question rather than a weakness. MaoP listed no significant weaknesses."
+
+  # ============================================================
+  # TOKEN COUNT PREDICTION ACCURACY UNDER TOKENIZATION
+  # ============================================================
+  - id: "O12"
+    text: "LLM might not accurately predict the number of tokens to backtrack due to the tokenization step, potentially affecting results."
+    verbatim: "llm might not be able to accurately predict the number of tokens, considering the step of tokenization"
+    raised_by: ["MaoP"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors explained multiple mechanisms: SFT stage teaches token count learning from ground truth, RL stage provides safeguards via reward function, model has inherent token access during generation. Qualitative observations show no significant issues."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["tokenization", "mechanism_robustness", "technical_validity"]
+    issue_type: "conceptual"
+    addressed_in_pdf: false
+    pdf_evidence: "No evidence in PDF. Section 4.1 describes the mechanism but does not discuss potential tokenization prediction errors or safeguards against them. The detailed multi-mechanism explanation appears only in the rebuttal."
+
+  # ============================================================
+  # FIGURE 1 ILLUSTRATION IS CONFUSING
+  # ============================================================
+  - id: "O13"
+    text: "Figure 1 illustration is confusing and does not clearly show the difference between the two methods (BSAFE+ and RLBF)."
+    verbatim: "illustration of figure 1 seems confusing, as it doesn't show the difference of two methods"
+    raised_by: ["MaoP"]
+    severity: "minor"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors acknowledged the issue and described planned visual improvements including comparison boxes and clearer annotations for camera-ready version."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["figure_clarity", "presentation"]
+    issue_type: "framing"
+    addressed_in_pdf: false
+    pdf_evidence: "Figure 1 (p.2) shows side-by-side BSAFE+ and RLBF illustrations but the visual distinctions are subtle. The planned improvements (comparison boxes, clearer annotations) are not present in this PDF version."
+
+ac_decision_drivers:
+  - id: "D1"
+    polarity: "pro_accept"
+    text: "The paper is well-written with clear motivation and explanation of how the method improves existing baselines."
+    decisive: false
+    tags: ["writing_quality", "motivation"]
+    observable_stage: "pre_rebuttal"
+
+  - id: "D2"
+    polarity: "pro_accept"
+    text: "RLBF introduces a targeted backtracking mechanism that removes only violating spans, making safety correction efficient."
+    decisive: true
+    tags: ["methodological_novelty", "efficiency", "targeted_correction"]
+    observable_stage: "pre_rebuttal"
+
+  - id: "D3"
+    polarity: "pro_accept"
+    text: "Strong empirical validation across attacks and model scales, showing reduced ASR while preserving standard benchmark performance."
+    decisive: true
+    tags: ["empirical_results", "multi_scale", "safety_effectiveness"]
+    observable_stage: "pre_rebuttal"
+
+  - id: "D4"
+    polarity: "pro_accept"
+    text: "The backtracking approach is effective beyond safety (correcting generation mistakes generally) and outperforms alternatives in reducing ASR while maintaining accuracy."
+    decisive: true
+    tags: ["generalization_beyond_safety", "practical_utility"]
+    observable_stage: "pre_rebuttal"
+
+  - id: "D5"
+    polarity: "pro_reject"
+    text: "Important implementation details (data splits, training choices, critic evaluation) are lacking, making it difficult to assess reproducibility and the true source of performance gains."
+    decisive: false
+    tags: ["reproducibility", "transparency"]
+    observable_stage: "pre_rebuttal"
+
+  - id: "D6"
+    polarity: "pro_reject"
+    text: "Dependence on a single LLM-based critic whose quality is not sufficiently evaluated and may itself be adversarially exploitable or error-prone."
+    decisive: false
+    tags: ["single_critic", "adversarial_vulnerability"]
+    observable_stage: "pre_rebuttal"
+
+  - id: "D7"
+    polarity: "pro_reject"
+    text: "Incomplete experimental coverage, particularly the lack of tests against stronger adaptive attacks and limited baseline/contextual comparisons, weakening claims of robustness and superiority."
+    decisive: false
+    tags: ["adaptive_attacks", "baseline_coverage", "robustness"]
+    observable_stage: "pre_rebuttal"
+
+  - id: "D8"
+    polarity: "pro_accept"
+    text: "After author rebuttal and discussions, most concerns have been addressed and reviewers reached consensus for acceptance."
+    decisive: true
+    tags: ["rebuttal_quality", "reviewer_consensus"]
+    observable_stage: "rebuttal"
+
+critical_references:
+  - id: "CR1"
+    title: "Backtracking for Safety (BSAFE)"
+    short_name: "BSAFE"
+    cited_by: ["wAMH", "mSbG"]
+    role: "methodological_basis"
+    decisive: false
+    concern_ids: ["O7"]
+    verbatim: "baseline BSAFE[1] for the comparison is an article published on arXiv"
+    note: "BSAFE (Sel et al., 2025b) is the primary baseline and methodological predecessor. mSbG noted it is only an arXiv preprint. RLBF extends and improves upon BSAFE's backtracking mechanism."
+
+  - id: "CR2"
+    title: "Improving Alignment and Robustness with Circuit Breakers"
+    short_name: "Circuit Breakers"
+    cited_by: ["mSbG", "Gc4v"]
+    role: "missing_comparison"
+    decisive: false
+    concern_ids: ["O6", "O7"]
+    verbatim: "baseline Circuit Breakers[2] was only compared in Table 2"
+    note: "Zou et al. NeurIPS 2024. mSbG flagged limited CB comparison; Gc4v requested contextualization with non-backtracking methods. Authors provided comprehensive CB results in rebuttal showing CB underperforms RLBF and BSAFE+."
+
+  - id: "CR3"
+    title: "Backtracking improves generation safety"
+    short_name: "Zhang et al. 2025"
+    cited_by: ["wAMH"]
+    role: "methodological_basis"
+    decisive: false
+    concern_ids: ["O4"]
+    verbatim: "the evaluation set does not appear to target RLBF's specific backtracking signal the way Zhang et al. probe BSAFE"
+    note: "Zhang et al. ICLR 2025. wAMH cited this as a reference for how adaptive attacks should specifically target the backtracking mechanism, arguing the evaluation should follow a similar approach."
+
+ac_decisive_negative_ids: []
+# Accepted. No decisive blockers. AC found the paper's strengths—well-written, novel
+# targeted backtracking, strong empirical results, beyond-safety applicability—outweigh
+# the remaining weaknesses around implementation transparency, critic evaluation, and
+# experimental coverage. AC notes most concerns were addressed in rebuttal and
+# reviewers reached consensus for acceptance.

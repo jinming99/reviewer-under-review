@@ -1,0 +1,169 @@
+schema_version: "v1"
+paper: "adversarial_dejavu"
+version: "v0.9.2"
+condition: "own_group/liang_run1"
+method: "baseline_liang_etal"
+
+matches:
+  - official_id: O11
+    agentic_id: A1
+    match_type: partial
+    issue: "LLM-based evaluation pipeline lacks independent validation, risking circularity and model-specific bias"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: major → same level
+    rationale: >-
+      O11 flags GPT-4.1 being used for both skill extraction and evaluation with no
+      human verification, raising model-specific bias. A1 flags the broader circularity
+      of the entire LLM-as-judge pipeline (LLMs judging LLM-extracted skills against
+      LLM-named primitives with no human ground truth). Both identify LLM self-evaluation
+      as a validity threat. Partial because A1 encompasses the full pipeline circularity
+      while O11 focuses on the specific evaluator model; fixing O11 (adding an
+      independent judge) would not fully address A1's broader circularity claim.
+
+  - official_id: O2
+    agentic_id: A3
+    match_type: partial
+    issue: "Evaluation attack coverage is narrow and may not adequately test generalization"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: major → same level
+    rationale: >-
+      O2 flags missing representative jailbreak baselines (specifically BEAST, SAA, and
+      other widely-adopted attacks). A3 flags narrow scope (only 6 unseen attacks, mostly
+      single-turn language-based) plus an LLM stylistic overlap confound between
+      LLM-generated training data and LLM-generated test attacks. Both identify evaluation
+      narrowness on the attack dimension, but A3 adds a distribution overlap confound
+      absent from O2, while O2 names specific missing baselines A3 does not. Partial
+      because the concerns overlap on attack coverage but diverge on the confound aspect.
+
+  - official_id: O19
+    agentic_id: A2
+    match_type: related
+    issue: "Dictionary learning methodology questioned from different angles"
+    judgment_alignment: n/a
+    severity_alignment: n/a
+    rationale: >-
+      O19 questions whether DL provides advantages over simpler alternatives like
+      clustering or deduplication (a necessity argument). A2 questions whether the
+      linearity assumption underlying DL is valid and calls for reconstruction quality
+      metrics and nonlinear comparisons (an assumption validity argument). Both target
+      the DL methodology but the specific complaints and required fixes differ: O19
+      would be addressed by a DL-vs-clustering ablation, A2 by validating reconstruction
+      quality or testing nonlinear alternatives. This is false match pattern #4 (same
+      component, different complaint). Related only.
+
+positive_factor_matches:
+  - official_factor_id: D1
+    agentic_source: mention
+    agentic_text: >-
+      Novel conceptual reframing of jailbreaks as sparse recombinations of a finite
+      set of adversarial skill primitives. (M1)
+    match_type: exact
+    judgment_alignment: aligned
+    rationale: >-
+      D1 identifies the Adversarial Deja Vu hypothesis as novel with wide community
+      implications. M1 captures the same factor: novel conceptual reframing of jailbreaks
+      as sparse skill recombinations, described as 'intellectually appealing and
+      potentially impactful.' Both recognize the core intellectual contribution. The
+      agentic system acknowledged this as significant but weighted methodological
+      concerns above it in the final verdict.
+
+  - official_factor_id: D2
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >-
+      D2 praises the principled DL-based pipeline and LLM-augmented basis pursuit as
+      'smart' and 'novel.' The agentic system does not highlight the DL methodology
+      as a strength; instead A2 criticizes the linearity assumption. The DL pipeline
+      as a positive contribution is entirely absent from the agentic output. This is
+      a significant miss — the AC considered DL methodology independently valuable.
+
+  - official_factor_id: D3
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >-
+      D3 is about reviewer Q4KG's score reversal (2 to 6) post-rebuttal. This is a
+      rebuttal-stage review dynamic not observable to the agentic system, which reviews
+      the paper in isolation without access to discussion history.
+
+  - official_factor_id: D4
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >-
+      D4 is about post-discussion reviewer consensus (all scores at 6+). This is a
+      post-discussion dynamic not observable to the agentic system.
+
+  - official_factor_id: D5
+    agentic_source: mention
+    agentic_text: >-
+      Strong empirical results: ASCoT achieves lowest mean harmfulness on unseen
+      attacks across three models while maintaining competitive over-refusal rates.
+      (M2); Thorough ablations provide evidence gains come from structured skill
+      coverage. (M4)
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >-
+      D5 highlights ASCoT's robustness improvement on unseen attacks with low
+      over-refusal, validated by key control experiments added per reviewer request.
+      M2 captures the core empirical strength (lowest harmfulness, competitive
+      over-refusal). M4 separately notes thorough ablations. Partial because D5
+      specifically emphasizes the rebuttal-added control experiments as decisive
+      validation, while the agentic system acknowledged the empirical results but
+      treated them as insufficient to offset methodological concerns.
+
+  - official_factor_id: D6
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >-
+      D6 is AC's post-discussion holistic judgment that the paper's merits outweigh
+      missing opportunities. This is a meta-level weighing assessment not observable
+      to the agentic system. The agentic system reached the opposite weighing
+      conclusion (REJECT), making this the core verdict divergence point.
+
+  - official_factor_id: D7
+    agentic_source: mention
+    agentic_text: >-
+      Novel conceptual reframing of jailbreaks as sparse recombinations of a finite
+      set of adversarial skill primitives. (M1)
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >-
+      D7 highlights the practical utility of the dictionary as a novelty measurement
+      tool for tracking jailbreak attack innovation. M1 captures the conceptual novelty
+      of the skill decomposition approach but frames it as a research contribution
+      rather than emphasizing the specific practical utility for measuring attack
+      novelty that AC valued. Partial because both recognize value in the approach
+      but from different angles (practical measurement utility vs conceptual novelty).
+
+# Official concerns with no strict (exact/partial) agentic match.
+# Related-only matches (O19) count as strict-unmatched.
+unmatched_official:
+  - O1   # Too few base models — model diversity not flagged by agentic system
+  - O3   # StrongReject metric details unclear
+  - O4   # Skill extraction overlaps AutoDAN-Turbo (novelty concern)
+  - O5   # Paper format violation (ICLR template width)
+  - O6   # No concrete skill composition examples
+  - O7   # Incremental contribution over AutoDAN-Turbo
+  - O8   # AutoDAN-Turbo unseen attack fairness (temporal cutoff)
+  - O9   # Stability of automated skill extraction
+  - O10  # Dictionary from subset + experimental verification gap
+  - O12  # Missing key control experiments (ablation controls)
+  - O13  # Single-turn to multi-turn gap (GALA mechanism)
+  - O14  # Missing statistics / variance / confidence intervals
+  - O15  # Comparison to skill-mix / instruction-tuning methods
+  - O16  # D_over notation not defined
+  - O17  # CAT*/LAT* 40K sample details unclear
+  - O18  # Skills extracted from GCG unclear
+  - O19  # DL advantages over clustering not shown (related-only with A2)
+  - O20  # Training dataset composition not justified
+  - O21  # ALO metric missing alongside ASR
+  - O22  # Is DL truly needed? (related to O19)
+
+# Agentic concerns with no strict (exact/partial) official match.
+# Related-only matches (A2) count as strict-unmatched.
+unmatched_agentic:
+  - A2  # Linearity assumption unvalidated (related-only with O19)
+  - A4  # Adaptive attacker / threat model analysis underdeveloped

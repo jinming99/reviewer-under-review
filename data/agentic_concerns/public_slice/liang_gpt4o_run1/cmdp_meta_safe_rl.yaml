@@ -1,0 +1,157 @@
+schema_version: "v1"
+paper: cmdp_meta_safe_rl
+version: "baseline"
+method: baseline_liang_etal
+verdict: ACCEPT
+score: null
+
+decision_drivers:
+  - id: R1
+    polarity: pro_accept
+    text: >
+      Novel CMDP-within-online framework provides the first provable guarantees
+      for meta-safe reinforcement learning with rigorous task-averaged regret
+      bounds for both reward maximization and constraint violations.
+    evidence: "review.md Section 1 'Significance and novelty' + Section 2 bullet 1 'Theoretical contributions'"
+    linked_concern_ids: []
+
+  - id: R2
+    polarity: pro_accept
+    text: >
+      Framework is adaptable to various RL settings with practical applicability
+      to real-world scenarios involving safety constraints, supported by
+      experimental validation across different environments.
+    evidence: "review.md Section 2 bullets 2-3 'Practical applicability' and 'Experimental validation'"
+    linked_concern_ids: ["A4"]
+
+mentions:
+  - id: M1
+    polarity: pro_accept
+    text: >
+      Addresses a critical gap in meta-reinforcement learning by focusing on
+      constraint violations, which are often overlooked in existing literature.
+    evidence: "review.md Section 1 'Significance and novelty' sentence 1"
+    note: >
+      Noted as contextual motivation but not singled out as a decisive factor;
+      the verdict rested on the theoretical and empirical contributions.
+
+  - id: M2
+    polarity: pro_accept
+    text: >
+      Comprehensive technical analysis with detailed proofs and thorough
+      discussion of challenges, demonstrating deep understanding of the problem.
+    evidence: "review.md Section 2 bullet 4 'Comprehensive analysis'"
+    note: >
+      Acknowledged as a strength but not elevated to a decisive reason;
+      treated as supporting evidence for the theoretical contribution.
+
+concerns:
+  - id: A1
+    text: >
+      CMDP-within-online framework may be overly complex, limiting
+      accessibility and practical implementation by practitioners.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "review.md Section 3 'Complexity of the framework' bullet 1"
+    decisive: false
+    tags: [complexity, accessibility]
+    dimension_impact: [B, G]
+
+  - id: A2
+    text: >
+      Reliance on advanced mathematical concepts (tame geometry, subgradient
+      flow systems) may deter readers unfamiliar with these areas.
+    severity:
+      level: minor
+      addressability: addressable
+      mechanism: none
+    source: review_minor
+    source_detail: "review.md Section 3 'Complexity of the framework' bullet 2"
+    decisive: false
+    tags: [accessibility, notation]
+    dimension_impact: [G]
+
+  - id: A3
+    text: >
+      Framework assumes access to certain distributions and parameters that
+      may not be readily available in all practical scenarios, limiting
+      generalizability.
+    severity:
+      level: major
+      addressability: unresolved
+      mechanism: none
+    source: review_major
+    source_detail: "review.md Section 3 'Assumptions and limitations' bullet 1"
+    decisive: false
+    tags: [assumptions, generalizability]
+    dimension_impact: [F]
+
+  - id: A4
+    text: >
+      Task-similarity and task-relatedness assumptions may not hold in diverse
+      real-world environments, affecting the framework's robustness.
+    severity:
+      level: major
+      addressability: unresolved
+      mechanism: none
+    source: review_major
+    source_detail: "review.md Section 3 'Assumptions and limitations' bullet 2"
+    decisive: false
+    tags: [assumptions, robustness]
+    dimension_impact: [F]
+
+  - id: A5
+    text: >
+      Experiments conducted on a limited set of environments, not fully
+      capturing the diversity and complexity of real-world tasks.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "review.md Section 3 'Experimental limitations' bullet 1"
+    decisive: false
+    tags: [evaluation_scope, experimental_coverage]
+    dimension_impact: [D, F]
+
+  - id: A6
+    text: >
+      Missing detailed comparison with state-of-the-art methods in terms of
+      computational efficiency and scalability.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "review.md Section 3 'Experimental limitations' bullet 2"
+    decisive: false
+    tags: [missing_baselines, scalability]
+    dimension_impact: [D]
+
+  - id: A7
+    text: >
+      Dense mathematical notation and extensive theoretical sections hinder
+      comprehension; paper needs clearer explanations and visual aids.
+    severity:
+      level: minor
+      addressability: addressable
+      mechanism: none
+    source: review_minor
+    source_detail: "review.md Section 3 'Clarity and presentation' bullets 1-2"
+    decisive: false
+    tags: [clarity, presentation]
+    dimension_impact: [G]
+
+method_specific:
+  system: "Liang et al. GPT-4o baseline"
+  run: "run_1"
+  verdict_inferred: true
+  verdict_inference_note: >
+    No explicit accept/reject verdict in review. Inferred ACCEPT from balance
+    of evidence: Section 1-2 present strong positive assessment (novel framework,
+    first provable guarantees, practical applicability, experimental validation),
+    while Section 3 concerns are framed as 'potential' reasons for rejection
+    with hedged language ('may be', 'might').

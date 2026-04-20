@@ -1,0 +1,173 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: HumanJudgmentSchemas
+description: >
+  Schema for human judgment files used in the human calibration loop.
+  Two document types: severity_triage.yaml (for severity-misaligned edges)
+  and concern_triage.yaml (for unmatched concerns — misses and phantoms).
+  Produced by generate_triage_queue.py, completed by a human reviewer.
+
+schema_version: v1
+
+# ============================================================
+# severity_triage.yaml — human judgments on severity-misaligned edges
+# ============================================================
+severity_triage:
+  type: object
+  required: [schema_version, version, reviewer, date, judgments]
+  properties:
+    schema_version: { type: string, enum: ["v1"] }
+    version:
+      type: string
+      description: "Artifact version, e.g., v0.7"
+    reviewer:
+      type: string
+      description: "Human reviewer identifier"
+    date:
+      type: string
+      format: date
+      description: "Date of triage completion (YYYY-MM-DD)"
+    judgments:
+      type: array
+      items:
+        type: object
+        required: [paper, method, edge, severity_alignment, human_verdict, reasoning, action]
+        properties:
+          paper:
+            type: string
+            description: "Paper slug"
+          method:
+            type: string
+            enum: [baseline, decide_first, delta_only, panel]
+          edge:
+            type: object
+            required: [official_id, agentic_id]
+            properties:
+              official_id:
+                type: string
+                pattern: "^O\\d+$"
+              agentic_id:
+                type: string
+                pattern: "^A\\d+$"
+          severity_alignment:
+            type: string
+            enum: [over, under, inverted]
+            description: >
+              The severity misalignment type from the match graph.
+              'over' = agentic severity higher than official.
+              'under' = agentic severity lower than official.
+              'inverted' = judgment alignment is inverted (feature vs flaw).
+          human_verdict:
+            type: string
+            enum: [system_correct, officials_correct, context_dependent]
+            description: >
+              system_correct: the agentic system's severity is more appropriate.
+              officials_correct: the official reviewers' severity is more appropriate.
+              context_dependent: neither is clearly wrong; depends on evaluation context.
+          reasoning:
+            type: string
+            description: "1-3 sentence explanation of the human verdict"
+          action:
+            type: string
+            enum:
+              - dampening_candidate
+              - escalation_candidate
+              - rule_change_candidate
+              - example_candidate
+              - no_action
+            description: >
+              dampening_candidate: system is too harsh, should be tuned down.
+              escalation_candidate: system is too lenient, should be tuned up.
+              rule_change_candidate: a rubric rule needs modification.
+              example_candidate: good case for the examples library.
+              no_action: no system change needed.
+
+# ============================================================
+# concern_triage.yaml — human judgments on unmatched concerns
+# ============================================================
+concern_triage:
+  type: object
+  required: [schema_version, version, reviewer, date, misses, phantoms]
+  properties:
+    schema_version: { type: string, enum: ["v1"] }
+    version:
+      type: string
+      description: "Artifact version, e.g., v0.7"
+    reviewer:
+      type: string
+      description: "Human reviewer identifier"
+    date:
+      type: string
+      format: date
+      description: "Date of triage completion (YYYY-MM-DD)"
+    misses:
+      type: array
+      description: "Official concerns the agentic system failed to detect"
+      items:
+        type: object
+        required: [paper, method, official_id, concern_text, miss_type, action]
+        properties:
+          paper:
+            type: string
+            description: "Paper slug"
+          method:
+            type: string
+            enum: [baseline, decide_first, delta_only, panel]
+          official_id:
+            type: string
+            pattern: "^O\\d+$"
+          concern_text:
+            type: string
+            description: "Text of the missed official concern (for reference)"
+          miss_type:
+            type: string
+            enum: [structural_gap, detection_failure, unobservable]
+            description: >
+              structural_gap: the system lacks a skill or rubric rule to detect this.
+              detection_failure: the system should detect this but failed.
+              unobservable: the concern requires information not available to the system
+              (e.g., post-rebuttal discussion, author identity, venue norms).
+          action:
+            type: string
+            description: >
+              Free-text action recommendation. Examples:
+              'add example to skill-03', 'new gate for X', 'no action (unobservable)',
+              'enhance skill-05 prompt for Y'.
+          target_skill:
+            type: string
+            description: "Skill ID that should be modified (e.g., 'skill-03'). Optional."
+    phantoms:
+      type: array
+      description: "Agentic concerns with no official counterpart"
+      items:
+        type: object
+        required: [paper, method, agentic_id, concern_text, phantom_type, action]
+        properties:
+          paper:
+            type: string
+            description: "Paper slug"
+          method:
+            type: string
+            enum: [baseline, decide_first, delta_only, panel]
+          agentic_id:
+            type: string
+            pattern: "^A\\d+$"
+          concern_text:
+            type: string
+            description: "Text of the phantom agentic concern (for reference)"
+          phantom_type:
+            type: string
+            enum: [valid_concern, policy_artifact, hallucination]
+            description: >
+              valid_concern: a real issue that official reviewers missed or deemed unimportant.
+              policy_artifact: concern generated by rubric rules rather than paper content
+              (e.g., cost analysis, reproducibility checklist items).
+              hallucination: fabricated concern not supported by paper content.
+          action:
+            type: string
+            description: >
+              Free-text action recommendation. Examples:
+              'dampen policy rule X', 'add negative example to skill-13',
+              'no action (valid concern)', 'investigate hallucination source'.
+          source_skill:
+            type: string
+            description: "Skill ID that generated this phantom (e.g., 'skill-09'). Optional."

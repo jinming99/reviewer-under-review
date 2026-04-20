@@ -1,0 +1,160 @@
+schema_version: "v1"
+paper: "rl_reasoning_limits"
+version: "own_group/liang_gpt4o_run1"
+method: "baseline"
+
+matches:
+  # ── A1 (novelty/confirming suspicions) ↔ O17 (prior work overlap / DeepSeekMath) ──
+  - official_id: "O17"
+    agentic_id: "A1"
+    match_type: "partial"
+    issue: "Paper's novelty is limited because similar insights about RLVR limitations were observed in prior work"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # agentic=moderate, official=major → gap=1, within tolerance
+    rationale: >
+      Both concern novelty of the paper's findings. O17 specifically cites DeepSeekMath Section 5.2.2
+      as having similar phrasing about 'fundamental capabilities.' A1 makes the same point generically
+      ('confirming existing suspicions') without naming prior work. Partial because A1 lacks the specific
+      prior work reference that makes O17 concrete.
+
+  # ── A2 (no solutions proposed) ↔ O12 (limited improvement suggestions) ──
+  - official_id: "O12"
+    agentic_id: "A2"
+    match_type: "exact"
+    issue: "Paper identifies RLVR limitations clearly but provides limited improvement suggestions or solutions"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # agentic=moderate, official=moderate → gap=0
+    rationale: >
+      Both flag the same gap: the paper is diagnostic rather than prescriptive. O12 says 'identifies
+      problems clearly but provides limited improvement suggestions.' A2 says 'highlights limitations
+      without proposing concrete solutions or novel methodologies.' Fixing one necessarily fixes the other.
+
+  # ── A3 (limited alternatives beyond distillation) ↔ O11 (narrow scope / future RL paradigms) ──
+  - official_id: "O11"
+    agentic_id: "A3"
+    match_type: "partial"
+    issue: "Paper's scope is limited to current RLVR without exploring alternative methods or future paradigms"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # agentic=moderate, official=moderate → gap=0
+    rationale: >
+      Both concern the paper's scope beyond current RLVR. O11 questions whether findings generalize to
+      'future RL paradigms or different reward structures.' A3 criticizes not exploring 'other promising
+      methods or hybrid approaches.' Partial because O11 frames this as generalizability and A3 frames
+      it as missing exploration, requiring different author fixes.
+
+  # ── A4 (insufficient theory) ↔ O10 (no explanation for why RLVR fails) ──
+  - official_id: "O10"
+    agentic_id: "A4"
+    match_type: "exact"
+    issue: "Lacks theoretical or mechanistic explanation for why RLVR fails to expand reasoning boundaries"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # agentic=moderate, official=major → gap=1, within tolerance
+    rationale: >
+      Both identify the same specific gap. O10: 'Lacks explanation for why RLVR fails to expand
+      reasoning boundaries.' A4: 'Insufficient theoretical or empirical analysis of underlying causes.'
+      A4 even mentions the same mechanisms (vast action space, pretrained priors) that O10's rebuttal
+      resolution discusses. The underlying complaint is identical.
+
+  # ── A4 (insufficient theory) ↔ O14 (no theoretical explanation, only experiments) ──
+  - official_id: "O14"
+    agentic_id: "A4"
+    match_type: "exact"
+    issue: "Lacks theoretical explanation for why RLVR fails to expand reasoning boundaries"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # agentic=moderate, official=major → gap=1, within tolerance
+    rationale: >
+      O14 is the same theory gap concern as O10 but raised by reviewer 6ryS: 'There is no theoretical
+      explanation--only extensive experimental results.' A4 captures this directly. Second match edge
+      for A4 since O10 and O14 are the same underlying issue from different reviewers.
+
+  # ── A5 (pass@k overreliance) ↔ O16 (evaluation too centered on pass@k) ──
+  - official_id: "O16"
+    agentic_id: "A5"
+    match_type: "exact"
+    issue: "Evaluation is too centered on pass@k curves without sufficient complementary analyses"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # agentic=moderate, official=moderate → gap=0
+    rationale: >
+      Both identify the same specific metric concern. O16: 'The evaluation is too centered on pass@k
+      curves. Would appreciate more analyses like the Perplexity Analysis paragraph.' A5: 'Overreliance
+      on pass@k as primary evaluation metric...would benefit from qualitative assessments or case
+      studies.' Both want diverse evaluation beyond pass@k.
+
+positive_factor_matches:
+  # D1: Important question about pass@k vs reasoning boundaries
+  - official_factor_id: "D1"
+    agentic_source: "mention"
+    agentic_text: "The paper addresses a critical question in the field of reinforcement learning applied to large language models: whether RLVR genuinely enhances reasoning capabilities beyond the base model."
+    match_type: "partial"
+    judgment_alignment: "aligned"
+    rationale: >
+      The agentic review (M1, section 1) recognizes the question's importance and mentions pass@k
+      as a 'novel metric.' However, it does not frame the specific insight about pass@k (exploration
+      adequacy) vs pass@1 (optimization) that makes the AC's framing distinctive. Partial because the
+      importance is captured but the specific pass@k framing is shallower.
+
+  # D2: Negative result answered with masterful execution
+  - official_factor_id: "D2"
+    agentic_source: "mention"
+    agentic_text: "The paper presents a thorough and systematic evaluation of RLVR, using a robust experimental setup...offers significant insights into the limitations of current RLVR methods."
+    match_type: "partial"
+    judgment_alignment: "aligned"
+    rationale: >
+      The agentic review (M1, M2) recognizes the systematic evaluation and the value of the negative
+      findings for guiding future research. But it does not explicitly frame the negative result as
+      intrinsically valuable in the way the AC does ('answers this important question negatively'),
+      nor does it acknowledge the rebuttal quality ('masterful execution').
+
+  # D3: Unanimous reviewer consensus (post-discussion, not observable)
+  - official_factor_id: "D3"
+    agentic_source: "none"
+    agentic_text: ""
+    match_type: "none"
+    judgment_alignment: "n/a"
+    rationale: >
+      D3 is a post-discussion consensus factor (observable_stage: post_discussion). The agentic
+      system reviews only the paper, not the OpenReview discussion. This factor is structurally
+      unobservable.
+
+  # D4: Distillation contrast as diagnostic value
+  - official_factor_id: "D4"
+    agentic_source: "mention"
+    agentic_text: "While the paper discusses distillation as a potential alternative, it does not explore other promising methods or hybrid approaches."
+    match_type: "related"
+    judgment_alignment: "inverted"
+    rationale: >
+      The agentic review mentions the distillation comparison but frames it as a weakness (A3:
+      'limited exploration of alternative approaches'). The AC frames the same distillation contrast
+      as a strength: it proves the limitation is RLVR-specific, not inherent to all post-training.
+      The agentic system noticed the distillation discussion but inverted its normative interpretation.
+
+unmatched_positive_factors: []  # Deprecated; all factors tracked in positive_factor_matches above
+
+unmatched_official:
+  # 20 official concerns have no exact or partial agentic match.
+  # The GPT-4o baseline review is generic and misses most specific reviewer concerns.
+  - "O1"   # Model scale limited to 7-32B (79qN, KdU6)
+  - "O2"   # Random guessing explanation not ruled out (79qN)
+  - "O3"   # Overfitting to test set as alternative explanation (79qN)
+  - "O4"   # Table 1 should note training data (79qN minor)
+  - "O5"   # Figure 6 perplexity vs o1 relevance (79qN minor)
+  - "O6"   # Figure 8 readability (79qN minor)
+  - "O7"   # Tables 4&5 should report fraction overlap (79qN minor)
+  - "O8"   # Figure 16 temperature inconsistency (79qN minor)
+  - "O9"   # Terminology 'reasoning capacity' misnomer (79qN)
+  - "O13"  # Base model dependency (tKuY)
+  - "O15"  # Experiments mainly Qwen series (6ryS)
+  - "O18"  # Policy optimization parameters not reported (6ryS)
+  - "O19"  # Perplexity analysis only two AIME samples (6ryS)
+  - "O20"  # Scaling to 70B+ models (tKuY, KdU6)
+  - "O21"  # Effect of task difficulty on pass@k gap (KdU6)
+  - "O22"  # Train vs test pass@k not distinguished (KdU6)
+  - "O23"  # Perplexity evolution during training not shown (KdU6)
+  - "O24"  # Limitations section missing/insufficient (KdU6, 79qN)
+  - "O25"  # Contradicting CoT-Pass@k paper (KdU6)
+  - "O26"  # SFT pre-training effect on conclusions (79qN)
+
+unmatched_agentic: []
+# All 5 agentic concerns have at least one exact or partial match edge.
+# The agentic review's concerns are generic enough that each maps to some official concern,
+# but the reverse is not true -- the review misses 20 of 26 specific official concerns.

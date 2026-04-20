@@ -1,0 +1,199 @@
+schema_version: "v1"
+paper: "cmdp_meta_safe_rl"
+version: "v0.9.2"
+condition: "own_group/liang_run1"
+method: "baseline_liang_etal"
+
+matches:
+  # ── Experimental evaluation ──────────────────────────────────────
+  - official_id: O1
+    agentic_id: A3
+    match_type: partial
+    issue: "Experimental evaluation is insufficient in scope and methodology"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: moderate (±1)
+    rationale: >-
+      O1 flags sparse experiments with too few environments (scope). A3 flags
+      few training steps, large variance, and MuJoCo relegated to appendix
+      (methodology quality). Both are in the 'experimental evaluation
+      insufficient' family but target different facets: O1 wants more
+      environments, A3 wants more rigorous experimental design. Different
+      author fixes needed (add environments vs increase training steps and
+      reduce variance).
+
+  - official_id: O14
+    agentic_id: A3
+    match_type: partial
+    issue: "Limited experimental scope — missing or underemphasized MuJoCo environments"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: moderate (±1)
+    rationale: >-
+      O14 specifically asks for MuJoCo experiments (GvYx: 'only frozen lake
+      and acrobot'). A3 notes MuJoCo results exist but are relegated to the
+      appendix with few training steps and large variance. Both relate to
+      MuJoCo coverage but O14 is about absence of environments while A3 is
+      about presentation and quality of the MuJoCo results.
+
+  # ── Assumption 1 implications ────────────────────────────────────
+  - official_id: O2
+    agentic_id: A4
+    match_type: related
+    issue: "Assumption 1 (full support / shrinkage simplex) has problematic implications"
+    judgment_alignment: n/a
+    severity_alignment: n/a
+    rationale: >-
+      Both concerns target Assumption 1 (full support over state-action
+      space) but draw completely different conclusions. O2 argues this
+      assumption doesn't guarantee safety from the first step (a safety
+      concern). A4 argues it restricts the framework to tabular settings,
+      incompatible with continuous control (a scope concern). Different
+      fixes: O2 needs a safe initialization mechanism, A4 needs theory
+      extension beyond tabular softmax. Same component, different complaint
+      (false match pattern 4).
+
+  # ── CRPO dependence / generality ─────────────────────────────────
+  - official_id: O5
+    agentic_id: A8
+    match_type: partial
+    issue: "Framework is overly dependent on CRPO, limiting its scope"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: major
+    rationale: >-
+      O5 flags that using a simplified CRPO restricts applicability. A8
+      flags that claimed modularity is not demonstrated because the entire
+      theoretical development is CRPO-specific. Both point to CRPO
+      dependence limiting the framework, but O5 is about the simplification
+      choice restricting scope while A8 is about the generality claim being
+      unsupported. Fixing O5 (use full CRPO) would not fix A8 (demonstrate
+      with alternative algorithms).
+
+  - official_id: O8
+    agentic_id: A8
+    match_type: partial
+    issue: "Theoretical contribution may lack generality due to composition of existing techniques"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: major
+    rationale: >-
+      O8 argues the analysis is a composition of DualDICE+CRPO that may lack
+      generality. A8 argues claimed modularity is not demonstrated because
+      everything is CRPO-specific. Both converge on the framework being too
+      tied to specific existing algorithms and not as general as claimed, but
+      O8 has a novelty dimension (just composing known work) that A8 does
+      not address directly.
+
+  - official_id: O5
+    agentic_id: A9
+    match_type: related
+    issue: "CRPO limitations affect the meta-framework"
+    judgment_alignment: n/a
+    severity_alignment: n/a
+    rationale: >-
+      O5 is about simplified CRPO restricting applicability. A9 is about
+      inherited CRPO limitations (single constraint at a time, eta_t tuning)
+      and proof corrections via Assumption 4. Both concern CRPO's impact on
+      the framework but target different defects: simplification choice vs
+      known bugs and proof robustness. Same component, different complaint
+      (false match pattern 4).
+
+  # ── Theoretical bound interpretability ───────────────────────────
+  - official_id: O13
+    agentic_id: A7
+    match_type: partial
+    issue: "Theoretical bounds involve hard-to-control or unjustified terms"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: moderate (±1)
+    rationale: >-
+      O13 asks why the regret upper bound assumptions (E_T^opt, U_T^pi) in
+      Theorem 3.3 are reasonable — an assumption justification concern. A7
+      says the cumulative inexactness E_T depends on DualDICE errors that are
+      hard to control, and Corollary 1 has too many problem-dependent
+      constants (C1-C5, ct_1-ct_5) to be interpretable. Both target the
+      opacity of the theoretical bounds around Theorem 3.3/Corollary 1 but
+      from different angles: assumption validity vs practical interpretability.
+
+  # ── Tame geometry framework opacity ──────────────────────────────
+  - official_id: O15
+    agentic_id: A6
+    match_type: partial
+    issue: "Tame geometry framework (Assumption 2, desingularizing function) is opaque"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: moderate, agentic: major (±1)
+    rationale: >-
+      O15 asks for clarification of Assumption 2 (o-minimal structure), a
+      non-standard condition. A6 says the desingularizing function h in
+      Theorem 3.1 — which arises from the tame geometry framework — is
+      uncharacterized and could yield arbitrarily slow convergence. Both
+      target the tame geometry theoretical apparatus but different facets:
+      O15 questions the assumption, A6 questions the resulting function's
+      behavior.
+
+positive_factor_matches:
+  - official_factor_id: D1
+    agentic_source: mention
+    agentic_text: >-
+      First provable guarantees for meta-safe RL, filling a genuine gap;
+      the problem formulation (Def. 1, TAOG/TACV) is clean and well-motivated.
+    match_type: exact
+    judgment_alignment: aligned
+    rationale: >-
+      D1 recognizes the work as 'highly innovative' for introducing the
+      CMDP-within-online framework. M1 recognizes 'first provable guarantees
+      for meta-safe RL, filling a genuine gap.' Both identify the same core
+      positive factor: pioneering theoretical framework for meta-safe RL.
+      The agentic system acknowledged this contribution but weighted it below
+      the technical concerns.
+
+  - official_factor_id: D2
+    agentic_source: mention
+    agentic_text: >-
+      First provable guarantees for meta-safe RL, filling a genuine gap;
+      the problem formulation (Def. 1, TAOG/TACV) is clean and well-motivated.
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >-
+      D2 combines two aspects: (1) safe RL is a very important problem area,
+      and (2) the framework is practical (only needs inexact solutions and
+      data trajectories). M1 captures the problem importance via 'filling a
+      genuine gap' but does not explicitly highlight the practical inexact-
+      solutions aspect. The practicality dimension of D2 is not directly
+      captured by any single agentic mention.
+
+  - official_factor_id: D3
+    agentic_source: mention
+    agentic_text: >-
+      Technically substantial: estimation error decomposition (Eq. 4), tame
+      geometry argument (Theorem 3.1, Appendix F), and inexact OGD bounds
+      may be of independent interest.
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >-
+      D3 emphasizes the framework relies only on inexact solutions, making it
+      applicable without optimal policy access. M2 recognizes the 'inexact
+      OGD bounds may be of independent interest' — capturing the inexact
+      solutions aspect as a technical contribution. However, M2 frames this
+      as technical depth rather than practical applicability, so the emphasis
+      differs.
+
+unmatched_official:
+  # Presentation/clarity concerns (agentic system did not raise any)
+  - O6   # Theoretical analysis not always clear, notation confusing
+  - O7   # No CRPO explanation or parameter comments
+  - O9   # Assumptions introduced mid-paper without explanation
+  - O12  # Notation unclear (V_{M_t}, pi*)
+  - O17  # Writing unclear, claims vague
+  - O19  # Citation formats non-standard
+  # Specific conceptual questions not raised by agentic system
+  - O2   # Meta-initialization safety (related-only to A4)
+  - O3   # Safety constraints should adapt to shifting environments
+  - O4   # Missing comparison to safe policy improvement (Thomas et al.)
+  - O10  # Ethics: fairness constraint implications
+  - O11  # Static regret inappropriate for meta-learning
+  - O16  # DualDICE vs offline CMDP algorithm choice
+  - O18  # Novelty marginal — combines existing algorithms
+
+unmatched_agentic:
+  - A1  # Simplistic baselines — no official reviewer flagged baseline quality
+  - A2  # No empirical verification of TAOG/TACV scaling predictions
+  - A4  # Tabular softmax restriction (related-only to O2, different complaint)
+  - A5  # Theory-experiment disconnect — bounds vacuous for large |S|x|A|
+  - A9  # CRPO inherited limitations and proof corrections (related-only to O5)

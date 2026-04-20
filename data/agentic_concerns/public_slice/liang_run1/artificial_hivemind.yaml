@@ -1,0 +1,131 @@
+schema_version: "v1"
+paper: "artificial_hivemind"
+version: "own_group/liang_run1"
+method: "baseline"
+verdict: "REJECT"
+score: null
+
+decision_drivers:
+  - id: "R1"
+    polarity: "pro_reject"
+    text: "Sole reliance on sentence-embedding cosine similarity as the diversity metric without validation against human diversity judgments; conflates semantic similarity with lack of diversity."
+    evidence: "review.md section 3 'Potential reasons for rejection' bullet 1"
+    linked_concern_ids: ["A1"]
+  - id: "R2"
+    polarity: "pro_reject"
+    text: "Causal analysis of inter-model homogenization is entirely absent; the paper is purely descriptive without controlled experiments to disentangle contributing factors."
+    evidence: "review.md section 3 'Potential reasons for rejection' bullet 2"
+    linked_concern_ids: ["A2"]
+  - id: "R3"
+    polarity: "pro_reject"
+    text: "Human annotation study (Section 4) is disconnected from the diversity analysis (Section 3) and its conclusions may reflect a statistical artifact rather than meaningful calibration failure."
+    evidence: "review.md section 3 'Potential reasons for rejection' bullet 3"
+    linked_concern_ids: ["A3"]
+
+mentions:
+  - id: "M1"
+    polarity: "pro_accept"
+    text: "Scale and comprehensiveness of the empirical study: 70+ models evaluated across open-source and closed-source families with 50 samples per query per model, providing the most extensive cross-model diversity analysis to date."
+    evidence: "review.md section 2 'Potential reasons for acceptance' bullet 1"
+    note: "Acknowledged as a strength but not treated as decisive for an accept verdict."
+  - id: "M2"
+    polarity: "pro_accept"
+    text: "High-quality dataset and annotation effort: INFINITY-CHAT fills a genuine gap with 25 annotations per example enabling distributional analysis of human preferences; taxonomy grounded in real WildChat user behavior."
+    evidence: "review.md section 2 'Potential reasons for acceptance' bullet 2"
+    note: "Dataset quality recognized but insufficient to overcome methodological concerns."
+  - id: "M3"
+    polarity: "pro_accept"
+    text: "Actionable downstream findings: demonstration that reward models and LM judges are poorly calibrated on similar-quality and high-disagreement subsets has direct implications for RLHF pipelines."
+    evidence: "review.md section 2 'Potential reasons for acceptance' bullet 3"
+    note: "Acknowledged as valuable but the underlying analysis (Section 4) was simultaneously critiqued for methodological issues."
+  - id: "M4"
+    polarity: "pro_accept"
+    text: "Thorough experimental design with robustness checks: multiple subset selection methods, alternative decoding strategies, paraphrase robustness experiments, and human validation of open-endedness."
+    evidence: "review.md section 2 'Potential reasons for acceptance' bullet 4"
+    note: "Robustness appreciated but individual checks were critiqued for limited scope."
+
+concerns:
+  # ============================================================
+  # A1: Embedding-based diversity metric not validated
+  # Source: review.md section 3 bullet 1 + section 4 suggestion 1
+  # ============================================================
+  - id: "A1"
+    text: "Reliance on sentence embeddings (text-embedding-3-small) as the sole diversity metric without validation against human diversity judgments; cosine similarity conflates semantic similarity with lack of diversity, and the choice of embedding model is not justified or ablated."
+    severity:
+      level: "major"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "review.md section 3 'Potential reasons for rejection' bullet 1; reinforced in section 4 suggestion 1 ('Validate the embedding-based diversity metric against human judgments of diversity')"
+    decisive: true
+    tags: ["metric_validity", "diversity_measurement", "evaluation_methodology"]
+    dimension_impact: ["D"]
+
+  # ============================================================
+  # A2: Absent causal analysis
+  # Source: review.md section 3 bullet 2 + section 4 suggestion 2
+  # ============================================================
+  - id: "A2"
+    text: "Causal analysis of inter-model homogenization is entirely absent; the paper does not include even partial investigation (e.g., base vs. instruction-tuned, models on disjoint corpora) to distinguish benign convergence from problematic homogenization."
+    severity:
+      level: "major"
+      addressability: "unresolved"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "review.md section 3 'Potential reasons for rejection' bullet 2; reinforced in section 4 suggestion 2 ('Include at least a partial causal analysis')"
+    decisive: true
+    tags: ["causal_analysis", "mechanistic_understanding", "scope_limitation"]
+    dimension_impact: ["E"]
+
+  # ============================================================
+  # A3: Section 4 disconnected + statistical artifact concern
+  # Source: review.md section 3 bullet 3 + section 4 suggestions 3-4
+  # ============================================================
+  - id: "A3"
+    text: "Human annotation study (Section 4) is disconnected from the diversity analysis (Section 3); the finding that model ratings correlate less on similar-quality subsets may be a statistical artifact (reduced variance, regression to the mean) rather than meaningful calibration failure, and the sample size (50 queries) is small."
+    severity:
+      level: "major"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "review.md section 3 'Potential reasons for rejection' bullet 3; reinforced in section 4 suggestions 3 (null-model baseline) and 4 (integrate Sections 3 and 4)"
+    decisive: true
+    tags: ["statistical_artifact", "narrative_coherence", "methodology", "sample_size"]
+    dimension_impact: ["D", "E"]
+
+  # ============================================================
+  # A4: GPT-4o reliance in dataset construction
+  # Source: review.md section 3 bullet 4
+  # ============================================================
+  - id: "A4"
+    text: "Taxonomy and dataset construction rely heavily on GPT-4o with limited validation: 74.7% human-GPT-4o agreement on taxonomy labels is moderate, inter-annotator agreement among humans is not reported, and the open-endedness validation uses only 3 annotators per query on 100 examples."
+    severity:
+      level: "moderate"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "review.md section 3 'Potential reasons for rejection' bullet 4"
+    decisive: false
+    tags: ["dataset_construction", "automation_reliance", "validation"]
+    dimension_impact: ["D", "H"]
+
+  # ============================================================
+  # A5: Incremental conceptual novelty
+  # Source: review.md section 1 'Significance and novelty'
+  # ============================================================
+  - id: "A5"
+    text: "Conceptual novelty is incremental: the observation that LMs lack diversity is well-documented, and the paper primarily scales up and systematizes existing intuitions rather than introducing fundamentally new analytical frameworks or mitigation strategies."
+    severity:
+      level: "moderate"
+      addressability: "unresolved"
+      mechanism: "none"
+    source: "other"
+    source_detail: "review.md section 1 'Significance and novelty' final sentence"
+    decisive: false
+    tags: ["novelty", "contribution_significance", "incremental"]
+    dimension_impact: ["B"]
+
+method_specific:
+  review_format: "liang_etal_structured_review"
+  has_explicit_verdict: false
+  note: "Liang et al. baseline produces structured reviews with reasons for/against but no explicit binary verdict. Verdict inferred from the balance of concerns: three major methodological issues (metric validity, absent causal analysis, statistical artifact in Section 4) outweigh the acknowledged strengths in scale and annotation quality."

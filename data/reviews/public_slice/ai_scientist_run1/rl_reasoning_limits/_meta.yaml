@@ -1,0 +1,16 @@
+slug: rl_reasoning_limits
+baseline: ai_scientist
+model: claude-opus-4-6
+timestamp: '2026-04-12T10:36:46.975351+00:00'
+git_sha: 6b601aec
+git_branch: main
+elapsed_s: 199.1
+usage: {}
+cost_usd: 1.063
+num_sdk_calls: 3
+num_api_calls: 5
+num_chunks: null
+specialties: null
+paper_text_chars: 107082
+review_text_chars: 6534
+skip_refinement: false

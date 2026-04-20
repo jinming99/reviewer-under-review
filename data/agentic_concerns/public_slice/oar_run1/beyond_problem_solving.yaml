@@ -1,0 +1,190 @@
+schema_version: "v1"
+paper: beyond_problem_solving
+version: baseline
+method: baseline
+
+verdict: REJECT
+score: null
+
+decision_drivers:
+  - id: R1
+    polarity: pro_reject
+    text: >
+      Multiple data integrity errors (copy-paste duplications in Tables 3 and 8,
+      decimal typo in Table 6, swapped templates in Appendix A) undermine confidence
+      in empirical claims, especially concerning for a benchmarking paper.
+    evidence: "Overall Feedback paragraph: 'the paper suffers from several significant data integrity issues'"
+    linked_concern_ids: [A1, A2, A3, A4]
+  - id: R2
+    polarity: pro_reject
+    text: >
+      Statistical analysis is incomplete with missing test specifications and
+      ambiguous correlation reporting, making key results non-reproducible.
+    evidence: "Overall Feedback paragraph: 'The statistical analysis is also incomplete in places, with missing test specifications and ambiguous correlation reporting'"
+    linked_concern_ids: [A5, A6]
+
+mentions:
+  - id: M1
+    polarity: pro_accept
+    text: >
+      Interesting framework for evaluating LLM critical thinking through
+      Three-Space Theory with controlled inconsistencies.
+    evidence: "Overall Feedback: 'proposes an interesting framework for evaluating LLM critical thinking through the lens of Three-Space Theory'"
+    note: Acknowledged as positive framing but not weighted against the data integrity concerns.
+  - id: M2
+    polarity: pro_accept
+    text: >
+      Thoughtful experimental design covering multiple modification types,
+      datasets, and models.
+    evidence: "Overall Feedback: 'The experimental design is thoughtful, covering multiple modification types, datasets, and models'"
+    note: Acknowledged as a strength but did not offset the empirical reliability issues.
+
+concerns:
+  - id: A1
+    text: >
+      Table 3 copy-paste error: all 40 values for Qwen3-8b-reasoning are
+      identical to Qwen3-32b-reasoning, invalidating size-scaling analysis.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Comment 1: Table 3 Qwen3-8b-reasoning data is an exact copy of Qwen3-32b-reasoning"
+    decisive: true
+    tags: [data_integrity, reproducibility]
+    dimension_impact: [D, H]
+
+  - id: A2
+    text: >
+      Table 8 copy-paste error: all 16 ARC values for qwen3_8b_rF are
+      identical to Llama3.3-70b, a column-level duplication across different architectures.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Comment 2: Table 8 qwen3_8b_rF ARC columns duplicate Llama3.3-70b ARC columns"
+    decisive: true
+    tags: [data_integrity, reproducibility]
+    dimension_impact: [D, H]
+
+  - id: A3
+    text: >
+      Table 6 decimal typo: 0.100 should be 1.000 for qwen3_8b_rT Format on
+      BBH Logical 3, confirmed by average column mismatch.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_minor
+    source_detail: "Comment 3: Table 6 Typo '0.100' should be '1.000'"
+    decisive: false
+    tags: [data_integrity]
+    dimension_impact: [D]
+
+  - id: A4
+    text: >
+      Appendix A templates for 3-ICL and 3-ICL-cha appear swapped, making it
+      impossible to reproduce experiments as described.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Comment 4: Appendix A 3-ICL and 3-ICL-cha templates appear swapped"
+    decisive: true
+    tags: [reproducibility, clarity]
+    dimension_impact: [G, H]
+
+  - id: A5
+    text: >
+      Redundant modification correlation coefficients (0.175 and 0.280) reported
+      without p-values or labels for which is applied vs. inherent critical thinking.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Comment 5: Redundant modification correlation coefficients reported without p-values or metric labels"
+    decisive: true
+    tags: [statistical_rigor, incomplete_reporting]
+    dimension_impact: [D]
+
+  - id: A6
+    text: >
+      Statistical test for the difficulty hypothesis is unspecified (no test name,
+      unit of analysis, or threshold justification), making results non-reproducible.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Comment 6: Statistical test for difficulty hypothesis is unspecified"
+    decisive: true
+    tags: [statistical_rigor, reproducibility]
+    dimension_impact: [D, H]
+
+  - id: A7
+    text: >
+      Lower bound claim for 3-ICL-cha is internally contradictory: framed as both
+      a lower bound on ideal performance and an aspirational target for other prompts.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_minor
+    source_detail: "Comment 7: 'Lower bound' claim for 3-ICL-cha is internally contradictory"
+    decisive: false
+    tags: [clarity, logical_consistency]
+    dimension_impact: [G]
+
+  - id: A8
+    text: >
+      Terminology misnomer: 'redundant information' is used throughout to describe
+      contradictory information, potentially misleading readers about what the benchmark tests.
+    severity:
+      level: minor
+      addressability: addressable
+      mechanism: none
+    source: review_minor
+    source_detail: "Comment 8: 'Redundant information' is a misnomer for contradictory information"
+    decisive: false
+    tags: [clarity, terminology]
+    dimension_impact: [G]
+
+  - id: A9
+    text: >
+      Correlation analysis conflates model-level and dataset-level variation by
+      pooling all (model, dataset) pairs, inflating correlation without establishing
+      a model-level relationship.
+    severity:
+      level: major
+      addressability: unresolved
+      mechanism: none
+    source: review_major
+    source_detail: "Comment 9: Correlation analysis conflates model-level and dataset-level variation"
+    decisive: false
+    tags: [methodology, statistical_rigor]
+    dimension_impact: [D, E]
+
+  - id: A10
+    text: >
+      Incomplete specification of which datasets receive which redundant modifications;
+      several datasets absent from results without explanation.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: review_minor
+    source_detail: "Comment 10: Incomplete specification of which datasets receive which redundant modifications"
+    decisive: false
+    tags: [reproducibility, incomplete_reporting]
+    dimension_impact: [D, H]
+
+method_specific:
+  system: oar_baseline
+  note: >
+    Extracted from OpenAI-based baseline review (OAR run 1). No summary.yaml,
+    gates, scorecard, or adversarial brief available. Verdict inferred from
+    overall feedback tone — data integrity errors described as undermining
+    confidence in empirical claims for a benchmarking paper.

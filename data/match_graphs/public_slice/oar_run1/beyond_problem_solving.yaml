@@ -1,0 +1,93 @@
+schema_version: "v1"
+paper: "beyond_problem_solving"
+version: "v0.9.2"
+condition: "own_group/oar_run1"
+method: "baseline_openaireview"
+
+# ============================================================
+# MATCHING SUMMARY
+# ============================================================
+# Official concerns (O1-O9): conceptual/methodological issues
+#   - Theory-experiment gap, narrow construct, evaluator bias,
+#     metric validity, data confound, ecological validity,
+#     model coverage, paper structure, dataset release
+#
+# Agentic concerns (A1-A10): data integrity + statistical reporting
+#   - Copy-paste errors in tables, decimal typos, swapped templates,
+#     missing p-values, unspecified tests, conflated analysis levels,
+#     contradictory claims, terminology, incomplete reporting
+#
+# These are almost entirely non-overlapping. The agentic system
+# found granular data quality issues the officials did not flag,
+# while completely missing the high-level conceptual and
+# methodological concerns that drove the rejection decision.
+# Only 3 weak (related) matches exist; no exact or partial matches.
+# ============================================================
+
+matches:
+  - official_id: O8
+    agentic_id: A7
+    match_type: related
+    issue: "Clarity and logical coherence of the paper"
+    judgment_alignment: "n/a"
+    severity_alignment: "n/a"
+    rationale: >
+      O8 is about overall paper structure being scattered and logical flow unclear
+      (macro-level presentation). A7 is about a specific logical inconsistency in
+      the lower-bound claim for 3-ICL-cha (micro-level logic error). Both fall under
+      'clarity/logic' but target completely different granularity levels and require
+      different fixes. Not even partial — reorganizing the paper would not fix A7,
+      and fixing A7 would not address O8.
+
+  - official_id: O8
+    agentic_id: A8
+    match_type: related
+    issue: "Presentation quality and reader comprehension"
+    judgment_alignment: "n/a"
+    severity_alignment: "n/a"
+    rationale: >
+      O8 targets paper organization and section-level logical flow. A8 targets a
+      specific terminology misnomer ('redundant information' used for contradictory
+      information). Both are presentation concerns but at different levels — structural
+      vs. lexical. Fixing the terminology would not fix the scattered structure.
+
+  - official_id: O9
+    agentic_id: A10
+    match_type: related
+    issue: "Insufficient information for reproducing results"
+    judgment_alignment: "n/a"
+    severity_alignment: "n/a"
+    rationale: >
+      O9 is about the modified benchmark dataset not being publicly released
+      (data availability). A10 is about incomplete specification of which datasets
+      receive which redundant modifications (methodological documentation gap).
+      Both are reproducibility concerns but require different author actions —
+      releasing the dataset vs. documenting the experimental design. Neither fix
+      would resolve the other concern.
+
+# No positive_factor_matches — paper was rejected.
+# Pro_accept drivers D4/D5/D6 are non-decisive and positive_factor_matches
+# is only populated for accepted papers per the schema.
+
+unmatched_official:
+  - O1  # Theory-experiment disconnect: Three-Space Theory not integrated with experimental design
+  - O2  # Narrow definition of critical thinking: equated solely with detecting inconsistencies
+  - O3  # GPT-4o evaluator bias: using GPT-4o to judge other models risks circular evaluation
+  - O4  # Metrics reduce to binary classification: don't capture complex cognitive process
+  - O5  # Data generation confound: LLMs may detect modification artifacts, not logical inconsistencies
+  - O6  # Artificial vs real-world inconsistencies: ecological validity of test stimuli
+  - O7  # Limited model generalizability: reasoning mode tested only on Qwen3
+  - O8  # Paper structure and clarity (only related edges, no exact/partial)
+  - O9  # Dataset not publicly released (only related edge, no exact/partial)
+
+unmatched_agentic:
+  - A1   # Table 3 copy-paste error: Qwen3-8b values duplicate Qwen3-32b
+  - A2   # Table 8 copy-paste error: qwen3_8b_rF ARC values duplicate Llama3.3-70b
+  - A3   # Table 6 decimal typo: 0.100 should be 1.000
+  - A4   # Appendix A templates swapped: 3-ICL and 3-ICL-cha
+  - A5   # Missing p-values for redundant modification correlation coefficients
+  - A6   # Unspecified statistical test for difficulty hypothesis
+  - A7   # Lower bound claim for 3-ICL-cha internally contradictory (only related edge)
+  - A8   # Terminology misnomer: 'redundant' used for 'contradictory' (only related edge)
+  - A9   # Correlation analysis conflates model-level and dataset-level variation
+  - A10  # Incomplete specification of dataset-modification mapping (only related edge)

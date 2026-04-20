@@ -1,0 +1,128 @@
+schema_version: "v1"
+paper: rl_reasoning_limits
+version: own_group/oar_run1
+method: baseline
+
+matches:
+  # ----------------------------------------------------------------
+  # A3 ↔ O19: Perplexity analysis on only 2 AIME problems
+  # ----------------------------------------------------------------
+  - official_id: O19
+    agentic_id: A3
+    match_type: exact
+    issue: "Perplexity analysis supporting a central distributional claim is based on only two AIME problems"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: moderate, agentic: major (±1 = within tolerance)
+    rationale: >-
+      Both identify the same specific gap: the perplexity analysis in Section 4.1/Figure 6 uses
+      only two randomly selected AIME24 problems, which is insufficient for the generality of
+      the distributional claim. 6ryS asked "Why does the Perplexity Analysis paragraph only
+      analyze two samples?" and the agentic review says "extremely small sample from which to
+      draw a general conclusion." Same issue, same direction. Agentic rates major vs official
+      moderate — one level apart, within tolerance.
+
+  # ----------------------------------------------------------------
+  # A4 ↔ O9: Claims about reasoning patterns vs terminology misnomer
+  # ----------------------------------------------------------------
+  - official_id: O9
+    agentic_id: A4
+    match_type: related
+    issue: "Gap between solvability evidence and reasoning pattern/capacity claims"
+    judgment_alignment: n/a
+    severity_alignment: n/a
+    rationale: >-
+      Both identify a mismatch between the paper's evidence (problem solvability via pass@k)
+      and its framing (reasoning patterns/capacity). O9 flags the terminology as a misnomer —
+      should be 'reasoning coverage/scope' not 'reasoning capacity.' A4 flags the logical gap
+      more broadly — pass@k cannot distinguish 'same paths found more efficiently' from
+      'different paths to the same problems.' Same underlying observation but different levels:
+      O9 is a minor terminology fix; A4 is a major logical gap in the argument. Different author
+      fixes required (rename vs. weaken claims or add evidence), so related only.
+
+positive_factor_matches:
+  # ----------------------------------------------------------------
+  # D1: Important question about pass@k and reasoning boundaries
+  # ----------------------------------------------------------------
+  - official_factor_id: D1
+    agentic_source: mention
+    agentic_text: "Paper presents a thought-provoking empirical investigation into whether RLVR genuinely expands LLM reasoning capabilities beyond the base model"
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >-
+      M1 recognizes the research question as "thought-provoking" but does not specifically
+      articulate why it is intriguing (the pass@k framing, the link to diversity of reasoning)
+      as the AC does. Partial — same direction, less specificity.
+
+  # ----------------------------------------------------------------
+  # D2: Masterful execution, negative result, clean rebuttal
+  # ----------------------------------------------------------------
+  - official_factor_id: D2
+    agentic_source: mention
+    agentic_text: "The experimental breadth—covering multiple model families, RL algorithms, and task domains—is commendable, and the core finding that pass@k curves cross over is well-demonstrated"
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >-
+      M2 and M3 together recognize experimental breadth and that the core finding is
+      well-demonstrated. This partially captures D2's "masterful execution" but misses the
+      rebuttal quality and the weight the AC places on comprehensive evidence. The agentic
+      system acknowledged execution quality but weighted its concerns more heavily.
+
+  # ----------------------------------------------------------------
+  # D3: Unanimous reviewer consensus (6/6 post-rebuttal)
+  # ----------------------------------------------------------------
+  - official_factor_id: D3
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >-
+      Reviewer consensus is a post-discussion signal observable only to the AC. The agentic
+      system operates pre-rebuttal and has no access to reviewer scores or discussion outcomes.
+      Not a meaningful miss — this factor is structurally unobservable.
+
+  # ----------------------------------------------------------------
+  # D4: Distillation contrast as important diagnostic contribution
+  # ----------------------------------------------------------------
+  - official_factor_id: D4
+    agentic_source: none
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >-
+      The agentic system addressed distillation but with inverted judgment: A6 criticizes the
+      distillation comparison as confounded (lacking a controlled baseline), while the AC treats
+      the distillation contrast as a positive contribution showing RLVR's limitation is specific,
+      not inherent to all post-training. The system saw the same topic but drew the opposite
+      normative conclusion — it treated a strength as a weakness.
+
+unmatched_official:
+  - O1   # Model scale limited to 7-32B — agentic review did not flag scope limitation
+  - O2   # Random guessing explanation not ruled out
+  - O3   # Overfitting to test set as alternative explanation
+  - O4   # Table 1 should note training data
+  - O5   # Figure 6 relevance of perplexity vs o1 unclear
+  - O6   # Figure 8 readability issues
+  - O7   # Tables 4 & 5 should report fraction overlap
+  - O8   # Figure 16 AIME24 temperature inconsistency
+  - O9   # Terminology misnomer (related-only match with A4)
+  - O10  # Limited theoretical insight for why RLVR fails
+  - O11  # May not generalize to future RL paradigms
+  - O12  # Missing improvement suggestions
+  - O13  # Base model dependency
+  - O14  # No theoretical explanation
+  - O15  # Qwen model series dominance
+  - O16  # Evaluation too centered on pass@k
+  - O17  # Similar insights in DeepSeekMath
+  - O18  # Missing policy optimization parameters
+  - O20  # Scaling to larger models (70B+)
+  - O21  # Effect of task difficulty on pass@k gap
+  - O22  # Train vs test pass@k not distinguished
+  - O23  # Perplexity evolution during training not shown
+  - O24  # Limitations section insufficient
+  - O25  # Contradicting concurrent paper with CoT-Pass@k
+  - O26  # SFT pre-training effect on conclusions
+
+unmatched_agentic:
+  - A1   # ∆SE definition ambiguity (subtraction direction) — no official flagged this
+  - A2   # ∆SE numerical inconsistency with Table 3 — no official flagged this
+  - A4   # Overclaiming about reasoning patterns (related-only to O9)
+  - A5   # CoT canceling arithmetic errors in Figure 20 — no official flagged this
+  - A6   # Distillation comparison lacks controlled baseline — officials saw as strength

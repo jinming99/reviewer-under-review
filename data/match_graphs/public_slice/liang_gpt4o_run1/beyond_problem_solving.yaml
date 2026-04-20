@@ -1,0 +1,60 @@
+schema_version: "v1"
+paper: "beyond_problem_solving"
+version: "v0.9.2"
+condition: "own_group/liang_gpt4o_run1"
+method: "baseline_liang_etal"
+
+matches:
+  - official_id: O1
+    agentic_id: A1
+    match_type: exact
+    issue: "Three-Space Theory not integrated with experimental design"
+    judgment_alignment: aligned
+    severity_alignment: under  # official: major, agentic: moderate (gap = 1, within tolerance)
+    rationale: >-
+      Both identify the theory-experiment disconnect: O1 says metrics are not matched to the
+      three spaces making the framing superficial; A1 says the adaptation is too abstract and
+      the connection to experimental results is not explicitly drawn. Same underlying complaint.
+      A1 frames it as a clarity issue (dimension G) while O1 treats it as a conceptual gap, but
+      the fix is identical: tightly map metrics to the three spaces. Severity within ±1 tolerance
+      (major vs moderate). Notably, O1 is the AC's primary decisive blocker; the agentic system
+      did not flag it as decisive.
+
+  - official_id: O6
+    agentic_id: A2
+    match_type: related
+    issue: "Gap between evaluation and real-world conditions"
+    judgment_alignment: n/a
+    severity_alignment: n/a
+    rationale: >-
+      O6 targets ecological validity of the test stimuli (artificial contradictions with explicit
+      Hint markers vs subtle real-world inconsistencies). A2 targets missing practical application
+      case studies (healthcare, legal domains). Both gesture at a real-world gap but require
+      different author fixes: O6 needs more realistic test stimuli; A2 needs application
+      demonstrations. Too different for partial.
+
+  - official_id: O7
+    agentic_id: A4
+    match_type: partial
+    issue: "Limited model coverage threatens generalizability"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: moderate, agentic: major (gap = 1, within tolerance)
+    rationale: >-
+      O7 specifically targets the reasoning-mode experiment (Section 4.2) being limited to
+      Qwen3 models only. A4 is a broader concern about overall dataset and model diversity
+      across all experiments. A4 subsumes O7 but has wider scope (also covers datasets).
+      Broad-to-narrow match per Skill 3 rules. Both treat as weakness (aligned). Severity
+      within ±1 tolerance (moderate vs major).
+
+unmatched_official:
+  - O2  # Narrow definition of critical thinking (decisive blocker) — agentic system did not raise
+  - O3  # GPT-4o evaluator bias (decisive blocker) — agentic system did not raise
+  - O4  # Metrics reduce to binary classification — agentic system did not raise
+  - O5  # Data generation confound (artifact detection vs reasoning) — agentic system did not raise
+  - O6  # Artificial vs real-world inconsistencies — only related edge to A2, no strict match
+  - O8  # Paper structure and logical flow — agentic system did not raise
+  - O9  # Dataset not publicly released — agentic system did not raise
+
+unmatched_agentic:
+  - A2  # Limited real-world applications — only related edge to O6, no strict match; no official reviewer raised missing case studies
+  - A3  # Insufficient comparison with existing benchmarks — phantom concern; officials did not raise benchmark comparison

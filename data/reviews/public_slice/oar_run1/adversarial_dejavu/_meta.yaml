@@ -1,0 +1,23 @@
+slug: adversarial_dejavu
+baseline: openaireview_zero_shot
+model: claude-opus-4-6
+timestamp: '2026-04-10T02:51:56.888603+00:00'
+git_sha: 6b601aec
+git_branch: main
+elapsed_s: 209.4
+usage:
+  input_tokens: 0
+  output_tokens: 0
+cost_usd: 0.4558
+num_sdk_calls: 1
+num_api_calls: 1
+num_chunks: null
+specialties: null
+paper_text_chars: 111723
+review_text_chars: 8948
+skip_refinement: false
+note: >
+  Used zero_shot method instead of progressive. Progressive failed twice
+  (on both jinming and ming machines) — crashes in Claude Code SDK at the
+  consolidation step after processing 16/17 passages. All other OAR own-group
+  papers use progressive.

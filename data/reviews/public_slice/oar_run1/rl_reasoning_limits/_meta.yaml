@@ -1,0 +1,18 @@
+slug: rl_reasoning_limits
+baseline: openaireview_zero_shot
+model: claude-opus-4-6
+timestamp: '2026-04-12T02:05:21.311401+00:00'
+git_sha: 6b601aec
+git_branch: main
+elapsed_s: 326.9
+usage:
+  input_tokens: 0
+  output_tokens: 0
+cost_usd: 0.7074
+num_sdk_calls: 1
+num_api_calls: 1
+num_chunks: null
+specialties: null
+paper_text_chars: 107082
+review_text_chars: 7273
+skip_refinement: false

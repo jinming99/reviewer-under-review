@@ -1,0 +1,18 @@
+slug: beyond_problem_solving
+baseline: liang_etal
+model: gpt-4o
+timestamp: '2026-04-10T12:46:44.967119+00:00'
+git_sha: 6b601aec
+git_branch: main
+elapsed_s: 15.4
+usage:
+  input_tokens: 27077
+  output_tokens: 596
+cost_usd: 0.0
+num_sdk_calls: 0
+num_api_calls: 1
+num_chunks: null
+specialties: null
+paper_text_chars: 81111
+review_text_chars: 3413
+skip_refinement: false

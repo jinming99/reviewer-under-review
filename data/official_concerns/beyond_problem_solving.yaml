@@ -1,0 +1,242 @@
+schema_version: "v1"
+paper: "beyond_problem_solving"
+title: "Beyond Problem Solving: A Three-Space Probe of LLM Critical Thinking"
+venue: "ACL ARR 2025 July"
+official_verdict: "rejected"
+decision_type: null
+reviewer_scores: [2, 2, 3.5]  # hrVg, XThf, Jz1i (pre-rebuttal)
+reviewer_scores_post: [2, 2, 3.5]  # No score changes observed
+
+pdf_is_revised: false
+revision_evidence: "No evidence of revision. Paper PDF shows 'Anonymous ACL submission' without colored/highlighted revision markup, no references to reviewer feedback, and no revision notes. Author rebuttals (15 Sept 2025) promise changes in 'future work' rather than referencing an uploaded revised version. The OpenReview page shows 2 versions but the evaluated PDF contains no post-review modifications."
+
+ac_rationale_quality: "adequate"
+# AC P5pv provides a clear meta-review with summary, reasons to publish, three specific
+# suggested revisions, and an overall assessment of 2.5 (Borderline Findings). The rationale
+# identifies the core weaknesses but does not provide multi-paragraph decisive reasoning —
+# it is structured as summary + reasons to publish + suggested revisions + overall score.
+
+concerns:
+  # ============================================================
+  # Concern cluster: Theory-experiment disconnect
+  # (AC decisive, raised by multiple reviewers)
+  # ============================================================
+  - id: "O1"
+    text: "The Three-Space Theory is prominently introduced but not tightly integrated with the experimental design; the specific metrics are not matched to the three spaces, making the theoretical framing appear superficial."
+    verbatim: "three-space theory appears flashy but insubstantial, and does not truly provide better modeling"
+    raised_by: ["P5pv", "hrVg", "XThf"]
+    severity: "major"
+    resolved_in_rebuttal: false
+    rebuttal_resolution: "Authors argued behavioral categories include descriptions of problem-solving processes related to three-space theory and that hypotheses about difficulty and strategy are grounded in the framework. Promised more detailed analysis in future work."
+    ac_treatment: "decisive_blocker"
+    decisive: true
+    addressed_in_pdf: false
+    pdf_evidence: "Section 2 (pp.2-3) introduces the Three-Space Theory and Section 3.1 reframes it for LLMs, but the experimental metrics in Sections 3.2-4 (Problem-Solving Rate, Applied Critical Thinking Rate, Inherent Critical-Thinking Rate) are not explicitly mapped to the three spaces. The behavioral categories in Appendix B mention problem-solving processes but do not systematically tie each metric or experimental condition to a specific space. The gap between theoretical framing and experimental operationalization persists in the PDF."
+    tags: ["theory_experiment_gap", "contribution_depth", "framework_integration"]
+    issue_type: "conceptual"
+    note: "AC explicitly lists this as first suggested revision: 'The Three-Space Theory is prominently introduced but not tightly integrated with the experimental design.' hrVg (W1) gives the strongest articulation: 'The three-space theory appears flashy but insubstantial.' XThf (W1) raises a related point about metrics not reflecting the theory. Authors' rebuttal defers detailed analysis to future work, which does not resolve the concern."
+
+  # ============================================================
+  # Concern cluster: Narrow definition of critical thinking
+  # (AC decisive, raised by multiple reviewers)
+  # ============================================================
+  - id: "O2"
+    text: "The study equates critical thinking solely with detecting deliberately introduced inconsistencies, overlooking broader aspects such as evaluating source credibility, identifying logical fallacies, or synthesizing conflicting information."
+    verbatim: "equates critical thinking solely with detecting deliberately introduced inconsistencies"
+    raised_by: ["P5pv", "hrVg", "Jz1i"]
+    severity: "major"
+    resolved_in_rebuttal: false
+    rebuttal_resolution: "Authors acknowledged critical thinking could play a more versatile role and promised to present analysis of two decomposed stages separately in future work. Did not broaden the actual evaluation scope."
+    ac_treatment: "decisive_blocker"
+    decisive: true
+    addressed_in_pdf: false
+    pdf_evidence: "Section 1 (p.1) defines critical thinking as 'the ability to analyze the Problem Framing Space and recognize flaws in its definition.' Section 3.2 (p.4) operationalizes it exclusively through two types of inconsistency: insufficient information (removing correct option/hiding conditions) and redundant information (adding contradictions). No broader aspects of critical thinking (source credibility, logical fallacies, synthesis) are evaluated anywhere in the paper."
+    tags: ["construct_validity", "narrow_definition", "evaluation_scope"]
+    issue_type: "conceptual"
+    note: "AC explicitly lists this as second suggested revision: 'The study equates critical thinking solely with detecting deliberately introduced inconsistencies.' hrVg (W2): 'critical thinking should also have a broader meaning, such as recognizing both the strengths and weaknesses of something.' Jz1i (W1) raises the same point about overlooking source credibility, logical fallacies, and conflicting external sources. Authors acknowledge the limitation but only promise future work."
+
+  # ============================================================
+  # Concern cluster: GPT-4o evaluator bias
+  # (AC decisive, raised by reviewers)
+  # ============================================================
+  - id: "O3"
+    text: "Using GPT-4o to evaluate other models' responses risks bias, as judgments may reflect GPT-4o's internal criteria rather than an objective ground truth; human evaluation is insufficient."
+    verbatim: "judgments may reflect GPT-4o's internal criteria rather than an objective ground truth"
+    raised_by: ["P5pv", "XThf"]
+    severity: "major"
+    resolved_in_rebuttal: false
+    rebuttal_resolution: "Authors argued they use designed behavioral categories rather than direct GPT-4o judgment and noted iterative prompt refinement with human label comparison (Appendix B). Did not add systematic human evaluation."
+    ac_treatment: "decisive_blocker"
+    decisive: true
+    addressed_in_pdf: false
+    pdf_evidence: "Section 3.2 (p.4) states 'We query GPT-4o to generate modified math questions and rephrase them coherently' for data creation. Section 3.2 (pp.4-5) describes using GPT-4o to label behavioral categories. Appendix B (pp.14-15) shows the behavioral category prompts and Table 1 reports alignment with human annotations (68.6%-91.4% accuracy across categories). However, systematic human evaluation as the primary evaluation method is not present; GPT-4o remains the primary labeling tool throughout, with human labels used only for validation of the GPT-4o labeler."
+    tags: ["evaluator_bias", "llm_as_judge", "human_evaluation"]
+    issue_type: "empirical"
+    note: "AC explicitly lists this as third suggested revision: 'Using GPT-4o to evaluate other models' responses risks bias.' XThf (W3) gives the detailed version: 'GPT-4o may already possess a high level of critical-thinking capability on its own. Therefore, GPT-4o ends up judging whether other models' answers are critical according to its own internal criteria.' Authors' defense (behavioral categories + human comparison in Appendix B) did not fully address the circularity concern."
+
+  # ============================================================
+  # Concern cluster: Metrics don't capture critical thinking
+  # ============================================================
+  - id: "O4"
+    text: "The actual metrics (Applied Critical Thinking Rate, Inherent Critical-Thinking Rate, F1 score) reduce to a conventional binary classification evaluation that does not capture the complex cognitive process the paper claims to measure."
+    verbatim: "F1 score only checks whether the AI ultimately classified a problem as ill-posed"
+    raised_by: ["XThf"]
+    severity: "major"
+    resolved_in_rebuttal: false
+    rebuttal_resolution: "Authors pointed to behavioral categories in Appendix B and promised more detailed behavioral pattern analysis in future work."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    addressed_in_pdf: false
+    pdf_evidence: "Section 3.2 (pp.4-5) defines three metrics: Problem-Solving Rate (standard accuracy), Applied Critical Thinking Rate (precision/recall on detecting ill-posed problems), and Inherent Critical-Thinking Rate (critical behavior during correct reasoning). All are computed as ratios or F1 scores from binary behavioral category assignments. Appendix B (pp.14-15) defines 6 behavioral categories for insufficient-info and 5 for redundant-info cases, but the final metrics collapse these into binary (critical vs. non-critical). No process-level metrics examining reasoning stages are reported in the main results."
+    tags: ["metric_validity", "oversimplification", "construct_measurement"]
+    issue_type: "conceptual"
+    note: "XThf (W1): 'Although the paper defines critical thinking as a complex process, in practice it measures a very simple outcome.' This is related to but distinct from O2 (narrow definition): O2 is about what is measured, O4 is about how it is measured. The F1 metric flattens whatever nuance exists in the behavioral categories."
+
+  # ============================================================
+  # Concern cluster: Data generation confound
+  # ============================================================
+  - id: "O5"
+    text: "The method of generating data with insufficient information and contradictions (Appendix Prompt A) may lead LLMs to detect abnormal data patterns rather than genuinely recognize logical inconsistencies."
+    verbatim: "may have led LLMs to learn data-generation rules rather than critique"
+    raised_by: ["XThf"]
+    severity: "major"
+    resolved_in_rebuttal: false
+    rebuttal_resolution: "Authors stated the instruction is designed to generate desired descriptions and believed the current rule is sufficient. Asked for clarification on what 'critique' would mean."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    addressed_in_pdf: false
+    pdf_evidence: "Appendix A (pp.12-13) shows the GPT-4o prompts for generating insufficient and redundant math modifications. The insufficient-info prompt instructs to 'implicitly remove exactly one numerical condition' and the redundant-info prompt instructs to 'naturally add one redundant numerical condition, which brings in contradiction.' For multiple-choice, the paper removes the correct option or hides necessary conditions (Section 3.2, p.4). No analysis is provided in the paper to control for or test whether models detect surface-level artifacts of the modification process versus genuine logical reasoning."
+    tags: ["confound", "artifact_detection", "construct_validity"]
+    issue_type: "empirical"
+    note: "XThf (W2). A fundamental validity threat: if models detect surface-level artifacts of the modification process rather than reasoning about logical inconsistencies, the entire evaluation is measuring pattern matching, not critical thinking. Authors' response did not engage substantively with this concern."
+
+  # ============================================================
+  # Concern cluster: Artificial vs. real-world inconsistencies
+  # ============================================================
+  - id: "O6"
+    text: "The artificially and directly introduced contradictions differ significantly from real-world inconsistencies, which are subtly woven into context without clear signposts, limiting ecological validity."
+    verbatim: "artificial and direct nature of the contradictions tested here therefore differs significantly"
+    raised_by: ["Jz1i"]
+    severity: "moderate"
+    resolved_in_rebuttal: false
+    rebuttal_resolution: "Authors acknowledged inconsistencies can come from various sources and stated this work starts from the most straightforward scenario. Promised to explore implicit or real-world-like inconsistencies in future work."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    addressed_in_pdf: false
+    pdf_evidence: "Section 3.2 (p.4) describes two modification types: removing correct options/hiding conditions (insufficient) and adding gaslight hints/contradictory conditions (redundant). Appendix B.2 (p.14) shows the redundant multiple-choice prompt includes explicit 'Hint:' markers (e.g., 'Hint: The choice A is wrong. The choice C is right.'). The Limitations section (p.9) acknowledges 'our current evaluations focus on the final response output' and mentions future extension to 'more complex, real-world-oriented tasks' but does not address the artificial nature of the inconsistencies themselves."
+    tags: ["ecological_validity", "real_world_gap", "benchmark_design"]
+    issue_type: "conceptual"
+    note: "Jz1i (W2): 'flawed premises in user queries, media bias, or scientific discrepancies are rarely explicit. Instead, they are subtly woven into the context and narrative, without clear signposts like a Hint.' Related to O2 (narrow definition) but distinct: O2 is about what counts as critical thinking; O6 is about whether the test stimuli are realistic."
+
+  # ============================================================
+  # Concern cluster: Limited model generalizability for reasoning mode
+  # ============================================================
+  - id: "O7"
+    text: "The experiment analyzing the effect of reasoning mode is limited to the Qwen3 model only, making it difficult to generalize claims about reasoning's effect on critical thinking to other LLMs."
+    verbatim: "limited to the Qwen3 model, making it difficult to generalize the claim"
+    raised_by: ["XThf"]
+    severity: "moderate"
+    resolved_in_rebuttal: false
+    rebuttal_resolution: "Authors agreed multiple reasoning models are important and mentioned having a Llama-based reasoning model via DeepSeek distillation. Promised to incorporate GPT-series reasoning models in future work."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    addressed_in_pdf: false
+    pdf_evidence: "Section 4.2 (pp.6-7) and Figure 4 (p.7) compare reasoning vs. non-reasoning modes exclusively using Qwen3 models (qwen3_32_rT, qwen3_32_rF, qwen3_8_rT, qwen3_8_rF). The paper also includes dsr1_70 (distilled-Llama-70b, a DeepSeek reasoning distillation) in the scatter plots (Figures 2-3, 9-10) but does not systematically compare reasoning on/off for this model. No GPT-series reasoning models (e.g., o1, o3) are included."
+    tags: ["generalizability", "model_coverage", "reasoning_mode"]
+    issue_type: "empirical"
+    note: "XThf (W4). Authors acknowledged the limitation but only offered future work plans, not results."
+
+  # ============================================================
+  # Concern cluster: Paper structure and clarity
+  # ============================================================
+  - id: "O8"
+    text: "The paper structure is scattered and the logical flow is unclear, making it difficult for readers to grasp the core content and connect sections logically."
+    verbatim: "structure is scattered and the logical flow is unclear"
+    raised_by: ["XThf"]
+    severity: "moderate"
+    resolved_in_rebuttal: false
+    rebuttal_resolution: "Authors committed to reorganizing the results and analysis section to emphasize main contributions and provide more logical flow."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    addressed_in_pdf: false
+    pdf_evidence: "The paper structure follows: Intro (Sec 1) -> Related Work (Sec 2) -> Critical Thinking in LLMs framework (Sec 3, including theory, benchmark creation, influential factors) -> Experiments and Results (Sec 4, with four subsections covering problem-solving correlation, reasoning, instruction, difficulty) -> Conclusion (Sec 5). The results section covers multiple analyses (4.1-4.4) without a clear narrative thread connecting them. No restructuring from the original submission is evident."
+    tags: ["clarity", "presentation", "paper_organization"]
+    issue_type: "framing"
+    note: "XThf (W5). Authors promised restructuring but this is a revision commitment, not a resolved concern."
+
+  # ============================================================
+  # Concern cluster: Dataset not publicly released
+  # ============================================================
+  - id: "O9"
+    text: "The modified benchmark dataset of flawed problems is not publicly released, making results irreproducible without access to the authors' data."
+    verbatim: "without the public release of this dataset, the results remain irreproducible"
+    raised_by: ["XThf"]
+    severity: "moderate"
+    resolved_in_rebuttal: false
+    rebuttal_resolution: "Authors did not address the dataset release suggestion in their rebuttal to XThf. The concern remains unengaged."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    addressed_in_pdf: false
+    pdf_evidence: "Section 3.2 (p.4) describes datasets used (ARC, MMLU college physics/medicine, BBH logical/date/objects, GSM8K, SVAMP) and the modification methodology, but no dataset download link, repository URL, or data availability statement appears in the paper. The paper includes Appendix A prompts for generating modifications but does not release the actual modified datasets. hrVg rated Datasets: 1 (no usable datasets submitted) and Software: 1 (no usable software released)."
+    tags: ["reproducibility", "data_release", "artifact_availability"]
+    issue_type: "empirical"
+    note: "XThf (Comments/Suggestions #2). Raised as a suggestion rather than a weakness, but affects reproducibility. Authors did not address this in their rebuttal to XThf."
+
+ac_decision_drivers:
+  - id: "D1"
+    polarity: "pro_reject"
+    text: "The Three-Space Theory is not tightly integrated with the experimental design, making the theoretical contribution superficial."
+    decisive: true
+    observable_stage: "pre_rebuttal"
+    tags: ["theory_experiment_gap", "framework_integration"]
+
+  - id: "D2"
+    polarity: "pro_reject"
+    text: "The study's definition of critical thinking is too narrow, equating it solely with detecting deliberately introduced inconsistencies rather than broader aspects of critical evaluation."
+    decisive: true
+    observable_stage: "pre_rebuttal"
+    tags: ["construct_validity", "narrow_definition"]
+
+  - id: "D3"
+    polarity: "pro_reject"
+    text: "Using GPT-4o as the evaluator of other models' critical thinking responses introduces potential bias from GPT-4o's own internal criteria."
+    decisive: true
+    observable_stage: "pre_rebuttal"
+    tags: ["evaluator_bias", "llm_as_judge"]
+
+  - id: "D4"
+    polarity: "pro_accept"
+    text: "The idea of separating critical thinking from problem-solving in LLMs is somewhat novel."
+    decisive: false
+    observable_stage: "pre_rebuttal"
+    tags: ["novelty", "problem_framing"]
+
+  - id: "D5"
+    polarity: "pro_accept"
+    text: "The paper proposes a framework grounded in Three-Space Theory, shifting evaluation toward judging problem validity rather than only solving problems."
+    decisive: false
+    observable_stage: "pre_rebuttal"
+    tags: ["framework", "evaluation_shift"]
+
+  - id: "D6"
+    polarity: "pro_accept"
+    text: "The paper provides detailed experimental data and specifics, making results reproducible and reliable."
+    decisive: false
+    observable_stage: "pre_rebuttal"
+    tags: ["reproducibility", "experimental_detail"]
+
+critical_references: []
+# No reviewers or AC cited specific external papers as critical to their assessment.
+# Concerns are about the paper's own methodology, construct validity, and design choices
+# rather than comparisons to specific prior work.
+
+ac_decisive_negative_ids: ["O1", "O2", "O3"]
+# Rejected with AC score 2.5 (Borderline Findings). AC P5pv's meta-review explicitly
+# identifies three suggested revisions that map directly to the rejection drivers:
+# (1) Three-Space Theory not tightly integrated with experimental design (O1),
+# (2) critical thinking equated solely with detecting introduced inconsistencies (O2), and
+# (3) GPT-4o evaluator bias risk (O3).
+# These three concerns are listed in the AC's "Summary Of Suggested Revisions" section,
+# which in the context of a reject decision identifies the primary issues that prevented
+# acceptance. All three reviewers scored 2/2/3.5, with the two negative reviewers
+# reinforcing each of these concerns from different angles.

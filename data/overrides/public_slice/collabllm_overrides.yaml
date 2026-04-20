@@ -1,0 +1,806 @@
+schema_version: v1
+version: own_group
+generated_by: skill_5b_claude_code
+
+# =======================================================================
+# EDGE OVERRIDES — all 51 strict edges across 10 conditions
+# =======================================================================
+edge_overrides:
+
+  # ====================================================================
+  # panel_no_ls (5 strict edges)
+  # ====================================================================
+
+  - method: panel_no_ls
+    paper: collabllm
+    official_id: O21
+    agentic_id: A3
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: wrong_severity
+    action: reclassified
+    rationale: "Both target missing MTPO/ArCHer quantitative baselines — exact match_type is correct. However, severity_alignment was labeled 'over' (implying gap ≥2) when O21=moderate(1) and A3=major(2), a gap of only 1 level. Gap ≤1 → match, not over."
+    confidence: high
+
+  - method: panel_no_ls
+    paper: collabllm
+    official_id: O9
+    agentic_id: A4
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both target sim-to-real user divergence gap. Same defect, same direction. O9=moderate, A4=major, gap=1 → match."
+    confidence: high
+
+  - method: panel_no_ls
+    paper: collabllm
+    official_id: O22
+    agentic_id: A4
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: over
+    verdict: correct
+    action: confirmed
+    rationale: "O22 flags specific agreeableness bias in simulators; A4 asks for distributional sim-to-real validation. Same issue family, different scope. O22=minor(0), A4=major(2), gap=2, agentic higher → over."
+    confidence: high
+
+  - method: panel_no_ls
+    paper: collabllm
+    official_id: O7
+    agentic_id: A5
+    original_match_type: partial
+    override_match_type: related
+    override_judgment_alignment: n/a
+    override_severity_alignment: n/a
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O7 targets limited out-of-domain automated benchmark diversity (only Abg-CoQA). A5 targets user study covering only document writing, lacking human evaluation for code/math domains. These are different evaluation tracks: adding automated OOD benchmarks would not fix the human evaluation gap, and vice versa. Same broad area (evaluation scope) but genuinely different defects."
+    confidence: high
+
+  - method: panel_no_ls
+    paper: collabllm
+    official_id: O6
+    agentic_id: A8
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O6 asks for computational overhead/scalability discussion; A8 asks for GPU hours and wall-clock time. A8 is a narrower slice of O6's broader ask. O6=moderate, A8=minor, gap=1 → match."
+    confidence: high
+
+  # ====================================================================
+  # panel_arch_b (5 strict edges)
+  # ====================================================================
+
+  - method: panel_arch_b
+    paper: collabllm
+    official_id: O21
+    agentic_id: A1
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: over
+    verdict: correct
+    action: confirmed
+    rationale: "Both name MTPO/ArCHer as missing quantitative baselines. A1 adds DMPO and single-turn DPO — rhetorical elaboration, not independent fix-actions. O21=moderate(1), A1=fatal(3), gap=2 → over."
+    confidence: high
+
+  - method: panel_arch_b
+    paper: collabllm
+    official_id: O20
+    agentic_id: A2
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O20 asks about model choice rationale and self-play feasibility; A2 flags train-eval circularity from same GPT-4o-mini. Same issue family (simulator setup) but different defects. O20=moderate, A2=major, gap=1 → match."
+    confidence: high
+
+  - method: panel_arch_b
+    paper: collabllm
+    official_id: O20
+    agentic_id: A7
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O20 asks about self-play feasibility; A7 asks for ablation over simulator quality. Both want experiments with different simulator configurations but different scope. O20=moderate, A7=minor, gap=1 → match."
+    confidence: high
+
+  - method: panel_arch_b
+    paper: collabllm
+    official_id: O7
+    agentic_id: A4
+    original_match_type: partial
+    override_match_type: related
+    override_judgment_alignment: n/a
+    override_severity_alignment: n/a
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O7 asks for more diverse generalization benchmarks beyond Abg-CoQA. A4 identifies a specific accuracy degradation (90.40% to 72.32%) on non-ambiguous questions within Abg-CoQA and claims trading core competence for proactive behavior. Different defects: adding more datasets (O7 fix) would not explain the accuracy drop (A4), and analyzing the accuracy drop would not address limited dataset diversity."
+    confidence: high
+
+  - method: panel_arch_b
+    paper: collabllm
+    official_id: O14
+    agentic_id: A8
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O14 asks why ITR decreases from w=2 to w=3 (specific anomaly). A8 notes only 3 MC samples used with no formal approximation quality analysis. A8's concern is the likely root cause of O14's anomaly — same underlying technical limitation. Both minor → match."
+    confidence: medium
+
+  # ====================================================================
+  # df_no_ls (8 strict edges)
+  # ====================================================================
+
+  - method: df_no_ls
+    paper: collabllm
+    official_id: O21
+    agentic_id: A1
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both flag identical gap: no empirical comparison with MTPO/ArCHer. O21=moderate, A1=major, gap=1 → match."
+    confidence: high
+
+  - method: df_no_ls
+    paper: collabllm
+    official_id: O12
+    agentic_id: A1
+    original_match_type: partial
+    override_match_type: related
+    override_judgment_alignment: n/a
+    override_severity_alignment: n/a
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O12 asks a within-framework attribution question: are gains from MR design vs reward modification vs their interaction? This requires component-level ablation. A1 asks a between-framework question: is turn-level MR better than trajectory-level RL? This requires head-to-head external comparison. Fixing O12 (ablating reward components) would NOT fix A1 (adding external baselines), and vice versa. Different decomposition axes → related."
+    confidence: high
+
+  - method: df_no_ls
+    paper: collabllm
+    official_id: O9
+    agentic_id: A2
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O9 targets sim-to-real divergence; A2 targets train-eval circularity from same simulator family. Both concern user simulator validity but different angles. O9=moderate, A2=major, gap=1 → match."
+    confidence: high
+
+  - method: df_no_ls
+    paper: collabllm
+    official_id: O2
+    agentic_id: A5
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "O2 says causal claim 'somewhat convincing'; A5 says causal framing 'overstated, should be motivation not proof.' Same issue family (causal framing credibility). O2=major(2), A5=minor(0), gap=2, agentic lower → under."
+    confidence: high
+
+  - method: df_no_ls
+    paper: collabllm
+    official_id: O11
+    agentic_id: A6
+    original_match_type: partial
+    override_match_type: related
+    override_judgment_alignment: n/a
+    override_severity_alignment: n/a
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O11 flags small improvements (BLEU 35→36-38) as questionable practical significance (effect size concern). A6 flags that Proactive Base may not represent best-practice prompt engineering (baseline fairness concern). These are genuinely different defects: fixing A6 (optimizing the baseline) could make O11 worse (smaller delta), not fix it. Effect size magnitude and baseline strength are independent evaluation issues."
+    confidence: high
+
+  - method: df_no_ls
+    paper: collabllm
+    official_id: O15
+    agentic_id: A7
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O15 asks for ITR scoring methodology clarity; A7 flags ad-hoc scoring weights (A=3,B=2,C=1) and evaluation bias. Same metric, different facets: transparency vs design validity. Both minor → match."
+    confidence: high
+
+  - method: df_no_ls
+    paper: collabllm
+    official_id: O20
+    agentic_id: A8
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O20 asks why GPT-4o used instead of self-play; A8 reports open-source models struggle as simulators. Both about simulator model choice constraints. O20=moderate, A8=minor, gap=1 → match."
+    confidence: high
+
+  - method: df_no_ls
+    paper: collabllm
+    official_id: O22
+    agentic_id: A8
+    original_match_type: partial
+    override_match_type: related
+    override_judgment_alignment: n/a
+    override_severity_alignment: n/a
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O22 flags that instruction-tuned LLMs are overly agreeable as simulators (sycophancy). A8 flags that open-source models get confused and act as assistants (role confusion). These are different behavioral failure modes of LLM simulators. Fixing agreeableness does not fix role confusion, and vice versa. Same broad theme (simulator quality) but different specific defects."
+    confidence: high
+
+  # ====================================================================
+  # df_arch_c (6 strict edges)
+  # ====================================================================
+
+  - method: df_arch_c
+    paper: collabllm
+    official_id: O2
+    agentic_id: A7
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: correct
+    action: confirmed
+    rationale: "Both target the causal inference framing as unvalidated. O2 says 'somewhat convincing'; A7 says structural assumptions not empirically verified. O2=major(2), A7=minor(0), gap=2, agentic lower → under."
+    confidence: high
+
+  - method: df_arch_c
+    paper: collabllm
+    official_id: O7
+    agentic_id: A8
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both identify the identical defect: generalizability claim rests on single OOD dataset (Abg-CoQA). O7=moderate, A8=minor, gap=1 → match."
+    confidence: high
+
+  - method: df_arch_c
+    paper: collabllm
+    official_id: O9
+    agentic_id: A9
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both flag sim-to-real divergence acknowledged but not quantified. Same defect, same fix. O9=moderate, A9=minor, gap=1 → match."
+    confidence: high
+
+  - method: df_arch_c
+    paper: collabllm
+    official_id: O11
+    agentic_id: A6
+    original_match_type: exact
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: under
+    verdict: wrong_type
+    action: reclassified
+    rationale: "Both flag modest BLEU gains over Proactive Base (~1.8 points). However, O11 bundles an independent fix-action: requesting a GPT-4o topline experiment to clarify the performance ceiling. A6 focuses on misleading relative improvement reporting (18.5% headline uses Base, not Proactive Base as denominator). The core observation overlaps (modest BLEU gains) but specific fixes diverge: O11 wants a topline experiment, A6 wants honest reporting against the fair baseline. Scope inflation → partial. O11=major(2), A6=minor(0), gap=2, agentic lower → under (unchanged)."
+    confidence: medium
+
+  - method: df_arch_c
+    paper: collabllm
+    official_id: O21
+    agentic_id: A1
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both flag no empirical comparison with MTPO/ArCHer. O21=moderate, A1=major, gap=1 → match."
+    confidence: high
+
+  - method: df_arch_c
+    paper: collabllm
+    official_id: O22
+    agentic_id: A9
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O22 flags agreeableness bias; A9 flags unmeasured sim-to-real gap. Same family (simulator limitations/fidelity), different specifics. Both minor → match."
+    confidence: high
+
+  # ====================================================================
+  # ai_scientist_run1 (8 strict edges)
+  # ====================================================================
+
+  - method: ai_scientist_run1
+    paper: collabllm
+    official_id: O21
+    agentic_id: A1
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both flag missing MTPO/ArCHer quantitative comparison. O21=moderate, A1=major, gap=1 → match."
+    confidence: high
+
+  - method: ai_scientist_run1
+    paper: collabllm
+    official_id: O2
+    agentic_id: A6
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both target the causal framing claim. O2 says 'somewhat convincing'; A6 says Eq.5 is standard conditional expectation, not front-door adjustment. Same defect. Both major → match."
+    confidence: high
+
+  - method: ai_scientist_run1
+    paper: collabllm
+    official_id: O9
+    agentic_id: A10
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both flag sim-to-real gap not measured. Same concern. Both moderate → match."
+    confidence: high
+
+  - method: ai_scientist_run1
+    paper: collabllm
+    official_id: O12
+    agentic_id: A2
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both question improvement attribution but along different axes. O12: MR design vs reward modification (component-level). A2: MR framework vs training on GPT-4o data (framework-level). Both major → match."
+    confidence: high
+
+  - method: ai_scientist_run1
+    paper: collabllm
+    official_id: O11
+    agentic_id: A4
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both question practical significance of improvements. O11: small incremental gains (BLEU 35→36-38). A4: low absolute performance levels making relative gains misleading. Both major → match."
+    confidence: high
+
+  - method: ai_scientist_run1
+    paper: collabllm
+    official_id: O7
+    agentic_id: A7
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both flag generalization weaknesses on Abg-CoQA. O7: limited to one dataset (scope). A7: non-ambiguous accuracy drops from 90.4% to 72.3% (mixed results). Both moderate → match."
+    confidence: high
+
+  - method: ai_scientist_run1
+    paper: collabllm
+    official_id: O20
+    agentic_id: A9
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O20 asks about model choice and self-play; A9 flags proprietary simulator reproducibility bottleneck. Same issue family, different angles. Both moderate → match."
+    confidence: high
+
+  - method: ai_scientist_run1
+    paper: collabllm
+    official_id: O6
+    agentic_id: A11
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O6 asks for computational overhead/scalability discussion; A11 asks for training compute comparison with DPO/PPO. A11 is narrower slice of O6's broader request. O6=moderate, A11=minor, gap=1 → match."
+    confidence: high
+
+  # ====================================================================
+  # ai_scientist_gpt4o_run1 (2 strict edges)
+  # ====================================================================
+
+  - method: ai_scientist_gpt4o_run1
+    paper: collabllm
+    official_id: O4
+    agentic_id: A1
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both question novelty. O4 identifies resemblance to self-training; A1 generically says not distinguished from existing methods. Same issue family (novelty differentiation), A1 lacks specificity. Both major → match."
+    confidence: high
+
+  - method: ai_scientist_gpt4o_run1
+    paper: collabllm
+    official_id: O9
+    agentic_id: A5
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both concern simulator fidelity to real users. O9 flags systematic bias; A5 flags unpredictable human behavior not captured. Same root issue, different emphasis. O9=moderate, A5=major, gap=1 → match."
+    confidence: high
+
+  # ====================================================================
+  # liang_run1 (4 strict edges)
+  # ====================================================================
+
+  - method: liang_run1
+    paper: collabllm
+    official_id: O9
+    agentic_id: A3
+    original_match_type: exact
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: wrong_type
+    action: reclassified
+    rationale: "Both target the sim-to-real gap in user simulation. However, A3 bundles additional independent fix-actions beyond O9's scope: O9 asks for a comparison of divergence between simulated and real users, while A3 additionally demands an ablation over simulator model quality and flags MR overfitting to simulator behaviors. Fixing O9's divergence comparison would not necessarily address A3's simulator quality ablation or overfitting concerns. Scope inflation: shared core + independent extras → partial."
+    confidence: medium
+
+  - method: liang_run1
+    paper: collabllm
+    official_id: O20
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O20 questions GPT-4o model choice and self-play feasibility; A3 flags missing simulator fidelity validation and model quality ablation. Same family (simulator quality), different sub-questions. O20=moderate, A3=major, gap=1 → match."
+    confidence: high
+
+  - method: liang_run1
+    paper: collabllm
+    official_id: O21
+    agentic_id: A1
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both specifically flag absence of empirical comparisons with MTPO/ArCHer. A1 adds DMPO, STaR-GATE — same class of missing baselines. O21=moderate, A1=major, gap=1 → match."
+    confidence: high
+
+  - method: liang_run1
+    paper: collabllm
+    official_id: O15
+    agentic_id: A2
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: over
+    verdict: correct
+    action: confirmed
+    rationale: "O15 asks for ITR scoring methodology clarity; A2 critiques LLM-judge circularity, reward hacking risks, and ad-hoc rubric weighting. Same component (ITR scoring), different complaint depth. O15=minor(0), A2=major(2), gap=2, agentic higher → over."
+    confidence: high
+
+  # ====================================================================
+  # liang_gpt4o_run1 (6 strict edges)
+  # ====================================================================
+
+  - method: liang_gpt4o_run1
+    paper: collabllm
+    official_id: O1
+    agentic_id: A1
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O1 asks why MR encourages collaboration (conceptual purpose); A1 asks how MR is computed and integrated (exposition). Both target MR clarity but different facets. O1=major, A1=moderate, gap=1 → match."
+    confidence: high
+
+  - method: liang_gpt4o_run1
+    paper: collabllm
+    official_id: O7
+    agentic_id: A2
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O7 targets single OOD dataset (Abg-CoQA); A2 is broader about evaluation scope and user study diversity. O7 is one facet of A2's broader critique. Both moderate → match."
+    confidence: high
+
+  - method: liang_gpt4o_run1
+    paper: collabllm
+    official_id: O9
+    agentic_id: A3
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both flag the same sim-to-real gap: simulated users may diverge from real humans, threatening training validity. Fixing one necessarily addresses the other. Both moderate → match."
+    confidence: high
+
+  - method: liang_gpt4o_run1
+    paper: collabllm
+    official_id: O22
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O22 identifies specific agreeableness failure mode; A3 is broader sim-to-real concern. O22 is one instance of A3's broader complaint. O22=minor, A3=moderate, gap=1 → match."
+    confidence: high
+
+  - method: liang_gpt4o_run1
+    paper: collabllm
+    official_id: O21
+    agentic_id: A4
+    original_match_type: exact
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: wrong_type
+    action: reclassified
+    rationale: "O21 specifically requests quantitative/empirical comparisons with named methods (MTPO, ArCHer). A4 bundles two distinct fix-actions: (1) insufficient comparison with SOTA, and (2) lacking discussion of how CollabLLM differs from or improves upon existing methods (positioning). The positioning discussion is an independent fix-action from running experiments — adding MTPO/ArCHer comparisons would not automatically address the qualitative differentiation narrative A4 demands. Scope inflation → partial."
+    confidence: medium
+
+  - method: liang_gpt4o_run1
+    paper: collabllm
+    official_id: O19
+    agentic_id: A4
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O19 targets specific missing comparison with Hong et al. (user-simulator-based RL); A4 broadly flags insufficient positioning. O19's concern is one facet of A4's broader critique. Both moderate → match."
+    confidence: high
+
+  # ====================================================================
+  # marg_gpt4o_run1 (5 strict edges)
+  # ====================================================================
+
+  - method: marg_gpt4o_run1
+    paper: collabllm
+    official_id: O22
+    agentic_id: A10
+    original_match_type: exact
+    override_match_type: exact
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both request discussion of LLM user simulator limitations. O22 names agreeableness; A10 is more generic. Fixing A10 (comprehensive discussion of limitations) necessarily addresses O22's specific point. Both minor → match."
+    confidence: high
+
+  - method: marg_gpt4o_run1
+    paper: collabllm
+    official_id: O1
+    agentic_id: A6
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O1 asks how MR encourages collaboration (why); A6 asks for MR computational details (how). Same issue area (MR explanation gaps), different facets. O1=major, A6=moderate, gap=1 → match."
+    confidence: high
+
+  - method: marg_gpt4o_run1
+    paper: collabllm
+    official_id: O12
+    agentic_id: A4
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "Both want better contribution attribution. O12 targets MR framework vs reward modification; A4 requests regression analysis for individual components. Same family, different analytical approaches. O12=major, A4=moderate, gap=1 → match."
+    confidence: high
+
+  - method: marg_gpt4o_run1
+    paper: collabllm
+    official_id: O9
+    agentic_id: A9
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O9 flags user simulator bias vs real users; A9 asks about synthetic dataset validation techniques. Same root concern (sim-to-real validity), different fix-actions. Both moderate → match."
+    confidence: high
+
+  - method: marg_gpt4o_run1
+    paper: collabllm
+    official_id: O14
+    agentic_id: A7
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O14 flags specific ITR decrease from w=2 to w=3; A7 asks for more window size explanation. A7 is broader but less specific than O14's puzzle. Both minor → match."
+    confidence: high
+
+  # ====================================================================
+  # oar_run1 (2 strict edges)
+  # ====================================================================
+
+  - method: oar_run1
+    paper: collabllm
+    official_id: O2
+    agentic_id: A3
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O2 broadly questions the causal claim; A3 identifies specific mathematical errors in Eq.5 (Appendix A.1). Both target causal inference credibility, different specificity. Both major → match."
+    confidence: high
+
+  - method: oar_run1
+    paper: collabllm
+    official_id: O2
+    agentic_id: A5
+    original_match_type: partial
+    override_match_type: partial
+    override_judgment_alignment: aligned
+    override_severity_alignment: match
+    verdict: correct
+    action: confirmed
+    rationale: "O2 says distinction from trajectory-level methods needs elaboration; A5 argues the observational-vs-interventional distinction is overstated. A5 directly addresses a sub-claim of O2's broader concern. O2=major, A5=moderate, gap=1 → match."
+    confidence: high
+
+# =======================================================================
+# MISSED MATCHES
+# =======================================================================
+missed_matches:
+
+  - method: df_arch_c
+    paper: collabllm
+    official_id: O15
+    agentic_id: A3
+    recommended_match_type: partial
+    recommended_judgment_alignment: aligned
+    recommended_severity_alignment: over
+    rationale: "O15 asks for clarity on how ITR scoring is performed (LLM judge Claude-3.5-Sonnet, rescaled scores). A3 flags that ITR — the metric with the largest gains — is entirely scored by Claude-3.5-Sonnet with no reported human-LLM agreement. Both target the ITR LLM-judge scoring methodology specifically. O15 wants methodological clarity; A3 wants human validation evidence. Same root concern (under-specified/under-validated LLM-based scoring) but different depths: clarifying how it works (O15) vs proving it's valid (A3). O15=minor(0), A3=major(2), gap=2, agentic higher → over."
+    confidence: medium
+
+# =======================================================================
+# PHANTOM JUDGMENTS
+# =======================================================================
+phantom_judgments: []
+
+# =======================================================================
+# VERIFICATION SUMMARY
+# =======================================================================
+verification_summary:
+  total_edges_verified: 51
+  total_unmatched_verified: 202
+  error_counts:
+    false_matches: 0
+    type_errors: 8
+    severity_errors: 1
+    missed_matches: 1
+  error_rates:
+    false_match_rate: "0.0%"
+    type_error_rate: "15.7%"
+    severity_error_rate: "2.0%"
+    missed_match_rate: "0.5%"
+  skill26_health: needs_improvement
+  # Rationale: total_error_rate = (0+8+1)/51 = 17.6% → needs_improvement (15-25%).
+  # false_match_rate 0% → healthy. missed_match_rate 0.5% → healthy.
+  # Worst threshold across all three: needs_improvement.
+  # Primary error pattern: type_errors (scope inflation: partial→related when
+  # concerns target different evaluation tracks or different behavioral failure
+  # modes; exact→partial when agentic concern bundles extra fix-actions).
+  papers_verified:
+    - paper: collabllm
+      method: panel_no_ls
+      edges_verified: 5
+      unmatched_verified: 21
+      errors_found: 2
+    - paper: collabllm
+      method: panel_arch_b
+      edges_verified: 5
+      unmatched_verified: 21
+      errors_found: 1
+    - paper: collabllm
+      method: df_no_ls
+      edges_verified: 8
+      unmatched_verified: 17
+      errors_found: 3
+    - paper: collabllm
+      method: df_arch_c
+      edges_verified: 6
+      unmatched_verified: 21
+      errors_found: 2
+    - paper: collabllm
+      method: ai_scientist_run1
+      edges_verified: 8
+      unmatched_verified: 17
+      errors_found: 0
+    - paper: collabllm
+      method: ai_scientist_gpt4o_run1
+      edges_verified: 2
+      unmatched_verified: 23
+      errors_found: 0
+    - paper: collabllm
+      method: liang_run1
+      edges_verified: 4
+      unmatched_verified: 19
+      errors_found: 1
+    - paper: collabllm
+      method: liang_gpt4o_run1
+      edges_verified: 6
+      unmatched_verified: 16
+      errors_found: 1
+    - paper: collabllm
+      method: marg_gpt4o_run1
+      edges_verified: 5
+      unmatched_verified: 22
+      errors_found: 0
+    - paper: collabllm
+      method: oar_run1
+      edges_verified: 2
+      unmatched_verified: 25
+      errors_found: 0

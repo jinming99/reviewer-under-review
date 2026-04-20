@@ -1,0 +1,176 @@
+schema_version: "v1"
+paper: cmdp_meta_safe_rl
+version: baseline
+method: baseline
+verdict: REJECT
+score: 3
+
+decision_drivers:
+  - id: R1
+    polarity: pro_reject
+    text: >
+      Theoretical claims about task similarity and convergence are abstract
+      without thorough justification, undermining soundness.
+    evidence: "Weaknesses bullet 1: 'Theoretical claims, particularly concerning task similarity and convergence, are abstract without thorough justification.'"
+    linked_concern_ids: [A1]
+
+  - id: R2
+    polarity: pro_reject
+    text: >
+      Experimental setups are complex with insufficient clarity on result
+      implications and baseline interpretations.
+    evidence: "Weaknesses bullet 2: 'Experimental setups are complex, with insufficient clarity on result implications and baseline interpretations.'"
+    linked_concern_ids: [A2]
+
+  - id: R3
+    polarity: pro_reject
+    text: >
+      Interpretive clarity is lacking, making it difficult to understand
+      the novel contributions fully.
+    evidence: "Weaknesses bullet 4: 'Interpretive clarity is lacking, making it difficult to understand the novel contributions fully.'"
+    linked_concern_ids: [A4]
+
+  - id: R4
+    polarity: pro_reject
+    text: >
+      Lacks practical validation and thorough exploration of societal
+      impact, particularly fairness.
+    evidence: "Weaknesses bullet 3: 'Lacks practical validation and thorough exploration of societal impact, particularly fairness.'"
+    linked_concern_ids: [A3]
+
+mentions:
+  - id: M1
+    polarity: pro_accept
+    text: >
+      Introduces CMDP into the meta-learning framework, targeting safer
+      AI applications.
+    evidence: "Strengths bullet 1"
+    note: "Noted as a strength but did not outweigh the weaknesses driving REJECT."
+
+  - id: M2
+    polarity: pro_accept
+    text: >
+      Provides theoretical task-averaged regret bounds, suggesting
+      improvement with task-similarity.
+    evidence: "Strengths bullet 2"
+    note: "Theoretical contribution acknowledged but insufficient to overcome soundness concerns."
+
+  - id: M3
+    polarity: pro_accept
+    text: >
+      Ambitiously integrates safe RL paradigms with meta-RL.
+    evidence: "Strengths bullet 3"
+    note: "Ambition recognized but execution fell short per the weakness assessment."
+
+concerns:
+  - id: A1
+    text: >
+      Theoretical claims about task similarity and convergence are abstract
+      and lack thorough justification.
+    severity:
+      level: major
+      addressability: unresolved
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 1"
+    decisive: true
+    tags: [theoretical_rigor, soundness]
+    dimension_impact: [D, E]
+
+  - id: A2
+    text: >
+      Experimental setups are complex with insufficient clarity on result
+      implications and baseline interpretations.
+    severity:
+      level: major
+      addressability: unresolved
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 2"
+    decisive: true
+    tags: [evaluation, clarity]
+    dimension_impact: [D, G]
+
+  - id: A3
+    text: >
+      Lacks practical validation and thorough exploration of societal
+      impact, particularly fairness in task adaptation.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 3; Limitations bullet 3: 'The discussion on societal impacts, particularly fairness in task adaptation, is limited.'"
+    decisive: true
+    tags: [evaluation, impact]
+    dimension_impact: [A, D]
+
+  - id: A4
+    text: >
+      Interpretive clarity is lacking, making it difficult to understand
+      the novel contributions fully.
+    severity:
+      level: major
+      addressability: addressable
+      mechanism: none
+    source: review_major
+    source_detail: "Weaknesses bullet 4; Limitations bullet 1: 'Assumes a high level of familiarity with complex mathematical frameworks, potentially limiting accessibility.'"
+    decisive: true
+    tags: [clarity, presentation]
+    dimension_impact: [G]
+
+  - id: A5
+    text: >
+      Narrow focus on CRPO without exploring how other single-task safe RL
+      algorithms might adapt to the framework.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Questions bullet 2: 'Why focus narrowly on CRPO, and how might other single-task algorithms adapt to this framework?'"
+    decisive: false
+    tags: [scope, methodology]
+    dimension_impact: [B]
+
+  - id: A6
+    text: >
+      DualDICE estimation technique used is not broadly validated across
+      different RL settings.
+    severity:
+      level: moderate
+      addressability: unknown
+      mechanism: none
+    source: other
+    source_detail: "Limitations bullet 2: 'Uses estimation techniques like DualDICE that are not broadly validated across different RL settings.'"
+    decisive: false
+    tags: [methodology, soundness]
+    dimension_impact: [D, E]
+
+  - id: A7
+    text: >
+      Sensitivity of the framework to changes in task-relatedness metrics
+      is unclear.
+    severity:
+      level: moderate
+      addressability: addressable
+      mechanism: none
+    source: other
+    source_detail: "Questions bullet 1: 'Can the authors clarify the sensitivity of the framework to changes in task-relatedness metrics?'"
+    decisive: false
+    tags: [robustness, theoretical_rigor]
+    dimension_impact: [F]
+
+method_specific:
+  baseline_system: "AI Scientist (GPT-4o)"
+  run: 1
+  confidence: 4
+  subscores:
+    originality: 3
+    quality: 2
+    clarity: 2
+    significance: 3
+    soundness: 2
+    presentation: 2
+    contribution: 2
+    overall: 3

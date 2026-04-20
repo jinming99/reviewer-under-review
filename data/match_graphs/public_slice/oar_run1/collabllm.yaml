@@ -1,0 +1,187 @@
+schema_version: v1
+paper: collabllm
+version: own_group/oar_run1
+method: baseline
+
+matches:
+  # ============================================================
+  # Strict matches (exact / partial)
+  # ============================================================
+
+  - official_id: O2
+    agentic_id: A3
+    match_type: partial
+    issue: "Causal inference derivation in appendix is inadequate/incorrect"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: major → same level
+    rationale: >
+      O2 says the causal effect estimation claim is "somewhat convincing" and the
+      distinction from trajectory-level methods needs elaboration. A3 identifies
+      three specific mathematical errors in Equation 5 (Appendix A.1) that explain
+      why the derivation fails. Both target the paper's causal inference claims,
+      but O2 is broader (includes unconvincing positioning) while A3 is narrower
+      (specific math errors). Partial because O2 also encompasses the MTPO
+      distinction which is addressed separately by A5.
+
+  - official_id: O2
+    agentic_id: A5
+    match_type: partial
+    issue: "Causal vs observational positioning relative to trajectory-level methods is unconvincing"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: moderate → ±1 within tolerance
+    rationale: >
+      O2 states the "distinction from existing methods that rely on post-hoc
+      trajectory-level data needs elaboration." A5 directly addresses this
+      sub-claim, arguing the observational-vs-interventional distinction is
+      overstated since forward simulation is still a conditional expectation.
+      Partial because O2 is broader (covers both the derivation and the
+      positioning), while A5 targets only the MTPO comparison framing.
+
+  # ============================================================
+  # Related matches (near-misses, not strict)
+  # ============================================================
+
+  - official_id: O4
+    agentic_id: A5
+    match_type: related
+    issue: "Novelty of contribution is weaker than claimed"
+    judgment_alignment: aligned
+    severity_alignment: n/a
+    rationale: >
+      O4 questions whether the methodology is truly novel or "essentially
+      resembles self-training." A5 argues the causal framing overstates the
+      theoretical novelty. Both concern novelty overclaiming but from different
+      angles: O4 targets resemblance to self-training paradigms, A5 targets
+      the causal-vs-observational theoretical framing. Different author fixes
+      would be needed.
+
+  - official_id: O11
+    agentic_id: A1
+    match_type: related
+    issue: "Table 1 improvement reporting issues"
+    judgment_alignment: aligned
+    severity_alignment: n/a
+    rationale: >
+      O11 notes the improvements in Table 1 are small (BLEU 35→36-38),
+      raising doubts about real impact. A1 finds a specific numerical error
+      where the MATH-Chat ITR improvement was calculated against the wrong
+      baseline, inflating the result by ~6 percentage points. Both concern
+      Table 1 reporting but target different problems: magnitude vs accuracy
+      of the reported numbers.
+
+  - official_id: O7
+    agentic_id: A4
+    match_type: related
+    issue: "Generalization evaluation weaknesses"
+    judgment_alignment: aligned
+    severity_alignment: n/a
+    rationale: >
+      O7 wants broader generalization testing beyond a single dataset
+      (Abg-CoQA). A4 identifies overclaiming within the existing generalization
+      results (Table 2): claiming "maintaining high accuracy" despite a 20%
+      relative drop. Both concern generalization evaluation, but O7 is about
+      scope (more datasets needed) while A4 is about framing (existing results
+      are overclaimed). Different fixes required.
+
+  - official_id: O12
+    agentic_id: A6
+    match_type: related
+    issue: "Understanding what drives the improvements"
+    judgment_alignment: aligned
+    severity_alignment: n/a
+    rationale: >
+      O12 asks whether improvements come from MR design, reward modification,
+      or their interaction. A6 identifies a specific mechanism: the token
+      penalty saturates for most MATH-Chat examples, suggesting efficiency
+      gains come from extrinsic rewards rather than the intrinsic token
+      penalty. A6 partially answers one sub-question of O12 but the concerns
+      operate at different levels of specificity.
+
+# ============================================================
+# Positive factor matches (accepted paper)
+# ============================================================
+positive_factor_matches:
+  - official_factor_id: D1
+    agentic_source: mention
+    agentic_text: "Well-motivated framework for training LLMs to be more collaborative in multiturn interactions"
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >
+      D1 identifies "essential problem: improving LLMs' multi-turn conversational
+      capability." M1 calls the framework "well-motivated." Both recognize the
+      problem's importance, but D1 is more emphatic ("essential") while the
+      agentic mention is a passing acknowledgment.
+
+  - official_factor_id: D2
+    agentic_source: decision_driver
+    agentic_text: "Core idea of using forward simulation to estimate long-term reward is sound, and the experimental design is thorough"
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >
+      D2 highlights "method for generating data with a user simulator and
+      multi-turn reward that is important and technically sound." R1 affirms
+      the core idea is "sound" and design "thorough." Partial because D2
+      specifically highlights user simulator data generation, which R1 does
+      not mention.
+
+  - official_factor_id: D3
+    agentic_source: decision_driver
+    agentic_text: "Core idea of using forward simulation to estimate long-term reward is sound, and the experimental design is thorough"
+    match_type: partial
+    judgment_alignment: aligned
+    rationale: >
+      D3 praises "strong results" and "strong baselines." R1 calls the
+      experimental design "thorough" and M2 notes the "large user study."
+      Partial because the agentic system does not explicitly comment on
+      result strength or baseline quality — its praise is more generic.
+
+  - official_factor_id: D4
+    agentic_source: none
+    agentic_text: ""
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >
+      D4 notes the paper "introduces three public benchmarks." The agentic
+      review does not mention the benchmark contribution at all.
+
+  - official_factor_id: D5
+    agentic_source: none
+    agentic_text: ""
+    match_type: none
+    judgment_alignment: n/a
+    rationale: >
+      D5 praises "substantial work to address all reviewer concerns" (rebuttal
+      quality). This is not observable to the OAR system, which reviews a
+      single version of the paper without seeing the review-rebuttal exchange.
+
+# ============================================================
+# Unmatched concerns
+# ============================================================
+unmatched_official:
+  - O1   # Unclear how MR encourages collaboration
+  - O3   # Dataset access / reproducibility
+  - O4   # Novelty concern — resemblance to self-training (related-only to A5)
+  - O5   # Missing related references on multi-turn RL benchmarks
+  - O6   # Computational overhead of MR / scalability
+  - O7   # Generalization on single dataset (related-only to A4)
+  - O8   # Integration with existing RL frameworks
+  - O9   # Simulated vs real user divergence / bias
+  - O10  # MR function hard to define for ambiguous tasks
+  - O11  # Small improvements over prompt engineering (related-only to A1)
+  - O12  # Source of improvement unclear (related-only to A6)
+  - O13  # BLEU metric appropriateness
+  - O14  # ITR performance decrease w=2 to w=3
+  - O15  # ITR metric scoring clarity
+  - O16  # Caption typo in Figure 2
+  - O17  # Helpfulness as w=0 reward not optimized
+  - O18  # Broader literature missing from main text
+  - O19  # Missing comparison with user-simulator prior work
+  - O20  # User simulator model choice (GPT-4o)
+  - O21  # Quantitative comparison with prior multi-turn methods
+  - O22  # Limitations of LLM as user simulator
+
+unmatched_agentic:
+  - A1   # MATH-Chat ITR baseline calculation error (related-only to O11)
+  - A2   # Figure 2 contradictory efficiency labels (no match)
+  - A4   # Overclaimed generalization accuracy (related-only to O7)
+  - A6   # Token penalty saturation (related-only to O12)

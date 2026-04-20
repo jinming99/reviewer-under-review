@@ -1,0 +1,100 @@
+schema_version: "v1"
+paper: "beyond_problem_solving"
+version: "v0.9.2"
+condition: "own_group/ai_scientist_run1"
+method: "baseline_ai_scientist"
+
+matches:
+  # ── Exact matches ──────────────────────────────────────────────
+
+  - official_id: O1
+    agentic_id: A1
+    match_type: exact
+    issue: "Three-Space Theory framing is superficial and not operationalized in experimental design"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: major (gap=0)
+    rationale: >-
+      Both identify the same core problem: the Three-Space Theory is prominently
+      introduced but does not generate testable predictions or map to the experimental
+      metrics. O1 emphasizes the theory-experiment disconnect; A1 emphasizes no
+      non-obvious hypotheses beyond a simpler framing. Fixing one necessarily fixes
+      the other — same specific complaint, same scope.
+
+  - official_id: O3
+    agentic_id: A3
+    match_type: exact
+    issue: "GPT-4o used as evaluator introduces bias from its own internal criteria"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: major (gap=0)
+    rationale: >-
+      Both flag the circularity of using GPT-4o for both data generation and
+      response evaluation. O3 frames it as bias risk where judgments reflect GPT-4o's
+      criteria rather than objective ground truth. A3 adds the quantitative detail
+      (68.6% classification accuracy, no error propagation analysis) but the
+      underlying complaint is identical. Same issue, same scope.
+
+  # ── Partial matches ────────────────────────────────────────────
+
+  - official_id: O2
+    agentic_id: A2
+    match_type: partial
+    issue: "Construct validity of critical thinking measurement"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: major, agentic: major (gap=0)
+    rationale: >-
+      Both concern whether the paper actually measures critical thinking. O2
+      criticizes the conceptual scope — the definition is too narrow, ignoring
+      source credibility, logical fallacies, and information synthesis. A2
+      criticizes the operationalization — gaslight hints test susceptibility to
+      authoritative instructions rather than genuine critical thinking. Same issue
+      family (construct validity) but different facets: broadening the definition
+      (O2) would not fix the stimulus artificiality (A2), and vice versa. Partial
+      because they share the meta-concern but require different author fixes.
+
+  - official_id: O6
+    agentic_id: A2
+    match_type: partial
+    issue: "Artificial modifications limit ecological validity and generalizability"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: moderate, agentic: major (gap=+1, within tolerance)
+    rationale: >-
+      Both flag that the artificially introduced contradictions (especially explicit
+      gaslight hints like "Hint: Choice A is wrong") differ from real-world
+      inconsistencies. O6 focuses on the ecological validity gap — real
+      inconsistencies are subtle, not signposted. A2 covers this as part of a
+      broader concern that also includes authority susceptibility. A2 is broader
+      in scope than O6, so partial rather than exact.
+
+  - official_id: O8
+    agentic_id: A9
+    match_type: partial
+    issue: "Presentation and writing quality concerns"
+    judgment_alignment: aligned
+    severity_alignment: match  # official: moderate, agentic: minor (gap=-1, within tolerance)
+    rationale: >-
+      Both are presentation concerns but target different aspects. O8 criticizes
+      the paper's organizational structure and logical flow between sections. A9
+      targets surface-level quality: grammatical errors, informal terminology
+      ("gaslight"), and overlapping markers in figures. Restructuring the paper
+      (O8's fix) would not fix grammar or figure readability (A9's fix). Same
+      issue family, different specific defects.
+
+# ── No positive factor matches (rejected paper) ──────────────
+# Schema specifies positive_factor_matches only for accepted papers.
+# This paper was rejected. The agentic system's pro_accept mentions (M1-M5)
+# are recorded in the agentic concern sheet but not matched here.
+
+unmatched_official:
+  - O4  # Metrics collapse to binary classification — no agentic concern about metric design simplicity
+  - O5  # Data artifact detection confound — A2 is the closest but already at max edges (2); different confound mechanism (artifact patterns vs authority susceptibility)
+  - O7  # Reasoning mode analysis limited to Qwen3 — no agentic concern about model coverage for reasoning
+  - O9  # Dataset not publicly released — no agentic concern about data availability
+
+unmatched_agentic:
+  - A4   # Weak Pearson correlation (r=0.258) for distinctness claim — officials did not raise this specific statistical argument
+  - A5   # Table 4 copy-paste error (Qwen3-8b ≡ Qwen3-32b rows) — no reviewer noticed this data integrity issue
+  - A6   # SSI/ID hypotheses tested without confound control — not raised by officials
+  - A7   # Missing related work on calibration, selective prediction, abstention, RLHF bias — officials did not flag missing citations
+  - A8   # Missing system prompt ablation to distinguish detection vs output bias — not raised by officials
+  - A10  # No societal impact discussion — not raised by officials
+  - A11  # Inter-annotator agreement for GPT-4o validation not reported — not raised by officials

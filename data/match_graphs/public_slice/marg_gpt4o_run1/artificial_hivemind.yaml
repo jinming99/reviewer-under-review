@@ -1,0 +1,219 @@
+schema_version: "v1"
+paper: "artificial_hivemind"
+version: "own_group/marg_gpt4o_run1"
+method: "baseline"  # MARG external baseline
+
+matches:
+  # ============================================================
+  # O1 ↔ A8: English-only scope limits generalizability
+  # ============================================================
+  - official_id: "O1"
+    agentic_id: "A8"
+    match_type: "exact"
+    issue: "English-only dataset limits generalizability across languages and cultures"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # both moderate
+    rationale: >
+      Both identify the same concern: the dataset uses only English-language
+      prompts from WildChat, constraining cross-cultural and cross-linguistic
+      generalizability. O1 severity=moderate, A8 severity=moderate.
+
+  # ============================================================
+  # O3 ↔ A1: Causal analysis / decoding strategy analysis
+  # ============================================================
+  - official_id: "O3"
+    agentic_id: "A1"
+    match_type: "partial"
+    issue: "Insufficient mechanistic understanding of what drives inter-model homogenization"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # official=major, agentic=moderate
+    rationale: >
+      O3 asks for mechanistic disentangling of causes (shared training data,
+      alignment, decoding). A1 asks specifically about decoding parameter effects
+      on diversity. A1 is one narrow facet of the broader O3 concern. Both are
+      aligned in wanting deeper causal understanding, but A1's scope is narrower.
+
+  # ============================================================
+  # O3 ↔ A2: Causal analysis / model architecture ablations
+  # ============================================================
+  - official_id: "O3"
+    agentic_id: "A2"
+    match_type: "partial"
+    issue: "Need to disentangle what model-level factors drive alignment and homogenization"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # official=major, agentic=moderate
+    rationale: >
+      O3 requests mechanistic causal analysis of inter-model homogenization.
+      A2 asks for ablation studies on model architecture and training data
+      effects on human alignment. Both concern what drives convergent behavior,
+      but O3 is about homogenization causes while A2 is about alignment quality.
+      Partial because they share the same issue family (understanding model-level
+      drivers) but target different outcomes.
+
+  # ============================================================
+  # O15 ↔ A2: Foundation model baseline / model architecture ablation
+  # ============================================================
+  - official_id: "O15"
+    agentic_id: "A2"
+    match_type: "partial"
+    issue: "Need experiments on model architecture/training variations to understand drivers of the effect"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # both moderate
+    rationale: >
+      O15 asks specifically for experiments on foundation models without
+      instruction-following to determine whether post-training drives the effect.
+      A2 asks for ablation studies on model architecture and training data
+      effects on alignment. Both want more model-variation experiments, but
+      O15 targets a specific comparison (base vs instruction-tuned) while A2
+      is broader. Partial match.
+
+  # ============================================================
+  # O14 ↔ A9: Data availability / reproducibility
+  # ============================================================
+  - official_id: "O14"
+    agentic_id: "A9"
+    match_type: "partial"
+    issue: "Data and code accessibility for reproducibility"
+    judgment_alignment: "aligned"
+    severity_alignment: "match"  # official=moderate, agentic=minor → within ±1 tolerance
+    rationale: >
+      O14 flags a specific broken dataset link. A9 raises broader
+      reproducibility concerns including data accessibility and proprietary
+      model barriers. Same issue family (can others access the data?) but
+      different specificity: O14 is concrete (broken link), A9 is general
+      (sufficient documentation). Partial.
+
+  # ============================================================
+  # O16 ↔ A9: Code completeness / reproducibility
+  # ============================================================
+  - official_id: "O16"
+    agentic_id: "A9"
+    match_type: "related"
+    issue: "Code/data completeness for reproduction"
+    judgment_alignment: "aligned"
+    severity_alignment: "n/a"  # related match
+    rationale: >
+      O16 asks for model-testing scripts in the codebase. A9 raises general
+      reproducibility. Thematically related (both reproducibility) but different
+      specific requests: scripts for each model vs overall pipeline documentation.
+      Related, not partial — different author fixes needed.
+
+  # ============================================================
+  # O7 ↔ A5: Figure clarity / Hivemind definition clarity
+  # ============================================================
+  # NOT matched: O7 is about Figure 1 visual clutter (presentation), while A5
+  # is about the conceptual definition of the Hivemind effect. Different issues
+  # despite both touching "clarity."
+
+  # ============================================================
+  # O9 ↔ A4: Open-endedness verification / dataset construction detail
+  # ============================================================
+  - official_id: "O9"
+    agentic_id: "A4"
+    match_type: "related"
+    issue: "Dataset construction methodology and validation"
+    judgment_alignment: "aligned"
+    severity_alignment: "n/a"  # related match
+    rationale: >
+      O9 specifically asks for human validation that queries are genuinely
+      open-ended. A4 asks for more detail about query selection criteria,
+      taxonomy assumptions, and annotation processes. Both concern dataset
+      construction methodology, but O9 targets a specific validation gap
+      (are queries actually open-ended?) while A4 is about general
+      methodological documentation. Different fixes needed — related only.
+
+positive_factor_matches:
+  # D1: Benchmark meticulously constructed
+  - official_factor_id: "D1"
+    agentic_source: "mention"
+    agentic_text: "The INFINITY-CHAT dataset is recognized as crucial for evaluating language model output diversity."
+    match_type: "partial"
+    judgment_alignment: "aligned"
+    rationale: >
+      MARG acknowledges the dataset's importance (M3) but does not comment
+      on the meticulous construction (31K+ annotations, 25 per example).
+      The positive recognition is generic rather than specific to the
+      annotation density that the AC highlighted.
+
+  # D2: Evaluation framework comprehensive
+  - official_factor_id: "D2"
+    agentic_source: "mention"
+    agentic_text: "The paper provides a thorough evaluation of LM output diversity and the Artificial Hivemind effect."
+    match_type: "partial"
+    judgment_alignment: "aligned"
+    rationale: >
+      MARG acknowledges thorough evaluation (M1) but does not specifically
+      praise the fine-grained, comprehensive nature of measuring response
+      diversity, human alignment, and inter-model homogenization together.
+
+  # D3: Reveals Artificial Hivemind effect across 70+ LMs
+  - official_factor_id: "D3"
+    agentic_source: "mention"
+    agentic_text: "The paper provides a thorough evaluation of LM output diversity and the Artificial Hivemind effect."
+    match_type: "partial"
+    judgment_alignment: "aligned"
+    rationale: >
+      MARG mentions the Hivemind effect by name (M1) but does not highlight
+      the novelty of demonstrating it across 70+ LMs with both automatic and
+      hand-written queries, which was the AC's core strength.
+
+  # D4: Critical challenges for aligned LLMs
+  - official_factor_id: "D4"
+    agentic_source: "none"
+    match_type: "none"
+    judgment_alignment: "n/a"
+    rationale: >
+      MARG does not discuss the tension between alignment and diversity
+      or the importance of capturing human pluralism. This broader
+      significance point is entirely absent from the review.
+
+  # D5: Well-written, clear figures, strong documentation
+  - official_factor_id: "D5"
+    agentic_source: "none"
+    match_type: "none"
+    judgment_alignment: "n/a"
+    rationale: >
+      MARG does not comment on writing quality, figure clarity, or
+      code documentation quality. In fact, A5 questions clarity of the
+      Hivemind definition, moving in the opposite direction.
+
+  # D6: Authors addressed concerns in rebuttal
+  - official_factor_id: "D6"
+    agentic_source: "none"
+    match_type: "none"
+    judgment_alignment: "n/a"
+    rationale: >
+      Not observable by MARG — reviews the pre-rebuttal paper only.
+      MARG has no mechanism to observe or evaluate rebuttal responses.
+
+  # D7 and D8 are pro_reject — excluded per schema rules
+  # (positive_factor_matches includes only pro_accept drivers)
+
+unmatched_official:
+  # O2: Limited actionable guidance for applying the metric — no MARG counterpart
+  # O4: Hivemind effect is statistically expected (conceptual challenge) — not raised
+  # O5: Paraphrase robustness test needed — not raised
+  # O6: Query entropy impact on Hivemind effect — not raised
+  # O7: Figure 1 could be more concise — not raised
+  # O8: Missing taxonomy discussion in related work — not raised
+  # O9: Open-endedness not verified — has only related edge with A4
+  # O10: Similarity scores lack reference baseline — not raised
+  # O11: Section 4 analysis technically flawed — not raised
+  # O12: Similarity score range too narrow — not raised
+  # O13: Cosine metric inconsistency — not raised
+  # O16: Scripts for testing models — has only related edge with A9
+  # O17: Rebuttal results should be in camera-ready — not observable pre-rebuttal
+  # O18: Results need deeper interpretation — not raised with this specificity
+  # O19: Justification for averaging human ratings — not raised
+  [O2, O4, O5, O6, O7, O8, O9, O10, O11, O12, O13, O16, O17, O18, O19]
+
+unmatched_agentic:
+  # A3: Insufficient comparison with existing benchmarks — no official counterpart
+  #     (officials did not question benchmark positioning)
+  # A4: Dataset construction methodology under-documented — only related edge with O9
+  # A5: Hivemind effect needs clearer definition — no official counterpart
+  #     (officials understood the definition; questioned significance, not clarity)
+  # A6: Model configurations insufficient — no official counterpart
+  # A7: Evaluation metrics lack formal definitions — no official counterpart
+  # A9: Reproducibility concerns — only related edge with O16; partial with O14
+  [A3, A4, A5, A6, A7]

@@ -1,0 +1,118 @@
+schema_version: "v1"
+paper: "rl_backtracking_feedback"
+version: "baseline"
+method: "baseline_liang_etal"
+verdict: "REJECT"
+score: null
+
+decision_drivers:
+  - id: "R1"
+    polarity: "pro_reject"
+    text: >
+      Experimental results lack statistical significance measures (no error bars
+      or confidence intervals), making reliability and generalizability hard to assess.
+    evidence: "Section 3, 'Potential reasons for rejection', bullet 1"
+    linked_concern_ids: ["A1"]
+  - id: "R2"
+    polarity: "pro_reject"
+    text: >
+      No open access to code or data, limiting reproducibility and independent verification.
+    evidence: "Section 3, 'Potential reasons for rejection', bullet 4"
+    linked_concern_ids: ["A4"]
+
+mentions:
+  - id: "M1"
+    polarity: "pro_accept"
+    text: >
+      Novel RLBF framework addresses critical need for robust LLM safety against
+      adversarial attacks and in-distribution errors.
+    evidence: "Section 1, 'Significance and novelty', paragraph 1"
+    note: "Acknowledged as significant contribution but not weighted against rejection concerns"
+  - id: "M2"
+    polarity: "pro_accept"
+    text: >
+      Comprehensive empirical evaluations demonstrate effectiveness of RLBF in
+      reducing attack success rates across diverse benchmarks and model scales.
+    evidence: "Section 2, 'Potential reasons for acceptance', bullet 2"
+    note: "Noted as strength but the review's rejection concerns take priority"
+  - id: "M3"
+    polarity: "pro_accept"
+    text: >
+      Integration of RL with critic feedback and streamlined backtracking mechanism
+      offers a unique contribution to LLM safety and alignment research.
+    evidence: "Section 2, 'Potential reasons for acceptance', bullet 3"
+    note: "Recognized as novel combination but not treated as decisive"
+  - id: "M4"
+    polarity: "pro_accept"
+    text: >
+      Enhanced SFT data generation strategy (BSAFE+) supports acquisition of
+      backtracking capabilities, providing a comprehensive approach.
+    evidence: "Section 1, 'Significance and novelty', paragraph 3"
+    note: "Methodological strength acknowledged but not weighted in decision"
+
+concerns:
+  - id: "A1"
+    text: >
+      No error bars, confidence intervals, or statistical significance measures
+      reported for experimental results.
+    severity:
+      level: "major"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "Section 3, 'Potential reasons for rejection', bullet 1: 'The paper does not report error bars or other statistical measures'"
+    decisive: true
+    tags: ["statistical_rigor", "missing_uncertainty"]
+    dimension_impact: ["D"]
+
+  - id: "A2"
+    text: >
+      No detailed information on computational resources required for RLBF,
+      making scalability and practical deployment costs unclear.
+    severity:
+      level: "moderate"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "Section 3, 'Potential reasons for rejection', bullet 2: 'does not provide detailed information on the computational resources required'"
+    decisive: false
+    tags: ["scalability", "missing_detail"]
+    dimension_impact: ["H"]
+
+  - id: "A3"
+    text: >
+      Insufficient exploration of potential negative societal impacts and ethical
+      concerns around the proposed technology.
+    severity:
+      level: "minor"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_minor"
+    source_detail: "Section 3, 'Potential reasons for rejection', bullet 3: 'lacks a thorough examination of potential negative societal impacts'"
+    decisive: false
+    tags: ["ethics", "broader_impact"]
+    dimension_impact: ["G"]
+
+  - id: "A4"
+    text: >
+      No open access to code and data used in experiments, limiting
+      reproducibility and independent verification.
+    severity:
+      level: "moderate"
+      addressability: "addressable"
+      mechanism: "none"
+    source: "review_major"
+    source_detail: "Section 3, 'Potential reasons for rejection', bullet 4: 'does not provide open access to the code and data'"
+    decisive: true
+    tags: ["reproducibility", "open_science"]
+    dimension_impact: ["H"]
+
+method_specific:
+  system: "liang_gpt4o"
+  run: "run_1"
+  explicit_verdict_given: false
+  verdict_inference: >
+    No explicit accept/reject verdict in review. Inferred REJECT from:
+    (1) four specific rejection concerns vs three general acceptance points,
+    (2) suggestions section mirrors rejection concerns, indicating reviewer
+    sees them as issues requiring resolution before acceptance.

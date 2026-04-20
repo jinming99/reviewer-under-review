@@ -1,0 +1,468 @@
+schema_version: "v1"
+paper: "artificial_hivemind"
+title: "Artificial Hivemind: The Open-Ended Homogeneity of Language Models (and Beyond)"
+venue: "NeurIPS 2025"
+official_verdict: "accepted"
+decision_type: "Best Paper (DB track)"
+reviewer_scores: [6, 2, 4, 5]  # 1cqC, zt6D, WB9g, cdsj (pre-rebuttal); zt6D originally rated 2 per Final Justification
+reviewer_scores_post: [6, 4, 4, 5]  # zt6D increased from 2 to 4; cdsj endorsed acceptance at 5; 1cqC and WB9g unchanged
+
+ac_rationale_quality: "detailed"
+# AC (Program Chairs) provides a structured meta-review with: summary of contributions,
+# enumeration of strengths (5 bullets), weaknesses (4 bullets), explicit note that
+# authors addressed most reviewer concerns leading to score increases, and a clear
+# recommendation to accept. The decision is "Accept (oral)" indicating Outstanding Paper Award.
+
+# ============================================================
+# PDF version status (Skill 1b Step 0)
+# ============================================================
+pdf_is_revised: true
+revision_evidence: "OpenReview shows '2 Versions' badge (Published: 18 Sept 2025, Last Modified: 21 Jan 2026). Camera-ready includes content added during rebuttal: Appendix B.3 human validation of open-endedness (86 Prolific annotators, 89% open-ended rate), Appendix C.4 paraphrase experiments (within-prompt 0.821 vs cross-paraphrase 0.781), random similarity baseline in Appendix C, alternative subset selection methods (Tables 19-20), qualitative paraphrase examples (Tables 17-18), and expanded limitations discussion (Section A.1, p.19). No colored markup visible in PDF."
+
+concerns:
+  # ============================================================
+  # O1: English-only scope limits generalizability
+  # Raised by: 1cqC (W-i), AC (W1)
+  # ============================================================
+  - id: "O1"
+    text: "The dataset is limited to English-language queries from WildChat, constraining the generalizability of findings across cultures and languages."
+    verbatim: "limited to English web queries and manually filtered data...may constrain the generalizability"
+    raised_by: ["1cqC", "AC"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors acknowledged the limitation and committed to strengthening the discussion in camera-ready. They noted the taxonomy is language-agnostic and anticipate similar homogenization in multilingual settings."
+    ac_treatment: "accepted_limitation"
+    decisive: false
+    tags: ["generalizability", "language_scope", "dataset_limitation"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Section A.1 Limitations (p.19) explicitly discusses: 'the focus on English-language prompts derived from WildChat potentially underrepresents linguistic, cultural, and regional diversity in user interactions with language models, limiting the generalizability of our findings to non-English contexts and diverse cultural perspectives.' Also states: 'While extending INFINITY-CHAT to multilingual and multicultural settings is an important direction, we anticipate that similar homogenization issues will likely arise across languages and cultures.'"
+    note: "AC lists this as weakness W1. Reviewer 1cqC rated it as a minor issue. The limitation is explicitly acknowledged and discussed in the camera-ready."
+
+  # ============================================================
+  # O2: Limited actionable guidance for applying the metric
+  # Raised by: 1cqC (W-ii), AC (W2)
+  # ============================================================
+  - id: "O2"
+    text: "The paper provides limited actionable guidance on how to apply the Artificial Hivemind metric for model development or training feedback."
+    verbatim: "may add more actionable guidance...how to interpret and adopt the Artificial Hivemind metric"
+    raised_by: ["1cqC", "AC"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors committed to expanding discussion with actionable uses: integration into red-teaming workflows, leveraging dataset for RL approaches, benchmarking decoding strategies, and providing diagnostic signals for curriculum design."
+    ac_treatment: "accepted_limitation"
+    decisive: false
+    tags: ["actionability", "practical_guidance", "metric_usage"]
+    issue_type: "framing"
+    addressed_in_pdf: true
+    pdf_evidence: "Section A.2 Future Directions (pp.19-20) includes actionable subsections: 'Mitigation and alignment strategies' (diversity-aware training objectives, decoding strategies), 'Practical integration' (red-teaming workflows, RL training prompts, decoding benchmarking, curriculum design). These were added in response to this concern."
+    note: "AC lists this as weakness W2. Authors expanded the discussion substantially in the camera-ready."
+
+  # ============================================================
+  # O3: Insufficient causal analysis of inter-model homogenization
+  # Raised by: 1cqC (W-iii), zt6D (W1)
+  # ============================================================
+  - id: "O3"
+    text: "The analysis does not provide sufficient insight into the underlying causes of inter-model homogenization; the paper diagnoses the phenomenon but does not mechanistically disentangle causes like shared training data, alignment, or decoding."
+    verbatim: "does not clearly provide sufficient insights into the underlying causes of inter-model homogenization"
+    raised_by: ["1cqC", "zt6D"]
+    severity: "major"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors expanded discussion to highlight potential contributing factors: (1) substantial overlap in pretraining corpora, (2) alignment processes, and (3) convergence in decoding strategies. Acknowledged full causal tracing is beyond scope but committed to including the discussion in camera-ready."
+    ac_treatment: "accepted_limitation"
+    decisive: false
+    tags: ["causal_analysis", "mechanistic_understanding", "scope_limitation"]
+    issue_type: "conceptual"
+    addressed_in_pdf: true
+    pdf_evidence: "Section A.1 Limitations (p.19): 'although our analysis identifies clear evidence of an Artificial Hivemind effect across models, it falls short of establishing the underlying mechanisms causing this homogenization. Future research can mechanistically disentangle causality, whether stemming from shared training data, memorization, generalization, or other factors.' Section A.2 Future Directions (p.20): 'Foundation and training analysis' subsection plans to 'disentangle the respective roles of pre-training and post-training in shaping convergent behaviors' and 'quantify the relative contributions of different post-training pipelines.'"
+    note: "This was zt6D's core conceptual challenge. 1cqC raised it as a minor issue. The paper frames this as an acknowledged limitation and future direction rather than a resolved question."
+
+  # ============================================================
+  # O4: Hivemind effect is statistically expected, not surprising
+  # Raised by: zt6D (W1 - conceptual challenge)
+  # ============================================================
+  - id: "O4"
+    text: "The Artificial Hivemind phenomenon may be statistically expected given shared training data and the law of large numbers; autoregressive LMs are designed to approximate the average behavior, so cross-model similarity is a natural consequence rather than a surprising finding."
+    verbatim: "autoregressive language models are designed to approximate the exactly average behavior...the geometry of tokens is radial"
+    raised_by: ["zt6D"]
+    severity: "major"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors argued that even if convergence is statistically expected, it does not make it desirable or inevitable. The paper provides empirical tools to measure and track the phenomenon, which has practical implications for synthetic data generation, model ensembles, and alignment. Reviewer zt6D was ultimately convinced: 'I'm ready to re-evaluate the work, and now instead leaning to endorse the acceptance of the paper.'"
+    ac_treatment: "resolved"
+    decisive: false
+    tags: ["conceptual_challenge", "statistical_expectation", "contribution_significance"]
+    issue_type: "conceptual"
+    addressed_in_pdf: true
+    pdf_evidence: "Section A.3 Broader Implications (p.20) addresses this: 'Implications for Data Distillation and Model Training' subsection notes that 'even across distinct state-of-the-art models, diversity in open-ended tasks is far from guaranteed' and that 'practitioners risk overestimating cross-model diversity and unintentionally perpetuating homogenization across generations of language models.' The paper reframes the contribution as providing diagnostic tools regardless of whether the phenomenon is expected."
+    note: "zt6D's primary concern. This was a philosophical/conceptual challenge to the paper's contribution, not a methodological flaw. Reviewer was ultimately persuaded by the distinction between expected and desirable, and by the practical utility of the framework."
+
+  # ============================================================
+  # O5: Need to test with paraphrased queries (robustness check)
+  # Raised by: zt6D (follow-up Q1)
+  # ============================================================
+  - id: "O5"
+    text: "The homogenization findings should be tested with paraphrased versions of queries to verify whether the effect is robust to surface-level prompt variation, or whether models are simply responding to specific phrasings."
+    verbatim: "one crucial way to disprove my attack...is to test whether paraphrasing the queries shall have significant impact"
+    raised_by: ["zt6D"]
+    severity: "major"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors conducted a new paraphrase experiment: 30 prompts with 4 paraphrases each, 42 models, 20 responses per prompt. Within-prompt similarity averaged 0.821 and cross-paraphrase similarity averaged 0.781 (difference of only 0.04), showing the effect is robust to paraphrasing. Qualitative examples provided showing models converge on same themes across paraphrases."
+    ac_treatment: "resolved"
+    decisive: false
+    tags: ["robustness", "paraphrase_invariance", "experimental_validation"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Appendix C.4 (pp.29-30) presents the full paraphrase experiment: 'Our results across all 42 models show that the within-prompt similarity averaged 0.821, while the cross-paraphrase similarity averaged 0.781. Although responses to the original prompts showed slightly higher similarity scores, responses to paraphrased prompts also demonstrated high similarity (difference of only 0.04).' Tables 17-18 (pp.43-44) provide qualitative examples across models and paraphrases."
+    note: "This was zt6D's most constructive follow-up, framed as 'if there could be any significant results for this point, I'm more than willing to significantly raise my scores.' The experiment was decisive in converting zt6D to endorsing acceptance."
+
+  # ============================================================
+  # O6: Query entropy impact on Hivemind effect
+  # Raised by: zt6D (follow-up Q2)
+  # ============================================================
+  - id: "O6"
+    text: "The impact of the open-ended query's entropy/difficulty on the strength of the Hivemind effect should be analyzed; less definitive questions may show different patterns than highly open-ended ones."
+    verbatim: "Do you think the entropy of the open-ended query question should have an impact on the strength of the Hivemind Effect?"
+    raised_by: ["zt6D"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors conducted human annotation of open-endedness levels (86 annotators on Prolific). Found high open-endedness queries had average similarity 0.800 vs low open-endedness at 0.837, suggesting models do not produce more diverse responses even for more open-ended prompts. Authors committed to including this in camera-ready appendix."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["query_difficulty", "open-endedness_level", "analysis_depth"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Appendix B.3 (pp.21-22) includes the full human validation: 'We used majority vote among three annotators per question to assess query open-endedness. By this criterion, 89% of queries were judged open-ended.' Also reports the open-endedness level analysis: 'High open-endedness = 0.800, Low open-endedness = 0.837. These results suggest that, even for prompts perceived as more open-ended, models do not necessarily produce more diverse responses.'"
+    note: "zt6D's second follow-up question. The result that more open-ended queries do NOT produce more diverse model responses is a notable finding included in camera-ready."
+
+  # ============================================================
+  # O7: Figure 1 could be more concise
+  # Raised by: WB9g (W1)
+  # ============================================================
+  - id: "O7"
+    text: "Figure 1 could be more concise; the visual presentation with many models is cluttered."
+    verbatim: "The figure1 can be more concise."
+    raised_by: ["WB9g"]
+    severity: "minor"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors agreed to reduce the number of representative models in Figure 1 for clarity, with the complete version in appendix."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["figure_design", "visual_clarity", "presentation"]
+    issue_type: "framing"
+    addressed_in_pdf: true
+    pdf_evidence: "Figure 1 (p.2) shows a PCA visualization with 25 models. The main figure retains many models but includes detailed callout examples on the right side. The full version with all models is available in the appendix (Figures 15-18)."
+    note: "Minor presentation issue from a low-confidence reviewer (confidence 1). Not substantive."
+
+  # ============================================================
+  # O8: Missing taxonomy discussion in related work
+  # Raised by: WB9g (W2)
+  # ============================================================
+  - id: "O8"
+    text: "The paper should add discussion of the taxonomy problem in related works, connecting to prior work on open-endedness taxonomies."
+    verbatim: "add some discussion about taxonomy problem in related works as it is discussed in the main body"
+    raised_by: ["WB9g"]
+    severity: "minor"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors committed to incorporating a discussion of prior work on open-endedness taxonomies in the Related Work section."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["related_work", "taxonomy", "positioning"]
+    issue_type: "framing"
+    addressed_in_pdf: true
+    pdf_evidence: "Section 5 Related Work (p.10) includes discussion of creativity and divergent thinking research including taxonomies of open-endedness. The section discusses 'Measuring the creativity and divergent thinking of language models' and 'Disagreement and pluralistic alignment of language models' with references to evaluation frameworks and taxonomy-related work."
+    note: "Minor suggestion from a low-confidence reviewer. The related work section was expanded."
+
+  # ============================================================
+  # O9: Open-endedness of queries not verified
+  # Raised by: cdsj (main concern 1)
+  # ============================================================
+  - id: "O9"
+    text: "The extent of the 'open-endedness' of collected queries was not verified; the dataset construction relies on automated filtering but lacks human validation that queries genuinely admit multiple plausible responses."
+    verbatim: "The extent of the 'open-endedness' of collected queries was not verified"
+    raised_by: ["cdsj"]
+    severity: "major"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors conducted a new human study with 86 Prolific annotators on 100 queries. By majority vote, 89% of queries were judged open-ended; with at least one annotator agreeing, 100% qualified. 81.27% of queries allow 3+ alternatives, 34.66% allow 20+. Results committed to be included in camera-ready."
+    ac_treatment: "resolved"
+    decisive: false
+    tags: ["dataset_validation", "open-endedness_verification", "human_study"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Appendix B.3 'Human Validation of the Open-endedness of Queries in INFINITY-CHAT' (pp.21-22) presents the full study: 100 examples, 86 Prolific annotators, 3 per query, two questions (Q1: is it open-ended? Q2: how many alternatives?). Reports 89% open-ended by majority vote, 100% by any-one-agrees criterion. Table 1 (p.22) shows degree distribution: 18.73% fewer than 3, 31.87% 3-10, 14.74% 10-20, 34.66% more than 20."
+    note: "This was cdsj's first and most important concern. The new human study was decisive in resolving it. Reviewer cdsj stated: 'The first of my 3 main concerns is addressed.'"
+
+  # ============================================================
+  # O10: Similarity scores lack reference/baseline for interpretation
+  # Raised by: cdsj (main concern 2)
+  # ============================================================
+  - id: "O10"
+    text: "The cosine similarity scores used to demonstrate homogeneity lack a reference baseline or contextualization; without knowing what random or expected similarity looks like, the reported scores (0.7-0.8 range) cannot be meaningfully interpreted."
+    verbatim: "similarity scores...used to show the existence of the homogeneity phenomenon lack reference and thus cannot be interpreted meaningfully"
+    raised_by: ["cdsj"]
+    severity: "major"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors computed a random similarity baseline: randomly paired responses fall in the 0.1-0.2 range, while model responses cluster at 0.7-0.9, showing a clear and substantial gap. Also provided clustering analysis showing top-50 closest responses come from ~8 distinct models on average. Committed to including in camera-ready."
+    ac_treatment: "resolved"
+    decisive: false
+    tags: ["baseline_comparison", "metric_interpretation", "contextualization"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "The random baseline is referenced in the rebuttal discussion. Appendix C.1 (p.29) describes that 'All similarities are computed using cosine similarity between sentence embeddings' and provides concrete examples in Tables 12-16 (pp.38-42) with similarity score pairs showing the full range. Figure 8 (p.6) shows the unique source model analysis. The camera-ready incorporates the baseline comparison data in Figures 4-5 (p.4) where the row labeled '0.0-0.1' shows 0% for all models (i.e., no responses fall in the random baseline range)."
+    note: "cdsj's second key concern. The random baseline (0.1-0.2 for random pairs vs 0.7-0.9 for model responses) was a convincing contextualization. Reviewer cdsj also asked for the baseline to be included with Figure 6 specifically."
+
+  # ============================================================
+  # O11: Section 4 analysis on human disagreement is technically flawed
+  # Raised by: cdsj (main concern 3)
+  # ============================================================
+  - id: "O11"
+    text: "The analysis correlating model ratings with human ratings in Section 4 is technically flawed: the methodology for selecting 'similar-quality' responses and 'high annotator disagreement' subsets is questionable, the use of entropy as a disagreement measure is unjustified, and the motivation for averaging human ratings is unclear."
+    verbatim: "analysis on correlations with human disagreement is technically flawed and is not well motivated"
+    raised_by: ["cdsj"]
+    severity: "major"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors provided extensive additional analysis: (1) tested multiple alternative subset selection methods (Tukey, centroid-based, distance-based, sliding window, median expansion, gap-based) showing consistent trends; (2) added alternative disagreement metrics (Fleiss' kappa, majority vs minority, Gini impurity, pairwise disagreement) confirming the same pattern; (3) clarified motivation for averaging human ratings in terms of model training practice. Committed to using Fleiss' kappa as primary metric and including all alternative methods in appendix."
+    ac_treatment: "resolved"
+    decisive: false
+    tags: ["methodology", "statistical_analysis", "subset_selection", "disagreement_metrics"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Appendix D.3 (pp.50-51) includes Table 19 with alternative similar-quality subset selection methods and their Spearman correlations. Appendix D.4 (p.52) includes Table 20 with alternative disagreement metrics. Section 4.3 (pp.8-9) presents the main analysis. The camera-ready retains Tukey's fences as the primary method but acknowledges alternatives. Figures 10-11 (pp.8-9) show correlation trends for both absolute and pairwise ratings across subsets."
+    note: "cdsj's most detailed technical concern, spanning multiple sub-points. The reviewer engaged in extensive discussion, requesting alternative methods and metrics. After receiving comprehensive additional analyses, cdsj stated: 'The new results and analysis have addressed the remaining concerns, and I am now satisfied this paper should be accepted.'"
+
+  # ============================================================
+  # O12: Similarity score range too narrow for meaningful comparison
+  # Raised by: cdsj (follow-up on O10)
+  # ============================================================
+  - id: "O12"
+    text: "In Figure 6, most average similarity scores are tightly clustered in the 0.7-0.8 range with little difference among them, making it hard to meaningfully compare the numbers; full distributions rather than just averages should be shown."
+    verbatim: "most average similarity scores are tightly clustered in the range of 0.7-0.8 with little difference among them"
+    raised_by: ["cdsj"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors pointed to Tables 6-10 in the appendix providing finer-grained repetition scores by similarity range, and added the random baseline for comparison context."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["visualization", "granularity", "distribution_analysis"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Tables 7-11 (pp.33-37) provide the full inter-model repetition results broken down by similarity range bins (0.9-1.0, 0.8-0.9, etc.) for all model pairs. This is substantially more granular than the heatmap averages in Figure 6 (p.5). Table 6 (p.32) provides the same for intra-model repetition."
+    note: "Follow-up concern from cdsj about the granularity of Figure 6. The appendix tables addressed this by providing full distributions."
+
+  # ============================================================
+  # O13: Cosine metric vs inter/intra model metric inconsistency
+  # Raised by: cdsj (follow-up)
+  # ============================================================
+  - id: "O13"
+    text: "If the goal is to compare inter- and intra-model similarity, why not use the cosine similarity as done in Figure 4 and 6/7 directly, instead of the different metric used for inter vs intra comparison?"
+    verbatim: "if the goal is to compare inter- and intra-model similarity, why not use the cosine similarity"
+    raised_by: ["cdsj"]
+    severity: "minor"
+    resolved_in_rebuttal: false
+    rebuttal_resolution: "Not directly addressed in rebuttal; the paper uses cosine similarity throughout but presents it in different visualizations (heatmaps for pairwise, distributions for within-model)."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["metric_consistency", "visualization_methodology"]
+    issue_type: "empirical"
+    addressed_in_pdf: false
+    pdf_evidence: "Figures 4-5 (p.4) show intra-model similarity distributions, Figure 6 (p.5) shows inter-model pairwise averages. Both use the same underlying cosine similarity metric on sentence embeddings. The visualization formats differ but the metric is consistent."
+    note: "Minor methodological question about presentation consistency. The underlying metric (cosine similarity of text-embedding-3-small embeddings) is the same throughout."
+
+  # ============================================================
+  # O14: Data availability issue (broken link)
+  # Raised by: cdsj (dataset code comments)
+  # ============================================================
+  - id: "O14"
+    text: "The dataset link in the paper was broken at time of review; code is available but data was not accessible."
+    verbatim: "Code is available but data is not."
+    raised_by: ["cdsj"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors provided the correct dataset link (huggingface.co/collections/liweijiang/artificial-hivemind) and noted the link was accidentally broken in the paper. Committed to fixing in camera-ready."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["data_availability", "reproducibility", "broken_link"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Page 1 of the paper lists the correct Dataset URL: 'https://huggingface.co/datasets/liweijiang/infinite-chats-taxonomy' and Code URL: 'https://github.com/liweijiang/artificial-hiveminds'. The OpenReview submission also lists the Croissant file link."
+    note: "The broken link was fixed in the camera-ready. Both code and data are now accessible."
+
+  # ============================================================
+  # O15: Need for baseline of foundation models without instruction-following
+  # Raised by: zt6D (W2 - addressed)
+  # ============================================================
+  - id: "O15"
+    text: "The testbed needs further validation by designing experiments on foundation models without instruction-following capabilities, to determine whether post-training (not just pretraining) drives the Hivemind effect."
+    verbatim: "needs further validation by designing a testbed that...applies to the foundation models w/o instruction following capabilities"
+    raised_by: ["zt6D"]
+    severity: "moderate"
+    resolved_in_rebuttal: false
+    rebuttal_resolution: "Authors acknowledged this as an important future direction but argued it is beyond the scope of a dataset paper. Committed to exploring foundation model analysis in future work."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["scope_extension", "foundation_models", "future_work"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Section A.2 Future Directions (pp.19-20): 'Foundation and training analysis. We plan to extend the Artificial Hivemind testbed to foundation models without instruction-following capabilities to better disentangle the respective roles of pre-training and post-training in shaping convergent behaviors.'"
+    note: "zt6D suggested this as future work. The paper explicitly commits to this direction. zt6D accepted this as reasonable scope limitation for a dataset paper."
+
+  # ============================================================
+  # O16: Codebase should include scripts for testing each model
+  # Raised by: zt6D (code comment)
+  # ============================================================
+  - id: "O16"
+    text: "The codebase would benefit from including scripts for testing each model candidate, so readers can reproduce the analysis and understand system prompt impact."
+    verbatim: "It would be better if the scripts to test each model candidate can also be included"
+    raised_by: ["zt6D"]
+    severity: "minor"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors committed to updating the codebase to include testing scripts for each model."
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["code_completeness", "reproducibility"]
+    issue_type: "empirical"
+    addressed_in_pdf: false
+    pdf_evidence: "The GitHub repository (github.com/liweijiang/artificial-hiveminds) is listed. Whether the specific testing scripts were added to the repository cannot be verified from the PDF alone."
+    note: "Minor reproducibility suggestion. Authors agreed to address it."
+
+  # ============================================================
+  # O17: New human annotation results should be in camera-ready
+  # Raised by: AC (W4)
+  # ============================================================
+  - id: "O17"
+    text: "The new human annotation results introduced in the rebuttal should be fully included in the camera-ready version to strengthen the grounding and definition of open-endedness."
+    verbatim: "new human annotation results introduced in the rebuttal should be fully included in the camera-ready"
+    raised_by: ["AC"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors committed to including all rebuttal results in camera-ready."
+    ac_treatment: "accepted_limitation"
+    decisive: false
+    tags: ["completeness", "camera_ready_revision", "documentation"]
+    issue_type: "framing"
+    addressed_in_pdf: true
+    pdf_evidence: "Appendix B.3 (pp.21-22) includes the full human validation study. Appendix C.4 (pp.29-30) includes the paraphrase experiments. Appendix D.3-D.4 (pp.50-52) include alternative subset selection and disagreement methods. All major rebuttal results appear to be incorporated."
+    note: "AC's explicit directive. The camera-ready appears to have incorporated the requested content."
+
+  # ============================================================
+  # O18: Results need deeper interpretation and discussion
+  # Raised by: AC (W3)
+  # ============================================================
+  - id: "O18"
+    text: "The results would benefit from deeper interpretation and discussion beyond reporting the observations."
+    verbatim: "The results would benefit from deeper interpretation and discussion."
+    raised_by: ["AC"]
+    severity: "moderate"
+    resolved_in_rebuttal: null
+    rebuttal_resolution: "Addressed through expanded limitations, future directions, and broader implications sections in camera-ready."
+    ac_treatment: "accepted_limitation"
+    decisive: false
+    tags: ["interpretation", "discussion_depth", "analysis"]
+    issue_type: "framing"
+    addressed_in_pdf: true
+    pdf_evidence: "Section A.1 Limitations (p.19), A.2 Future Directions (pp.19-20), and A.3 Broader Implications (p.20) provide extended discussion including societal implications, implications for data distillation and model training, and connections to broader AI alignment challenges. Section A.1 specifically discusses the tension between diversity and quality, and the limitation of not establishing underlying mechanisms."
+    note: "AC's general suggestion for richer discussion. The camera-ready expanded the discussion substantially across three appendix subsections."
+
+  # ============================================================
+  # O19: Justification for averaging human ratings
+  # Raised by: cdsj (follow-up on O11)
+  # ============================================================
+  - id: "O19"
+    text: "The justification for using average human ratings as the ground truth for correlation analysis is unclear; annotator disagreement should be taken into account rather than averaged away."
+    verbatim: "I think what is needed is some kind of measure that takes into account the rating disagreement"
+    raised_by: ["cdsj"]
+    severity: "moderate"
+    resolved_in_rebuttal: true
+    rebuttal_resolution: "Authors clarified that averaging is motivated by how reward models are currently used in training (they typically see averaged scores). They also released all individual annotations to enable alternative analyses. Reviewer cdsj acknowledged: 'I admit I don't have a good solution.'"
+    ac_treatment: "not_mentioned"
+    decisive: false
+    tags: ["aggregation_methodology", "annotator_disagreement", "ground_truth"]
+    issue_type: "empirical"
+    addressed_in_pdf: true
+    pdf_evidence: "Section D.2 (pp.49-50) 'Motivation for using average human ratings' provides the justification: 'Our motivation arises from how reward models (or LM judges) are currently used in LM training... we therefore use average human scores, which capture when multiple responses are high-quality across different subpopulations and avoid the misleading signals of isolated ratings.'"
+    note: "cdsj pushed back on averaging but ultimately acknowledged the practical motivation. The paper makes the rationale explicit in the camera-ready."
+
+ac_decision_drivers:
+  - id: "D1"
+    polarity: "pro_accept"
+    text: "The benchmark is meticulously constructed with rich open-ended prompts and high-density human preference annotations (31K+ annotations, 25 per example)."
+    decisive: true
+    tags: ["dataset_quality", "annotation_density"]
+    observable_stage: "meta_review"
+
+  - id: "D2"
+    polarity: "pro_accept"
+    text: "The evaluation framework is fine-grained and comprehensive, measuring response diversity, human alignment, and inter-model homogenization."
+    decisive: true
+    tags: ["evaluation_framework", "comprehensiveness"]
+    observable_stage: "meta_review"
+
+  - id: "D3"
+    polarity: "pro_accept"
+    text: "The paper reveals the 'Artificial Hivemind' effect through automatic and hand-written queries, with both intra- and inter-model homogeneity demonstrated across 70+ LMs."
+    decisive: true
+    tags: ["novel_finding", "hivemind_effect", "scale"]
+    observable_stage: "meta_review"
+
+  - id: "D4"
+    polarity: "pro_accept"
+    text: "Experimental results highlight critical challenges for aligned LLMs: tension between alignment and diversity, importance of capturing human pluralism."
+    decisive: false
+    tags: ["significance", "alignment_tension", "pluralism"]
+    observable_stage: "meta_review"
+
+  - id: "D5"
+    polarity: "pro_accept"
+    text: "The paper is well-written with clear figures, well-structured code, and strong documentation."
+    decisive: false
+    tags: ["clarity", "presentation", "code_quality"]
+    observable_stage: "meta_review"
+
+  - id: "D6"
+    polarity: "pro_accept"
+    text: "Authors addressed most reviewer concerns during rebuttal, leading some reviewers to increase their ratings or endorse acceptance."
+    decisive: true
+    tags: ["rebuttal_quality", "responsiveness"]
+    observable_stage: "meta_review"
+
+  - id: "D7"
+    polarity: "pro_reject"
+    text: "Limited discussion of English-only scope and cross-cultural implications."
+    decisive: false
+    tags: ["scope_limitation", "generalizability"]
+    observable_stage: "meta_review"
+
+  - id: "D8"
+    polarity: "pro_reject"
+    text: "Limited actionable guidance for applying the Artificial Hivemind metric."
+    decisive: false
+    tags: ["actionability"]
+    observable_stage: "meta_review"
+
+critical_references:
+  - id: "CR1"
+    title: "Wildchat: 1m chatgpt interaction logs in the wild"
+    short_name: "WildChat"
+    cited_by: ["1cqC", "cdsj"]
+    role: "benchmark_precedent"
+    decisive: false
+    verbatim: "naturally occurring prompts mined from WildChat"
+
+  - id: "CR2"
+    title: "Homogenization effects of large language models on human creative ideation"
+    short_name: "Anderson et al. 2024"
+    cited_by: ["zt6D"]
+    role: "novelty_precedent"
+    decisive: false
+    verbatim: "Recent studies have already begun documenting changes in human writing patterns"
+
+  - id: "CR3"
+    title: "Is model collapse inevitable?"
+    short_name: "Gerstgrasser et al. 2024"
+    cited_by: ["zt6D"]
+    role: "novelty_precedent"
+    decisive: false
+    verbatim: "model collapse...breaking the curse of recursion"
+
+ac_decisive_negative_ids: []
+# No decisive blockers identified by AC. All weaknesses were treated as
+# accepted limitations or resolved concerns. Decision was Accept (oral).

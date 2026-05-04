@@ -113,4 +113,4 @@ The case studies under `docs/case_studies/public_slice/` read the match graphs o
 - Aggregate metrics for the 9-paper slice: `data/reports/public_slice/aggregate_report.md`
 - Schemas for every artifact: `schemas/`
 - Verdict inference audit methodology and reconciled data: `data/audit/README.md`
-- Paper: `docs/concern-alignment-paper.pdf`
+- Paper: [arXiv:2604.19998](https://arxiv.org/abs/2604.19998)
